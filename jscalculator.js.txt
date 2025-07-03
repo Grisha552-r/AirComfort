@@ -1,0 +1,41 @@
+document.addEventListener('DOMContentLoaded', function() {
+  const modelSelect = document.getElementById('model');
+  const lengthInput = document.getElementById('length');
+  const decreaseBtn = document.getElementById('decrease-length');
+  const increaseBtn = document.getElementById('increase-length');
+  const totalPrice = document.getElementById('total-price');
+
+  function calculateTotal() {
+    const modelPrice = parseInt(modelSelect.value);
+    const length = parseInt(lengthInput.value);
+    const additionalLength = Math.max(0, length - 3);
+    const additionalLengthPrice = additionalLength * 50;
+    let total = modelPrice + additionalLengthPrice;
+
+    document.querySelectorAll('input[type="checkbox"]:checked').forEach(checkbox => {
+      total += parseInt(checkbox.value);
+    });
+
+    if (modelPrice === 0) {
+      totalPrice.textContent = 'По запросу';
+    } else {
+      totalPrice.textContent = total + ' BYN';
+    }
+  }
+
+  modelSelect.addEventListener('change', calculateTotal);
+  decreaseBtn.addEventListener('click', function() {
+    const currentValue = parseInt(lengthInput.value);
+    if (currentValue > 3) {
+      lengthInput.value = currentValue - 1;
+      calculateTotal();
+    }
+  });
+  increaseBtn.addEventListener('click', function() {
+    const currentValue = parseInt(lengthInput.value);
+    lengthInput.value = currentValue + 1;
+    calculateTotal();
+  });
+
+  calculateTotal();
+});

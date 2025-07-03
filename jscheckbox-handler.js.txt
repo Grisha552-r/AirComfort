@@ -1,0 +1,39 @@
+document.addEventListener('DOMContentLoaded', function() {
+  const checkboxes = document.querySelectorAll('input[type="checkbox"]');
+  window.calculateTotal = function() {
+    const modelSelect = document.getElementById('model');
+    const lengthInput = document.getElementById('length');
+    const totalPrice = document.getElementById('total-price');
+    const modelPrice = parseInt(modelSelect.value);
+    const length = parseInt(lengthInput.value);
+    const additionalLength = Math.max(0, length - 3);
+    const additionalLengthPrice = additionalLength * 50;
+    let total = modelPrice + additionalLengthPrice;
+
+    checkboxes.forEach(checkbox => {
+      if (checkbox.checked) {
+        total += parseInt(checkbox.value);
+      }
+    });
+
+    if (modelPrice === 0) {
+      totalPrice.textContent = 'По запросу';
+    } else {
+      totalPrice.textContent = total + ' BYN';
+    }
+  };
+
+  checkboxes.forEach(checkbox => {
+    const bg = checkbox.nextElementSibling;
+    checkbox.addEventListener('change', function() {
+      if (this.checked) {
+        bg.classList.add('bg-primary', 'border-primary');
+        bg.innerHTML = '<i class="ri-check-line text-white"></i>';
+      } else {
+        bg.classList.remove('bg-primary', 'border-primary');
+        bg.innerHTML = '';
+      }
+      window.calculateTotal();
+    });
+  });
+});
