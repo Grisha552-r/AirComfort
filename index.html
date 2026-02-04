@@ -2417,6 +2417,8 @@
     document.querySelectorAll('button, a.btn-animate').forEach(btn => {
       btn.classList.add('btn-animate');
     });
+// ===== ФУНКЦИИ ДЛЯ КОРЗИНЫ =====
+
 // Обновление счетчика корзины
 function updateCartCount() {
   const cart = JSON.parse(localStorage.getItem('cart')) || [];
@@ -2424,11 +2426,130 @@ function updateCartCount() {
   const cartCount = document.getElementById('cart-count');
   if (cartCount) {
     cartCount.textContent = totalItems;
+    // Анимация при обновлении
+    cartCount.classList.add('add-to-cart-animation');
+    setTimeout(() => {
+      cartCount.classList.remove('add-to-cart-animation');
+    }, 300);
   }
 }
 
+// Уведомление о добавлении в корзину
+function showCartNotification(productName) {
+  // Удаляем старое уведомление, если есть
+  const oldNotification = document.querySelector('.cart-notification');
+  if (oldNotification) {
+    oldNotification.remove();
+  }
+  
+  // Создаем новое уведомление
+  const notification = document.createElement('div');
+  notification.className = 'cart-notification';
+  notification.innerHTML = `
+    <i class="ri-checkbox-circle-fill"></i>
+    <div class="cart-notification-content">
+      <h4>Товар добавлен в корзину!</h4>
+      <p>${productName}</p>
+    </div>
+  `;
+  
+  document.body.appendChild(notification);
+  
+  // Автоматическое удаление через 3 секунды
+  setTimeout(() => {
+    notification.style.animation = 'slideInRight 0.3s ease reverse';
+    setTimeout(() => {
+      notification.remove();
+    }, 300);
+  }, 3000);
+}
+
+// Добавление товара в корзину
+function addToCart(productId) {
+  // Получаем текущую корзину
+  let cart = JSON.parse(localStorage.getItem('cart')) || [];
+  
+  // Находим продукт (это нужно будет реализовать в catalog.html)
+  // В этом примере используем фиктивные данные
+  const product = {
+    id: productId,
+    name: `Кондиционер ${productId}`,
+    price: 850,
+    installationPrice: 400,
+    image: 'https://readdy.ai/api/search-image?query=air%20conditioner&width=400&height=300',
+    quantity: 1
+  };
+  
+  // Проверяем, есть ли товар уже в корзине
+  const existingItem = cart.find(item => item.id === productId);
+  
+  if (existingItem) {
+    // Увеличиваем количество
+    existingItem.quantity += 1;
+  } else {
+    // Добавляем новый товар
+    cart.push(product);
+  }
+  
+  // Сохраняем в localStorage
+  localStorage.setItem('cart', JSON.stringify(cart));
+  
+  // Обновляем счетчик
+  updateCartCount();
+  
+  // Показываем уведомление
+  showCartNotification(product.name);
+}
+
 // Инициализация при загрузке
-document.addEventListener('DOMContentLoaded', updateCartCount);
+document.addEventListener('DOMContentLoaded', function() {
+  updateCartCount();
+  
+  // Добавляем обработчики для кнопок "В корзину"
+  document.querySelectorAll('.add-to-cart-btn').forEach(btn => {
+    btn.addEventListener('click', function() {
+      const productId = this.dataset.productId;
+      addToCart(productId);
+    });
+  });
+});
+
+// Функция для очистки корзины
+function clearCart() {
+  if (confirm('Вы уверены, что хотите очистить корзину?')) {
+    localStorage.removeItem('cart');
+    updateCartCount();
+    // Перезагрузка страницы корзины, если мы на ней
+    if (window.location.pathname.includes('cart.html')) {
+      window.location.reload();
+    }
+  }
+}
+
+// Функция для удаления товара из корзины
+function removeFromCart(productId) {
+  let cart = JSON.parse(localStorage.getItem('cart')) || [];
+  cart = cart.filter(item => item.id !== productId);
+  localStorage.setItem('cart', JSON.stringify(cart));
+  updateCartCount();
+}
+
+// Функция для изменения количества товара
+function updateCartQuantity(productId, change) {
+  let cart = JSON.parse(localStorage.getItem('cart')) || [];
+  const itemIndex = cart.findIndex(item => item.id === productId);
+  
+  if (itemIndex !== -1) {
+    cart[itemIndex].quantity += change;
+    
+    if (cart[itemIndex].quantity <= 0) {
+      cart.splice(itemIndex, 1);
+    }
+    
+    localStorage.setItem('cart', JSON.stringify(cart));
+    updateCartCount();
+  }
+}
  </script>
 </body>
 </html>
