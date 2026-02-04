@@ -716,6 +716,17 @@
   <div id="content">
 
     <!-- Навигация с обновленными стилями -->
+<div class="hidden md:flex space-x-2">
+  <!-- Существующие ссылки... -->
+  <a href="catalog.html" class="nav-link">
+    <i class="ri-store-line mr-2"></i>Каталог
+  </a>
+  <a href="cart.html" class="nav-link relative">
+    <i class="ri-shopping-cart-line mr-2"></i>Корзина
+    <span id="cart-count" class="cart-badge">0</span>
+  </a>
+  <!-- Остальные ссылки... -->
+</div>
     <nav class="glass-effect shadow-lg py-4 px-4 sm:px-6 fixed w-full z-50 border-b border-white/20">
       <div class="max-w-7xl mx-auto flex justify-between items-center">
         <div class="flex items-center">
@@ -1600,3 +1611,16 @@
   </script>
 </body>
 </html>
+// В конце script в index.html добавьте:
+// Обновление счетчика корзины
+function updateCartCount() {
+  const cart = JSON.parse(localStorage.getItem('cart')) || [];
+  const totalItems = cart.reduce((sum, item) => sum + item.quantity, 0);
+  const cartCount = document.getElementById('cart-count');
+  if (cartCount) {
+    cartCount.textContent = totalItems;
+  }
+}
+
+// Инициализация при загрузке
+document.addEventListener('DOMContentLoaded', updateCartCount);
