@@ -1498,11 +1498,13 @@
     function updateCartBadge() {
       const count = cart.reduce((acc, item) => acc + item.quantity, 0);
       const badge = document.getElementById('cart-count');
-      if (count > 0) {
-        badge.classList.remove('hidden');
-        badge.textContent = count;
-      } else {
-        badge.classList.add('hidden');
+      if (badge) {
+        if (count > 0) {
+          badge.classList.remove('hidden');
+          badge.textContent = count;
+        } else {
+          badge.classList.add('hidden');
+        }
       }
     }
 
@@ -1595,6 +1597,7 @@
 
     function addCalculatorToCart() {
       const modelSelect = document.getElementById('model');
+      if (!modelSelect) return;
       const modelText = modelSelect.options[modelSelect.selectedIndex].text;
       const length = document.getElementById('length').value;
       const demontage = document.getElementById('demontage').checked ? ' + демонтаж' : '';
@@ -1617,8 +1620,10 @@
 
     function toggleCartModal() {
       const modal = document.getElementById('cart-modal');
-      renderCartItems();
-      modal.style.display = 'flex';
+      if (modal) {
+        renderCartItems();
+        modal.style.display = 'flex';
+      }
     }
 
     function renderCartItems() {
@@ -1627,7 +1632,7 @@
       if (!container) return;
       if (cart.length === 0) {
         container.innerHTML = '<p class="text-gray-500 text-center">Корзина пуста</p>';
-        totalSpan.textContent = '0 BYN';
+        if (totalSpan) totalSpan.textContent = '0 BYN';
         return;
       }
       let html = '';
@@ -1650,7 +1655,7 @@
         `;
       });
       container.innerHTML = html;
-      totalSpan.textContent = total + ' BYN';
+      if (totalSpan) totalSpan.textContent = total + ' BYN';
     }
 
     function changeQuantity(id, delta) {
@@ -1847,7 +1852,9 @@
 
     function toggleFilterCollapse(el) {
       const content = el.nextElementSibling;
-      content.style.display = content.style.display === 'none' ? 'block' : 'none';
+      if (content) {
+        content.style.display = content.style.display === 'none' ? 'block' : 'none';
+      }
     }
 
     // Калькулятор
@@ -1872,17 +1879,21 @@
         return total;
       }
 
-      modelSelect.addEventListener('change', calculateTotal);
-      decreaseBtn.addEventListener('click', () => {
-        if (parseInt(lengthInput.value) > 3) {
-          lengthInput.value = parseInt(lengthInput.value) - 1;
+      if (modelSelect) modelSelect.addEventListener('change', calculateTotal);
+      if (decreaseBtn) {
+        decreaseBtn.addEventListener('click', () => {
+          if (parseInt(lengthInput.value) > 3) {
+            lengthInput.value = parseInt(lengthInput.value) - 1;
+            calculateTotal();
+          }
+        });
+      }
+      if (increaseBtn) {
+        increaseBtn.addEventListener('click', () => {
+          lengthInput.value = parseInt(lengthInput.value) + 1;
           calculateTotal();
-        }
-      });
-      increaseBtn.addEventListener('click', () => {
-        lengthInput.value = parseInt(lengthInput.value) + 1;
-        calculateTotal();
-      });
+        });
+      }
       checkboxes.forEach(checkbox => checkbox.addEventListener('change', calculateTotal));
       calculateTotal();
     });
@@ -1895,14 +1906,20 @@
     checkAdminHash();
 
     // Слайдер цены
-    document.getElementById('priceRange').addEventListener('input', function(e) {
-      document.getElementById('maxPrice').value = e.target.value;
-      filterProducts();
-    });
-    document.getElementById('maxPrice').addEventListener('change', function(e) {
-      document.getElementById('priceRange').value = e.target.value;
-      filterProducts();
-    });
+    const priceRange = document.getElementById('priceRange');
+    const maxPrice = document.getElementById('maxPrice');
+    if (priceRange) {
+      priceRange.addEventListener('input', function(e) {
+        if (maxPrice) maxPrice.value = e.target.value;
+        filterProducts();
+      });
+    }
+    if (maxPrice) {
+      maxPrice.addEventListener('change', function(e) {
+        if (priceRange) priceRange.value = e.target.value;
+        filterProducts();
+      });
+    }
 
     // Скрыть модалки при клике вне
     window.addEventListener('click', function(event) {
