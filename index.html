@@ -431,7 +431,7 @@
       background: white;
       padding: 2rem;
       border-radius: 12px;
-      max-width: 500px;
+      max-width: 600px;
       width: 90%;
       max-height: 80vh;
       overflow-y: auto;
@@ -674,6 +674,7 @@
       -webkit-line-clamp: 2;
       -webkit-box-orient: vertical;
       overflow: hidden;
+      min-height: 3rem;
     }
 
     @media (max-width: 768px) {
@@ -854,7 +855,21 @@
         <div class="flex flex-col lg:flex-row gap-8">
           <!-- Фильтры (сайдбар) -->
           <div class="lg:w-1/4 bg-gray-50 p-6 rounded-lg shadow-card h-fit sticky top-24">
-            <h3 class="text-xl font-bold mb-4">Фильтры</h3>
+            <!-- Кнопка Каталог с возможностью изменения названия -->
+            <div class="filter-section">
+              <div class="filter-section-title" onclick="toggleFilterCollapse(this)">
+                <span id="catalog-title" ondblclick="editCatalogTitle()" class="text-xl font-bold cursor-pointer">Каталог</span>
+                <i class="ri-arrow-down-s-line"></i>
+              </div>
+              <div class="filter-collapse space-y-1">
+                <div class="filter-option"><a href="#" class="text-primary hover:underline">Все товары</a></div>
+                <div class="filter-option"><a href="#" class="text-gray-700 hover:text-primary">Новинки</a></div>
+                <div class="filter-option"><a href="#" class="text-gray-700 hover:text-primary">Хиты продаж</a></div>
+                <div class="filter-option"><a href="#" class="text-gray-700 hover:text-primary">Распродажа</a></div>
+              </div>
+            </div>
+            
+            <h3 class="text-xl font-bold mb-4 mt-4">Фильтры</h3>
             
             <!-- Площадь помещения -->
             <div class="filter-section">
@@ -985,6 +1000,23 @@
           <input type="text" id="order-name" placeholder="ФИО *" class="w-full border px-3 py-2 rounded mb-2">
           <input type="tel" id="order-phone" placeholder="Телефон *" class="w-full border px-3 py-2 rounded mb-2">
           <input type="text" id="order-address" placeholder="Адрес доставки *" class="w-full border px-3 py-2 rounded mb-3">
+          
+          <!-- Способ оплаты -->
+          <div class="mb-3">
+            <label class="block text-gray-700 font-medium mb-2">Способ оплаты:</label>
+            <div class="flex gap-4">
+              <label class="flex items-center">
+                <input type="radio" name="payment" value="Наличные" checked class="mr-2"> Наличные
+              </label>
+              <label class="flex items-center">
+                <input type="radio" name="payment" value="Карта" class="mr-2"> Карта
+              </label>
+              <label class="flex items-center">
+                <input type="radio" name="payment" value="Юр.лицо" class="mr-2"> Юр.лицо
+              </label>
+            </div>
+          </div>
+          
           <div class="flex gap-2">
             <button onclick="checkoutCart()" class="flex-1 gradient-bg text-white px-4 py-2 rounded-button btn-animate">Оформить заказ</button>
             <button onclick="clearCart()" class="flex-1 bg-gray-200 text-gray-800 px-4 py-2 rounded-button btn-animate">Очистить</button>
@@ -1011,17 +1043,28 @@
           <input type="password" id="admin-pass" placeholder="Новый пароль" class="border px-3 py-2 mr-2 rounded">
           <button onclick="changeAdminCredentials()" class="bg-primary text-white px-4 py-2 rounded-button">Сохранить</button>
         </div>
+
+        <!-- Быстрый поиск товаров -->
+        <div class="mb-4">
+          <input type="text" id="admin-search" placeholder="🔍 Быстрый поиск товаров..." class="w-full border px-4 py-2 rounded-lg" onkeyup="filterAdminProducts()">
+        </div>
+
         <div class="grid md:grid-cols-2 gap-8">
           <!-- Управление товарами -->
           <div>
             <h3 class="text-xl font-bold mb-4">Товары</h3>
             <button onclick="addProductForm()" class="mb-4 bg-primary text-white px-4 py-2 rounded-button btn-animate">+ Добавить товар</button>
-            <div id="admin-product-list" class="space-y-2"></div>
+            <div id="admin-product-list" class="space-y-2 max-h-96 overflow-y-auto"></div>
           </div>
           <!-- Заказы -->
           <div>
             <h3 class="text-xl font-bold mb-4">Заказы</h3>
-            <div id="admin-orders-list" class="space-y-2"></div>
+            <div id="admin-orders-list" class="space-y-2 max-h-96 overflow-y-auto"></div>
+            <div class="mt-4 p-4 bg-blue-50 rounded">
+              <h4 class="font-bold">Статистика заказов:</h4>
+              <p>Всего заказов: <span id="total-orders">0</span></p>
+              <p>Общая сумма: <span id="total-amount">0</span> BYN</p>
+            </div>
           </div>
         </div>
       </div>
@@ -1048,13 +1091,16 @@
         <div class="bg-white rounded-lg shadow-hover overflow-hidden max-w-3xl mx-auto border border-gray-100">
           <div class="p-8">
             <div class="mb-6">
-              <label for="model" class="block text-gray-700 font-medium mb-2">Модель кондиционера</label>
+              <label for="model" class="block text-gray-700 font-medium mb-2">Выберите услугу *</label>
               <div class="relative">
-                <select id="model" class="w-full px-4 py-3 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-primary/50 focus:border-primary appearance-none pr-8">
-                  <option value="400">Модель 7,9(до 30м²) 400 BYN</option>
-                  <option value="430">Модель 12(35м²) 430 BYN</option>
-                  <option value="500">Модель 18(50м²) 500 BYN</option>
-                  <option value="550">Модель 24(70м²) 550 BYN</option>
+                <select id="model" class="w-full px-4 py-3 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-primary/50 focus:border-primary appearance-none pr-8" required>
+                  <option value="">-- Выберите услугу --</option>
+                  <option value="400">Монтаж кондиционера (до 30м²) 400 BYN</option>
+                  <option value="430">Монтаж кондиционера (35м²) 430 BYN</option>
+                  <option value="500">Монтаж кондиционера (50м²) 500 BYN</option>
+                  <option value="550">Монтаж кондиционера (70м²) 550 BYN</option>
+                  <option value="100">Только демонтаж 100 BYN</option>
+                  <option value="100">Только обслуживание 100 BYN</option>
                   <option value="0">Модель 42 и выше (индивидуально)</option>
                 </select>
                 <div class="absolute inset-y-0 right-0 flex items-center px-2 pointer-events-none">
@@ -1064,7 +1110,7 @@
                 </div>
               </div>
             </div>
-            <div class="mb-6">
+            <div class="mb-6" id="length-section">
               <label for="length" class="block text-gray-700 font-medium mb-2">Длина трассы (метры)</label>
               <div class="flex items-center">
                 <button id="decrease-length" class="px-4 py-2 bg-gray-200 rounded-l-lg hover:bg-gray-300 focus:outline-none btn-animate">
@@ -1105,7 +1151,7 @@
             <div class="bg-gradient-to-r from-gray-50 to-primary/5 p-6 rounded-lg border border-primary/10">
               <div class="flex justify-between items-center">
                 <span class="text-lg font-medium text-gray-700">Итоговая стоимость:</span>
-                <span id="total-price" class="text-2xl font-bold text-primary">400 BYN</span>
+                <span id="total-price" class="text-2xl font-bold text-primary">0 BYN</span>
               </div>
             </div>
             <div class="mt-6">
@@ -1431,6 +1477,7 @@
               <span class="text-2xl sm:text-3xl font-['Pacifico'] text-white mr-2">AirComfort</span>
             </div>
             <p class="text-gray-400 mt-2">Профессиональная установка кондиционеров в Гомеле</p>
+            <p class="text-gray-500 text-sm mt-2">Общество с ограниченной ответственностью "ТеплоПрайм" УНП 491393506</p>
           </div>
           <div class="flex flex-col items-center md:items-end">
             <p class="text-gray-400 mb-2">© 2026 AirComfort. Все права защищены.</p>
@@ -1459,12 +1506,84 @@
 
     // ========== КАТАЛОГ, КОРЗИНА, АДМИНКА ==========
     let products = [
-      { id: 1, name: 'Ballu BSO-07HN1', price: 850, area: 'до 20', category: 'Настенные', type: 'Настенный', inverter: 'Нет', heat: '-7', description: 'Надежный кондиционер для небольших помещений. Энергосберегающий режим.', image: 'https://via.placeholder.com/200x150?text=Ballu+BSO-07HN1' },
-      { id: 2, name: 'Electrolux EACS-07HAT/N3', price: 1100, area: '21-29', category: 'Настенные', type: 'Настенный', inverter: 'Да', heat: '-15', description: 'Инверторная модель с низким уровнем шума. Идеально для спальни.', image: 'https://via.placeholder.com/200x150?text=Electrolux' },
-      { id: 3, name: 'LG P09EP', price: 1450, area: '30-39', category: 'Настенные', type: 'Настенный', inverter: 'Да', heat: '-10', description: 'Современный дизайн, Wi-Fi управление, мощный обогрев.', image: 'https://via.placeholder.com/200x150?text=LG+P09EP' },
-      { id: 4, name: 'Mitsubishi MSZ-LN25VG', price: 2450, area: '40-49', category: 'Настенные', type: 'Настенный', inverter: 'Да', heat: '-20', description: 'Премиум-класс, максимальная энергоэффективность, тихая работа.', image: 'https://via.placeholder.com/200x150?text=Mitsubishi' },
-      { id: 5, name: 'Канальный кондиционер', price: 3200, area: '70-99', category: 'Канальные', type: 'Канальный', inverter: 'Да', heat: '-25', description: 'Для скрытого монтажа, равномерное распределение воздуха.', image: 'https://via.placeholder.com/200x150?text=Duct' },
-      { id: 6, name: 'Мобильный кондиционер', price: 620, area: 'до 20', category: 'Мобильные', type: 'Мобильный', inverter: 'Нет', heat: '-7', description: 'Мобильный моноблок, не требует установки. Подходит для аренды.', image: 'https://via.placeholder.com/200x150?text=Mobile' },
+      { 
+        id: 1, 
+        name: 'Ballu BSO-07HN1', 
+        price: 850, 
+        area: 'до 20', 
+        category: 'Настенные', 
+        type: 'Настенный', 
+        inverter: 'Нет', 
+        heat: '-7', 
+        description: 'Надежный кондиционер для небольших помещений. Энергосберегающий режим.',
+        fullDescription: 'Ballu BSO-07HN1 - это надежная сплит-система для небольших помещений до 20 м². Оснащена энергосберегающим режимом, низким уровнем шума и простым управлением. Идеально подходит для спальни или небольшого офиса. Гарантия 5 лет.',
+        image: 'https://via.placeholder.com/200x150?text=Ballu+BSO-07HN1' 
+      },
+      { 
+        id: 2, 
+        name: 'Electrolux EACS-07HAT/N3', 
+        price: 1100, 
+        area: '21-29', 
+        category: 'Настенные', 
+        type: 'Настенный', 
+        inverter: 'Да', 
+        heat: '-15', 
+        description: 'Инверторная модель с низким уровнем шума. Идеально для спальни.',
+        fullDescription: 'Electrolux EACS-07HAT/N3 - инверторный кондиционер с низким уровнем шума (22 дБ) и высокой энергоэффективностью. Обеспечивает быстрое охлаждение и обогрев, поддерживает заданную температуру с точностью до 0.5°C. Имеет функцию самодиагностики и автоматического перезапуска.',
+        image: 'https://via.placeholder.com/200x150?text=Electrolux' 
+      },
+      { 
+        id: 3, 
+        name: 'LG P09EP', 
+        price: 1450, 
+        area: '30-39', 
+        category: 'Настенные', 
+        type: 'Настенный', 
+        inverter: 'Да', 
+        heat: '-10', 
+        description: 'Современный дизайн, Wi-Fi управление, мощный обогрев.',
+        fullDescription: 'LG P09EP - современный кондиционер с Wi-Fi управлением через приложение. Имеет стильный дизайн, мощный обогрев до -10°C, низкое энергопотребление. Оснащен плазменным фильтром для очистки воздуха от аллергенов и бактерий.',
+        image: 'https://via.placeholder.com/200x150?text=LG+P09EP' 
+      },
+      { 
+        id: 4, 
+        name: 'Mitsubishi MSZ-LN25VG', 
+        price: 2450, 
+        area: '40-49', 
+        category: 'Настенные', 
+        type: 'Настенный', 
+        inverter: 'Да', 
+        heat: '-20', 
+        description: 'Премиум-класс, максимальная энергоэффективность, тихая работа.',
+        fullDescription: 'Mitsubishi MSZ-LN25VG - премиальная сплит-система с максимальной энергоэффективностью класса A+++. Оснащена 3D-датчиком движения для направления потока воздуха, имеет уровень шоса всего 19 дБ. Работает на обогрев до -20°C. Управление со смартфона.',
+        image: 'https://via.placeholder.com/200x150?text=Mitsubishi' 
+      },
+      { 
+        id: 5, 
+        name: 'Канальный кондиционер', 
+        price: 3200, 
+        area: '70-99', 
+        category: 'Канальные', 
+        type: 'Канальный', 
+        inverter: 'Да', 
+        heat: '-25', 
+        description: 'Для скрытого монтажа, равномерное распределение воздуха.',
+        fullDescription: 'Канальный кондиционер предназначен для скрытого монтажа за подвесным потолком. Обеспечивает равномерное распределение воздуха по помещению. Идеально подходит для офисов, магазинов, ресторанов. Мощность достаточна для помещений до 100 м².',
+        image: 'https://via.placeholder.com/200x150?text=Duct' 
+      },
+      { 
+        id: 6, 
+        name: 'Мобильный кондиционер', 
+        price: 620, 
+        area: 'до 20', 
+        category: 'Мобильные', 
+        type: 'Мобильный', 
+        inverter: 'Нет', 
+        heat: '-7', 
+        description: 'Мобильный моноблок, не требует установки. Подходит для аренды.',
+        fullDescription: 'Мобильный кондиционер - идеальное решение для арендованных помещений или там, где невозможна установка стационарной сплит-системы. Не требует монтажа, достаточно вывести гибкий воздуховод в окно. Прост в перемещении и обслуживании.',
+        image: 'https://via.placeholder.com/200x150?text=Mobile' 
+      },
     ];
 
     let cart = [];
@@ -1482,9 +1601,11 @@
     function loadOrders() {
       const stored = localStorage.getItem('aircom_orders');
       if (stored) orders = JSON.parse(stored);
+      updateOrderStats();
     }
     function saveOrders() {
       localStorage.setItem('aircom_orders', JSON.stringify(orders));
+      updateOrderStats();
     }
     function loadCart() {
       const stored = localStorage.getItem('aircom_cart');
@@ -1505,6 +1626,16 @@
         } else {
           badge.classList.add('hidden');
         }
+      }
+    }
+    
+    function updateOrderStats() {
+      const totalOrders = document.getElementById('total-orders');
+      const totalAmount = document.getElementById('total-amount');
+      if (totalOrders && totalAmount) {
+        totalOrders.textContent = orders.length;
+        const sum = orders.reduce((acc, order) => acc + order.total, 0);
+        totalAmount.textContent = sum;
       }
     }
 
@@ -1537,7 +1668,7 @@
       productArray.forEach(p => {
         const card = document.createElement('div');
         card.className = 'bg-white rounded-lg shadow-card overflow-hidden product-card';
-        card.onclick = () => openProductModal(p.id);
+        card.onclick = () => openProductPage(p.id);
         card.innerHTML = `
           <img src="${p.image}" alt="${p.name}" class="w-full h-40 object-cover">
           <div class="p-4">
@@ -1551,7 +1682,9 @@
       });
     }
 
-    function openProductModal(id) {
+    // Открытие отдельной страницы товара
+    function openProductPage(id) {
+      window.location.hash = `product-${id}`;
       const prod = products.find(p => p.id === id);
       if (!prod) return;
       const modal = document.getElementById('product-modal');
@@ -1559,7 +1692,7 @@
         <img src="${prod.image}" alt="${prod.name}" class="w-full h-48 object-cover rounded mb-4">
         <h3 class="text-2xl font-bold mb-2">${prod.name}</h3>
         <p class="text-primary text-xl font-bold mb-2">${prod.price} BYN</p>
-        <p class="text-gray-700 mb-4">${prod.description || 'Нет описания'}</p>
+        <p class="text-gray-700 mb-4">${prod.fullDescription || prod.description || 'Нет описания'}</p>
         <ul class="text-sm text-gray-600 space-y-1">
           <li><span class="font-medium">Площадь:</span> ${prod.area} м²</li>
           <li><span class="font-medium">Категория:</span> ${prod.category}</li>
@@ -1570,6 +1703,14 @@
         <button onclick="addToCart(${prod.id})" class="mt-4 gradient-bg text-white px-4 py-2 rounded-button btn-animate w-full">В корзину</button>
       `;
       modal.style.display = 'flex';
+    }
+
+    // Проверка хеша при загрузке
+    function checkProductHash() {
+      if (window.location.hash.startsWith('#product-')) {
+        const id = parseInt(window.location.hash.replace('#product-', ''));
+        openProductPage(id);
+      }
     }
 
     function resetFilters() {
@@ -1598,6 +1739,10 @@
     function addCalculatorToCart() {
       const modelSelect = document.getElementById('model');
       if (!modelSelect) return;
+      if (!modelSelect.value) {
+        alert('Пожалуйста, выберите услугу');
+        return;
+      }
       const modelText = modelSelect.options[modelSelect.selectedIndex].text;
       const length = document.getElementById('length').value;
       const demontage = document.getElementById('demontage').checked ? ' + демонтаж' : '';
@@ -1606,16 +1751,16 @@
       
       const calcItem = {
         id: 'calc-' + Date.now(),
-        name: 'Монтаж: ' + modelText + demontage + service,
-        price: parseInt(totalPrice) || 400,
+        name: modelText + demontage + service,
+        price: parseInt(totalPrice) || 100,
         quantity: 1,
-        image: 'https://via.placeholder.com/200x150?text=Installation'
+        image: 'https://via.placeholder.com/200x150?text=Service'
       };
       const existing = cart.find(item => item.id === calcItem.id);
       if (existing) existing.quantity++;
       else cart.push(calcItem);
       saveCart();
-      alert('Услуга монтажа добавлена в корзину');
+      alert('Услуга добавлена в корзину');
     }
 
     function toggleCartModal() {
@@ -1691,6 +1836,7 @@
       const name = document.getElementById('order-name').value;
       const phone = document.getElementById('order-phone').value;
       const address = document.getElementById('order-address').value;
+      const payment = document.querySelector('input[name="payment"]:checked')?.value || 'Наличные';
       
       if (!name || !phone || !address) {
         alert('Пожалуйста, заполните все поля');
@@ -1700,7 +1846,7 @@
       const total = cart.reduce((acc, i) => acc + i.price * i.quantity, 0);
       const order = {
         id: Date.now(),
-        customer: { name, phone, address },
+        customer: { name, phone, address, payment },
         items: [...cart],
         total: total,
         date: new Date().toLocaleString(),
@@ -1715,6 +1861,7 @@
       formData.append('name', name);
       formData.append('phone', phone);
       formData.append('address', address);
+      formData.append('payment', payment);
       formData.append('order', JSON.stringify(order));
       
       fetch('https://formspree.io/f/mrbkdwwe', {
@@ -1768,13 +1915,27 @@
       products.forEach(p => {
         list.innerHTML += `
           <div class="border p-2 rounded flex justify-between items-center">
-            <span>${p.name} - ${p.price} BYN</span>
+            <span>${p.name} - ${p.price} BYN (${p.category})</span>
             <div>
               <button onclick="editProduct(${p.id})" class="text-blue-600 mr-2"><i class="ri-edit-line"></i></button>
               <button onclick="deleteProduct(${p.id})" class="text-red-600"><i class="ri-delete-bin-line"></i></button>
             </div>
           </div>
         `;
+      });
+    }
+
+    function filterAdminProducts() {
+      const searchText = document.getElementById('admin-search').value.toLowerCase();
+      const list = document.getElementById('admin-product-list');
+      const items = list.getElementsByTagName('div');
+      Array.from(items).forEach(item => {
+        const text = item.textContent.toLowerCase();
+        if (text.includes(searchText)) {
+          item.style.display = 'flex';
+        } else {
+          item.style.display = 'none';
+        }
       });
     }
 
@@ -1790,11 +1951,13 @@
           <div class="border p-2 rounded">
             <p><strong>Заказ #${o.id}</strong> от ${o.date}</p>
             <p>Клиент: ${o.customer.name}, ${o.customer.phone}, ${o.customer.address}</p>
+            <p>Оплата: ${o.customer.payment || 'Наличные'}</p>
             <p>Сумма: ${o.total} BYN, статус: ${o.status}</p>
             <p>Товары: ${o.items.map(i => i.name + ' x' + i.quantity).join(', ')}</p>
           </div>
         `;
       });
+      updateOrderStats();
     }
 
     function addProductForm() {
@@ -1803,14 +1966,15 @@
       const price = parseFloat(prompt('Цена:'));
       if (isNaN(price)) return;
       const area = prompt('Площадь (до 20, 21-29, ...):');
-      const category = prompt('Категория (Настенные, Канальные, ...):');
-      const type = prompt('Тип (Настенный, Канальный, ...):');
+      const category = prompt('Категория (Настенные, Канальные, Мобильные, Кассетные, Мульти-сплит, Напольно-потолочные):');
+      const type = prompt('Тип (Настенный, Канальный, Кассетный, Мобильный, Напольно-потолочный):');
       const inverter = prompt('Инвертор (Да/Нет):');
       const heat = prompt('Обогрев (напр. -15):');
-      const description = prompt('Описание:');
+      const description = prompt('Краткое описание:');
+      const fullDescription = prompt('Полное описание (для отдельной страницы):');
       const image = prompt('Ссылка на изображение:') || 'https://via.placeholder.com/200x150?text=New';
       const newId = Math.max(...products.map(p => p.id), 0) + 1;
-      products.push({ id: newId, name, price, area, category, type, inverter, heat, description, image });
+      products.push({ id: newId, name, price, area, category, type, inverter, heat, description, fullDescription, image });
       saveProducts();
       renderAdminProducts();
       filterProducts();
@@ -1826,7 +1990,8 @@
       prod.type = prompt('Тип:', prod.type) || prod.type;
       prod.inverter = prompt('Инвертор:', prod.inverter) || prod.inverter;
       prod.heat = prompt('Обогрев:', prod.heat) || prod.heat;
-      prod.description = prompt('Описание:', prod.description) || prod.description;
+      prod.description = prompt('Краткое описание:', prod.description) || prod.description;
+      prod.fullDescription = prompt('Полное описание:', prod.fullDescription) || prod.fullDescription;
       prod.image = prompt('Ссылка на изображение:', prod.image) || prod.image;
       saveProducts();
       renderAdminProducts();
@@ -1857,6 +2022,15 @@
       }
     }
 
+    // Редактирование названия каталога
+    function editCatalogTitle() {
+      const titleSpan = document.getElementById('catalog-title');
+      const newTitle = prompt('Введите новое название каталога:', titleSpan.textContent);
+      if (newTitle) {
+        titleSpan.textContent = newTitle;
+      }
+    }
+
     // Калькулятор
     document.addEventListener('DOMContentLoaded', function() {
       const modelSelect = document.getElementById('model');
@@ -1865,8 +2039,13 @@
       const increaseBtn = document.getElementById('increase-length');
       const totalPrice = document.getElementById('total-price');
       const checkboxes = document.querySelectorAll('input[type="checkbox"]');
+      const lengthSection = document.getElementById('length-section');
 
       function calculateTotal() {
+        if (!modelSelect.value) {
+          totalPrice.textContent = '0 BYN';
+          return 0;
+        }
         const modelPrice = parseInt(modelSelect.value);
         const length = parseInt(lengthInput.value);
         const additionalLength = Math.max(0, length - 3);
@@ -1875,7 +2054,21 @@
         checkboxes.forEach(checkbox => {
           if (checkbox.checked) total += parseInt(checkbox.value);
         });
-        totalPrice.textContent = modelPrice === 0 ? 'По запросу' : total + ' BYN';
+        
+        // Если выбрана услуга без монтажа, скрываем длину трассы
+        if (modelSelect.value === '100' && modelSelect.options[modelSelect.selectedIndex].text.includes('Только')) {
+          lengthSection.style.display = 'none';
+          total = modelPrice;
+          checkboxes.forEach(checkbox => {
+            if (checkbox.checked && checkbox.id !== 'demontage' && checkbox.id !== 'service') {
+              total += parseInt(checkbox.value);
+            }
+          });
+        } else {
+          lengthSection.style.display = 'block';
+        }
+        
+        totalPrice.textContent = total + ' BYN';
         return total;
       }
 
@@ -1904,6 +2097,7 @@
     loadCart();
     filterProducts();
     checkAdminHash();
+    checkProductHash();
 
     // Слайдер цены
     const priceRange = document.getElementById('priceRange');
@@ -1927,6 +2121,9 @@
         event.target.style.display = 'none';
       }
     });
+    
+    // Следим за изменением хеша
+    window.addEventListener('hashchange', checkProductHash);
   </script>
 </body>
 </html>
