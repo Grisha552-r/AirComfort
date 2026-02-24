@@ -212,7 +212,7 @@
     /* Стили для навигации */
     .nav-link {
       position: relative;
-      padding: 8px 16px;
+      padding: 6px 12px;
       border-radius: 8px;
       transition: all 0.3s ease;
       color: #374151;
@@ -694,11 +694,11 @@
       display: none;
       flex-direction: column;
       cursor: pointer;
-      padding: 10px;
+      padding: 8px;
     }
     .hamburger-menu span {
-      width: 25px;
-      height: 3px;
+      width: 22px;
+      height: 2px;
       background-color: #333;
       margin: 2px 0;
       transition: 0.3s;
@@ -706,15 +706,15 @@
     .mobile-menu {
       display: none;
       position: fixed;
-      top: 70px;
+      top: 60px;
       left: 0;
       right: 0;
       background: white;
-      padding: 20px;
+      padding: 15px;
       box-shadow: 0 5px 15px rgba(0,0,0,0.2);
       z-index: 100;
       flex-direction: column;
-      gap: 10px;
+      gap: 8px;
     }
     .mobile-menu.active {
       display: flex;
@@ -744,9 +744,9 @@
       }
 
       .float-button {
-        width: 50px;
-        height: 50px;
-        font-size: 20px;
+        width: 45px;
+        height: 45px;
+        font-size: 18px;
       }
 
       .modal-content,
@@ -763,8 +763,8 @@
       }
 
       .nav-link {
-        padding: 6px 12px;
-        font-size: 14px;
+        padding: 4px 8px;
+        font-size: 13px;
         white-space: normal;
       }
       
@@ -775,7 +775,7 @@
         display: flex;
       }
       .cart-icon {
-        margin-right: 10px;
+        margin-right: 8px;
       }
       #product-grid {
         grid-template-columns: 1fr !important;
@@ -793,6 +793,7 @@
       }
       h1 {
         font-size: 1.8rem !important;
+        line-height: 1.2 !important;
       }
       h2 {
         font-size: 1.5rem !important;
@@ -812,6 +813,13 @@
       }
       .filter-sidebar.mobile-visible {
         display: block;
+      }
+      nav {
+        padding-top: 8px !important;
+        padding-bottom: 8px !important;
+      }
+      .pt-20 {
+        padding-top: 4rem !important;
       }
     }
   </style>
@@ -837,34 +845,34 @@
   <div id="content">
 
     <!-- Навигация -->
-    <nav class="glass-effect shadow-lg py-4 px-4 sm:px-6 fixed w-full z-50 border-b border-white/20">
+    <nav class="glass-effect shadow-lg py-3 px-4 sm:px-6 fixed w-full z-50 border-b border-white/20">
       <div class="max-w-7xl mx-auto flex justify-between items-center">
         <div class="flex items-center">
           <div class="mr-2 text-primary">
-            <div class="bg-gradient-to-br from-primary/20 to-primary/10 rounded-full p-2 shadow-lg">
-              <i class="ri-temp-cold-line text-2xl"></i>
+            <div class="bg-gradient-to-br from-primary/20 to-primary/10 rounded-full p-1.5 shadow-lg">
+              <i class="ri-temp-cold-line text-xl"></i>
             </div>
           </div>
-          <span class="text-2xl sm:text-3xl font-['Pacifico'] text-gradient flex items-center">AirComfort</span>
+          <span class="text-xl sm:text-2xl font-['Pacifico'] text-gradient flex items-center">AirComfort</span>
         </div>
         <div class="hidden md:flex space-x-2 desktop-menu">
           <button onclick="document.getElementById('catalog').scrollIntoView({behavior: 'smooth'})" class="nav-link">
-            <i class="ri-store-2-line mr-2"></i>Каталог
+            <i class="ri-store-2-line mr-1"></i>Каталог
           </button>
           <button onclick="document.getElementById('calculator').scrollIntoView({behavior: 'smooth'})" class="nav-link">
-            <i class="ri-calculator-line mr-2"></i>Расчет стоимости
+            <i class="ri-calculator-line mr-1"></i>Расчет стоимости
           </button>
           <button onclick="document.getElementById('contacts').scrollIntoView({behavior: 'smooth'})" class="nav-link">
-            <i class="ri-contacts-line mr-2"></i>Контакты
+            <i class="ri-contacts-line mr-1"></i>Контакты
           </button>
         </div>
-        <div class="flex items-center space-x-2">
-          <button onclick="toggleCartModal()" class="text-primary font-medium flex items-center bg-white/50 px-4 py-2 rounded-button hover:bg-white/70 transition-colors nav-link cart-icon">
-            <i class="ri-shopping-cart-line mr-2"></i>Корзина
+        <div class="flex items-center space-x-1">
+          <button onclick="toggleCartModal()" class="text-primary font-medium flex items-center bg-white/50 px-3 py-1.5 rounded-button hover:bg-white/70 transition-colors nav-link cart-icon">
+            <i class="ri-shopping-cart-line mr-1"></i>Корзина
             <span id="cart-count" class="cart-badge hidden">0</span>
           </button>
-          <a href="tel:+375291050694" class="text-primary font-medium flex items-center bg-white/50 px-4 py-2 rounded-button hover:bg-white/70 transition-colors nav-link">
-            <i class="ri-phone-line mr-2"></i>
+          <a href="tel:+375291050694" class="text-primary font-medium flex items-center bg-white/50 px-3 py-1.5 rounded-button hover:bg-white/70 transition-colors nav-link">
+            <i class="ri-phone-line mr-1"></i>
             +375 (29) 105-06-94
           </a>
           <!-- Гамбургер меню -->
@@ -890,16 +898,16 @@
     </nav>
 
     <!-- Главный экран -->
-    <section class="pt-20 sm:pt-24 pb-12 sm:pb-16 relative overflow-hidden" style="background-image: url('https://readdy.ai/api/search-image?query=Modern%20air%20conditioner%20unit%20mounted%20on%20a%20light%20wall%20with%20soft%20natural%20lighting%2C%20green%20plants%20visible%20in%20foreground%2C%20minimalist%20interior%20design%2C%20professional%20installation%2C%20high-quality%20air%20conditioning%20system%2C%20energy%20efficient%20cooling%20system%2C%20comfortable%20home%20environment&width=1600&height=800&seq=1&orientation=landscape'); background-size: cover; background-position: center right;">
+    <section class="pt-16 sm:pt-20 pb-10 sm:pb-12 relative overflow-hidden" style="background-image: url('https://readdy.ai/api/search-image?query=Modern%20air%20conditioner%20unit%20mounted%20on%20a%20light%20wall%20with%20soft%20natural%20lighting%2C%20green%20plants%20visible%20in%20foreground%2C%20minimalist%20interior%20design%2C%20professional%20installation%2C%20high-quality%20air%20conditioning%20system%2C%20energy%20efficient%20cooling%20system%2C%20comfortable%20home%20environment&width=1600&height=800&seq=1&orientation=landscape'); background-size: cover; background-position: center right;">
       <div class="absolute inset-0 bg-gradient-to-r from-white via-white/95 to-white/30"></div>
       <div class="absolute inset-0 bg-gradient-to-b from-transparent via-transparent to-white/20"></div>
       <div class="max-w-7xl mx-auto px-4 sm:px-6 relative z-10">
         <div class="max-w-2xl">
-          <h1 class="text-3xl sm:text-4xl md:text-5xl font-bold text-gray-900 mb-4 sm:mb-6 leading-tight">Профессиональная установка и продажа <span class="text-gradient">кондиционеров</span> с гарантией!</h1>
-          <p class="text-base sm:text-lg text-gray-700 mb-6 sm:mb-8 leading-relaxed">Бесплатный выезд замерщика, точный расчет стоимости и монтаж за 1 день! Мы предлагаем полный спектр услуг по установке климатического оборудования с гарантией качества.</p>
-          <div class="flex flex-col sm:flex-row gap-4 items-start">
-            <button onclick="document.getElementById('calculator').scrollIntoView({behavior: 'smooth'})" class="gradient-bg text-white px-8 py-3 rounded-button font-medium hover:shadow-glow transition-all duration-300 shadow-lg shadow-primary/20 whitespace-nowrap flex items-center justify-center btn-animate">
-              <div class="w-5 h-5 flex items-center justify-center mr-2">
+          <h1 class="text-2xl sm:text-3xl md:text-4xl font-bold text-gray-900 mb-3 sm:mb-4 leading-tight">Профессиональная установка и продажа <span class="text-gradient">кондиционеров</span> с гарантией!</h1>
+          <p class="text-sm sm:text-base text-gray-700 mb-4 sm:mb-6 leading-relaxed">Бесплатный выезд замерщика, точный расчет стоимости и монтаж за 1 день! Мы предлагаем полный спектр услуг по установке климатического оборудования с гарантией качества.</p>
+          <div class="flex flex-col sm:flex-row gap-3 items-start">
+            <button onclick="document.getElementById('calculator').scrollIntoView({behavior: 'smooth'})" class="gradient-bg text-white px-6 py-2.5 rounded-button font-medium hover:shadow-glow transition-all duration-300 shadow-lg shadow-primary/20 whitespace-nowrap flex items-center justify-center btn-animate text-sm sm:text-base">
+              <div class="w-4 h-4 flex items-center justify-center mr-2">
                 <i class="ri-calculator-line"></i>
               </div>
               Рассчитать стоимость
@@ -910,73 +918,73 @@
     </section>
 
     <!-- Наши услуги -->
-    <section id="services" class="py-16 bg-gradient-to-b from-gray-50 to-white">
+    <section id="services" class="py-12 sm:py-16 bg-gradient-to-b from-gray-50 to-white">
       <div class="max-w-7xl mx-auto px-6">
-        <h2 class="text-3xl font-bold text-center text-gray-900 mb-12">Наши услуги</h2>
-        <div class="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 gap-6 sm:gap-8">
+        <h2 class="text-2xl sm:text-3xl font-bold text-center text-gray-900 mb-8 sm:mb-12">Наши услуги</h2>
+        <div class="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 gap-4 sm:gap-6">
           <!-- Услуга 1 -->
           <div class="bg-white rounded-lg shadow-card overflow-hidden card-hover">
-            <div class="h-48 bg-gradient-to-br from-primary/10 to-primary/5 flex items-center justify-center relative">
+            <div class="h-40 sm:h-48 bg-gradient-to-br from-primary/10 to-primary/5 flex items-center justify-center relative">
               <div class="absolute inset-0 bg-gradient-to-br from-transparent to-primary/5"></div>
-              <div class="w-24 h-24 flex items-center justify-center text-primary relative z-10">
-                <i class="ri-install-line ri-4x"></i>
+              <div class="w-20 h-20 sm:w-24 sm:h-24 flex items-center justify-center text-primary relative z-10">
+                <i class="ri-install-line ri-3x sm:ri-4x"></i>
               </div>
             </div>
-            <div class="p-6">
-              <h3 class="text-xl font-bold text-gray-900 mb-3">Установка кондиционеров</h3>
-              <p class="text-gray-700 mb-4">Профессиональный монтаж кондиционеров любого типа с гарантией качества работы. Быстро, качественно, с соблюдением всех норм.</p>
-              <div class="flex justify-between items-center pt-4 border-t border-gray-100">
-                <span class="text-gray-600">Стоимость:</span>
-                <span class="text-xl font-bold text-primary">от 400 BYN</span>
+            <div class="p-4 sm:p-6">
+              <h3 class="text-lg sm:text-xl font-bold text-gray-900 mb-2">Установка кондиционеров</h3>
+              <p class="text-sm sm:text-base text-gray-700 mb-3">Профессиональный монтаж кондиционеров любого типа с гарантией качества работы.</p>
+              <div class="flex justify-between items-center pt-3 border-t border-gray-100">
+                <span class="text-sm sm:text-base text-gray-600">Стоимость:</span>
+                <span class="text-lg sm:text-xl font-bold text-primary">от 400 BYN</span>
               </div>
             </div>
           </div>
           <!-- Услуга 2 -->
           <div class="bg-white rounded-lg shadow-card overflow-hidden card-hover">
-            <div class="h-48 bg-gradient-to-br from-secondary/10 to-secondary/5 flex items-center justify-center relative">
+            <div class="h-40 sm:h-48 bg-gradient-to-br from-secondary/10 to-secondary/5 flex items-center justify-center relative">
               <div class="absolute inset-0 bg-gradient-to-br from-transparent to-secondary/5"></div>
-              <div class="w-24 h-24 flex items-center justify-center text-secondary relative z-10">
-                <i class="ri-tools-line ri-4x"></i>
+              <div class="w-20 h-20 sm:w-24 sm:h-24 flex items-center justify-center text-secondary relative z-10">
+                <i class="ri-tools-line ri-3x sm:ri-4x"></i>
               </div>
             </div>
-            <div class="p-6">
-              <h3 class="text-xl font-bold text-gray-900 mb-3">Демонтаж оборудования</h3>
-              <p class="text-gray-700 mb-4">Аккуратный демонтаж старых кондиционеров с сохранением безопасных стен и отделок. Быстро и без пыли.</p>
-              <div class="flex justify-between items-center pt-4 border-t border-gray-100">
-                <span class="text-gray-600">Стоимость:</span>
-                <span class="text-xl font-bold text-primary">100 BYN</span>
+            <div class="p-4 sm:p-6">
+              <h3 class="text-lg sm:text-xl font-bold text-gray-900 mb-2">Демонтаж оборудования</h3>
+              <p class="text-sm sm:text-base text-gray-700 mb-3">Аккуратный демонтаж старых кондиционеров с сохранением стен.</p>
+              <div class="flex justify-between items-center pt-3 border-t border-gray-100">
+                <span class="text-sm sm:text-base text-gray-600">Стоимость:</span>
+                <span class="text-lg sm:text-xl font-bold text-primary">100 BYN</span>
               </div>
             </div>
           </div>
           <!-- Услуга 3 -->
           <div class="bg-white rounded-lg shadow-card overflow-hidden card-hover">
-            <div class="h-48 bg-gradient-to-br from-accent/10 to-accent/5 flex items-center justify-center relative">
+            <div class="h-40 sm:h-48 bg-gradient-to-br from-accent/10 to-accent/5 flex items-center justify-center relative">
               <div class="absolute inset-0 bg-gradient-to-br from-transparent to-accent/5"></div>
-              <div class="w-24 h-24 flex items-center justify-center text-accent relative z-10">
-                <i class="ri-service-line ri-4x"></i>
+              <div class="w-20 h-20 sm:w-24 sm:h-24 flex items-center justify-center text-accent relative z-10">
+                <i class="ri-service-line ri-3x sm:ri-4x"></i>
               </div>
             </div>
-            <div class="p-6">
-              <h3 class="text-xl font-bold text-gray-900 mb-3">Обслуживание кондиционера</h3>
-              <p class="text-gray-700 mb-4">Регулярное техническое обслуживание, чистка, дезинфекция и заправка фреоном. Продлите срок службы вашего кондиционера!</p>
-              <div class="flex justify-between items-center pt-4 border-t border-gray-100">
-                <span class="text-gray-600">Стоимость:</span>
-                <span class="text-xl font-bold text-primary">100 BYN</span>
+            <div class="p-4 sm:p-6">
+              <h3 class="text-lg sm:text-xl font-bold text-gray-900 mb-2">Обслуживание кондиционера</h3>
+              <p class="text-sm sm:text-base text-gray-700 mb-3">Регулярное ТО, чистка, дезинфекция и заправка фреоном.</p>
+              <div class="flex justify-between items-center pt-3 border-t border-gray-100">
+                <span class="text-sm sm:text-base text-gray-600">Стоимость:</span>
+                <span class="text-lg sm:text-xl font-bold text-primary">100 BYN</span>
               </div>
             </div>
           </div>
         </div>
-        <div class="mt-8 p-6 bg-gradient-to-r from-primary/5 to-secondary/5 rounded-lg border border-primary/20 shadow-card">
-          <p class="text-gray-700">Регулярное обслуживание кондиционера не только продлевает срок его службы, но и обеспечивает эффективную работу, экономит электроэнергию и поддерживает чистоту воздуха в помещении. Рекомендуем проводить профилактику не реже 1 раза в год.</p>
+        <div class="mt-6 sm:mt-8 p-4 sm:p-6 bg-gradient-to-r from-primary/5 to-secondary/5 rounded-lg border border-primary/20 shadow-card">
+          <p class="text-sm sm:text-base text-gray-700">Регулярное обслуживание кондиционера не только продлевает срок его службы, но и обеспечивает эффективную работу, экономит электроэнергию и поддерживает чистоту воздуха в помещении. Рекомендуем проводить профилактику не реже 1 раза в год.</p>
         </div>
       </div>
     </section>
 
     <!-- КАТАЛОГ ТОВАРОВ -->
-    <section id="catalog" class="py-16 bg-white">
+    <section id="catalog" class="py-12 sm:py-16 bg-white">
       <div class="max-w-7xl mx-auto px-6">
-        <h2 class="text-3xl font-bold text-center text-gray-900 mb-4">Каталог кондиционеров</h2>
-        <p class="text-center text-gray-700 mb-12">Широкий выбор сплит-систем для вашего комфорта</p>
+        <h2 class="text-2xl sm:text-3xl font-bold text-center text-gray-900 mb-3">Каталог кондиционеров</h2>
+        <p class="text-center text-gray-700 mb-8 sm:mb-10">Широкий выбор сплит-систем для вашего комфорта</p>
         
         <!-- Кнопка для мобильных фильтров -->
         <div class="mobile-filter-toggle">
@@ -987,7 +995,7 @@
         
         <div class="flex flex-col lg:flex-row gap-8">
           <!-- Фильтры (сайдбар) -->
-          <div class="lg:w-1/4 bg-gray-50 p-6 rounded-lg shadow-card h-fit sticky top-24 filter-sidebar" id="filterSidebar">
+          <div class="lg:w-1/4 bg-gray-50 p-6 rounded-lg shadow-card h-fit sticky top-20 filter-sidebar" id="filterSidebar">
             
             <h3 class="text-xl font-bold mb-4 mt-4">Фильтры</h3>
             
@@ -1008,14 +1016,13 @@
               </div>
             </div>
 
-            <!-- Категории -->
+            <!-- Категории (удалена галочка "Кондиционеры") -->
             <div class="filter-section">
               <div class="filter-section-title" onclick="toggleFilterCollapse(this)">
                 <span>Категории</span>
                 <i class="ri-arrow-down-s-line"></i>
               </div>
               <div class="filter-collapse space-y-1" style="display: none;">
-                <div class="filter-option"><input type="checkbox" id="cat1" value="Кондиционеры" onchange="filterProducts()"> <label for="cat1">Кондиционеры</label></div>
                 <div class="filter-option"><input type="checkbox" id="cat2" value="Настенные" onchange="filterProducts()"> <label for="cat2">Настенные кондиционеры</label></div>
                 <div class="filter-option"><input type="checkbox" id="cat3" value="Мульти-сплит" onchange="filterProducts()"> <label for="cat3">Мульти-сплит системы</label></div>
                 <div class="filter-option"><input type="checkbox" id="cat4" value="Мобильные" onchange="filterProducts()"> <label for="cat4">Мобильные кондиционеры</label></div>
@@ -1087,12 +1094,18 @@
                 <div class="filter-option"><input type="checkbox" id="heat8" value="-30" onchange="filterProducts()"> <label for="heat8">-30°C</label></div>
               </div>
             </div>
-            <button onclick="resetFilters()" class="mt-4 w-full bg-gray-200 text-gray-800 px-4 py-2 rounded-button hover:bg-gray-300 btn-animate">Сбросить фильтры</button>
+            
+            <!-- Кнопка Применить -->
+            <button onclick="applyFilters()" class="mt-4 w-full gradient-bg text-white px-4 py-3 rounded-button font-medium hover:shadow-glow transition-all duration-300 btn-animate">
+              Применить фильтры
+            </button>
+            
+            <button onclick="resetFilters()" class="mt-2 w-full bg-gray-200 text-gray-800 px-4 py-2 rounded-button hover:bg-gray-300 btn-animate">Сбросить фильтры</button>
           </div>
 
           <!-- Сетка товаров -->
           <div class="lg:w-3/4">
-            <div id="product-grid" class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6">
+            <div id="product-grid" class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-4 sm:gap-6">
               <!-- Товары будут загружены из localStorage или по умолчанию -->
             </div>
           </div>
@@ -1152,8 +1165,8 @@
 
     <!-- Админ-панель (доступна только по прямой ссылке /#admin) -->
     <div id="admin-panel" class="fixed inset-0 bg-white z-50 overflow-y-auto" style="display: none;">
-      <div class="max-w-7xl mx-auto px-4 sm:px-6 py-8">
-        <div class="flex justify-between items-center mb-8">
+      <div class="max-w-7xl mx-auto px-4 sm:px-6 py-6">
+        <div class="flex justify-between items-center mb-6">
           <h2 class="text-2xl font-bold">Админ-панель AirComfort</h2>
           <a href="#" onclick="closeAdminPanel(); return false;" class="text-gray-600 hover:text-gray-900"><i class="ri-close-line ri-2x"></i></a>
         </div>
@@ -1169,7 +1182,7 @@
 
         <!-- Вкладка Товары -->
         <div id="admin-products-tab" class="block">
-          <div class="mb-8 p-4 bg-yellow-50 border border-yellow-200 rounded">
+          <div class="mb-6 p-4 bg-yellow-50 border border-yellow-200 rounded">
             <h3 class="font-bold mb-2">Изменение логина/пароля</h3>
             <p class="text-sm text-gray-600 mb-2">Текущие: admin / admin123</p>
             <input type="text" id="admin-login" placeholder="Новый логин" class="border px-3 py-2 mr-2 rounded mb-2 w-full sm:w-auto">
@@ -1211,7 +1224,6 @@
             <button onclick="deselectAllProducts()" class="bg-gray-200 text-gray-800 px-4 py-2 rounded-button">Снять выделение</button>
             <button onclick="deleteSelectedProducts()" class="bg-red-500 text-white px-4 py-2 rounded-button">Удалить выбранные</button>
             <button onclick="addProductForm()" class="bg-primary text-white px-4 py-2 rounded-button btn-animate">+ Добавить товар</button>
-            <button onclick="applyDiscountToAll()" class="bg-accent text-white px-4 py-2 rounded-button btn-animate">Скидка на все</button>
           </div>
 
           <!-- Список товаров -->
@@ -1253,6 +1265,11 @@
               <label class="block text-sm font-medium text-gray-700 mb-1">Поиск по клиенту</label>
               <input type="text" id="order-search" placeholder="🔍 Имя или телефон..." class="w-full border px-4 py-2 rounded-lg" onkeyup="filterAdminOrders()">
             </div>
+          </div>
+
+          <!-- Кнопка удаления всех заказов -->
+          <div class="mb-4">
+            <button onclick="deleteAllOrders()" class="bg-red-500 text-white px-4 py-2 rounded-button">Удалить все заказы</button>
           </div>
 
           <!-- Список заказов -->
@@ -1383,11 +1400,11 @@
     </div>
 
     <!-- Калькулятор расчета стоимости -->
-    <section id="calculator" class="py-16 bg-white">
+    <section id="calculator" class="py-12 sm:py-16 bg-white">
       <div class="max-w-7xl mx-auto px-6">
-        <h2 class="text-3xl font-bold text-center text-gray-900 mb-12">Расчет стоимости монтажа</h2>
+        <h2 class="text-2xl sm:text-3xl font-bold text-center text-gray-900 mb-8 sm:mb-12">Расчет стоимости монтажа</h2>
         <div class="bg-white rounded-lg shadow-hover overflow-hidden max-w-3xl mx-auto border border-gray-100">
-          <div class="p-8">
+          <div class="p-6 sm:p-8">
             <div class="mb-6">
               <label for="model" class="block text-gray-700 font-medium mb-2">Выберите услугу *</label>
               <div class="relative">
@@ -1493,114 +1510,114 @@
     </div>
 
     <!-- Наши преимущества -->
-    <section id="advantages" class="py-16 bg-gradient-to-b from-white to-gray-50">
+    <section id="advantages" class="py-12 sm:py-16 bg-gradient-to-b from-white to-gray-50">
       <div class="max-w-7xl mx-auto px-6">
-        <h2 class="text-3xl font-bold text-center text-gray-900 mb-12">Наши преимущества</h2>
-        <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-6 sm:gap-8">
+        <h2 class="text-2xl sm:text-3xl font-bold text-center text-gray-900 mb-8 sm:mb-12">Наши преимущества</h2>
+        <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-4 sm:gap-6">
           <!-- Преимущество 1 -->
-          <div class="bg-white p-6 rounded-lg shadow-card text-center card-hover">
-            <div class="w-16 h-16 mx-auto mb-4 flex items-center justify-center bg-gradient-to-br from-primary/20 to-primary/10 rounded-full text-primary shadow-lg">
-              <i class="ri-shield-check-line ri-2x"></i>
+          <div class="bg-white p-5 sm:p-6 rounded-lg shadow-card text-center card-hover">
+            <div class="w-14 h-14 sm:w-16 sm:h-16 mx-auto mb-3 sm:mb-4 flex items-center justify-center bg-gradient-to-br from-primary/20 to-primary/10 rounded-full text-primary shadow-lg">
+              <i class="ri-shield-check-line ri-xl sm:ri-2x"></i>
             </div>
-            <h3 class="text-xl font-bold text-gray-900 mb-3">Гарантия 5 лет</h3>
-            <p class="text-gray-700">Самая длительная гарантия на оборудование и 1 год на монтажные работы.</p>
+            <h3 class="text-lg sm:text-xl font-bold text-gray-900 mb-2">Гарантия 5 лет</h3>
+            <p class="text-sm sm:text-base text-gray-700">Самая длительная гарантия на оборудование и 1 год на монтажные работы.</p>
           </div>
           <!-- Преимущество 2 -->
-          <div class="bg-white p-6 rounded-lg shadow-card text-center card-hover">
-            <div class="w-16 h-16 mx-auto mb-4 flex items-center justify-center bg-gradient-to-br from-secondary/20 to-secondary/10 rounded-full text-secondary shadow-lg">
-              <i class="ri-user-star-line ri-2x"></i>
+          <div class="bg-white p-5 sm:p-6 rounded-lg shadow-card text-center card-hover">
+            <div class="w-14 h-14 sm:w-16 sm:h-16 mx-auto mb-3 sm:mb-4 flex items-center justify-center bg-gradient-to-br from-secondary/20 to-secondary/10 rounded-full text-secondary shadow-lg">
+              <i class="ri-user-star-line ri-xl sm:ri-2x"></i>
             </div>
-            <h3 class="text-xl font-bold text-gray-900 mb-3">Профессионализм</h3>
-            <p class="text-gray-700">Опытные мастера с профессиональной подготовкой и сертификатами.</p>
+            <h3 class="text-lg sm:text-xl font-bold text-gray-900 mb-2">Профессионализм</h3>
+            <p class="text-sm sm:text-base text-gray-700">Опытные мастера с профессиональной подготовкой и сертификатами.</p>
           </div>
           <!-- Преимущество 3 -->
-          <div class="bg-white p-6 rounded-lg shadow-card text-center card-hover">
-            <div class="w-16 h-16 mx-auto mb-4 flex items-center justify-center bg-gradient-to-br from-accent/20 to-accent/10 rounded-full text-accent shadow-lg">
-              <i class="ri-time-line ri-2x"></i>
+          <div class="bg-white p-5 sm:p-6 rounded-lg shadow-card text-center card-hover">
+            <div class="w-14 h-14 sm:w-16 sm:h-16 mx-auto mb-3 sm:mb-4 flex items-center justify-center bg-gradient-to-br from-accent/20 to-accent/10 rounded-full text-accent shadow-lg">
+              <i class="ri-time-line ri-xl sm:ri-2x"></i>
             </div>
-            <h3 class="text-xl font-bold text-gray-900 mb-3">Быстрая установка</h3>
-            <p class="text-gray-700">Установка в течение 1-2 дней после заказа по всей Гомельской области.</p>
+            <h3 class="text-lg sm:text-xl font-bold text-gray-900 mb-2">Быстрая установка</h3>
+            <p class="text-sm sm:text-base text-gray-700">Установка в течение 1-2 дней после заказа по всей Гомельской области.</p>
           </div>
           <!-- Преимущество 4 -->
-          <div class="bg-white p-6 rounded-lg shadow-card text-center card-hover">
-            <div class="w-16 h-16 mx-auto mb-4 flex items-center justify-center bg-gradient-to-br from-primary/20 to-primary/10 rounded-full text-primary shadow-lg">
-              <i class="ri-money-dollar-circle-line ri-2x"></i>
+          <div class="bg-white p-5 sm:p-6 rounded-lg shadow-card text-center card-hover">
+            <div class="w-14 h-14 sm:w-16 sm:h-16 mx-auto mb-3 sm:mb-4 flex items-center justify-center bg-gradient-to-br from-primary/20 to-primary/10 rounded-full text-primary shadow-lg">
+              <i class="ri-money-dollar-circle-line ri-xl sm:ri-2x"></i>
             </div>
-            <h3 class="text-xl font-bold text-gray-900 mb-3">Лучшие цены</h3>
-            <p class="text-gray-700">Оптимальное соотношение цены и качества.</p>
+            <h3 class="text-lg sm:text-xl font-bold text-gray-900 mb-2">Лучшие цены</h3>
+            <p class="text-sm sm:text-base text-gray-700">Оптимальное соотношение цены и качества.</p>
           </div>
         </div>
       </div>
     </section>
 
     <!-- Часто задаваемые вопросы -->
-    <section id="faq" class="py-16 bg-white">
+    <section id="faq" class="py-12 sm:py-16 bg-white">
       <div class="max-w-7xl mx-auto px-6">
-        <h2 class="text-3xl font-bold text-center text-gray-900 mb-4">Часто задаваемые вопросы</h2>
-        <p class="text-center text-gray-700 mb-12">Ответы на самые популярные вопросы наших клиентов</p>
+        <h2 class="text-2xl sm:text-3xl font-bold text-center text-gray-900 mb-3">Часто задаваемые вопросы</h2>
+        <p class="text-center text-gray-700 mb-8 sm:mb-10">Ответы на самые популярные вопросы наших клиентов</p>
         <div class="max-w-3xl mx-auto">
           <div class="faq-item">
             <div class="faq-question" onclick="toggleFaq(1)">
-              <span class="font-medium text-lg">Сколько времени занимает установка кондиционера?</span>
+              <span class="font-medium text-base sm:text-lg">Сколько времени занимает установка кондиционера?</span>
               <i class="ri-arrow-down-s-line faq-icon"></i>
             </div>
             <div class="faq-answer">
-              <div class="pb-6 text-gray-700">
+              <div class="pb-6 text-sm sm:text-base text-gray-700">
                 Стандартная установка занимает от 2 до 4 часов, в зависимости от сложности монтажа. Наши специалисты работают быстро и качественно, чтобы минимизировать неудобства для вас.
               </div>
             </div>
           </div>
           <div class="faq-item">
             <div class="faq-question" onclick="toggleFaq(2)">
-              <span class="font-medium text-lg">Как часто нужно обслуживать кондиционер?</span>
+              <span class="font-medium text-base sm:text-lg">Как часто нужно обслуживать кондиционер?</span>
               <i class="ri-arrow-down-s-line faq-icon"></i>
             </div>
             <div class="faq-answer">
-              <div class="pb-6 text-gray-700">
+              <div class="pb-6 text-sm sm:text-base text-gray-700">
                 Рекомендуем проводить техническое обслуживание кондиционера не реже одного раза в год. Это продлевает срок службы оборудования, обеспечивает эффективную работу и экономит электроэнергию.
               </div>
             </div>
           </div>
           <div class="faq-item">
             <div class="faq-question" onclick="toggleFaq(3)">
-              <span class="font-medium text-lg">В чем разница между инверторным и обычным кондиционером?</span>
+              <span class="font-medium text-base sm:text-lg">В чем разница между инверторным и обычным кондиционером?</span>
               <i class="ri-arrow-down-s-line faq-icon"></i>
             </div>
             <div class="faq-answer">
-              <div class="pb-6 text-gray-700">
+              <div class="pb-6 text-sm sm:text-base text-gray-700">
                 Инверторный кондиционер регулирует мощность компрессора плавно, что позволяет экономить до 30-40% электроэнергии, работать тише и поддерживать точную температуру. Обычный кондиционер работает по принципу "включил-выключил", что менее эффективно.
               </div>
             </div>
           </div>
           <div class="faq-item">
             <div class="faq-question" onclick="toggleFaq(4)">
-              <span class="font-medium text-lg">Можно ли установить кондиционер зимой?</span>
+              <span class="font-medium text-base sm:text-lg">Можно ли установить кондиционер зимой?</span>
               <i class="ri-arrow-down-s-line faq-icon"></i>
             </div>
             <div class="faq-answer">
-              <div class="pb-6 text-gray-700">
+              <div class="pb-6 text-sm sm:text-base text-gray-700">
                 Да, установка возможна круглый год.
               </div>
             </div>
           </div>
           <div class="faq-item">
             <div class="faq-question" onclick="toggleFaq(5)">
-              <span class="font-medium text-lg">Какая гарантия на работу и оборудование?</span>
+              <span class="font-medium text-base sm:text-lg">Какая гарантия на работу и оборудование?</span>
               <i class="ri-arrow-down-s-line faq-icon"></i>
             </div>
             <div class="faq-answer">
-              <div class="pb-6 text-gray-700">
+              <div class="pb-6 text-sm sm:text-base text-gray-700">
                 Мы предоставляем гарантию 5 лет на оборудование и 1 год на монтажные работы.
               </div>
             </div>
           </div>
           <div class="faq-item">
             <div class="faq-question" onclick="toggleFaq(6)">
-              <span class="font-medium text-lg">Нужно ли получать разрешение на установку кондиционера?</span>
+              <span class="font-medium text-base sm:text-lg">Нужно ли получать разрешение на установку кондиционера?</span>
               <i class="ri-arrow-down-s-line faq-icon"></i>
             </div>
             <div class="faq-answer">
-              <div class="pb-6 text-gray-700">
+              <div class="pb-6 text-sm sm:text-base text-gray-700">
                 В большинстве случаев установка кондиционера в квартире не требует специальных разрешений. Однако при монтаже в исторических зданиях или на фасадах многоэтажек могут потребоваться согласования.
               </div>
             </div>
@@ -1610,20 +1627,20 @@
     </section>
 
     <!-- Отзывы клиентов -->
-    <section id="reviews" class="py-16 bg-gradient-to-b from-gray-50 to-white">
+    <section id="reviews" class="py-12 sm:py-16 bg-gradient-to-b from-gray-50 to-white">
       <div class="max-w-7xl mx-auto px-6">
-        <h2 class="text-3xl font-bold text-center text-gray-900 mb-4">Отзывы наших клиентов</h2>
-        <p class="text-center text-gray-700 mb-12">Что говорят люди, которые уже воспользовались нашими услугами</p>
-        <div class="grid grid-cols-1 md:grid-cols-3 gap-8">
+        <h2 class="text-2xl sm:text-3xl font-bold text-center text-gray-900 mb-3">Отзывы наших клиентов</h2>
+        <p class="text-center text-gray-700 mb-8 sm:mb-10">Что говорят люди, которые уже воспользовались нашими услугами</p>
+        <div class="grid grid-cols-1 md:grid-cols-3 gap-6 sm:gap-8">
           <!-- Отзыв 1 -->
-          <div class="bg-white p-6 rounded-lg shadow-card review-card">
-            <div class="flex items-center mb-4">
-              <div class="w-12 h-12 rounded-full bg-gradient-to-br from-primary/20 to-primary/10 flex items-center justify-center text-primary mr-4">
-                <i class="ri-user-line ri-lg"></i>
+          <div class="bg-white p-5 sm:p-6 rounded-lg shadow-card review-card">
+            <div class="flex items-center mb-3">
+              <div class="w-10 h-10 rounded-full bg-gradient-to-br from-primary/20 to-primary/10 flex items-center justify-center text-primary mr-3">
+                <i class="ri-user-line"></i>
               </div>
               <div>
                 <h4 class="font-bold text-gray-900">Анна С.</h4>
-                <div class="flex stars">
+                <div class="flex stars text-sm">
                   <i class="ri-star-fill"></i>
                   <i class="ri-star-fill"></i>
                   <i class="ri-star-fill"></i>
@@ -1632,20 +1649,20 @@
                 </div>
               </div>
             </div>
-            <p class="text-gray-700 mb-4">
+            <p class="text-sm sm:text-base text-gray-700 mb-3">
               "Заказывали установку кондиционера в квартиру. Мастера приехали вовремя, все сделали быстро и аккуратно. Уже второй год работает без нареканий. Спасибо за качественную работу!"
             </p>
-            <div class="text-sm text-gray-500">15 марта 2024</div>
+            <div class="text-xs text-gray-500">15 марта 2024</div>
           </div>
           <!-- Отзыв 2 -->
-          <div class="bg-white p-6 rounded-lg shadow-card review-card">
-            <div class="flex items-center mb-4">
-              <div class="w-12 h-12 rounded-full bg-gradient-to-br from-secondary/20 to-secondary/10 flex items-center justify-center text-secondary mr-4">
-                <i class="ri-user-line ri-lg"></i>
+          <div class="bg-white p-5 sm:p-6 rounded-lg shadow-card review-card">
+            <div class="flex items-center mb-3">
+              <div class="w-10 h-10 rounded-full bg-gradient-to-br from-secondary/20 to-secondary/10 flex items-center justify-center text-secondary mr-3">
+                <i class="ri-user-line"></i>
               </div>
               <div>
                 <h4 class="font-bold text-gray-900">Игорь П.</h4>
-                <div class="flex stars">
+                <div class="flex stars text-sm">
                   <i class="ri-star-fill"></i>
                   <i class="ri-star-fill"></i>
                   <i class="ri-star-fill"></i>
@@ -1654,20 +1671,20 @@
                 </div>
               </div>
             </div>
-            <p class="text-gray-700 mb-4">
+            <p class="text-sm sm:text-base text-gray-700 mb-3">
               "Устанавливали кондиционер в офис. Профессиональная работа, аккуратный монтаж, все коммуникации спрятали в короб. Персонал вежливый, работу выполнили в срок. Рекомендую!"
             </p>
-            <div class="text-sm text-gray-500">2 февраля 2025</div>
+            <div class="text-xs text-gray-500">2 февраля 2025</div>
           </div>
           <!-- Отзыв 3 -->
-          <div class="bg-white p-6 rounded-lg shadow-card review-card">
-            <div class="flex items-center mb-4">
-              <div class="w-12 h-12 rounded-full bg-gradient-to-br from-accent/20 to-accent/10 flex items-center justify-center text-accent mr-4">
-                <i class="ri-user-line ri-lg"></i>
+          <div class="bg-white p-5 sm:p-6 rounded-lg shadow-card review-card">
+            <div class="flex items-center mb-3">
+              <div class="w-10 h-10 rounded-full bg-gradient-to-br from-accent/20 to-accent/10 flex items-center justify-center text-accent mr-3">
+                <i class="ri-user-line"></i>
               </div>
               <div>
                 <h4 class="font-bold text-gray-900">Елена К.</h4>
-                <div class="flex stars">
+                <div class="flex stars text-sm">
                   <i class="ri-star-fill"></i>
                   <i class="ri-star-fill"></i>
                   <i class="ri-star-fill"></i>
@@ -1676,14 +1693,14 @@
                 </div>
               </div>
             </div>
-            <p class="text-gray-700 mb-4">
+            <p class="text-sm sm:text-base text-gray-700 mb-3">
               "Очень довольна обслуживанием кондиционера. Приехали, почистили, все объяснили. Цена адекватная. Теперь буду пользоваться услугами регулярно. Спасибо за внимательное отношение!"
             </p>
-            <div class="text-sm text-gray-500">10 августа 2025</div>
+            <div class="text-xs text-gray-500">10 августа 2025</div>
           </div>
         </div>
-        <div class="mt-12 text-center">
-          <button onclick="document.getElementById('contacts').scrollIntoView({behavior: 'smooth'})" class="gradient-bg text-white px-8 py-3 rounded-button font-medium hover:shadow-glow transition-all duration-300 btn-animate">
+        <div class="mt-8 sm:mt-10 text-center">
+          <button onclick="document.getElementById('contacts').scrollIntoView({behavior: 'smooth'})" class="gradient-bg text-white px-6 sm:px-8 py-2.5 sm:py-3 rounded-button font-medium hover:shadow-glow transition-all duration-300 btn-animate text-sm sm:text-base">
             Оставить свой отзыв
           </button>
         </div>
@@ -1691,46 +1708,46 @@
     </section>
 
     <!-- Контакты -->
-    <section id="contacts" class="py-16 bg-white">
+    <section id="contacts" class="py-12 sm:py-16 bg-white">
       <div class="max-w-7xl mx-auto px-6">
-        <h2 class="text-3xl font-bold text-center text-gray-900 mb-4">Контакты</h2>
-        <p class="text-center text-gray-700 mb-12">Свяжитесь с нами любым удобным способом</p>
-        <div class="grid grid-cols-1 md:grid-cols-2 gap-8 items-start">
+        <h2 class="text-2xl sm:text-3xl font-bold text-center text-gray-900 mb-3">Контакты</h2>
+        <p class="text-center text-gray-700 mb-8 sm:mb-10">Свяжитесь с нами любым удобным способом</p>
+        <div class="grid grid-cols-1 md:grid-cols-2 gap-6 sm:gap-8 items-start">
           <div>
             <h3 class="text-xl font-bold text-gray-900 mb-6">Наши контакты</h3>
-            <div class="grid grid-cols-1 sm:grid-cols-2 gap-6">
-              <div class="bg-white p-6 rounded-lg shadow-card card-hover">
+            <div class="grid grid-cols-1 sm:grid-cols-2 gap-4 sm:gap-6">
+              <div class="bg-white p-5 sm:p-6 rounded-lg shadow-card card-hover">
                 <div class="w-10 h-10 flex items-center justify-center bg-gradient-to-br from-primary/20 to-primary/10 rounded-full text-primary mb-4 shadow-lg">
-                  <i class="ri-phone-line ri-lg"></i>
+                  <i class="ri-phone-line"></i>
                 </div>
-                <h4 class="text-lg font-medium text-gray-900 mb-2">Телефон</h4>
-                <a href="tel:+375291050694" class="text-primary hover:underline">+375 (29) 105-06-94</a>
+                <h4 class="text-base sm:text-lg font-medium text-gray-900 mb-2">Телефон</h4>
+                <a href="tel:+375291050694" class="text-sm sm:text-base text-primary hover:underline">+375 (29) 105-06-94</a>
               </div>
-              <div class="bg-white p-6 rounded-lg shadow-card card-hover">
+              <div class="bg-white p-5 sm:p-6 rounded-lg shadow-card card-hover">
                 <div class="w-10 h-10 flex items-center justify-center bg-gradient-to-br from-secondary/20 to-secondary/10 rounded-full text-secondary mb-4 shadow-lg">
-                  <i class="ri-mail-line ri-lg"></i>
+                  <i class="ri-mail-line"></i>
                 </div>
-                <h4 class="text-lg font-medium text-gray-900 mb-2">Электронная почта</h4>
-                <a href="mailto:aircomfortbel@gmail.com" class="text-primary hover:underline">aircomfortbel@gmail.com</a>
+                <h4 class="text-base sm:text-lg font-medium text-gray-900 mb-2">Электронная почта</h4>
+                <a href="mailto:aircomfortbel@gmail.com" class="text-sm sm:text-base text-primary hover:underline">aircomfortbel@gmail.com</a>
               </div>
-              <div class="bg-white p-6 rounded-lg shadow-card card-hover">
+              <div class="bg-white p-5 sm:p-6 rounded-lg shadow-card card-hover">
                 <div class="w-10 h-10 flex items-center justify-center bg-gradient-to-br from-accent/20 to-accent/10 rounded-full text-accent mb-4 shadow-lg">
-                  <i class="ri-time-line ri-lg"></i>
+                  <i class="ri-time-line"></i>
                 </div>
-                <h4 class="text-lg font-medium text-gray-900 mb-2">Время работы</h4>
-                <p class="text-gray-700">Пн-Пт: 9:00 - 20:00</p>
-                <p class="text-gray-700">Сб-Вс: 10:00 - 18:00</p>
+                <h4 class="text-base sm:text-lg font-medium text-gray-900 mb-2">Время работы</h4>
+                <p class="text-sm sm:text-base text-gray-700">Пн-Пт: 9:00 - 20:00</p>
+                <p class="text-sm sm:text-base text-gray-700">Сб-Вс: 10:00 - 18:00</p>
               </div>
-              <div class="bg-white p-6 rounded-lg shadow-card card-hover">
+              <div class="bg-white p-5 sm:p-6 rounded-lg shadow-card card-hover">
                 <div class="w-10 h-10 flex items-center justify-center bg-gradient-to-br from-primary/20 to-primary/10 rounded-full text-primary mb-4 shadow-lg">
-                  <i class="ri-map-pin-line ri-lg"></i>
+                  <i class="ri-map-pin-line"></i>
                 </div>
-                <h4 class="text-lg font-medium text-gray-900 mb-2">Регион работы</h4>
-                <p class="text-gray-700">Гомель и Гомельская область</p>
+                <h4 class="text-base sm:text-lg font-medium text-gray-900 mb-2">Регион работы</h4>
+                <p class="text-sm sm:text-base text-gray-700">Гомель и Гомельская область</p>
               </div>
             </div>
           </div>
-          <div class="bg-white p-8 rounded-lg shadow-hover border border-gray-100">
+          <div class="bg-white p-6 sm:p-8 rounded-lg shadow-hover border border-gray-100">
             <h3 class="text-xl font-bold text-gray-900 mb-6">Оставить заявку</h3>
             <form id="contact-form" action="https://formspree.io/f/mrbkdwwe" method="POST">
               <input type="hidden" id="calculator-data" name="calculator_data">
@@ -1767,18 +1784,18 @@
     </section>
 
     <!-- Футер -->
-    <footer class="bg-gradient-to-r from-gray-900 to-gray-800 text-white py-12">
+    <footer class="bg-gradient-to-r from-gray-900 to-gray-800 text-white py-8 sm:py-10">
       <div class="max-w-7xl mx-auto px-6">
         <div class="flex flex-col md:flex-row justify-between items-center">
-          <div class="mb-6 md:mb-0">
+          <div class="mb-4 md:mb-0">
             <div class="flex items-center">
-              <span class="text-2xl sm:text-3xl font-['Pacifico'] text-white mr-2">AirComfort</span>
+              <span class="text-xl sm:text-2xl font-['Pacifico'] text-white mr-2">AirComfort</span>
             </div>
-            <p class="text-gray-400 mt-2">Профессиональная установка кондиционеров в Гомеле</p>
-            <p class="text-gray-500 text-sm mt-2">Общество с ограниченной ответственностью "ТеплоПрайм" УНП 491393506</p>
+            <p class="text-sm sm:text-base text-gray-400 mt-2">Профессиональная установка кондиционеров в Гомеле</p>
+            <p class="text-xs sm:text-sm text-gray-500 mt-2">Общество с ограниченной ответственностью "ТеплоПрайм" УНП 491393506</p>
           </div>
           <div class="flex flex-col items-center md:items-end">
-            <p class="text-gray-400 mb-2">© 2026 AirComfort. Все права защищены.</p>
+            <p class="text-xs sm:text-sm text-gray-400 mb-2">© 2026 AirComfort. Все права защищены.</p>
           </div>
         </div>
       </div>
@@ -1797,6 +1814,14 @@
     function toggleMobileFilters() {
       const sidebar = document.getElementById('filterSidebar');
       sidebar.classList.toggle('mobile-visible');
+    }
+
+    // Применить фильтры
+    function applyFilters() {
+      filterProducts();
+      if (window.innerWidth <= 768) {
+        document.getElementById('filterSidebar').classList.remove('mobile-visible');
+      }
     }
 
     // Управление FAQ
@@ -2004,12 +2029,12 @@
         card.className = 'bg-white rounded-lg shadow-card overflow-hidden product-card';
         card.onclick = () => openProductPage(p.id);
         card.innerHTML = `
-          <img src="${p.image}" alt="${p.name}" class="w-full h-40 object-cover">
-          <div class="p-4 flex-grow">
-            <h3 class="font-bold text-lg mb-1">${p.name}</h3>
-            <p class="text-primary font-bold text-xl mb-2">${p.price} BYN</p>
-            <p class="text-sm text-gray-600 mb-2 product-description">${p.description || 'Нет описания'}</p>
-            <button onclick="event.stopPropagation(); addToCart(${p.id})" class="w-full gradient-bg text-white px-3 py-2 rounded-button btn-animate">В корзину</button>
+          <img src="${p.image}" alt="${p.name}" class="w-full h-36 sm:h-40 object-cover">
+          <div class="p-3 sm:p-4 flex-grow">
+            <h3 class="font-bold text-base sm:text-lg mb-1">${p.name}</h3>
+            <p class="text-primary font-bold text-lg sm:text-xl mb-2">${p.price} BYN</p>
+            <p class="text-xs sm:text-sm text-gray-600 mb-2 product-description">${p.description || 'Нет описания'}</p>
+            <button onclick="event.stopPropagation(); addToCart(${p.id})" class="w-full gradient-bg text-white px-3 py-1.5 sm:py-2 rounded-button btn-animate text-sm">В корзину</button>
           </div>
         `;
         grid.appendChild(card);
@@ -2023,11 +2048,11 @@
       if (!prod) return;
       const modal = document.getElementById('product-modal');
       document.getElementById('product-modal-detail').innerHTML = `
-        <img src="${prod.image}" alt="${prod.name}" class="w-full h-48 object-cover rounded mb-4">
-        <h3 class="text-2xl font-bold mb-2">${prod.name}</h3>
-        <p class="text-primary text-xl font-bold mb-2">${prod.price} BYN</p>
-        <p class="text-gray-700 mb-4">${prod.fullDescription || prod.description || 'Нет описания'}</p>
-        <ul class="text-sm text-gray-600 space-y-1">
+        <img src="${prod.image}" alt="${prod.name}" class="w-full h-40 sm:h-48 object-cover rounded mb-4">
+        <h3 class="text-xl sm:text-2xl font-bold mb-2">${prod.name}</h3>
+        <p class="text-primary text-lg sm:text-xl font-bold mb-2">${prod.price} BYN</p>
+        <p class="text-sm sm:text-base text-gray-700 mb-4">${prod.fullDescription || prod.description || 'Нет описания'}</p>
+        <ul class="text-xs sm:text-sm text-gray-600 space-y-1">
           <li><span class="font-medium">Площадь:</span> ${prod.area} м²</li>
           <li><span class="font-medium">Категория:</span> ${prod.category}</li>
           <li><span class="font-medium">Тип:</span> ${prod.type}</li>
@@ -2121,13 +2146,13 @@
         html += `
           <div class="flex flex-col sm:flex-row justify-between items-start sm:items-center border-b py-2 gap-2">
             <div class="flex-1">
-              <span class="font-medium">${item.name}</span><br>
-              <span class="text-sm">${item.price} BYN x ${item.quantity}</span>
+              <span class="font-medium text-sm sm:text-base">${item.name}</span><br>
+              <span class="text-xs sm:text-sm">${item.price} BYN x ${item.quantity}</span>
             </div>
             <div class="flex items-center gap-2">
-              <button onclick="changeQuantity('${item.id}', -1)" class="px-2 bg-gray-200 rounded">-</button>
-              <span class="mx-2">${item.quantity}</span>
-              <button onclick="changeQuantity('${item.id}', 1)" class="px-2 bg-gray-200 rounded">+</button>
+              <button onclick="changeQuantity('${item.id}', -1)" class="px-2 bg-gray-200 rounded text-sm">-</button>
+              <span class="mx-2 text-sm">${item.quantity}</span>
+              <button onclick="changeQuantity('${item.id}', 1)" class="px-2 bg-gray-200 rounded text-sm">+</button>
               <button onclick="removeFromCart('${item.id}')" class="ml-2 text-red-600"><i class="ri-delete-bin-line"></i></button>
             </div>
           </div>
@@ -2280,22 +2305,21 @@
       filteredProducts.forEach(p => {
         const row = document.createElement('tr');
         row.innerHTML = `
-          <td class="px-6 py-4 whitespace-nowrap">
+          <td class="px-4 sm:px-6 py-3 sm:py-4 whitespace-nowrap">
             <input type="checkbox" class="product-checkbox" value="${p.id}" ${selectedProducts.has(p.id) ? 'checked' : ''} onchange="toggleProductSelection(${p.id})">
           </td>
-          <td class="px-6 py-4 whitespace-nowrap">
-            <div class="text-sm font-medium text-gray-900">${p.name}</div>
+          <td class="px-4 sm:px-6 py-3 sm:py-4 whitespace-nowrap">
+            <div class="text-xs sm:text-sm font-medium text-gray-900">${p.name}</div>
           </td>
-          <td class="px-6 py-4 whitespace-nowrap">
-            <div class="text-sm text-gray-500">${p.category}</div>
+          <td class="px-4 sm:px-6 py-3 sm:py-4 whitespace-nowrap">
+            <div class="text-xs sm:text-sm text-gray-500">${p.category}</div>
           </td>
-          <td class="px-6 py-4 whitespace-nowrap">
-            <div class="text-sm text-gray-900">${p.price} BYN</div>
+          <td class="px-4 sm:px-6 py-3 sm:py-4 whitespace-nowrap">
+            <div class="text-xs sm:text-sm text-gray-900">${p.price} BYN</div>
           </td>
-          <td class="px-6 py-4 whitespace-nowrap text-sm font-medium">
-            <button onclick="openEditModal(${p.id})" class="text-blue-600 hover:text-blue-900 mr-3">✏️</button>
-            <button onclick="deleteProduct(${p.id})" class="text-red-600 hover:text-red-900 mr-3">🗑️</button>
-            <button onclick="setDiscount(${p.id})" class="text-green-600 hover:text-green-900">%</button>
+          <td class="px-4 sm:px-6 py-3 sm:py-4 whitespace-nowrap text-xs sm:text-sm font-medium">
+            <button onclick="openEditModal(${p.id})" class="text-blue-600 hover:text-blue-900 mr-2">✏️</button>
+            <button onclick="deleteProduct(${p.id})" class="text-red-600 hover:text-red-900">🗑️</button>
           </td>
         `;
         list.appendChild(row);
@@ -2385,28 +2409,31 @@
         list.innerHTML += `
           <div class="border p-4 rounded-lg hover:shadow-md transition-shadow">
             <div class="flex flex-col sm:flex-row justify-between items-start gap-2 mb-2">
-              <span class="font-bold">Заказ #${o.id}</span>
-              <span class="text-sm text-gray-500">${o.date}</span>
+              <span class="font-bold text-sm sm:text-base">Заказ #${o.id}</span>
+              <span class="text-xs text-gray-500">${o.date}</span>
             </div>
-            <div class="grid grid-cols-1 sm:grid-cols-2 gap-2 text-sm">
+            <div class="grid grid-cols-1 sm:grid-cols-2 gap-2 text-xs sm:text-sm">
               <div><span class="font-medium">Клиент:</span> ${o.customer.name}</div>
               <div><span class="font-medium">Телефон:</span> ${o.customer.phone}</div>
               <div><span class="font-medium">Адрес:</span> ${o.customer.address}</div>
               <div><span class="font-medium">Оплата:</span> ${o.customer.payment || 'Наличные'}</div>
             </div>
-            <div class="mt-2 flex justify-between items-center">
+            <div class="mt-2 flex flex-col sm:flex-row justify-between items-start sm:items-center gap-2">
               <div>
-                <span class="font-medium">Сумма:</span> ${o.total} BYN
+                <span class="font-medium text-sm">Сумма:</span> ${o.total} BYN
                 <span class="ml-2 px-2 py-1 bg-blue-100 text-blue-800 rounded text-xs">${o.status}</span>
               </div>
-              <select onchange="updateOrderStatus(${o.id}, this.value)" class="border rounded px-2 py-1 text-sm">
-                <option value="новый" ${o.status === 'новый' ? 'selected' : ''}>Новый</option>
-                <option value="в обработке" ${o.status === 'в обработке' ? 'selected' : ''}>В обработке</option>
-                <option value="выполнен" ${o.status === 'выполнен' ? 'selected' : ''}>Выполнен</option>
-                <option value="отменен" ${o.status === 'отменен' ? 'selected' : ''}>Отменен</option>
-              </select>
+              <div class="flex gap-2">
+                <select onchange="updateOrderStatus(${o.id}, this.value)" class="border rounded px-2 py-1 text-xs">
+                  <option value="новый" ${o.status === 'новый' ? 'selected' : ''}>Новый</option>
+                  <option value="в обработке" ${o.status === 'в обработке' ? 'selected' : ''}>В обработке</option>
+                  <option value="выполнен" ${o.status === 'выполнен' ? 'selected' : ''}>Выполнен</option>
+                  <option value="отменен" ${o.status === 'отменен' ? 'selected' : ''}>Отменен</option>
+                </select>
+                <button onclick="deleteOrder(${o.id})" class="text-red-600 hover:text-red-800 px-2 py-1 border border-red-300 rounded text-xs">Удалить</button>
+              </div>
             </div>
-            <div class="mt-2 text-sm text-gray-600">
+            <div class="mt-2 text-xs text-gray-600">
               <span class="font-medium">Товары:</span> ${o.items.map(i => i.name + ' x' + i.quantity).join(', ')}
             </div>
           </div>
@@ -2424,28 +2451,19 @@
       }
     }
 
-    function setDiscount(id) {
-      const prod = products.find(p => p.id === id);
-      if (prod) {
-        const discount = parseFloat(prompt('Введите размер скидки в %:', '0'));
-        if (!isNaN(discount)) {
-          prod.price = Math.round(prod.price * (100 - discount) / 100);
-          saveProducts();
-          renderAdminProducts();
-          filterProducts();
-        }
+    function deleteOrder(id) {
+      if (confirm('Удалить этот заказ?')) {
+        orders = orders.filter(o => o.id !== id);
+        saveOrders();
+        renderAdminOrders();
       }
     }
 
-    function applyDiscountToAll() {
-      const discount = parseFloat(prompt('Введите размер скидки для всех товаров в %:', '0'));
-      if (!isNaN(discount)) {
-        products.forEach(p => {
-          p.price = Math.round(p.price * (100 - discount) / 100);
-        });
-        saveProducts();
-        renderAdminProducts();
-        filterProducts();
+    function deleteAllOrders() {
+      if (confirm('Удалить все заказы?')) {
+        orders = [];
+        saveOrders();
+        renderAdminOrders();
       }
     }
 
