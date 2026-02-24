@@ -3,7 +3,7 @@
 <head>
   <!-- Обязательные мета-теги -->
   <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=yes">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=yes, viewport-fit=cover">
   
   <!-- Заголовок и описание -->
   <title>Установка кондиционеров в Гомеле и Областях | AirComfort</title>
@@ -197,10 +197,16 @@
 
   <style>
     /* Общие стили */
+    * {
+      box-sizing: border-box;
+    }
     body {
       font-family: system-ui, sans-serif;
       scroll-behavior: smooth;
       overflow-x: hidden;
+      width: 100%;
+      margin: 0;
+      padding: 0;
     }
 
     /* Стили для навигации */
@@ -211,6 +217,7 @@
       transition: all 0.3s ease;
       color: #374151;
       font-weight: 500;
+      white-space: nowrap;
     }
 
     .nav-link:hover {
@@ -642,6 +649,7 @@
       height: 100%;
       display: flex;
       flex-direction: column;
+      width: 100%;
     }
     .product-card:hover {
       transform: translateY(-4px);
@@ -716,6 +724,19 @@
       text-align: left;
     }
 
+    /* Мобильные фильтры */
+    .mobile-filter-toggle {
+      display: none;
+      width: 100%;
+      margin-bottom: 1rem;
+    }
+    .filter-sidebar {
+      transition: all 0.3s ease;
+    }
+    .filter-sidebar.mobile-hidden {
+      display: none;
+    }
+
     @media (max-width: 768px) {
       .float-buttons {
         bottom: 20px;
@@ -744,6 +765,7 @@
       .nav-link {
         padding: 6px 12px;
         font-size: 14px;
+        white-space: normal;
       }
       
       .desktop-menu {
@@ -757,14 +779,17 @@
       }
       #product-grid {
         grid-template-columns: 1fr !important;
+        gap: 1rem;
       }
       .filter-sidebar {
         width: 100% !important;
         margin-bottom: 20px;
       }
-      .container {
+      .container, .max-w-7xl {
         padding-left: 1rem;
         padding-right: 1rem;
+        width: 100%;
+        max-width: 100%;
       }
       h1 {
         font-size: 1.8rem !important;
@@ -774,6 +799,19 @@
       }
       .text-lg {
         font-size: 1rem !important;
+      }
+      section {
+        padding-left: 1rem;
+        padding-right: 1rem;
+      }
+      .mobile-filter-toggle {
+        display: block;
+      }
+      .filter-sidebar {
+        display: none;
+      }
+      .filter-sidebar.mobile-visible {
+        display: block;
       }
     }
   </style>
@@ -939,9 +977,17 @@
       <div class="max-w-7xl mx-auto px-6">
         <h2 class="text-3xl font-bold text-center text-gray-900 mb-4">Каталог кондиционеров</h2>
         <p class="text-center text-gray-700 mb-12">Широкий выбор сплит-систем для вашего комфорта</p>
+        
+        <!-- Кнопка для мобильных фильтров -->
+        <div class="mobile-filter-toggle">
+          <button onclick="toggleMobileFilters()" class="w-full gradient-bg text-white px-4 py-3 rounded-button font-medium">
+            <i class="ri-filter-line mr-2"></i>Показать фильтры
+          </button>
+        </div>
+        
         <div class="flex flex-col lg:flex-row gap-8">
           <!-- Фильтры (сайдбар) -->
-          <div class="lg:w-1/4 bg-gray-50 p-6 rounded-lg shadow-card h-fit sticky top-24 filter-sidebar">
+          <div class="lg:w-1/4 bg-gray-50 p-6 rounded-lg shadow-card h-fit sticky top-24 filter-sidebar" id="filterSidebar">
             
             <h3 class="text-xl font-bold mb-4 mt-4">Фильтры</h3>
             
@@ -1111,37 +1157,132 @@
           <h2 class="text-2xl font-bold">Админ-панель AirComfort</h2>
           <a href="#" onclick="closeAdminPanel(); return false;" class="text-gray-600 hover:text-gray-900"><i class="ri-close-line ri-2x"></i></a>
         </div>
-        <div class="mb-8 p-4 bg-yellow-50 border border-yellow-200 rounded">
-          <h3 class="font-bold mb-2">Изменение логина/пароля</h3>
-          <p class="text-sm text-gray-600 mb-2">Текущие: admin / admin123</p>
-          <input type="text" id="admin-login" placeholder="Новый логин" class="border px-3 py-2 mr-2 rounded mb-2 w-full sm:w-auto">
-          <input type="password" id="admin-pass" placeholder="Новый пароль" class="border px-3 py-2 mr-2 rounded mb-2 w-full sm:w-auto">
-          <button onclick="changeAdminCredentials()" class="bg-primary text-white px-4 py-2 rounded-button w-full sm:w-auto">Сохранить</button>
+        
+        <!-- Вкладки -->
+        <div class="border-b border-gray-200 mb-6">
+          <nav class="flex gap-4">
+            <button onclick="switchAdminTab('products')" class="px-4 py-2 font-medium text-primary border-b-2 border-primary" id="tab-products-btn">Товары</button>
+            <button onclick="switchAdminTab('orders')" class="px-4 py-2 font-medium text-gray-500 hover:text-gray-700" id="tab-orders-btn">Заказы</button>
+            <button onclick="switchAdminTab('settings')" class="px-4 py-2 font-medium text-gray-500 hover:text-gray-700" id="tab-settings-btn">Настройки</button>
+          </nav>
         </div>
 
-        <!-- Быстрый поиск товаров -->
-        <div class="mb-4">
-          <input type="text" id="admin-search" placeholder="🔍 Быстрый поиск товаров..." class="w-full border px-4 py-2 rounded-lg" onkeyup="filterAdminProducts()">
-        </div>
-
-        <div class="grid md:grid-cols-2 gap-8">
-          <!-- Управление товарами -->
-          <div>
-            <h3 class="text-xl font-bold mb-4">Управление товарами</h3>
-            <div class="mb-4 flex flex-col sm:flex-row gap-2">
-              <button onclick="addProductForm()" class="bg-primary text-white px-4 py-2 rounded-button btn-animate">+ Добавить товар</button>
-              <button onclick="applyDiscountToAll()" class="bg-accent text-white px-4 py-2 rounded-button btn-animate">Скидка на все</button>
-            </div>
-            <div id="admin-product-list" class="space-y-2 max-h-96 overflow-y-auto"></div>
+        <!-- Вкладка Товары -->
+        <div id="admin-products-tab" class="block">
+          <div class="mb-8 p-4 bg-yellow-50 border border-yellow-200 rounded">
+            <h3 class="font-bold mb-2">Изменение логина/пароля</h3>
+            <p class="text-sm text-gray-600 mb-2">Текущие: admin / admin123</p>
+            <input type="text" id="admin-login" placeholder="Новый логин" class="border px-3 py-2 mr-2 rounded mb-2 w-full sm:w-auto">
+            <input type="password" id="admin-pass" placeholder="Новый пароль" class="border px-3 py-2 mr-2 rounded mb-2 w-full sm:w-auto">
+            <button onclick="changeAdminCredentials()" class="bg-primary text-white px-4 py-2 rounded-button w-full sm:w-auto">Сохранить</button>
           </div>
-          <!-- Заказы -->
-          <div>
-            <h3 class="text-xl font-bold mb-4">Управление заказами</h3>
-            <div id="admin-orders-list" class="space-y-2 max-h-96 overflow-y-auto"></div>
-            <div class="mt-4 p-4 bg-blue-50 rounded">
-              <h4 class="font-bold">Статистика заказов:</h4>
-              <p>Всего заказов: <span id="total-orders">0</span></p>
-              <p>Общая сумма: <span id="total-amount">0</span> BYN</p>
+
+          <!-- Фильтры для товаров -->
+          <div class="grid md:grid-cols-3 gap-4 mb-6">
+            <div>
+              <label class="block text-sm font-medium text-gray-700 mb-1">Поиск</label>
+              <input type="text" id="admin-search" placeholder="🔍 Поиск товаров..." class="w-full border px-4 py-2 rounded-lg" onkeyup="filterAdminProducts()">
+            </div>
+            <div>
+              <label class="block text-sm font-medium text-gray-700 mb-1">Категория</label>
+              <select id="admin-category-filter" onchange="filterAdminProducts()" class="w-full border px-4 py-2 rounded-lg">
+                <option value="">Все категории</option>
+                <option value="Настенные">Настенные</option>
+                <option value="Канальные">Канальные</option>
+                <option value="Мобильные">Мобильные</option>
+                <option value="Кассетные">Кассетные</option>
+                <option value="Мульти-сплит">Мульти-сплит</option>
+                <option value="Напольно-потолочные">Напольно-потолочные</option>
+              </select>
+            </div>
+            <div>
+              <label class="block text-sm font-medium text-gray-700 mb-1">Сортировка</label>
+              <select id="admin-sort" onchange="filterAdminProducts()" class="w-full border px-4 py-2 rounded-lg">
+                <option value="name">По названию</option>
+                <option value="price-asc">По цене (возр.)</option>
+                <option value="price-desc">По цене (убыв.)</option>
+              </select>
+            </div>
+          </div>
+
+          <!-- Массовые операции -->
+          <div class="mb-4 flex flex-wrap gap-2">
+            <button onclick="selectAllProducts()" class="bg-gray-200 text-gray-800 px-4 py-2 rounded-button">Выбрать все</button>
+            <button onclick="deselectAllProducts()" class="bg-gray-200 text-gray-800 px-4 py-2 rounded-button">Снять выделение</button>
+            <button onclick="deleteSelectedProducts()" class="bg-red-500 text-white px-4 py-2 rounded-button">Удалить выбранные</button>
+            <button onclick="addProductForm()" class="bg-primary text-white px-4 py-2 rounded-button btn-animate">+ Добавить товар</button>
+            <button onclick="applyDiscountToAll()" class="bg-accent text-white px-4 py-2 rounded-button btn-animate">Скидка на все</button>
+          </div>
+
+          <!-- Список товаров -->
+          <div class="bg-white rounded-lg shadow overflow-hidden">
+            <table class="min-w-full divide-y divide-gray-200">
+              <thead class="bg-gray-50">
+                <tr>
+                  <th class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">
+                    <input type="checkbox" id="select-all-products" onclick="toggleSelectAll()">
+                  </th>
+                  <th class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">Товар</th>
+                  <th class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">Категория</th>
+                  <th class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">Цена</th>
+                  <th class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">Действия</th>
+                </tr>
+              </thead>
+              <tbody id="admin-product-list" class="bg-white divide-y divide-gray-200">
+                <!-- Товары будут загружены -->
+              </tbody>
+            </table>
+          </div>
+        </div>
+
+        <!-- Вкладка Заказы -->
+        <div id="admin-orders-tab" class="hidden">
+          <!-- Фильтры для заказов -->
+          <div class="grid md:grid-cols-2 gap-4 mb-6">
+            <div>
+              <label class="block text-sm font-medium text-gray-700 mb-1">Статус заказа</label>
+              <select id="order-status-filter" onchange="filterAdminOrders()" class="w-full border px-4 py-2 rounded-lg">
+                <option value="">Все статусы</option>
+                <option value="новый">Новые</option>
+                <option value="в обработке">В обработке</option>
+                <option value="выполнен">Выполненные</option>
+                <option value="отменен">Отмененные</option>
+              </select>
+            </div>
+            <div>
+              <label class="block text-sm font-medium text-gray-700 mb-1">Поиск по клиенту</label>
+              <input type="text" id="order-search" placeholder="🔍 Имя или телефон..." class="w-full border px-4 py-2 rounded-lg" onkeyup="filterAdminOrders()">
+            </div>
+          </div>
+
+          <!-- Список заказов -->
+          <div id="admin-orders-list" class="space-y-4"></div>
+          
+          <!-- Статистика -->
+          <div class="mt-4 p-4 bg-blue-50 rounded">
+            <h4 class="font-bold">Статистика заказов:</h4>
+            <p>Всего заказов: <span id="total-orders">0</span></p>
+            <p>Общая сумма: <span id="total-amount">0</span> BYN</p>
+          </div>
+        </div>
+
+        <!-- Вкладка Настройки -->
+        <div id="admin-settings-tab" class="hidden">
+          <div class="bg-white p-6 rounded-lg shadow">
+            <h3 class="text-lg font-bold mb-4">Настройки сайта</h3>
+            <div class="space-y-4">
+              <div>
+                <label class="block text-sm font-medium text-gray-700 mb-1">Название магазина</label>
+                <input type="text" value="AirComfort" class="w-full border px-4 py-2 rounded-lg">
+              </div>
+              <div>
+                <label class="block text-sm font-medium text-gray-700 mb-1">Email для уведомлений</label>
+                <input type="email" value="aircomfortbel@gmail.com" class="w-full border px-4 py-2 rounded-lg">
+              </div>
+              <div>
+                <label class="block text-sm font-medium text-gray-700 mb-1">Телефон</label>
+                <input type="text" value="+375 (29) 105-06-94" class="w-full border px-4 py-2 rounded-lg">
+              </div>
             </div>
           </div>
         </div>
@@ -1169,11 +1310,11 @@
         <form id="edit-product-form" class="space-y-4">
           <input type="hidden" id="edit-product-id">
           <div>
-            <label class="block text-gray-700 font-medium mb-2">Название товара</label>
+            <label class="block text-gray-700 font-medium mb-2">Название товара *</label>
             <input type="text" id="edit-name" class="w-full border px-4 py-2 rounded" required>
           </div>
           <div>
-            <label class="block text-gray-700 font-medium mb-2">Цена (BYN)</label>
+            <label class="block text-gray-700 font-medium mb-2">Цена (BYN) *</label>
             <input type="number" id="edit-price" class="w-full border px-4 py-2 rounded" required>
           </div>
           <div>
@@ -1652,6 +1793,12 @@
       menu.classList.toggle('active');
     }
 
+    // Мобильные фильтры
+    function toggleMobileFilters() {
+      const sidebar = document.getElementById('filterSidebar');
+      sidebar.classList.toggle('mobile-visible');
+    }
+
     // Управление FAQ
     function toggleFaq(id) {
       const answer = document.querySelectorAll('.faq-answer')[id - 1];
@@ -1752,6 +1899,7 @@
     let cart = [];
     let orders = [];
     let adminCredentials = { login: 'admin', password: 'admin123' };
+    let selectedProducts = new Set();
 
     // Загрузка/сохранение в localStorage
     function loadProducts() {
@@ -1799,6 +1947,29 @@
         totalOrders.textContent = orders.length;
         const sum = orders.reduce((acc, order) => acc + order.total, 0);
         totalAmount.textContent = sum;
+      }
+    }
+
+    // Переключение вкладок админки
+    function switchAdminTab(tab) {
+      document.getElementById('admin-products-tab').classList.add('hidden');
+      document.getElementById('admin-orders-tab').classList.add('hidden');
+      document.getElementById('admin-settings-tab').classList.add('hidden');
+      
+      document.getElementById('tab-products-btn').classList.remove('text-primary', 'border-b-2', 'border-primary');
+      document.getElementById('tab-orders-btn').classList.remove('text-primary', 'border-b-2', 'border-primary');
+      document.getElementById('tab-settings-btn').classList.remove('text-primary', 'border-b-2', 'border-primary');
+      
+      if (tab === 'products') {
+        document.getElementById('admin-products-tab').classList.remove('hidden');
+        document.getElementById('tab-products-btn').classList.add('text-primary', 'border-b-2', 'border-primary');
+      } else if (tab === 'orders') {
+        document.getElementById('admin-orders-tab').classList.remove('hidden');
+        document.getElementById('tab-orders-btn').classList.add('text-primary', 'border-b-2', 'border-primary');
+        renderAdminOrders();
+      } else if (tab === 'settings') {
+        document.getElementById('admin-settings-tab').classList.remove('hidden');
+        document.getElementById('tab-settings-btn').classList.add('text-primary', 'border-b-2', 'border-primary');
       }
     }
 
@@ -2065,7 +2236,7 @@
         document.getElementById('admin-login-modal').style.display = 'none';
         document.getElementById('admin-panel').style.display = 'block';
         renderAdminProducts();
-        renderAdminOrders();
+        switchAdminTab('products');
       } else {
         alert('Неверный логин или пароль');
       }
@@ -2078,72 +2249,178 @@
 
     function renderAdminProducts() {
       const list = document.getElementById('admin-product-list');
+      if (!list) return;
+      
+      const categoryFilter = document.getElementById('admin-category-filter')?.value || '';
+      const searchText = document.getElementById('admin-search')?.value.toLowerCase() || '';
+      const sortBy = document.getElementById('admin-sort')?.value || 'name';
+      
+      let filteredProducts = [...products];
+      
+      if (categoryFilter) {
+        filteredProducts = filteredProducts.filter(p => p.category === categoryFilter);
+      }
+      
+      if (searchText) {
+        filteredProducts = filteredProducts.filter(p => 
+          p.name.toLowerCase().includes(searchText) || 
+          (p.description && p.description.toLowerCase().includes(searchText))
+        );
+      }
+      
+      if (sortBy === 'price-asc') {
+        filteredProducts.sort((a, b) => a.price - b.price);
+      } else if (sortBy === 'price-desc') {
+        filteredProducts.sort((a, b) => b.price - a.price);
+      } else {
+        filteredProducts.sort((a, b) => a.name.localeCompare(b.name));
+      }
+      
       list.innerHTML = '';
-      products.forEach(p => {
-        const div = document.createElement('div');
-        div.className = 'border p-2 rounded flex flex-col sm:flex-row justify-between items-start sm:items-center gap-2';
-        div.innerHTML = `
-          <div class="flex-1">
-            <span class="font-medium">${p.name}</span>
-            <span class="text-primary ml-2">${p.price} BYN</span>
-            <span class="text-sm text-gray-600 block">${p.category}</span>
-          </div>
-          <div class="flex gap-2">
-            <button onclick="openEditModal(${p.id})" class="text-blue-600 px-2 py-1 border border-blue-600 rounded hover:bg-blue-50">✏️ Ред.</button>
-            <button onclick="deleteProduct(${p.id})" class="text-red-600 px-2 py-1 border border-red-600 rounded hover:bg-red-50">🗑️ Удал.</button>
-            <button onclick="setDiscount(${p.id})" class="text-green-600 px-2 py-1 border border-green-600 rounded hover:bg-green-50">% Скидка</button>
-          </div>
+      filteredProducts.forEach(p => {
+        const row = document.createElement('tr');
+        row.innerHTML = `
+          <td class="px-6 py-4 whitespace-nowrap">
+            <input type="checkbox" class="product-checkbox" value="${p.id}" ${selectedProducts.has(p.id) ? 'checked' : ''} onchange="toggleProductSelection(${p.id})">
+          </td>
+          <td class="px-6 py-4 whitespace-nowrap">
+            <div class="text-sm font-medium text-gray-900">${p.name}</div>
+          </td>
+          <td class="px-6 py-4 whitespace-nowrap">
+            <div class="text-sm text-gray-500">${p.category}</div>
+          </td>
+          <td class="px-6 py-4 whitespace-nowrap">
+            <div class="text-sm text-gray-900">${p.price} BYN</div>
+          </td>
+          <td class="px-6 py-4 whitespace-nowrap text-sm font-medium">
+            <button onclick="openEditModal(${p.id})" class="text-blue-600 hover:text-blue-900 mr-3">✏️</button>
+            <button onclick="deleteProduct(${p.id})" class="text-red-600 hover:text-red-900 mr-3">🗑️</button>
+            <button onclick="setDiscount(${p.id})" class="text-green-600 hover:text-green-900">%</button>
+          </td>
         `;
-        list.appendChild(div);
+        list.appendChild(row);
       });
     }
 
     function filterAdminProducts() {
-      const searchText = document.getElementById('admin-search').value.toLowerCase();
-      const list = document.getElementById('admin-product-list');
-      const items = list.getElementsByTagName('div');
-      Array.from(items).forEach(item => {
-        const text = item.textContent.toLowerCase();
-        if (text.includes(searchText)) {
-          item.style.display = 'flex';
+      renderAdminProducts();
+    }
+
+    function filterAdminOrders() {
+      renderAdminOrders();
+    }
+
+    function toggleProductSelection(id) {
+      if (selectedProducts.has(id)) {
+        selectedProducts.delete(id);
+      } else {
+        selectedProducts.add(id);
+      }
+    }
+
+    function toggleSelectAll() {
+      const checkboxes = document.querySelectorAll('.product-checkbox');
+      const allChecked = document.getElementById('select-all-products').checked;
+      checkboxes.forEach(cb => {
+        cb.checked = allChecked;
+        const id = parseInt(cb.value);
+        if (allChecked) {
+          selectedProducts.add(id);
         } else {
-          item.style.display = 'none';
+          selectedProducts.delete(id);
         }
       });
     }
 
-    function renderAdminOrders() {
-      const list = document.getElementById('admin-orders-list');
-      list.innerHTML = '';
-      if (orders.length === 0) {
-        list.innerHTML = '<p class="text-gray-500">Нет заказов</p>';
+    function selectAllProducts() {
+      document.getElementById('select-all-products').checked = true;
+      toggleSelectAll();
+    }
+
+    function deselectAllProducts() {
+      document.getElementById('select-all-products').checked = false;
+      toggleSelectAll();
+    }
+
+    function deleteSelectedProducts() {
+      if (selectedProducts.size === 0) {
+        alert('Выберите товары для удаления');
         return;
       }
-      orders.forEach(o => {
+      if (confirm(`Удалить ${selectedProducts.size} товар(ов)?`)) {
+        products = products.filter(p => !selectedProducts.has(p.id));
+        selectedProducts.clear();
+        saveProducts();
+        renderAdminProducts();
+        filterProducts();
+      }
+    }
+
+    function renderAdminOrders() {
+      const list = document.getElementById('admin-orders-list');
+      if (!list) return;
+      
+      const statusFilter = document.getElementById('order-status-filter')?.value || '';
+      const searchText = document.getElementById('order-search')?.value.toLowerCase() || '';
+      
+      let filteredOrders = [...orders];
+      
+      if (statusFilter) {
+        filteredOrders = filteredOrders.filter(o => o.status === statusFilter);
+      }
+      
+      if (searchText) {
+        filteredOrders = filteredOrders.filter(o => 
+          o.customer.name.toLowerCase().includes(searchText) || 
+          o.customer.phone.includes(searchText)
+        );
+      }
+      
+      list.innerHTML = '';
+      if (filteredOrders.length === 0) {
+        list.innerHTML = '<p class="text-gray-500 text-center py-4">Нет заказов</p>';
+        return;
+      }
+      filteredOrders.forEach(o => {
         list.innerHTML += `
-          <div class="border p-2 rounded">
-            <p><strong>Заказ #${o.id}</strong> от ${o.date}</p>
-            <p>Клиент: ${o.customer.name}, ${o.customer.phone}</p>
-            <p>Адрес: ${o.customer.address}</p>
-            <p>Оплата: ${o.customer.payment || 'Наличные'}</p>
-            <p>Сумма: ${o.total} BYN, статус: ${o.status}</p>
-            <p class="text-sm">Товары: ${o.items.map(i => i.name + ' x' + i.quantity).join(', ')}</p>
-            <button onclick="updateOrderStatus(${o.id})" class="mt-2 bg-blue-500 text-white px-3 py-1 rounded text-sm">Изменить статус</button>
+          <div class="border p-4 rounded-lg hover:shadow-md transition-shadow">
+            <div class="flex flex-col sm:flex-row justify-between items-start gap-2 mb-2">
+              <span class="font-bold">Заказ #${o.id}</span>
+              <span class="text-sm text-gray-500">${o.date}</span>
+            </div>
+            <div class="grid grid-cols-1 sm:grid-cols-2 gap-2 text-sm">
+              <div><span class="font-medium">Клиент:</span> ${o.customer.name}</div>
+              <div><span class="font-medium">Телефон:</span> ${o.customer.phone}</div>
+              <div><span class="font-medium">Адрес:</span> ${o.customer.address}</div>
+              <div><span class="font-medium">Оплата:</span> ${o.customer.payment || 'Наличные'}</div>
+            </div>
+            <div class="mt-2 flex justify-between items-center">
+              <div>
+                <span class="font-medium">Сумма:</span> ${o.total} BYN
+                <span class="ml-2 px-2 py-1 bg-blue-100 text-blue-800 rounded text-xs">${o.status}</span>
+              </div>
+              <select onchange="updateOrderStatus(${o.id}, this.value)" class="border rounded px-2 py-1 text-sm">
+                <option value="новый" ${o.status === 'новый' ? 'selected' : ''}>Новый</option>
+                <option value="в обработке" ${o.status === 'в обработке' ? 'selected' : ''}>В обработке</option>
+                <option value="выполнен" ${o.status === 'выполнен' ? 'selected' : ''}>Выполнен</option>
+                <option value="отменен" ${o.status === 'отменен' ? 'selected' : ''}>Отменен</option>
+              </select>
+            </div>
+            <div class="mt-2 text-sm text-gray-600">
+              <span class="font-medium">Товары:</span> ${o.items.map(i => i.name + ' x' + i.quantity).join(', ')}
+            </div>
           </div>
         `;
       });
       updateOrderStats();
     }
 
-    function updateOrderStatus(id) {
+    function updateOrderStatus(id, newStatus) {
       const order = orders.find(o => o.id === id);
       if (order) {
-        const newStatus = prompt('Введите новый статус заказа:', order.status);
-        if (newStatus) {
-          order.status = newStatus;
-          saveOrders();
-          renderAdminOrders();
-        }
+        order.status = newStatus;
+        saveOrders();
+        renderAdminOrders();
       }
     }
 
@@ -2320,6 +2597,10 @@
       }
       checkboxes.forEach(checkbox => checkbox.addEventListener('change', calculateTotal));
       calculateTotal();
+      
+      // Проверяем хеш при загрузке
+      checkAdminHash();
+      checkProductHash();
     });
 
     // Инициализация
@@ -2327,10 +2608,6 @@
     loadOrders();
     loadCart();
     filterProducts();
-    
-    // Проверяем хеш при загрузке
-    checkAdminHash();
-    checkProductHash();
 
     // Слайдер цены
     const priceRange = document.getElementById('priceRange');
