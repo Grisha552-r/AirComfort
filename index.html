@@ -200,6 +200,7 @@
     body {
       font-family: system-ui, sans-serif;
       scroll-behavior: smooth;
+      overflow-x: hidden;
     }
 
     /* Стили для навигации */
@@ -754,12 +755,25 @@
       .cart-icon {
         margin-right: 10px;
       }
-      .product-grid {
+      #product-grid {
         grid-template-columns: 1fr !important;
       }
       .filter-sidebar {
         width: 100% !important;
         margin-bottom: 20px;
+      }
+      .container {
+        padding-left: 1rem;
+        padding-right: 1rem;
+      }
+      h1 {
+        font-size: 1.8rem !important;
+      }
+      h2 {
+        font-size: 1.5rem !important;
+      }
+      .text-lg {
+        font-size: 1rem !important;
       }
     }
   </style>
@@ -928,19 +942,6 @@
         <div class="flex flex-col lg:flex-row gap-8">
           <!-- Фильтры (сайдбар) -->
           <div class="lg:w-1/4 bg-gray-50 p-6 rounded-lg shadow-card h-fit sticky top-24 filter-sidebar">
-            <!-- Кнопка Каталог с возможностью изменения названия -->
-            <div class="filter-section">
-              <div class="filter-section-title" onclick="toggleFilterCollapse(this)">
-                <span id="catalog-title" ondblclick="editCatalogTitle()" class="text-xl font-bold cursor-pointer">Каталог</span>
-                <i class="ri-arrow-down-s-line"></i>
-              </div>
-              <div class="filter-collapse space-y-1" style="display: none;">
-                <div class="filter-option"><a href="#" class="text-primary hover:underline">Все товары</a></div>
-                <div class="filter-option"><a href="#" class="text-gray-700 hover:text-primary">Новинки</a></div>
-                <div class="filter-option"><a href="#" class="text-gray-700 hover:text-primary">Хиты продаж</a></div>
-                <div class="filter-option"><a href="#" class="text-gray-700 hover:text-primary">Распродажа</a></div>
-              </div>
-            </div>
             
             <h3 class="text-xl font-bold mb-4 mt-4">Фильтры</h3>
             
@@ -1105,7 +1106,7 @@
 
     <!-- Админ-панель (доступна только по прямой ссылке /#admin) -->
     <div id="admin-panel" class="fixed inset-0 bg-white z-50 overflow-y-auto" style="display: none;">
-      <div class="max-w-7xl mx-auto px-6 py-8">
+      <div class="max-w-7xl mx-auto px-4 sm:px-6 py-8">
         <div class="flex justify-between items-center mb-8">
           <h2 class="text-2xl font-bold">Админ-панель AirComfort</h2>
           <a href="#" onclick="closeAdminPanel(); return false;" class="text-gray-600 hover:text-gray-900"><i class="ri-close-line ri-2x"></i></a>
@@ -1113,9 +1114,9 @@
         <div class="mb-8 p-4 bg-yellow-50 border border-yellow-200 rounded">
           <h3 class="font-bold mb-2">Изменение логина/пароля</h3>
           <p class="text-sm text-gray-600 mb-2">Текущие: admin / admin123</p>
-          <input type="text" id="admin-login" placeholder="Новый логин" class="border px-3 py-2 mr-2 rounded mb-2">
-          <input type="password" id="admin-pass" placeholder="Новый пароль" class="border px-3 py-2 mr-2 rounded mb-2">
-          <button onclick="changeAdminCredentials()" class="bg-primary text-white px-4 py-2 rounded-button">Сохранить</button>
+          <input type="text" id="admin-login" placeholder="Новый логин" class="border px-3 py-2 mr-2 rounded mb-2 w-full sm:w-auto">
+          <input type="password" id="admin-pass" placeholder="Новый пароль" class="border px-3 py-2 mr-2 rounded mb-2 w-full sm:w-auto">
+          <button onclick="changeAdminCredentials()" class="bg-primary text-white px-4 py-2 rounded-button w-full sm:w-auto">Сохранить</button>
         </div>
 
         <!-- Быстрый поиск товаров -->
@@ -1127,7 +1128,7 @@
           <!-- Управление товарами -->
           <div>
             <h3 class="text-xl font-bold mb-4">Управление товарами</h3>
-            <div class="mb-4 flex gap-2">
+            <div class="mb-4 flex flex-col sm:flex-row gap-2">
               <button onclick="addProductForm()" class="bg-primary text-white px-4 py-2 rounded-button btn-animate">+ Добавить товар</button>
               <button onclick="applyDiscountToAll()" class="bg-accent text-white px-4 py-2 rounded-button btn-animate">Скидка на все</button>
             </div>
@@ -1158,6 +1159,85 @@
           <button onclick="loginAdmin()" class="flex-1 gradient-bg text-white px-4 py-2 rounded-button">Войти</button>
           <button onclick="document.getElementById('admin-login-modal').style.display='none'" class="flex-1 bg-gray-200 px-4 py-2 rounded-button">Отмена</button>
         </div>
+      </div>
+    </div>
+
+    <!-- Форма редактирования товара (модальное окно) -->
+    <div id="edit-product-modal" class="modal" style="display: none;">
+      <div class="modal-content max-w-2xl">
+        <h3 class="text-xl font-bold mb-4" id="edit-modal-title">Редактирование товара</h3>
+        <form id="edit-product-form" class="space-y-4">
+          <input type="hidden" id="edit-product-id">
+          <div>
+            <label class="block text-gray-700 font-medium mb-2">Название товара</label>
+            <input type="text" id="edit-name" class="w-full border px-4 py-2 rounded" required>
+          </div>
+          <div>
+            <label class="block text-gray-700 font-medium mb-2">Цена (BYN)</label>
+            <input type="number" id="edit-price" class="w-full border px-4 py-2 rounded" required>
+          </div>
+          <div>
+            <label class="block text-gray-700 font-medium mb-2">Площадь помещения</label>
+            <select id="edit-area" class="w-full border px-4 py-2 rounded">
+              <option value="до 20">до 20 кв.м.</option>
+              <option value="21-29">21-29 кв.м.</option>
+              <option value="30-39">30-39 кв.м.</option>
+              <option value="40-49">40-49 кв.м.</option>
+              <option value="50-69">50-69 кв.м.</option>
+              <option value="70-99">70-99 кв.м.</option>
+              <option value="100+">от 100 кв.м.</option>
+            </select>
+          </div>
+          <div>
+            <label class="block text-gray-700 font-medium mb-2">Категория</label>
+            <select id="edit-category" class="w-full border px-4 py-2 rounded">
+              <option value="Кондиционеры">Кондиционеры</option>
+              <option value="Настенные">Настенные</option>
+              <option value="Мульти-сплит">Мульти-сплит</option>
+              <option value="Мобильные">Мобильные</option>
+              <option value="Кассетные">Кассетные</option>
+              <option value="Канальные">Канальные</option>
+              <option value="Напольно-потолочные">Напольно-потолочные</option>
+            </select>
+          </div>
+          <div>
+            <label class="block text-gray-700 font-medium mb-2">Тип</label>
+            <select id="edit-type" class="w-full border px-4 py-2 rounded">
+              <option value="Настенный">Настенный</option>
+              <option value="Канальный">Канальный</option>
+              <option value="Кассетный">Кассетный</option>
+              <option value="Мобильный">Мобильный</option>
+              <option value="Напольно-потолочный">Напольно-потолочный</option>
+            </select>
+          </div>
+          <div>
+            <label class="block text-gray-700 font-medium mb-2">Инвертор</label>
+            <select id="edit-inverter" class="w-full border px-4 py-2 rounded">
+              <option value="Да">Да</option>
+              <option value="Нет">Нет</option>
+            </select>
+          </div>
+          <div>
+            <label class="block text-gray-700 font-medium mb-2">Обогрев зимой</label>
+            <input type="text" id="edit-heat" placeholder="-15" class="w-full border px-4 py-2 rounded">
+          </div>
+          <div>
+            <label class="block text-gray-700 font-medium mb-2">Краткое описание</label>
+            <textarea id="edit-description" rows="2" class="w-full border px-4 py-2 rounded"></textarea>
+          </div>
+          <div>
+            <label class="block text-gray-700 font-medium mb-2">Полное описание</label>
+            <textarea id="edit-fullDescription" rows="4" class="w-full border px-4 py-2 rounded"></textarea>
+          </div>
+          <div>
+            <label class="block text-gray-700 font-medium mb-2">Ссылка на изображение</label>
+            <input type="text" id="edit-image" class="w-full border px-4 py-2 rounded">
+          </div>
+          <div class="flex gap-2">
+            <button type="button" onclick="saveEditedProduct()" class="flex-1 gradient-bg text-white px-4 py-2 rounded-button">Сохранить</button>
+            <button type="button" onclick="document.getElementById('edit-product-modal').style.display='none'" class="flex-1 bg-gray-200 text-gray-800 px-4 py-2 rounded-button">Отмена</button>
+          </div>
+        </form>
       </div>
     </div>
 
@@ -1951,8 +2031,12 @@
         method: 'POST',
         body: formData,
         headers: { 'Accept': 'application/json' }
-      }).then(() => {
-        alert('Заказ оформлен! Мы свяжемся с вами.');
+      }).then(response => {
+        if (response.ok) {
+          alert('Заказ оформлен! Мы свяжемся с вами.');
+        } else {
+          alert('Заказ оформлен, но не удалось отправить уведомление на email. Проверьте настройки Formspree.');
+        }
       }).catch(() => {
         alert('Заказ оформлен, но не удалось отправить уведомление на email.');
       });
@@ -2005,9 +2089,9 @@
             <span class="text-sm text-gray-600 block">${p.category}</span>
           </div>
           <div class="flex gap-2">
-            <button onclick="editProduct(${p.id})" class="text-blue-600 px-2 py-1 border border-blue-600 rounded hover:bg-blue-50">✏️</button>
-            <button onclick="deleteProduct(${p.id})" class="text-red-600 px-2 py-1 border border-red-600 rounded hover:bg-red-50">🗑️</button>
-            <button onclick="setDiscount(${p.id})" class="text-green-600 px-2 py-1 border border-green-600 rounded hover:bg-green-50">%</button>
+            <button onclick="openEditModal(${p.id})" class="text-blue-600 px-2 py-1 border border-blue-600 rounded hover:bg-blue-50">✏️ Ред.</button>
+            <button onclick="deleteProduct(${p.id})" class="text-red-600 px-2 py-1 border border-red-600 rounded hover:bg-red-50">🗑️ Удал.</button>
+            <button onclick="setDiscount(${p.id})" class="text-green-600 px-2 py-1 border border-green-600 rounded hover:bg-green-50">% Скидка</button>
           </div>
         `;
         list.appendChild(div);
@@ -2108,22 +2192,46 @@
       filterProducts();
     }
 
-    function editProduct(id) {
+    function openEditModal(id) {
       const prod = products.find(p => p.id === id);
       if (!prod) return;
-      prod.name = prompt('Новое название:', prod.name) || prod.name;
-      prod.price = parseFloat(prompt('Новая цена:', prod.price)) || prod.price;
-      prod.area = prompt('Площадь:', prod.area) || prod.area;
-      prod.category = prompt('Категория:', prod.category) || prod.category;
-      prod.type = prompt('Тип:', prod.type) || prod.type;
-      prod.inverter = prompt('Инвертор:', prod.inverter) || prod.inverter;
-      prod.heat = prompt('Обогрев:', prod.heat) || prod.heat;
-      prod.description = prompt('Краткое описание:', prod.description) || prod.description;
-      prod.fullDescription = prompt('Полное описание:', prod.fullDescription) || prod.fullDescription;
-      prod.image = prompt('Ссылка на изображение:', prod.image) || prod.image;
+      
+      document.getElementById('edit-product-id').value = prod.id;
+      document.getElementById('edit-name').value = prod.name;
+      document.getElementById('edit-price').value = prod.price;
+      document.getElementById('edit-area').value = prod.area || 'до 20';
+      document.getElementById('edit-category').value = prod.category || 'Настенные';
+      document.getElementById('edit-type').value = prod.type || 'Настенный';
+      document.getElementById('edit-inverter').value = prod.inverter || 'Да';
+      document.getElementById('edit-heat').value = prod.heat || '-15';
+      document.getElementById('edit-description').value = prod.description || '';
+      document.getElementById('edit-fullDescription').value = prod.fullDescription || '';
+      document.getElementById('edit-image').value = prod.image || '';
+      
+      document.getElementById('edit-product-modal').style.display = 'flex';
+    }
+
+    function saveEditedProduct() {
+      const id = parseInt(document.getElementById('edit-product-id').value);
+      const prod = products.find(p => p.id === id);
+      if (!prod) return;
+      
+      prod.name = document.getElementById('edit-name').value;
+      prod.price = parseFloat(document.getElementById('edit-price').value);
+      prod.area = document.getElementById('edit-area').value;
+      prod.category = document.getElementById('edit-category').value;
+      prod.type = document.getElementById('edit-type').value;
+      prod.inverter = document.getElementById('edit-inverter').value;
+      prod.heat = document.getElementById('edit-heat').value;
+      prod.description = document.getElementById('edit-description').value;
+      prod.fullDescription = document.getElementById('edit-fullDescription').value;
+      prod.image = document.getElementById('edit-image').value;
+      
       saveProducts();
       renderAdminProducts();
       filterProducts();
+      document.getElementById('edit-product-modal').style.display = 'none';
+      alert('Товар сохранен');
     }
 
     function deleteProduct(id) {
@@ -2151,15 +2259,6 @@
         } else {
           content.style.display = 'none';
         }
-      }
-    }
-
-    // Редактирование названия каталога
-    function editCatalogTitle() {
-      const titleSpan = document.getElementById('catalog-title');
-      const newTitle = prompt('Введите новое название каталога:', titleSpan.textContent);
-      if (newTitle) {
-        titleSpan.textContent = newTitle;
       }
     }
 
