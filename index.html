@@ -1016,7 +1016,7 @@
               </div>
             </div>
 
-            <!-- Категории (удалена галочка "Кондиционеры") -->
+            <!-- Категории -->
             <div class="filter-section">
               <div class="filter-section-title" onclick="toggleFilterCollapse(this)">
                 <span>Категории</span>
@@ -1172,12 +1172,96 @@
         </div>
         
         <!-- Вкладки -->
-        <div class="border-b border-gray-200 mb-6">
-          <nav class="flex gap-4">
+        <div class="border-b border-gray-200 mb-6 overflow-x-auto">
+          <nav class="flex gap-4 min-w-max">
+            <button onclick="switchAdminTab('dashboard')" class="px-4 py-2 font-medium text-gray-500 hover:text-gray-700" id="tab-dashboard-btn">Дашборд</button>
             <button onclick="switchAdminTab('products')" class="px-4 py-2 font-medium text-primary border-b-2 border-primary" id="tab-products-btn">Товары</button>
             <button onclick="switchAdminTab('orders')" class="px-4 py-2 font-medium text-gray-500 hover:text-gray-700" id="tab-orders-btn">Заказы</button>
+            <button onclick="switchAdminTab('categories')" class="px-4 py-2 font-medium text-gray-500 hover:text-gray-700" id="tab-categories-btn">Категории</button>
+            <button onclick="switchAdminTab('customers')" class="px-4 py-2 font-medium text-gray-500 hover:text-gray-700" id="tab-customers-btn">Клиенты</button>
+            <button onclick="switchAdminTab('reports')" class="px-4 py-2 font-medium text-gray-500 hover:text-gray-700" id="tab-reports-btn">Отчеты</button>
             <button onclick="switchAdminTab('settings')" class="px-4 py-2 font-medium text-gray-500 hover:text-gray-700" id="tab-settings-btn">Настройки</button>
+            <button onclick="switchAdminTab('logs')" class="px-4 py-2 font-medium text-gray-500 hover:text-gray-700" id="tab-logs-btn">Логи</button>
           </nav>
+        </div>
+
+        <!-- Вкладка Дашборд -->
+        <div id="admin-dashboard-tab" class="hidden">
+          <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-4 mb-6">
+            <div class="bg-white p-6 rounded-lg shadow border-l-4 border-primary">
+              <div class="flex justify-between items-center">
+                <div>
+                  <p class="text-sm text-gray-600">Выручка сегодня</p>
+                  <p class="text-2xl font-bold" id="dashboard-today-revenue">0 BYN</p>
+                </div>
+                <i class="ri-money-dollar-circle-line text-3xl text-primary"></i>
+              </div>
+            </div>
+            <div class="bg-white p-6 rounded-lg shadow border-l-4 border-secondary">
+              <div class="flex justify-between items-center">
+                <div>
+                  <p class="text-sm text-gray-600">Заказов сегодня</p>
+                  <p class="text-2xl font-bold" id="dashboard-today-orders">0</p>
+                </div>
+                <i class="ri-shopping-cart-line text-3xl text-secondary"></i>
+              </div>
+            </div>
+            <div class="bg-white p-6 rounded-lg shadow border-l-4 border-accent">
+              <div class="flex justify-between items-center">
+                <div>
+                  <p class="text-sm text-gray-600">Всего товаров</p>
+                  <p class="text-2xl font-bold" id="dashboard-total-products">0</p>
+                </div>
+                <i class="ri-stack-line text-3xl text-accent"></i>
+              </div>
+            </div>
+            <div class="bg-white p-6 rounded-lg shadow border-l-4 border-green-500">
+              <div class="flex justify-between items-center">
+                <div>
+                  <p class="text-sm text-gray-600">Ср. чек</p>
+                  <p class="text-2xl font-bold" id="dashboard-average-order">0 BYN</p>
+                </div>
+                <i class="ri-bar-chart-line text-3xl text-green-500"></i>
+              </div>
+            </div>
+          </div>
+
+          <div class="grid grid-cols-1 lg:grid-cols-2 gap-6 mb-6">
+            <div class="bg-white p-6 rounded-lg shadow">
+              <h3 class="text-lg font-bold mb-4">Популярные товары</h3>
+              <div id="dashboard-top-products" class="space-y-3">
+                <!-- Будут загружены через JS -->
+              </div>
+            </div>
+            <div class="bg-white p-6 rounded-lg shadow">
+              <h3 class="text-lg font-bold mb-4">Статистика заказов</h3>
+              <div class="space-y-3">
+                <div class="flex justify-between items-center">
+                  <span>Новые</span>
+                  <span class="font-bold" id="stats-new">0</span>
+                </div>
+                <div class="flex justify-between items-center">
+                  <span>В обработке</span>
+                  <span class="font-bold" id="stats-processing">0</span>
+                </div>
+                <div class="flex justify-between items-center">
+                  <span>Выполненные</span>
+                  <span class="font-bold" id="stats-completed">0</span>
+                </div>
+                <div class="flex justify-between items-center">
+                  <span>Отмененные</span>
+                  <span class="font-bold" id="stats-cancelled">0</span>
+                </div>
+              </div>
+            </div>
+          </div>
+
+          <div class="bg-white p-6 rounded-lg shadow">
+            <h3 class="text-lg font-bold mb-4">Последние действия</h3>
+            <div id="recent-actions" class="space-y-2">
+              <!-- Будут загружены через JS -->
+            </div>
+          </div>
         </div>
 
         <!-- Вкладка Товары -->
@@ -1185,13 +1269,15 @@
           <div class="mb-6 p-4 bg-yellow-50 border border-yellow-200 rounded">
             <h3 class="font-bold mb-2">Изменение логина/пароля</h3>
             <p class="text-sm text-gray-600 mb-2">Текущие: admin / admin123</p>
-            <input type="text" id="admin-login" placeholder="Новый логин" class="border px-3 py-2 mr-2 rounded mb-2 w-full sm:w-auto">
-            <input type="password" id="admin-pass" placeholder="Новый пароль" class="border px-3 py-2 mr-2 rounded mb-2 w-full sm:w-auto">
-            <button onclick="changeAdminCredentials()" class="bg-primary text-white px-4 py-2 rounded-button w-full sm:w-auto">Сохранить</button>
+            <div class="flex flex-wrap gap-2">
+              <input type="text" id="admin-login" placeholder="Новый логин" class="border px-3 py-2 rounded w-full sm:w-auto">
+              <input type="password" id="admin-pass" placeholder="Новый пароль" class="border px-3 py-2 rounded w-full sm:w-auto">
+              <button onclick="changeAdminCredentials()" class="bg-primary text-white px-4 py-2 rounded-button">Сохранить</button>
+            </div>
           </div>
 
           <!-- Фильтры для товаров -->
-          <div class="grid md:grid-cols-3 gap-4 mb-6">
+          <div class="grid grid-cols-1 md:grid-cols-4 gap-4 mb-6">
             <div>
               <label class="block text-sm font-medium text-gray-700 mb-1">Поиск</label>
               <input type="text" id="admin-search" placeholder="🔍 Поиск товаров..." class="w-full border px-4 py-2 rounded-lg" onkeyup="filterAdminProducts()">
@@ -1209,11 +1295,20 @@
               </select>
             </div>
             <div>
+              <label class="block text-sm font-medium text-gray-700 mb-1">Статус</label>
+              <select id="admin-status-filter" onchange="filterAdminProducts()" class="w-full border px-4 py-2 rounded-lg">
+                <option value="">Все</option>
+                <option value="active">Активные</option>
+                <option value="inactive">Неактивные</option>
+              </select>
+            </div>
+            <div>
               <label class="block text-sm font-medium text-gray-700 mb-1">Сортировка</label>
               <select id="admin-sort" onchange="filterAdminProducts()" class="w-full border px-4 py-2 rounded-lg">
                 <option value="name">По названию</option>
                 <option value="price-asc">По цене (возр.)</option>
                 <option value="price-desc">По цене (убыв.)</option>
+                <option value="date">По дате</option>
               </select>
             </div>
           </div>
@@ -1223,6 +1318,12 @@
             <button onclick="selectAllProducts()" class="bg-gray-200 text-gray-800 px-4 py-2 rounded-button">Выбрать все</button>
             <button onclick="deselectAllProducts()" class="bg-gray-200 text-gray-800 px-4 py-2 rounded-button">Снять выделение</button>
             <button onclick="deleteSelectedProducts()" class="bg-red-500 text-white px-4 py-2 rounded-button">Удалить выбранные</button>
+            <button onclick="bulkEditProducts()" class="bg-blue-500 text-white px-4 py-2 rounded-button">Массовое редактирование</button>
+            <button onclick="exportProducts()" class="bg-green-500 text-white px-4 py-2 rounded-button">Экспорт в Excel</button>
+            <label class="bg-purple-500 text-white px-4 py-2 rounded-button cursor-pointer">
+              Импорт из Excel
+              <input type="file" accept=".xlsx,.xls,.csv" class="hidden" onchange="importProducts(this)">
+            </label>
             <button onclick="addProductForm()" class="bg-primary text-white px-4 py-2 rounded-button btn-animate">+ Добавить товар</button>
           </div>
 
@@ -1231,13 +1332,15 @@
             <table class="min-w-full divide-y divide-gray-200">
               <thead class="bg-gray-50">
                 <tr>
-                  <th class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">
+                  <th class="px-4 sm:px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">
                     <input type="checkbox" id="select-all-products" onclick="toggleSelectAll()">
                   </th>
-                  <th class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">Товар</th>
-                  <th class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">Категория</th>
-                  <th class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">Цена</th>
-                  <th class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">Действия</th>
+                  <th class="px-4 sm:px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">Изображение</th>
+                  <th class="px-4 sm:px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">Товар</th>
+                  <th class="px-4 sm:px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">Категория</th>
+                  <th class="px-4 sm:px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">Цена</th>
+                  <th class="px-4 sm:px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">Статус</th>
+                  <th class="px-4 sm:px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">Действия</th>
                 </tr>
               </thead>
               <tbody id="admin-product-list" class="bg-white divide-y divide-gray-200">
@@ -1250,7 +1353,7 @@
         <!-- Вкладка Заказы -->
         <div id="admin-orders-tab" class="hidden">
           <!-- Фильтры для заказов -->
-          <div class="grid md:grid-cols-2 gap-4 mb-6">
+          <div class="grid grid-cols-1 md:grid-cols-3 gap-4 mb-6">
             <div>
               <label class="block text-sm font-medium text-gray-700 mb-1">Статус заказа</label>
               <select id="order-status-filter" onchange="filterAdminOrders()" class="w-full border px-4 py-2 rounded-lg">
@@ -1265,11 +1368,17 @@
               <label class="block text-sm font-medium text-gray-700 mb-1">Поиск по клиенту</label>
               <input type="text" id="order-search" placeholder="🔍 Имя или телефон..." class="w-full border px-4 py-2 rounded-lg" onkeyup="filterAdminOrders()">
             </div>
+            <div>
+              <label class="block text-sm font-medium text-gray-700 mb-1">Дата</label>
+              <input type="date" id="order-date-filter" class="w-full border px-4 py-2 rounded-lg" onchange="filterAdminOrders()">
+            </div>
           </div>
 
-          <!-- Кнопка удаления всех заказов -->
-          <div class="mb-4">
+          <!-- Кнопки массовых операций -->
+          <div class="mb-4 flex flex-wrap gap-2">
             <button onclick="deleteAllOrders()" class="bg-red-500 text-white px-4 py-2 rounded-button">Удалить все заказы</button>
+            <button onclick="exportOrders()" class="bg-green-500 text-white px-4 py-2 rounded-button">Экспорт в Excel</button>
+            <button onclick="bulkUpdateOrderStatus()" class="bg-blue-500 text-white px-4 py-2 rounded-button">Изменить статус выбранных</button>
           </div>
 
           <!-- Список заказов -->
@@ -1283,6 +1392,62 @@
           </div>
         </div>
 
+        <!-- Вкладка Категории -->
+        <div id="admin-categories-tab" class="hidden">
+          <div class="mb-4">
+            <button onclick="addCategory()" class="bg-primary text-white px-4 py-2 rounded-button">+ Добавить категорию</button>
+          </div>
+          <div id="categories-list" class="bg-white rounded-lg shadow p-4">
+            <!-- Категории будут загружены через JS -->
+          </div>
+        </div>
+
+        <!-- Вкладка Клиенты -->
+        <div id="admin-customers-tab" class="hidden">
+          <div class="grid grid-cols-1 md:grid-cols-2 gap-4 mb-6">
+            <div>
+              <input type="text" id="customer-search" placeholder="🔍 Поиск клиентов..." class="w-full border px-4 py-2 rounded-lg" onkeyup="filterCustomers()">
+            </div>
+          </div>
+          <div id="customers-list" class="bg-white rounded-lg shadow p-4">
+            <!-- Клиенты будут загружены через JS -->
+          </div>
+        </div>
+
+        <!-- Вкладка Отчеты -->
+        <div id="admin-reports-tab" class="hidden">
+          <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
+            <div class="bg-white p-6 rounded-lg shadow">
+              <h3 class="text-lg font-bold mb-4">Отчет по продажам</h3>
+              <div class="space-y-3">
+                <div class="flex justify-between">
+                  <span>За сегодня:</span>
+                  <span class="font-bold" id="report-today">0 BYN</span>
+                </div>
+                <div class="flex justify-between">
+                  <span>За неделю:</span>
+                  <span class="font-bold" id="report-week">0 BYN</span>
+                </div>
+                <div class="flex justify-between">
+                  <span>За месяц:</span>
+                  <span class="font-bold" id="report-month">0 BYN</span>
+                </div>
+                <div class="flex justify-between">
+                  <span>За год:</span>
+                  <span class="font-bold" id="report-year">0 BYN</span>
+                </div>
+              </div>
+              <button onclick="generateFullReport()" class="mt-4 w-full bg-primary text-white px-4 py-2 rounded-button">Сформировать полный отчет</button>
+            </div>
+            <div class="bg-white p-6 rounded-lg shadow">
+              <h3 class="text-lg font-bold mb-4">Топ-10 товаров</h3>
+              <div id="top-products-report" class="space-y-2">
+                <!-- Будут загружены -->
+              </div>
+            </div>
+          </div>
+        </div>
+
         <!-- Вкладка Настройки -->
         <div id="admin-settings-tab" class="hidden">
           <div class="bg-white p-6 rounded-lg shadow">
@@ -1290,23 +1455,87 @@
             <div class="space-y-4">
               <div>
                 <label class="block text-sm font-medium text-gray-700 mb-1">Название магазина</label>
-                <input type="text" value="AirComfort" class="w-full border px-4 py-2 rounded-lg">
+                <input type="text" id="site-name" value="AirComfort" class="w-full border px-4 py-2 rounded-lg">
               </div>
               <div>
                 <label class="block text-sm font-medium text-gray-700 mb-1">Email для уведомлений</label>
-                <input type="email" value="aircomfortbel@gmail.com" class="w-full border px-4 py-2 rounded-lg">
+                <input type="email" id="site-email" value="aircomfortbel@gmail.com" class="w-full border px-4 py-2 rounded-lg">
               </div>
               <div>
                 <label class="block text-sm font-medium text-gray-700 mb-1">Телефон</label>
-                <input type="text" value="+375 (29) 105-06-94" class="w-full border px-4 py-2 rounded-lg">
+                <input type="text" id="site-phone" value="+375 (29) 105-06-94" class="w-full border px-4 py-2 rounded-lg">
               </div>
+              <div>
+                <label class="block text-sm font-medium text-gray-700 mb-1">Адрес</label>
+                <input type="text" id="site-address" value="г. Гомель" class="w-full border px-4 py-2 rounded-lg">
+              </div>
+              <div>
+                <label class="block text-sm font-medium text-gray-700 mb-1">Валюта</label>
+                <select id="site-currency" class="w-full border px-4 py-2 rounded-lg">
+                  <option value="BYN">BYN</option>
+                  <option value="USD">USD</option>
+                  <option value="EUR">EUR</option>
+                  <option value="RUB">RUB</option>
+                </select>
+              </div>
+              <div>
+                <label class="block text-sm font-medium text-gray-700 mb-1">Способы доставки</label>
+                <div class="space-y-2">
+                  <label class="flex items-center">
+                    <input type="checkbox" checked class="mr-2"> Самовывоз
+                  </label>
+                  <label class="flex items-center">
+                    <input type="checkbox" checked class="mr-2"> Курьером по городу
+                  </label>
+                  <label class="flex items-center">
+                    <input type="checkbox" class="mr-2"> Почтой по РБ
+                  </label>
+                </div>
+              </div>
+              <div>
+                <label class="block text-sm font-medium text-gray-700 mb-1">Способы оплаты</label>
+                <div class="space-y-2">
+                  <label class="flex items-center">
+                    <input type="checkbox" checked class="mr-2"> Наличные
+                  </label>
+                  <label class="flex items-center">
+                    <input type="checkbox" checked class="mr-2"> Картой онлайн
+                  </label>
+                  <label class="flex items-center">
+                    <input type="checkbox" checked class="mr-2"> Безналичный расчет
+                  </label>
+                </div>
+              </div>
+              <div>
+                <label class="block text-sm font-medium text-gray-700 mb-1">SEO настройки</label>
+                <textarea id="site-seo" rows="3" class="w-full border px-4 py-2 rounded-lg" placeholder="Мета-теги по умолчанию"></textarea>
+              </div>
+              <button onclick="saveSettings()" class="bg-primary text-white px-6 py-2 rounded-button">Сохранить настройки</button>
+            </div>
+          </div>
+        </div>
+
+        <!-- Вкладка Логи -->
+        <div id="admin-logs-tab" class="hidden">
+          <div class="bg-white p-6 rounded-lg shadow">
+            <h3 class="text-lg font-bold mb-4">История действий</h3>
+            <div class="mb-4">
+              <select id="log-filter" onchange="filterLogs()" class="border px-4 py-2 rounded-lg">
+                <option value="">Все действия</option>
+                <option value="product">Товары</option>
+                <option value="order">Заказы</option>
+                <option value="user">Пользователи</option>
+              </select>
+            </div>
+            <div id="logs-list" class="space-y-2 max-h-96 overflow-y-auto">
+              <!-- Логи будут загружены -->
             </div>
           </div>
         </div>
       </div>
     </div>
 
-    <!-- Форма входа в админку (скрытая, доступна только по ссылке) -->
+    <!-- Форма входа в админку -->
     <div id="admin-login-modal" class="modal" style="display: none;">
       <div class="modal-content">
         <h3 class="text-xl font-bold mb-4">Вход в админ-панель</h3>
@@ -1320,7 +1549,7 @@
       </div>
     </div>
 
-    <!-- Форма редактирования товара (модальное окно) -->
+    <!-- Форма редактирования товара -->
     <div id="edit-product-modal" class="modal" style="display: none;">
       <div class="modal-content max-w-2xl">
         <h3 class="text-xl font-bold mb-4" id="edit-modal-title">Редактирование товара</h3>
@@ -1333,6 +1562,20 @@
           <div>
             <label class="block text-gray-700 font-medium mb-2">Цена (BYN) *</label>
             <input type="number" id="edit-price" class="w-full border px-4 py-2 rounded" required>
+          </div>
+          <div>
+            <label class="block text-gray-700 font-medium mb-2">Старая цена (для скидки)</label>
+            <input type="number" id="edit-old-price" class="w-full border px-4 py-2 rounded">
+          </div>
+          <div>
+            <label class="block text-gray-700 font-medium mb-2">Количество на складе</label>
+            <input type="number" id="edit-stock" value="10" class="w-full border px-4 py-2 rounded">
+          </div>
+          <div>
+            <label class="block text-gray-700 font-medium mb-2">Загрузить изображение</label>
+            <input type="file" id="edit-image-file" accept="image/*" class="w-full border px-4 py-2 rounded" onchange="previewImage(this)">
+            <input type="hidden" id="edit-image">
+            <div id="image-preview" class="mt-2"></div>
           </div>
           <div>
             <label class="block text-gray-700 font-medium mb-2">Площадь помещения</label>
@@ -1349,12 +1592,11 @@
           <div>
             <label class="block text-gray-700 font-medium mb-2">Категория</label>
             <select id="edit-category" class="w-full border px-4 py-2 rounded">
-              <option value="Кондиционеры">Кондиционеры</option>
               <option value="Настенные">Настенные</option>
-              <option value="Мульти-сплит">Мульти-сплит</option>
+              <option value="Канальные">Канальные</option>
               <option value="Мобильные">Мобильные</option>
               <option value="Кассетные">Кассетные</option>
-              <option value="Канальные">Канальные</option>
+              <option value="Мульти-сплит">Мульти-сплит</option>
               <option value="Напольно-потолочные">Напольно-потолочные</option>
             </select>
           </div>
@@ -1380,6 +1622,20 @@
             <input type="text" id="edit-heat" placeholder="-15" class="w-full border px-4 py-2 rounded">
           </div>
           <div>
+            <label class="block text-gray-700 font-medium mb-2">Теги (хит, новинка, распродажа)</label>
+            <div class="flex gap-2">
+              <label class="flex items-center">
+                <input type="checkbox" id="edit-tag-hit" class="mr-1"> Хит
+              </label>
+              <label class="flex items-center">
+                <input type="checkbox" id="edit-tag-new" class="mr-1"> Новинка
+              </label>
+              <label class="flex items-center">
+                <input type="checkbox" id="edit-tag-sale" class="mr-1"> Распродажа
+              </label>
+            </div>
+          </div>
+          <div>
             <label class="block text-gray-700 font-medium mb-2">Краткое описание</label>
             <textarea id="edit-description" rows="2" class="w-full border px-4 py-2 rounded"></textarea>
           </div>
@@ -1388,8 +1644,19 @@
             <textarea id="edit-fullDescription" rows="4" class="w-full border px-4 py-2 rounded"></textarea>
           </div>
           <div>
-            <label class="block text-gray-700 font-medium mb-2">Ссылка на изображение</label>
-            <input type="text" id="edit-image" class="w-full border px-4 py-2 rounded">
+            <label class="block text-gray-700 font-medium mb-2">SEO заголовок</label>
+            <input type="text" id="edit-seo-title" class="w-full border px-4 py-2 rounded">
+          </div>
+          <div>
+            <label class="block text-gray-700 font-medium mb-2">SEO описание</label>
+            <textarea id="edit-seo-desc" rows="2" class="w-full border px-4 py-2 rounded"></textarea>
+          </div>
+          <div>
+            <label class="block text-gray-700 font-medium mb-2">Статус</label>
+            <select id="edit-status" class="w-full border px-4 py-2 rounded">
+              <option value="active">Активен</option>
+              <option value="inactive">Неактивен</option>
+            </select>
           </div>
           <div class="flex gap-2">
             <button type="button" onclick="saveEditedProduct()" class="flex-1 gradient-bg text-white px-4 py-2 rounded-button">Сохранить</button>
@@ -1845,6 +2112,8 @@
         id: 1, 
         name: 'Ballu BSO-07HN1', 
         price: 850, 
+        oldPrice: 950,
+        stock: 5,
         area: 'до 20', 
         category: 'Настенные', 
         type: 'Настенный', 
@@ -1852,12 +2121,19 @@
         heat: '-7', 
         description: 'Надежный кондиционер для небольших помещений. Энергосберегающий режим.',
         fullDescription: 'Ballu BSO-07HN1 - это надежная сплит-система для небольших помещений до 20 м². Оснащена энергосберегающим режимом, низким уровнем шума и простым управлением. Идеально подходит для спальни или небольшого офиса. Гарантия 5 лет.',
-        image: 'https://via.placeholder.com/200x150?text=Ballu+BSO-07HN1' 
+        image: 'https://via.placeholder.com/200x150?text=Ballu+BSO-07HN1',
+        tags: ['хит'],
+        status: 'active',
+        seoTitle: 'Ballu BSO-07HN1 купить в Гомеле',
+        seoDesc: 'Ballu BSO-07HN1 - надежный кондиционер для дома и офиса',
+        createdAt: new Date().toISOString()
       },
       { 
         id: 2, 
         name: 'Electrolux EACS-07HAT/N3', 
         price: 1100, 
+        oldPrice: null,
+        stock: 3,
         area: '21-29', 
         category: 'Настенные', 
         type: 'Настенный', 
@@ -1865,12 +2141,19 @@
         heat: '-15', 
         description: 'Инверторная модель с низким уровнем шума. Идеально для спальни.',
         fullDescription: 'Electrolux EACS-07HAT/N3 - инверторный кондиционер с низким уровнем шума (22 дБ) и высокой энергоэффективностью. Обеспечивает быстрое охлаждение и обогрев, поддерживает заданную температуру с точностью до 0.5°C. Имеет функцию самодиагностики и автоматического перезапуска.',
-        image: 'https://via.placeholder.com/200x150?text=Electrolux' 
+        image: 'https://via.placeholder.com/200x150?text=Electrolux',
+        tags: ['новинка'],
+        status: 'active',
+        seoTitle: 'Electrolux EACS-07HAT/N3 купить в Гомеле',
+        seoDesc: 'Инверторный кондиционер Electrolux с низким уровнем шума',
+        createdAt: new Date().toISOString()
       },
       { 
         id: 3, 
         name: 'LG P09EP', 
         price: 1450, 
+        oldPrice: 1650,
+        stock: 2,
         area: '30-39', 
         category: 'Настенные', 
         type: 'Настенный', 
@@ -1878,12 +2161,19 @@
         heat: '-10', 
         description: 'Современный дизайн, Wi-Fi управление, мощный обогрев.',
         fullDescription: 'LG P09EP - современный кондиционер с Wi-Fi управлением через приложение. Имеет стильный дизайн, мощный обогрев до -10°C, низкое энергопотребление. Оснащен плазменным фильтром для очистки воздуха от аллергенов и бактерий.',
-        image: 'https://via.placeholder.com/200x150?text=LG+P09EP' 
+        image: 'https://via.placeholder.com/200x150?text=LG+P09EP',
+        tags: ['распродажа'],
+        status: 'active',
+        seoTitle: 'LG P09EP купить в Гомеле',
+        seoDesc: 'Кондиционер LG с Wi-Fi управлением',
+        createdAt: new Date().toISOString()
       },
       { 
         id: 4, 
         name: 'Mitsubishi MSZ-LN25VG', 
         price: 2450, 
+        oldPrice: null,
+        stock: 1,
         area: '40-49', 
         category: 'Настенные', 
         type: 'Настенный', 
@@ -1891,12 +2181,19 @@
         heat: '-20', 
         description: 'Премиум-класс, максимальная энергоэффективность, тихая работа.',
         fullDescription: 'Mitsubishi MSZ-LN25VG - премиальная сплит-система с максимальной энергоэффективностью класса A+++. Оснащена 3D-датчиком движения для направления потока воздуха, имеет уровень шоса всего 19 дБ. Работает на обогрев до -20°C. Управление со смартфона.',
-        image: 'https://via.placeholder.com/200x150?text=Mitsubishi' 
+        image: 'https://via.placeholder.com/200x150?text=Mitsubishi',
+        tags: [],
+        status: 'active',
+        seoTitle: 'Mitsubishi MSZ-LN25VG купить в Гомеле',
+        seoDesc: 'Премиальный кондиционер Mitsubishi',
+        createdAt: new Date().toISOString()
       },
       { 
         id: 5, 
         name: 'Канальный кондиционер', 
         price: 3200, 
+        oldPrice: null,
+        stock: 4,
         area: '70-99', 
         category: 'Канальные', 
         type: 'Канальный', 
@@ -1904,12 +2201,19 @@
         heat: '-25', 
         description: 'Для скрытого монтажа, равномерное распределение воздуха.',
         fullDescription: 'Канальный кондиционер предназначен для скрытого монтажа за подвесным потолком. Обеспечивает равномерное распределение воздуха по помещению. Идеально подходит для офисов, магазинов, ресторанов. Мощность достаточна для помещений до 100 м².',
-        image: 'https://via.placeholder.com/200x150?text=Duct' 
+        image: 'https://via.placeholder.com/200x150?text=Duct',
+        tags: [],
+        status: 'active',
+        seoTitle: 'Канальный кондиционер купить в Гомеле',
+        seoDesc: 'Канальный кондиционер для скрытого монтажа',
+        createdAt: new Date().toISOString()
       },
       { 
         id: 6, 
         name: 'Мобильный кондиционер', 
         price: 620, 
+        oldPrice: 720,
+        stock: 8,
         area: 'до 20', 
         category: 'Мобильные', 
         type: 'Мобильный', 
@@ -1917,7 +2221,12 @@
         heat: '-7', 
         description: 'Мобильный моноблок, не требует установки. Подходит для аренды.',
         fullDescription: 'Мобильный кондиционер - идеальное решение для арендованных помещений или там, где невозможна установка стационарной сплит-системы. Не требует монтажа, достаточно вывести гибкий воздуховод в окно. Прост в перемещении и обслуживании.',
-        image: 'https://via.placeholder.com/200x150?text=Mobile' 
+        image: 'https://via.placeholder.com/200x150?text=Mobile',
+        tags: ['хит', 'распродажа'],
+        status: 'active',
+        seoTitle: 'Мобильный кондиционер купить в Гомеле',
+        seoDesc: 'Мобильный кондиционер не требующий установки',
+        createdAt: new Date().toISOString()
       },
     ];
 
@@ -1925,6 +2234,7 @@
     let orders = [];
     let adminCredentials = { login: 'admin', password: 'admin123' };
     let selectedProducts = new Set();
+    let actionLogs = [];
 
     // Загрузка/сохранение в localStorage
     function loadProducts() {
@@ -1933,15 +2243,19 @@
     }
     function saveProducts() {
       localStorage.setItem('aircom_products', JSON.stringify(products));
+      addLog('product', 'Обновлен список товаров');
     }
     function loadOrders() {
       const stored = localStorage.getItem('aircom_orders');
       if (stored) orders = JSON.parse(stored);
       updateOrderStats();
+      updateDashboard();
     }
     function saveOrders() {
       localStorage.setItem('aircom_orders', JSON.stringify(orders));
       updateOrderStats();
+      updateDashboard();
+      addLog('order', 'Обновлен список заказов');
     }
     function loadCart() {
       const stored = localStorage.getItem('aircom_cart');
@@ -1951,6 +2265,23 @@
     function saveCart() {
       localStorage.setItem('aircom_cart', JSON.stringify(cart));
       updateCartBadge();
+    }
+    function loadLogs() {
+      const stored = localStorage.getItem('aircom_logs');
+      if (stored) actionLogs = JSON.parse(stored);
+    }
+    function saveLogs() {
+      localStorage.setItem('aircom_logs', JSON.stringify(actionLogs));
+    }
+    function addLog(type, action) {
+      actionLogs.unshift({
+        type,
+        action,
+        time: new Date().toLocaleString(),
+        user: 'admin'
+      });
+      if (actionLogs.length > 100) actionLogs.pop();
+      saveLogs();
     }
     function updateCartBadge() {
       const count = cart.reduce((acc, item) => acc + item.quantity, 0);
@@ -1975,27 +2306,73 @@
       }
     }
 
+    function updateDashboard() {
+      // Обновление дашборда
+      const today = new Date().toDateString();
+      const todayOrders = orders.filter(o => new Date(o.date).toDateString() === today);
+      const todayRevenue = todayOrders.reduce((sum, o) => sum + o.total, 0);
+      
+      document.getElementById('dashboard-today-revenue').textContent = todayRevenue + ' BYN';
+      document.getElementById('dashboard-today-orders').textContent = todayOrders.length;
+      document.getElementById('dashboard-total-products').textContent = products.length;
+      
+      const avg = orders.length ? Math.round(orders.reduce((sum, o) => sum + o.total, 0) / orders.length) : 0;
+      document.getElementById('dashboard-average-order').textContent = avg + ' BYN';
+      
+      // Статистика по статусам
+      document.getElementById('stats-new').textContent = orders.filter(o => o.status === 'новый').length;
+      document.getElementById('stats-processing').textContent = orders.filter(o => o.status === 'в обработке').length;
+      document.getElementById('stats-completed').textContent = orders.filter(o => o.status === 'выполнен').length;
+      document.getElementById('stats-cancelled').textContent = orders.filter(o => o.status === 'отменен').length;
+      
+      // Топ товаров
+      const productSales = {};
+      orders.forEach(o => {
+        o.items.forEach(i => {
+          productSales[i.name] = (productSales[i.name] || 0) + i.quantity;
+        });
+      });
+      
+      const topProducts = Object.entries(productSales)
+        .sort((a, b) => b[1] - a[1])
+        .slice(0, 5);
+      
+      const topHtml = topProducts.map(([name, count]) => 
+        `<div class="flex justify-between"><span>${name}</span><span class="font-bold">${count} шт</span></div>`
+      ).join('');
+      document.getElementById('dashboard-top-products').innerHTML = topHtml || '<p class="text-gray-500">Нет данных</p>';
+      
+      // Последние действия
+      const recentHtml = actionLogs.slice(0, 5).map(log => 
+        `<div class="text-sm border-b pb-1"><span class="text-gray-500">${log.time}</span> - ${log.action}</div>`
+      ).join('');
+      document.getElementById('recent-actions').innerHTML = recentHtml || '<p class="text-gray-500">Нет действий</p>';
+    }
+
     // Переключение вкладок админки
     function switchAdminTab(tab) {
-      document.getElementById('admin-products-tab').classList.add('hidden');
-      document.getElementById('admin-orders-tab').classList.add('hidden');
-      document.getElementById('admin-settings-tab').classList.add('hidden');
+      const tabs = ['dashboard', 'products', 'orders', 'categories', 'customers', 'reports', 'settings', 'logs'];
+      tabs.forEach(t => {
+        const el = document.getElementById(`admin-${t}-tab`);
+        const btn = document.getElementById(`tab-${t}-btn`);
+        if (el) el.classList.add('hidden');
+        if (btn) {
+          btn.classList.remove('text-primary', 'border-b-2', 'border-primary');
+          btn.classList.add('text-gray-500');
+        }
+      });
       
-      document.getElementById('tab-products-btn').classList.remove('text-primary', 'border-b-2', 'border-primary');
-      document.getElementById('tab-orders-btn').classList.remove('text-primary', 'border-b-2', 'border-primary');
-      document.getElementById('tab-settings-btn').classList.remove('text-primary', 'border-b-2', 'border-primary');
-      
-      if (tab === 'products') {
-        document.getElementById('admin-products-tab').classList.remove('hidden');
-        document.getElementById('tab-products-btn').classList.add('text-primary', 'border-b-2', 'border-primary');
-      } else if (tab === 'orders') {
-        document.getElementById('admin-orders-tab').classList.remove('hidden');
-        document.getElementById('tab-orders-btn').classList.add('text-primary', 'border-b-2', 'border-primary');
-        renderAdminOrders();
-      } else if (tab === 'settings') {
-        document.getElementById('admin-settings-tab').classList.remove('hidden');
-        document.getElementById('tab-settings-btn').classList.add('text-primary', 'border-b-2', 'border-primary');
+      const currentEl = document.getElementById(`admin-${tab}-tab`);
+      const currentBtn = document.getElementById(`tab-${tab}-btn`);
+      if (currentEl) currentEl.classList.remove('hidden');
+      if (currentBtn) {
+        currentBtn.classList.remove('text-gray-500');
+        currentBtn.classList.add('text-primary', 'border-b-2', 'border-primary');
       }
+      
+      if (tab === 'products') renderAdminProducts();
+      if (tab === 'orders') renderAdminOrders();
+      if (tab === 'logs') renderLogs();
     }
 
     // Рендер каталога с фильтрацией
@@ -2025,14 +2402,24 @@
       if (!grid) return;
       grid.innerHTML = '';
       productArray.forEach(p => {
+        const priceHtml = p.oldPrice ? 
+          `<span class="text-gray-400 line-through text-sm mr-2">${p.oldPrice} BYN</span>` : '';
+        const tagsHtml = p.tags?.map(t => 
+          `<span class="inline-block bg-${t === 'хит' ? 'red' : t === 'новинка' ? 'green' : 'orange'}-100 text-${t === 'хит' ? 'red' : t === 'новинка' ? 'green' : 'orange'}-800 text-xs px-2 py-1 rounded-full mr-1">${t}</span>`
+        ).join('') || '';
+        
         const card = document.createElement('div');
         card.className = 'bg-white rounded-lg shadow-card overflow-hidden product-card';
         card.onclick = () => openProductPage(p.id);
         card.innerHTML = `
-          <img src="${p.image}" alt="${p.name}" class="w-full h-36 sm:h-40 object-cover">
+          <div class="relative">
+            <img src="${p.image}" alt="${p.name}" class="w-full h-36 sm:h-40 object-cover">
+            ${p.stock < 3 ? '<span class="absolute top-2 right-2 bg-red-500 text-white text-xs px-2 py-1 rounded-full">Мало</span>' : ''}
+          </div>
           <div class="p-3 sm:p-4 flex-grow">
+            <div class="mb-1">${tagsHtml}</div>
             <h3 class="font-bold text-base sm:text-lg mb-1">${p.name}</h3>
-            <p class="text-primary font-bold text-lg sm:text-xl mb-2">${p.price} BYN</p>
+            <div class="mb-2">${priceHtml}<span class="text-primary font-bold text-lg sm:text-xl">${p.price} BYN</span></div>
             <p class="text-xs sm:text-sm text-gray-600 mb-2 product-description">${p.description || 'Нет описания'}</p>
             <button onclick="event.stopPropagation(); addToCart(${p.id})" class="w-full gradient-bg text-white px-3 py-1.5 sm:py-2 rounded-button btn-animate text-sm">В корзину</button>
           </div>
@@ -2047,10 +2434,17 @@
       const prod = products.find(p => p.id === id);
       if (!prod) return;
       const modal = document.getElementById('product-modal');
+      const priceHtml = prod.oldPrice ? 
+        `<span class="text-gray-400 line-through text-lg mr-2">${prod.oldPrice} BYN</span>` : '';
+      const tagsHtml = prod.tags?.map(t => 
+        `<span class="inline-block bg-${t === 'хит' ? 'red' : t === 'новинка' ? 'green' : 'orange'}-100 text-${t === 'хит' ? 'red' : t === 'новинка' ? 'green' : 'orange'}-800 text-sm px-3 py-1 rounded-full mr-2">${t}</span>`
+      ).join('') || '';
+      
       document.getElementById('product-modal-detail').innerHTML = `
         <img src="${prod.image}" alt="${prod.name}" class="w-full h-40 sm:h-48 object-cover rounded mb-4">
+        <div class="mb-2">${tagsHtml}</div>
         <h3 class="text-xl sm:text-2xl font-bold mb-2">${prod.name}</h3>
-        <p class="text-primary text-lg sm:text-xl font-bold mb-2">${prod.price} BYN</p>
+        <div class="mb-2">${priceHtml}<span class="text-primary text-lg sm:text-xl font-bold">${prod.price} BYN</span></div>
         <p class="text-sm sm:text-base text-gray-700 mb-4">${prod.fullDescription || prod.description || 'Нет описания'}</p>
         <ul class="text-xs sm:text-sm text-gray-600 space-y-1">
           <li><span class="font-medium">Площадь:</span> ${prod.area} м²</li>
@@ -2058,6 +2452,7 @@
           <li><span class="font-medium">Тип:</span> ${prod.type}</li>
           <li><span class="font-medium">Инвертор:</span> ${prod.inverter}</li>
           <li><span class="font-medium">Обогрев зимой:</span> ${prod.heat}°C</li>
+          <li><span class="font-medium">Наличие:</span> ${prod.stock > 0 ? 'В наличии (' + prod.stock + ' шт)' : 'Нет в наличии'}</li>
         </ul>
         <button onclick="addToCart(${prod.id})" class="mt-4 gradient-bg text-white px-4 py-2 rounded-button btn-animate w-full">В корзину</button>
       `;
@@ -2085,9 +2480,18 @@
     function addToCart(productId) {
       const prod = products.find(p => p.id === productId);
       if (!prod) return;
+      if (prod.stock < 1) {
+        alert('Товара нет в наличии');
+        return;
+      }
       const existing = cart.find(item => item.id === productId);
       if (existing) {
-        existing.quantity++;
+        if (existing.quantity < prod.stock) {
+          existing.quantity++;
+        } else {
+          alert('Достигнуто максимальное количество на складе');
+          return;
+        }
       } else {
         cart.push({ ...prod, quantity: 1 });
       }
@@ -2143,6 +2547,9 @@
       let total = 0;
       cart.forEach(item => {
         total += item.price * item.quantity;
+        const prod = products.find(p => p.id === item.id);
+        const maxStock = prod ? prod.stock : Infinity;
+        
         html += `
           <div class="flex flex-col sm:flex-row justify-between items-start sm:items-center border-b py-2 gap-2">
             <div class="flex-1">
@@ -2152,7 +2559,7 @@
             <div class="flex items-center gap-2">
               <button onclick="changeQuantity('${item.id}', -1)" class="px-2 bg-gray-200 rounded text-sm">-</button>
               <span class="mx-2 text-sm">${item.quantity}</span>
-              <button onclick="changeQuantity('${item.id}', 1)" class="px-2 bg-gray-200 rounded text-sm">+</button>
+              <button onclick="changeQuantity('${item.id}', 1, ${maxStock})" class="px-2 bg-gray-200 rounded text-sm">+</button>
               <button onclick="removeFromCart('${item.id}')" class="ml-2 text-red-600"><i class="ri-delete-bin-line"></i></button>
             </div>
           </div>
@@ -2162,12 +2569,17 @@
       if (totalDisplay) totalDisplay.textContent = 'Общая сумма: ' + total + ' BYN';
     }
 
-    function changeQuantity(id, delta) {
+    function changeQuantity(id, delta, maxStock = Infinity) {
       const item = cart.find(i => i.id == id);
       if (item) {
-        item.quantity += delta;
-        if (item.quantity <= 0) {
+        const newQty = item.quantity + delta;
+        if (newQty <= 0) {
           cart = cart.filter(i => i.id != id);
+        } else if (newQty <= maxStock) {
+          item.quantity = newQty;
+        } else {
+          alert('Достигнуто максимальное количество на складе');
+          return;
         }
         saveCart();
         renderCartItems();
@@ -2181,9 +2593,11 @@
     }
 
     function clearCart() {
-      cart = [];
-      saveCart();
-      renderCartItems();
+      if (confirm('Очистить корзину?')) {
+        cart = [];
+        saveCart();
+        renderCartItems();
+      }
     }
 
     function checkoutCart() {
@@ -2215,6 +2629,15 @@
       orders.push(order);
       saveOrders();
       
+      // Уменьшаем количество на складе
+      cart.forEach(item => {
+        const prod = products.find(p => p.id === item.id);
+        if (prod) {
+          prod.stock -= item.quantity;
+        }
+      });
+      saveProducts();
+      
       // Отправка email через Formspree
       const formData = new FormData();
       formData.append('name', name);
@@ -2245,6 +2668,7 @@
       document.getElementById('order-name').value = '';
       document.getElementById('order-phone').value = '';
       document.getElementById('order-address').value = '';
+      addLog('order', 'Новый заказ #' + order.id);
     }
 
     // Админка (доступ по ссылке /#admin)
@@ -2254,6 +2678,25 @@
       }
     }
 
+    // Проверяем сразу при загрузке
+    (function() {
+      if (window.location.hash === '#admin') {
+        if (document.readyState === 'loading') {
+          document.addEventListener('DOMContentLoaded', () => {
+            document.getElementById('admin-login-modal').style.display = 'flex';
+          });
+        } else {
+          document.getElementById('admin-login-modal').style.display = 'flex';
+        }
+      }
+    })();
+
+    window.addEventListener('hashchange', function() {
+      if (window.location.hash === '#admin') {
+        document.getElementById('admin-login-modal').style.display = 'flex';
+      }
+    });
+
     function loginAdmin() {
       const login = document.getElementById('admin-login-input').value;
       const pass = document.getElementById('admin-pass-input').value;
@@ -2261,7 +2704,10 @@
         document.getElementById('admin-login-modal').style.display = 'none';
         document.getElementById('admin-panel').style.display = 'block';
         renderAdminProducts();
-        switchAdminTab('products');
+        switchAdminTab('dashboard');
+        updateDashboard();
+        history.pushState('', document.title, window.location.pathname);
+        addLog('user', 'Вход в админ-панель');
       } else {
         alert('Неверный логин или пароль');
       }
@@ -2277,6 +2723,7 @@
       if (!list) return;
       
       const categoryFilter = document.getElementById('admin-category-filter')?.value || '';
+      const statusFilter = document.getElementById('admin-status-filter')?.value || '';
       const searchText = document.getElementById('admin-search')?.value.toLowerCase() || '';
       const sortBy = document.getElementById('admin-sort')?.value || 'name';
       
@@ -2284,6 +2731,10 @@
       
       if (categoryFilter) {
         filteredProducts = filteredProducts.filter(p => p.category === categoryFilter);
+      }
+      
+      if (statusFilter) {
+        filteredProducts = filteredProducts.filter(p => p.status === statusFilter);
       }
       
       if (searchText) {
@@ -2297,29 +2748,44 @@
         filteredProducts.sort((a, b) => a.price - b.price);
       } else if (sortBy === 'price-desc') {
         filteredProducts.sort((a, b) => b.price - a.price);
+      } else if (sortBy === 'date') {
+        filteredProducts.sort((a, b) => new Date(b.createdAt) - new Date(a.createdAt));
       } else {
         filteredProducts.sort((a, b) => a.name.localeCompare(b.name));
       }
       
       list.innerHTML = '';
       filteredProducts.forEach(p => {
+        const tags = p.tags?.map(t => `<span class="text-xs bg-gray-100 px-2 py-1 rounded ml-1">${t}</span>`).join('') || '';
+        const statusClass = p.status === 'active' ? 'bg-green-100 text-green-800' : 'bg-gray-100 text-gray-800';
+        const stockClass = p.stock < 3 ? 'text-red-600 font-bold' : '';
+        
         const row = document.createElement('tr');
         row.innerHTML = `
           <td class="px-4 sm:px-6 py-3 sm:py-4 whitespace-nowrap">
             <input type="checkbox" class="product-checkbox" value="${p.id}" ${selectedProducts.has(p.id) ? 'checked' : ''} onchange="toggleProductSelection(${p.id})">
           </td>
           <td class="px-4 sm:px-6 py-3 sm:py-4 whitespace-nowrap">
+            <img src="${p.image}" alt="${p.name}" class="w-10 h-10 object-cover rounded">
+          </td>
+          <td class="px-4 sm:px-6 py-3 sm:py-4">
             <div class="text-xs sm:text-sm font-medium text-gray-900">${p.name}</div>
+            <div class="text-xs text-gray-500">${tags}</div>
           </td>
           <td class="px-4 sm:px-6 py-3 sm:py-4 whitespace-nowrap">
             <div class="text-xs sm:text-sm text-gray-500">${p.category}</div>
           </td>
           <td class="px-4 sm:px-6 py-3 sm:py-4 whitespace-nowrap">
             <div class="text-xs sm:text-sm text-gray-900">${p.price} BYN</div>
+            <div class="text-xs ${stockClass}">Остаток: ${p.stock}</div>
+          </td>
+          <td class="px-4 sm:px-6 py-3 sm:py-4 whitespace-nowrap">
+            <span class="px-2 py-1 text-xs rounded-full ${statusClass}">${p.status === 'active' ? 'Активен' : 'Неактивен'}</span>
           </td>
           <td class="px-4 sm:px-6 py-3 sm:py-4 whitespace-nowrap text-xs sm:text-sm font-medium">
-            <button onclick="openEditModal(${p.id})" class="text-blue-600 hover:text-blue-900 mr-2">✏️</button>
-            <button onclick="deleteProduct(${p.id})" class="text-red-600 hover:text-red-900">🗑️</button>
+            <button onclick="openEditModal(${p.id})" class="text-blue-600 hover:text-blue-900 mr-2" title="Редактировать">✏️</button>
+            <button onclick="cloneProduct(${p.id})" class="text-green-600 hover:text-green-900 mr-2" title="Копировать">📋</button>
+            <button onclick="deleteProduct(${p.id})" class="text-red-600 hover:text-red-900" title="Удалить">🗑️</button>
           </td>
         `;
         list.appendChild(row);
@@ -2377,7 +2843,105 @@
         saveProducts();
         renderAdminProducts();
         filterProducts();
+        addLog('product', `Удалено ${selectedProducts.size} товаров`);
       }
+    }
+
+    function bulkEditProducts() {
+      alert('Функция массового редактирования будет доступна в следующем обновлении');
+    }
+
+    function exportProducts() {
+      const data = products.map(p => ({
+        Название: p.name,
+        Цена: p.price,
+        Категория: p.category,
+        Тип: p.type,
+        Площадь: p.area,
+        Инвертор: p.inverter,
+        Обогрев: p.heat,
+        Описание: p.description,
+        'Полное описание': p.fullDescription,
+        Изображение: p.image,
+        Теги: p.tags?.join(', '),
+        Статус: p.status,
+        Остаток: p.stock
+      }));
+      
+      const csv = [
+        Object.keys(data[0]).join(','),
+        ...data.map(row => Object.values(row).map(v => `"${v}"`).join(','))
+      ].join('\n');
+      
+      const blob = new Blob(['\uFEFF' + csv], { type: 'text/csv;charset=utf-8;' });
+      const link = document.createElement('a');
+      link.href = URL.createObjectURL(blob);
+      link.download = 'products_export.csv';
+      link.click();
+      addLog('product', 'Экспорт товаров в CSV');
+    }
+
+    function importProducts(input) {
+      const file = input.files[0];
+      if (!file) return;
+      
+      const reader = new FileReader();
+      reader.onload = (e) => {
+        const text = e.target.result;
+        const lines = text.split('\n');
+        const headers = lines[0].split(',').map(h => h.trim());
+        
+        for (let i = 1; i < lines.length; i++) {
+          if (!lines[i].trim()) continue;
+          const values = lines[i].split(',').map(v => v.replace(/^"|"$/g, '').trim());
+          const product = {};
+          headers.forEach((h, idx) => {
+            product[h] = values[idx];
+          });
+          
+          const newProduct = {
+            id: Math.max(...products.map(p => p.id), 0) + i,
+            name: product['Название'],
+            price: parseFloat(product['Цена']),
+            area: product['Площадь'] || 'до 20',
+            category: product['Категория'] || 'Настенные',
+            type: product['Тип'] || 'Настенный',
+            inverter: product['Инвертор'] || 'Да',
+            heat: product['Обогрев'] || '-15',
+            description: product['Описание'] || '',
+            fullDescription: product['Полное описание'] || '',
+            image: product['Изображение'] || 'https://via.placeholder.com/200x150?text=New',
+            tags: product['Теги'] ? product['Теги'].split(',').map(t => t.trim()) : [],
+            status: product['Статус'] || 'active',
+            stock: parseInt(product['Остаток']) || 10,
+            createdAt: new Date().toISOString()
+          };
+          products.push(newProduct);
+        }
+        saveProducts();
+        renderAdminProducts();
+        filterProducts();
+        addLog('product', 'Импорт товаров из CSV');
+        alert('Товары импортированы');
+      };
+      reader.readAsText(file, 'UTF-8');
+    }
+
+    function cloneProduct(id) {
+      const prod = products.find(p => p.id === id);
+      if (!prod) return;
+      
+      const newProd = {
+        ...prod,
+        id: Math.max(...products.map(p => p.id), 0) + 1,
+        name: prod.name + ' (копия)',
+        createdAt: new Date().toISOString()
+      };
+      products.push(newProd);
+      saveProducts();
+      renderAdminProducts();
+      filterProducts();
+      addLog('product', 'Копирование товара ' + prod.name);
     }
 
     function renderAdminOrders() {
@@ -2386,6 +2950,7 @@
       
       const statusFilter = document.getElementById('order-status-filter')?.value || '';
       const searchText = document.getElementById('order-search')?.value.toLowerCase() || '';
+      const dateFilter = document.getElementById('order-date-filter')?.value || '';
       
       let filteredOrders = [...orders];
       
@@ -2398,6 +2963,13 @@
           o.customer.name.toLowerCase().includes(searchText) || 
           o.customer.phone.includes(searchText)
         );
+      }
+      
+      if (dateFilter) {
+        filteredOrders = filteredOrders.filter(o => {
+          const orderDate = new Date(o.date).toISOString().split('T')[0];
+          return orderDate === dateFilter;
+        });
       }
       
       list.innerHTML = '';
@@ -2430,7 +3002,8 @@
                   <option value="выполнен" ${o.status === 'выполнен' ? 'selected' : ''}>Выполнен</option>
                   <option value="отменен" ${o.status === 'отменен' ? 'selected' : ''}>Отменен</option>
                 </select>
-                <button onclick="deleteOrder(${o.id})" class="text-red-600 hover:text-red-800 px-2 py-1 border border-red-300 rounded text-xs">Удалить</button>
+                <button onclick="printOrder(${o.id})" class="text-blue-600 hover:text-blue-800 px-2 py-1 border border-blue-300 rounded text-xs">🖨️</button>
+                <button onclick="deleteOrder(${o.id})" class="text-red-600 hover:text-red-800 px-2 py-1 border border-red-300 rounded text-xs">🗑️</button>
               </div>
             </div>
             <div class="mt-2 text-xs text-gray-600">
@@ -2448,6 +3021,7 @@
         order.status = newStatus;
         saveOrders();
         renderAdminOrders();
+        addLog('order', `Изменен статус заказа #${id} на ${newStatus}`);
       }
     }
 
@@ -2456,6 +3030,7 @@
         orders = orders.filter(o => o.id !== id);
         saveOrders();
         renderAdminOrders();
+        addLog('order', `Удален заказ #${id}`);
       }
     }
 
@@ -2464,7 +3039,182 @@
         orders = [];
         saveOrders();
         renderAdminOrders();
+        addLog('order', 'Удалены все заказы');
       }
+    }
+
+    function exportOrders() {
+      const data = orders.map(o => ({
+        'Номер заказа': o.id,
+        Дата: o.date,
+        Клиент: o.customer.name,
+        Телефон: o.customer.phone,
+        Адрес: o.customer.address,
+        Оплата: o.customer.payment,
+        Сумма: o.total,
+        Статус: o.status,
+        Товары: o.items.map(i => `${i.name} (${i.quantity})`).join('; ')
+      }));
+      
+      const csv = [
+        Object.keys(data[0]).join(','),
+        ...data.map(row => Object.values(row).map(v => `"${v}"`).join(','))
+      ].join('\n');
+      
+      const blob = new Blob(['\uFEFF' + csv], { type: 'text/csv;charset=utf-8;' });
+      const link = document.createElement('a');
+      link.href = URL.createObjectURL(blob);
+      link.download = 'orders_export.csv';
+      link.click();
+      addLog('order', 'Экспорт заказов в CSV');
+    }
+
+    function bulkUpdateOrderStatus() {
+      alert('Функция массового обновления статусов будет доступна в следующем обновлении');
+    }
+
+    function printOrder(id) {
+      const order = orders.find(o => o.id === id);
+      if (!order) return;
+      
+      const printWindow = window.open('', '_blank');
+      printWindow.document.write(`
+        <html>
+          <head>
+            <title>Заказ #${order.id}</title>
+            <style>
+              body { font-family: Arial; padding: 20px; }
+              .header { text-align: center; margin-bottom: 30px; }
+              .order-info { margin-bottom: 20px; }
+              table { width: 100%; border-collapse: collapse; }
+              th, td { border: 1px solid #ddd; padding: 8px; text-align: left; }
+              th { background-color: #f2f2f2; }
+              .total { margin-top: 20px; text-align: right; font-size: 18px; font-weight: bold; }
+            </style>
+          </head>
+          <body>
+            <div class="header">
+              <h1>Заказ #${order.id}</h1>
+              <p>Дата: ${order.date}</p>
+            </div>
+            <div class="order-info">
+              <h3>Информация о клиенте</h3>
+              <p><strong>Имя:</strong> ${order.customer.name}</p>
+              <p><strong>Телефон:</strong> ${order.customer.phone}</p>
+              <p><strong>Адрес:</strong> ${order.customer.address}</p>
+              <p><strong>Способ оплаты:</strong> ${order.customer.payment}</p>
+              <p><strong>Статус:</strong> ${order.status}</p>
+            </div>
+            <h3>Состав заказа</h3>
+            <table>
+              <tr>
+                <th>Товар</th>
+                <th>Цена</th>
+                <th>Количество</th>
+                <th>Сумма</th>
+              </tr>
+              ${order.items.map(i => `
+                <tr>
+                  <td>${i.name}</td>
+                  <td>${i.price} BYN</td>
+                  <td>${i.quantity}</td>
+                  <td>${i.price * i.quantity} BYN</td>
+                </tr>
+              `).join('')}
+            </table>
+            <div class="total">
+              Итого: ${order.total} BYN
+            </div>
+          </body>
+        </html>
+      `);
+      printWindow.document.close();
+      printWindow.print();
+    }
+
+    function addCategory() {
+      const name = prompt('Название категории:');
+      if (!name) return;
+      const categories = JSON.parse(localStorage.getItem('aircom_categories') || '[]');
+      categories.push({ id: Date.now(), name, parent: null });
+      localStorage.setItem('aircom_categories', JSON.stringify(categories));
+      renderCategories();
+      addLog('category', 'Добавлена категория ' + name);
+    }
+
+    function renderCategories() {
+      const list = document.getElementById('categories-list');
+      const categories = JSON.parse(localStorage.getItem('aircom_categories') || '[]');
+      list.innerHTML = categories.map(c => `
+        <div class="flex justify-between items-center p-2 border rounded mb-2">
+          <span>${c.name}</span>
+          <div>
+            <button onclick="editCategory(${c.id})" class="text-blue-600 mr-2">✏️</button>
+            <button onclick="deleteCategory(${c.id})" class="text-red-600">🗑️</button>
+          </div>
+        </div>
+      `).join('') || '<p class="text-gray-500">Нет категорий</p>';
+    }
+
+    function editCategory(id) {
+      const categories = JSON.parse(localStorage.getItem('aircom_categories') || '[]');
+      const cat = categories.find(c => c.id === id);
+      if (!cat) return;
+      const name = prompt('Новое название:', cat.name);
+      if (name) {
+        cat.name = name;
+        localStorage.setItem('aircom_categories', JSON.stringify(categories));
+        renderCategories();
+        addLog('category', 'Изменена категория ' + name);
+      }
+    }
+
+    function deleteCategory(id) {
+      if (confirm('Удалить категорию?')) {
+        let categories = JSON.parse(localStorage.getItem('aircom_categories') || '[]');
+        categories = categories.filter(c => c.id !== id);
+        localStorage.setItem('aircom_categories', JSON.stringify(categories));
+        renderCategories();
+        addLog('category', 'Удалена категория');
+      }
+    }
+
+    function filterCustomers() {
+      // Заглушка для фильтрации клиентов
+    }
+
+    function generateFullReport() {
+      alert('Функция генерации полного отчета будет доступна в следующем обновлении');
+    }
+
+    function saveSettings() {
+      const settings = {
+        siteName: document.getElementById('site-name').value,
+        siteEmail: document.getElementById('site-email').value,
+        sitePhone: document.getElementById('site-phone').value,
+        siteAddress: document.getElementById('site-address').value,
+        siteCurrency: document.getElementById('site-currency').value,
+        siteSeo: document.getElementById('site-seo').value
+      };
+      localStorage.setItem('aircom_settings', JSON.stringify(settings));
+      addLog('settings', 'Изменены настройки сайта');
+      alert('Настройки сохранены');
+    }
+
+    function renderLogs() {
+      const list = document.getElementById('logs-list');
+      const filter = document.getElementById('log-filter')?.value || '';
+      const filtered = filter ? actionLogs.filter(l => l.type === filter) : actionLogs;
+      list.innerHTML = filtered.map(l => `
+        <div class="text-sm border-b pb-2">
+          <span class="text-gray-500">${l.time}</span> - 
+          <span class="font-medium">${l.type}:</span> ${l.action}
+        </div>
+      `).join('') || '<p class="text-gray-500">Нет записей</p>';
+    }
+
+    function filterLogs() {
+      renderLogs();
     }
 
     function addProductForm() {
@@ -2480,11 +3230,33 @@
       const description = prompt('Краткое описание:');
       const fullDescription = prompt('Полное описание (для отдельной страницы):');
       const image = prompt('Ссылка на изображение:') || 'https://via.placeholder.com/200x150?text=New';
+      const stock = parseInt(prompt('Количество на складе:', '10')) || 10;
+      
       const newId = Math.max(...products.map(p => p.id), 0) + 1;
-      products.push({ id: newId, name, price, area, category, type, inverter, heat, description, fullDescription, image });
+      products.push({ 
+        id: newId, 
+        name, 
+        price, 
+        oldPrice: null,
+        stock,
+        area, 
+        category, 
+        type, 
+        inverter, 
+        heat, 
+        description, 
+        fullDescription, 
+        image,
+        tags: [],
+        status: 'active',
+        seoTitle: name,
+        seoDesc: description,
+        createdAt: new Date().toISOString()
+      });
       saveProducts();
       renderAdminProducts();
       filterProducts();
+      addLog('product', 'Добавлен товар ' + name);
     }
 
     function openEditModal(id) {
@@ -2494,6 +3266,9 @@
       document.getElementById('edit-product-id').value = prod.id;
       document.getElementById('edit-name').value = prod.name;
       document.getElementById('edit-price').value = prod.price;
+      document.getElementById('edit-old-price').value = prod.oldPrice || '';
+      document.getElementById('edit-stock').value = prod.stock || 10;
+      document.getElementById('edit-image').value = prod.image || '';
       document.getElementById('edit-area').value = prod.area || 'до 20';
       document.getElementById('edit-category').value = prod.category || 'Настенные';
       document.getElementById('edit-type').value = prod.type || 'Настенный';
@@ -2501,9 +3276,30 @@
       document.getElementById('edit-heat').value = prod.heat || '-15';
       document.getElementById('edit-description').value = prod.description || '';
       document.getElementById('edit-fullDescription').value = prod.fullDescription || '';
-      document.getElementById('edit-image').value = prod.image || '';
+      document.getElementById('edit-seo-title').value = prod.seoTitle || '';
+      document.getElementById('edit-seo-desc').value = prod.seoDesc || '';
+      document.getElementById('edit-status').value = prod.status || 'active';
+      
+      document.getElementById('edit-tag-hit').checked = prod.tags?.includes('хит') || false;
+      document.getElementById('edit-tag-new').checked = prod.tags?.includes('новинка') || false;
+      document.getElementById('edit-tag-sale').checked = prod.tags?.includes('распродажа') || false;
+      
+      if (prod.image) {
+        document.getElementById('image-preview').innerHTML = `<img src="${prod.image}" class="w-20 h-20 object-cover rounded">`;
+      }
       
       document.getElementById('edit-product-modal').style.display = 'flex';
+    }
+
+    function previewImage(input) {
+      if (input.files && input.files[0]) {
+        const reader = new FileReader();
+        reader.onload = (e) => {
+          document.getElementById('image-preview').innerHTML = `<img src="${e.target.result}" class="w-20 h-20 object-cover rounded">`;
+          document.getElementById('edit-image').value = e.target.result;
+        };
+        reader.readAsDataURL(input.files[0]);
+      }
     }
 
     function saveEditedProduct() {
@@ -2511,8 +3307,15 @@
       const prod = products.find(p => p.id === id);
       if (!prod) return;
       
+      const tags = [];
+      if (document.getElementById('edit-tag-hit').checked) tags.push('хит');
+      if (document.getElementById('edit-tag-new').checked) tags.push('новинка');
+      if (document.getElementById('edit-tag-sale').checked) tags.push('распродажа');
+      
       prod.name = document.getElementById('edit-name').value;
       prod.price = parseFloat(document.getElementById('edit-price').value);
+      prod.oldPrice = document.getElementById('edit-old-price').value ? parseFloat(document.getElementById('edit-old-price').value) : null;
+      prod.stock = parseInt(document.getElementById('edit-stock').value) || 10;
       prod.area = document.getElementById('edit-area').value;
       prod.category = document.getElementById('edit-category').value;
       prod.type = document.getElementById('edit-type').value;
@@ -2521,20 +3324,27 @@
       prod.description = document.getElementById('edit-description').value;
       prod.fullDescription = document.getElementById('edit-fullDescription').value;
       prod.image = document.getElementById('edit-image').value;
+      prod.tags = tags;
+      prod.seoTitle = document.getElementById('edit-seo-title').value;
+      prod.seoDesc = document.getElementById('edit-seo-desc').value;
+      prod.status = document.getElementById('edit-status').value;
       
       saveProducts();
       renderAdminProducts();
       filterProducts();
       document.getElementById('edit-product-modal').style.display = 'none';
+      addLog('product', 'Изменен товар ' + prod.name);
       alert('Товар сохранен');
     }
 
     function deleteProduct(id) {
       if (confirm('Удалить товар?')) {
+        const prod = products.find(p => p.id === id);
         products = products.filter(p => p.id !== id);
         saveProducts();
         renderAdminProducts();
         filterProducts();
+        addLog('product', 'Удален товар ' + (prod ? prod.name : ''));
       }
     }
 
@@ -2543,6 +3353,7 @@
       const newPass = document.getElementById('admin-pass').value;
       if (newLogin) adminCredentials.login = newLogin;
       if (newPass) adminCredentials.password = newPass;
+      addLog('user', 'Изменены учетные данные');
       alert('Данные изменены');
     }
 
@@ -2615,16 +3426,13 @@
       }
       checkboxes.forEach(checkbox => checkbox.addEventListener('change', calculateTotal));
       calculateTotal();
-      
-      // Проверяем хеш при загрузке
-      checkAdminHash();
-      checkProductHash();
     });
 
     // Инициализация
     loadProducts();
     loadOrders();
     loadCart();
+    loadLogs();
     filterProducts();
 
     // Слайдер цены
