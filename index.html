@@ -826,7 +826,7 @@
         padding: 0.25rem 0.5rem;
       }
       /* Скрываем номер телефона на мобильных */
-      .nav .phone-link {
+      .phone-link {
         display: none !important;
       }
     }
@@ -1193,7 +1193,7 @@
       </div>
     </div>
 
-    <!-- Админ-панель (доступна только по прямой ссылке /#admin) -->
+    <!-- Админ-панель -->
     <div id="admin-panel" class="fixed inset-0 bg-white z-50 overflow-y-auto" style="display: none;">
       <div class="max-w-7xl mx-auto px-4 sm:px-6 py-4 sm:py-6">
         <div class="flex justify-between items-center mb-4 sm:mb-6">
@@ -1262,9 +1262,7 @@
           <div class="grid grid-cols-1 lg:grid-cols-2 gap-4 sm:gap-6 mb-4 sm:mb-6">
             <div class="bg-white p-3 sm:p-6 rounded-lg shadow">
               <h3 class="text-sm sm:text-lg font-bold mb-2 sm:mb-4">Популярные товары</h3>
-              <div id="dashboard-top-products" class="space-y-2 text-xs sm:text-sm">
-                <!-- Будут загружены через JS -->
-              </div>
+              <div id="dashboard-top-products" class="space-y-2 text-xs sm:text-sm"></div>
             </div>
             <div class="bg-white p-3 sm:p-6 rounded-lg shadow">
               <h3 class="text-sm sm:text-lg font-bold mb-2 sm:mb-4">Статистика заказов</h3>
@@ -1291,9 +1289,7 @@
 
           <div class="bg-white p-3 sm:p-6 rounded-lg shadow">
             <h3 class="text-sm sm:text-lg font-bold mb-2 sm:mb-4">Последние действия</h3>
-            <div id="recent-actions" class="space-y-1 sm:space-y-2 text-xs sm:text-sm">
-              <!-- Будут загружены через JS -->
-            </div>
+            <div id="recent-actions" class="space-y-1 sm:space-y-2 text-xs sm:text-sm"></div>
           </div>
         </div>
 
@@ -1472,16 +1468,13 @@
                   <th class="px-2 sm:px-6 py-2 sm:py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">Действия</th>
                 </tr>
               </thead>
-              <tbody id="admin-product-list" class="bg-white divide-y divide-gray-200">
-                <!-- Товары будут загружены -->
-              </tbody>
+              <tbody id="admin-product-list" class="bg-white divide-y divide-gray-200"></tbody>
             </table>
           </div>
         </div>
 
         <!-- Вкладка Заказы -->
         <div id="admin-orders-tab" class="hidden">
-          <!-- Фильтры для заказов -->
           <div class="grid grid-cols-2 sm:grid-cols-3 gap-2 sm:gap-4 mb-4 sm:mb-6">
             <div>
               <label class="block text-xs sm:text-sm font-medium text-gray-700 mb-1">Статус</label>
@@ -1502,17 +1495,11 @@
               <input type="date" id="order-date-filter" class="w-full border px-2 sm:px-4 py-1 sm:py-2 rounded-lg text-xs sm:text-sm" onchange="filterAdminOrders()">
             </div>
           </div>
-
-          <!-- Кнопки массовых операций -->
           <div class="mb-4 flex flex-wrap gap-1 sm:gap-2">
             <button onclick="deleteAllOrders()" class="bg-red-500 text-white px-2 sm:px-4 py-1 sm:py-2 rounded-button text-xs sm:text-sm">Удалить все</button>
             <button onclick="exportOrders()" class="bg-green-500 text-white px-2 sm:px-4 py-1 sm:py-2 rounded-button text-xs sm:text-sm">Экспорт</button>
           </div>
-
-          <!-- Список заказов -->
           <div id="admin-orders-list" class="space-y-3 sm:space-y-4"></div>
-          
-          <!-- Статистика -->
           <div class="mt-4 p-3 sm:p-4 bg-blue-50 rounded">
             <h4 class="font-bold text-xs sm:text-sm">Статистика заказов:</h4>
             <p class="text-xs sm:text-sm">Всего заказов: <span id="total-orders">0</span></p>
@@ -1525,9 +1512,7 @@
           <div class="mb-4">
             <button onclick="addBrand()" class="bg-primary text-white px-3 sm:px-4 py-1 sm:py-2 rounded-button text-xs sm:text-sm">+ Добавить бренд</button>
           </div>
-          <div id="brands-admin-list" class="bg-white rounded-lg shadow p-3 sm:p-4 space-y-2">
-            <!-- Бренды будут загружены через JS -->
-          </div>
+          <div id="brands-admin-list" class="bg-white rounded-lg shadow p-3 sm:p-4 space-y-2"></div>
         </div>
 
         <!-- Вкладка Клиенты -->
@@ -1537,9 +1522,7 @@
               <input type="text" id="customer-search" placeholder="🔍 Поиск клиентов..." class="w-full border px-2 sm:px-4 py-1 sm:py-2 rounded-lg text-xs sm:text-sm" onkeyup="filterCustomers()">
             </div>
           </div>
-          <div id="customers-list" class="bg-white rounded-lg shadow p-3 sm:p-4">
-            <!-- Клиенты будут загружены через JS -->
-          </div>
+          <div id="customers-list" class="bg-white rounded-lg shadow p-3 sm:p-4"></div>
         </div>
 
         <!-- Вкладка Отчеты -->
@@ -1548,30 +1531,16 @@
             <div class="bg-white p-3 sm:p-6 rounded-lg shadow">
               <h3 class="text-sm sm:text-lg font-bold mb-2 sm:mb-4">Отчет по продажам</h3>
               <div class="space-y-2 text-xs sm:text-sm">
-                <div class="flex justify-between">
-                  <span>За сегодня:</span>
-                  <span class="font-bold" id="report-today">0 BYN</span>
-                </div>
-                <div class="flex justify-between">
-                  <span>За неделю:</span>
-                  <span class="font-bold" id="report-week">0 BYN</span>
-                </div>
-                <div class="flex justify-between">
-                  <span>За месяц:</span>
-                  <span class="font-bold" id="report-month">0 BYN</span>
-                </div>
-                <div class="flex justify-between">
-                  <span>За год:</span>
-                  <span class="font-bold" id="report-year">0 BYN</span>
-                </div>
+                <div class="flex justify-between"><span>За сегодня:</span><span class="font-bold" id="report-today">0 BYN</span></div>
+                <div class="flex justify-between"><span>За неделю:</span><span class="font-bold" id="report-week">0 BYN</span></div>
+                <div class="flex justify-between"><span>За месяц:</span><span class="font-bold" id="report-month">0 BYN</span></div>
+                <div class="flex justify-between"><span>За год:</span><span class="font-bold" id="report-year">0 BYN</span></div>
               </div>
               <button onclick="generateFullReport()" class="mt-3 sm:mt-4 w-full bg-primary text-white px-3 sm:px-4 py-1 sm:py-2 rounded-button text-xs sm:text-sm">Полный отчет</button>
             </div>
             <div class="bg-white p-3 sm:p-6 rounded-lg shadow">
               <h3 class="text-sm sm:text-lg font-bold mb-2 sm:mb-4">Топ-10 товаров</h3>
-              <div id="top-products-report" class="space-y-1 sm:space-y-2 text-xs sm:text-sm">
-                <!-- Будут загружены -->
-              </div>
+              <div id="top-products-report" class="space-y-1 sm:space-y-2 text-xs sm:text-sm"></div>
             </div>
           </div>
         </div>
@@ -1581,51 +1550,14 @@
           <div class="bg-white p-3 sm:p-6 rounded-lg shadow">
             <h3 class="text-sm sm:text-lg font-bold mb-3 sm:mb-4">Настройки сайта</h3>
             <div class="space-y-3 sm:space-y-4">
-              <div>
-                <label class="block text-xs sm:text-sm font-medium text-gray-700 mb-1">Название магазина</label>
-                <input type="text" id="site-name" value="AirComfort" class="w-full border px-2 sm:px-4 py-1 sm:py-2 rounded-lg text-xs sm:text-sm">
-              </div>
-              <div>
-                <label class="block text-xs sm:text-sm font-medium text-gray-700 mb-1">Email для уведомлений</label>
-                <input type="email" id="site-email" value="aircomfortbel@gmail.com" class="w-full border px-2 sm:px-4 py-1 sm:py-2 rounded-lg text-xs sm:text-sm">
-              </div>
-              <div>
-                <label class="block text-xs sm:text-sm font-medium text-gray-700 mb-1">Телефон</label>
-                <input type="text" id="site-phone" value="+375 (29) 105-06-94" class="w-full border px-2 sm:px-4 py-1 sm:py-2 rounded-lg text-xs sm:text-sm">
-              </div>
-              <div>
-                <label class="block text-xs sm:text-sm font-medium text-gray-700 mb-1">Адрес</label>
-                <input type="text" id="site-address" value="г. Гомель" class="w-full border px-2 sm:px-4 py-1 sm:py-2 rounded-lg text-xs sm:text-sm">
-              </div>
-              <div>
-                <label class="block text-xs sm:text-sm font-medium text-gray-700 mb-1">Валюта</label>
-                <select id="site-currency" class="w-full border px-2 sm:px-4 py-1 sm:py-2 rounded-lg text-xs sm:text-sm">
-                  <option value="BYN">BYN</option>
-                  <option value="USD">USD</option>
-                  <option value="EUR">EUR</option>
-                  <option value="RUB">RUB</option>
-                </select>
-              </div>
-              <div>
-                <label class="block text-xs sm:text-sm font-medium text-gray-700 mb-1">Способы доставки</label>
-                <div class="space-y-1 text-xs sm:text-sm">
-                  <label class="flex items-center"><input type="checkbox" checked class="mr-2"> Самовывоз</label>
-                  <label class="flex items-center"><input type="checkbox" checked class="mr-2"> Курьером по городу</label>
-                  <label class="flex items-center"><input type="checkbox" class="mr-2"> Почтой по РБ</label>
-                </div>
-              </div>
-              <div>
-                <label class="block text-xs sm:text-sm font-medium text-gray-700 mb-1">Способы оплаты</label>
-                <div class="space-y-1 text-xs sm:text-sm">
-                  <label class="flex items-center"><input type="checkbox" checked class="mr-2"> Наличные</label>
-                  <label class="flex items-center"><input type="checkbox" checked class="mr-2"> Картой онлайн</label>
-                  <label class="flex items-center"><input type="checkbox" checked class="mr-2"> Безналичный расчет</label>
-                </div>
-              </div>
-              <div>
-                <label class="block text-xs sm:text-sm font-medium text-gray-700 mb-1">SEO настройки</label>
-                <textarea id="site-seo" rows="3" class="w-full border px-2 sm:px-4 py-1 sm:py-2 rounded-lg text-xs sm:text-sm"></textarea>
-              </div>
+              <div><label class="block text-xs sm:text-sm font-medium text-gray-700 mb-1">Название магазина</label><input type="text" id="site-name" value="AirComfort" class="w-full border px-2 sm:px-4 py-1 sm:py-2 rounded-lg text-xs sm:text-sm"></div>
+              <div><label class="block text-xs sm:text-sm font-medium text-gray-700 mb-1">Email для уведомлений</label><input type="email" id="site-email" value="aircomfortbel@gmail.com" class="w-full border px-2 sm:px-4 py-1 sm:py-2 rounded-lg text-xs sm:text-sm"></div>
+              <div><label class="block text-xs sm:text-sm font-medium text-gray-700 mb-1">Телефон</label><input type="text" id="site-phone" value="+375 (29) 105-06-94" class="w-full border px-2 sm:px-4 py-1 sm:py-2 rounded-lg text-xs sm:text-sm"></div>
+              <div><label class="block text-xs sm:text-sm font-medium text-gray-700 mb-1">Адрес</label><input type="text" id="site-address" value="г. Гомель" class="w-full border px-2 sm:px-4 py-1 sm:py-2 rounded-lg text-xs sm:text-sm"></div>
+              <div><label class="block text-xs sm:text-sm font-medium text-gray-700 mb-1">Валюта</label><select id="site-currency" class="w-full border px-2 sm:px-4 py-1 sm:py-2 rounded-lg text-xs sm:text-sm"><option value="BYN">BYN</option><option value="USD">USD</option><option value="EUR">EUR</option><option value="RUB">RUB</option></select></div>
+              <div><label class="block text-xs sm:text-sm font-medium text-gray-700 mb-1">Способы доставки</label><div class="space-y-1 text-xs sm:text-sm"><label class="flex items-center"><input type="checkbox" checked class="mr-2"> Самовывоз</label><label class="flex items-center"><input type="checkbox" checked class="mr-2"> Курьером по городу</label><label class="flex items-center"><input type="checkbox" class="mr-2"> Почтой по РБ</label></div></div>
+              <div><label class="block text-xs sm:text-sm font-medium text-gray-700 mb-1">Способы оплаты</label><div class="space-y-1 text-xs sm:text-sm"><label class="flex items-center"><input type="checkbox" checked class="mr-2"> Наличные</label><label class="flex items-center"><input type="checkbox" checked class="mr-2"> Картой онлайн</label><label class="flex items-center"><input type="checkbox" checked class="mr-2"> Безналичный расчет</label></div></div>
+              <div><label class="block text-xs sm:text-sm font-medium text-gray-700 mb-1">SEO настройки</label><textarea id="site-seo" rows="3" class="w-full border px-2 sm:px-4 py-1 sm:py-2 rounded-lg text-xs sm:text-sm"></textarea></div>
               <button onclick="saveSettings()" class="bg-primary text-white px-4 sm:px-6 py-1 sm:py-2 rounded-button text-xs sm:text-sm">Сохранить</button>
             </div>
           </div>
@@ -1635,19 +1567,8 @@
         <div id="admin-logs-tab" class="hidden">
           <div class="bg-white p-3 sm:p-6 rounded-lg shadow">
             <h3 class="text-sm sm:text-lg font-bold mb-2 sm:mb-4">История действий</h3>
-            <div class="mb-3 sm:mb-4">
-              <select id="log-filter" onchange="filterLogs()" class="border px-2 sm:px-4 py-1 sm:py-2 rounded-lg text-xs sm:text-sm">
-                <option value="">Все действия</option>
-                <option value="product">Товары</option>
-                <option value="order">Заказы</option>
-                <option value="brand">Бренды</option>
-                <option value="user">Пользователи</option>
-                <option value="settings">Настройки</option>
-              </select>
-            </div>
-            <div id="logs-list" class="space-y-1 sm:space-y-2 max-h-96 overflow-y-auto text-xs sm:text-sm">
-              <!-- Логи будут загружены -->
-            </div>
+            <div class="mb-3 sm:mb-4"><select id="log-filter" onchange="filterLogs()" class="border px-2 sm:px-4 py-1 sm:py-2 rounded-lg text-xs sm:text-sm"><option value="">Все действия</option><option value="product">Товары</option><option value="order">Заказы</option><option value="brand">Бренды</option><option value="user">Пользователи</option><option value="settings">Настройки</option></select></div>
+            <div id="logs-list" class="space-y-1 sm:space-y-2 max-h-96 overflow-y-auto text-xs sm:text-sm"></div>
           </div>
         </div>
       </div>
@@ -1663,48 +1584,6 @@
           <button onclick="loginAdmin()" class="flex-1 gradient-bg text-white px-3 sm:px-4 py-2 sm:py-3 rounded-button text-sm sm:text-base">Войти</button>
           <button onclick="document.getElementById('admin-login-modal').style.display='none'" class="flex-1 bg-gray-200 text-gray-800 px-3 sm:px-4 py-2 sm:py-3 rounded-button text-sm sm:text-base">Отмена</button>
         </div>
-      </div>
-    </div>
-
-    <!-- Форма редактирования товара -->
-    <div id="edit-product-modal" class="modal" style="display: none;">
-      <div class="modal-content max-w-2xl">
-        <h3 class="text-lg sm:text-xl font-bold mb-3 sm:mb-4" id="edit-modal-title">Редактирование товара</h3>
-        <form id="edit-product-form" class="space-y-3 sm:space-y-4">
-          <input type="hidden" id="edit-product-id">
-          <div>
-            <label class="block text-xs sm:text-sm font-medium text-gray-700 mb-1">Название товара *</label>
-            <input type="text" id="edit-name" class="w-full border px-2 sm:px-3 py-1 sm:py-2 rounded text-xs sm:text-sm" required>
-          </div>
-          <div>
-            <label class="block text-xs sm:text-sm font-medium text-gray-700 mb-1">Цена (BYN) *</label>
-            <input type="number" id="edit-price" class="w-full border px-2 sm:px-3 py-1 sm:py-2 rounded text-xs sm:text-sm" required>
-          </div>
-          <div>
-            <label class="block text-xs sm:text-sm font-medium text-gray-700 mb-1">Старая цена (для скидки)</label>
-            <input type="number" id="edit-old-price" class="w-full border px-2 sm:px-3 py-1 sm:py-2 rounded text-xs sm:text-sm">
-          </div>
-          <div>
-            <label class="block text-xs sm:text-sm font-medium text-gray-700 mb-1">Количество на складе</label>
-            <input type="number" id="edit-stock" value="10" class="w-full border px-2 sm:px-3 py-1 sm:py-2 rounded text-xs sm:text-sm">
-          </div>
-          <div>
-            <label class="block text-xs sm:text-sm font-medium text-gray-700 mb-1">Загрузить изображение</label>
-            <input type="file" id="edit-image-file" accept="image/*" class="w-full border px-2 sm:px-3 py-1 sm:py-2 rounded text-xs sm:text-sm" onchange="previewImage(this)">
-            <input type="hidden" id="edit-image">
-            <div id="image-preview" class="mt-2"></div>
-          </div>
-          <div>
-            <label class="block text-xs sm:text-sm font-medium text-gray-700 mb-1">Бренд</label>
-            <select id="edit-brand" class="w-full border px-2 sm:px-3 py-1 sm:py-2 rounded text-xs sm:text-sm">
-              <option value="">Без бренда</option>
-            </select>
-          </div>
-          <div class="flex gap-2">
-            <button type="button" onclick="saveEditedProduct()" class="flex-1 gradient-bg text-white px-3 sm:px-4 py-1 sm:py-2 rounded-button text-xs sm:text-sm">Сохранить</button>
-            <button type="button" onclick="document.getElementById('edit-product-modal').style.display='none'" class="flex-1 bg-gray-200 text-gray-800 px-3 sm:px-4 py-1 sm:py-2 rounded-button text-xs sm:text-sm">Отмена</button>
-          </div>
-        </form>
       </div>
     </div>
 
@@ -1749,18 +1628,12 @@
                 <label class="checkbox-container text-xs sm:text-sm">
                   <input type="checkbox" id="demontage" name="demontage" value="100">
                   <span class="checkbox-custom w-5 h-5 sm:w-6 sm:h-6"></span>
-                  <span class="flex-1">
-                    <span class="text-gray-700">Демонтаж старого оборудования</span>
-                    <span class="ml-1 text-primary font-medium">+100 BYN</span>
-                  </span>
+                  <span class="flex-1"><span class="text-gray-700">Демонтаж старого оборудования</span><span class="ml-1 text-primary font-medium">+100 BYN</span></span>
                 </label>
                 <label class="checkbox-container text-xs sm:text-sm">
                   <input type="checkbox" id="service" name="service" value="100">
                   <span class="checkbox-custom w-5 h-5 sm:w-6 sm:h-6"></span>
-                  <span class="flex-1">
-                    <span class="text-gray-700">Обслуживание кондиционера</span>
-                    <span class="ml-1 text-primary font-medium">+100 BYN</span>
-                  </span>
+                  <span class="flex-1"><span class="text-gray-700">Обслуживание кондиционера</span><span class="ml-1 text-primary font-medium">+100 BYN</span></span>
                 </label>
               </div>
             </div>
@@ -1772,10 +1645,7 @@
             </div>
             <div class="mt-4 sm:mt-6">
               <button onclick="addCalculatorToCart()" class="w-full gradient-bg text-white px-4 sm:px-6 py-2 sm:py-3 rounded-button font-medium hover:shadow-glow transition-all duration-300 flex items-center justify-center btn-animate text-xs sm:text-base">
-                <div class="w-3 h-3 sm:w-5 sm:h-5 flex items-center justify-center mr-1 sm:mr-2">
-                  <i class="ri-shopping-cart-line"></i>
-                </div>
-                Добавить в корзину
+                <div class="w-3 h-3 sm:w-5 sm:h-5 flex items-center justify-center mr-1 sm:mr-2"><i class="ri-shopping-cart-line"></i></div>Добавить в корзину
               </button>
             </div>
           </div>
@@ -1788,65 +1658,24 @@
       <div class="modal-content">
         <h3 class="text-lg sm:text-xl font-bold text-gray-900 mb-4 sm:mb-6">Выберите способ связи</h3>
         <div class="space-y-3 sm:space-y-4">
-          <a href="tel:+375291050694" class="flex items-center justify-center gradient-bg text-white px-4 sm:px-6 py-2 sm:py-3 rounded-button font-medium hover:shadow-glow transition-all duration-300 btn-animate text-xs sm:text-base">
-            <i class="ri-phone-line mr-2"></i>
-            Позвонить
-          </a>
-          <a href="https://t.me/AirComforto" target="_blank" class="flex items-center justify-center bg-blue-500 text-white px-4 sm:px-6 py-2 sm:py-3 rounded-button font-medium hover:shadow-glow transition-all duration-300 btn-animate text-xs sm:text-base">
-            <i class="ri-telegram-line mr-2"></i>
-            Написать в Telegram
-          </a>
-          <a href="https://msngr.link/vi/375291050694?text=" target="_blank" class="flex items-center justify-center bg-purple-600 text-white px-4 sm:px-6 py-2 sm:py-3 rounded-button font-medium hover:shadow-glow transition-all duration-300 btn-animate text-xs sm:text-base">
-            <i class="ri-chat-3-line mr-2"></i>
-            Написать в Viber
-          </a>
-          <button onclick="document.getElementById('contacts').scrollIntoView({behavior: 'smooth'}); document.getElementById('contact-modal').style.display = 'none';" class="w-full bg-gray-200 text-gray-800 px-4 sm:px-6 py-2 sm:py-3 rounded-button font-medium hover:bg-gray-300 transition-all duration-300 btn-animate text-xs sm:text-base">
-            Заполнить форму на сайте
-          </button>
+          <a href="tel:+375291050694" class="flex items-center justify-center gradient-bg text-white px-4 sm:px-6 py-2 sm:py-3 rounded-button font-medium hover:shadow-glow transition-all duration-300 btn-animate text-xs sm:text-base"><i class="ri-phone-line mr-2"></i>Позвонить</a>
+          <a href="https://t.me/AirComforto" target="_blank" class="flex items-center justify-center bg-blue-500 text-white px-4 sm:px-6 py-2 sm:py-3 rounded-button font-medium hover:shadow-glow transition-all duration-300 btn-animate text-xs sm:text-base"><i class="ri-telegram-line mr-2"></i>Написать в Telegram</a>
+          <a href="https://msngr.link/vi/375291050694?text=" target="_blank" class="flex items-center justify-center bg-purple-600 text-white px-4 sm:px-6 py-2 sm:py-3 rounded-button font-medium hover:shadow-glow transition-all duration-300 btn-animate text-xs sm:text-base"><i class="ri-chat-3-line mr-2"></i>Написать в Viber</a>
+          <button onclick="document.getElementById('contacts').scrollIntoView({behavior: 'smooth'}); document.getElementById('contact-modal').style.display = 'none';" class="w-full bg-gray-200 text-gray-800 px-4 sm:px-6 py-2 sm:py-3 rounded-button font-medium hover:bg-gray-300 transition-all duration-300 btn-animate text-xs sm:text-base">Заполнить форму на сайте</button>
         </div>
-        <button onclick="document.getElementById('contact-modal').style.display = 'none';" class="mt-4 sm:mt-6 text-gray-500 hover:text-gray-700 text-xs sm:text-sm">
-          <i class="ri-close-line"></i> Закрыть
-        </button>
+        <button onclick="document.getElementById('contact-modal').style.display = 'none';" class="mt-4 sm:mt-6 text-gray-500 hover:text-gray-700 text-xs sm:text-sm"><i class="ri-close-line"></i> Закрыть</button>
       </div>
-    </section>
+    </div>
 
     <!-- Наши преимущества -->
     <section id="advantages" class="py-8 sm:py-16 bg-gradient-to-b from-white to-gray-50">
       <div class="max-w-7xl mx-auto px-6">
         <h2 class="text-lg sm:text-3xl font-bold text-center text-gray-900 mb-4 sm:mb-12">Наши преимущества</h2>
         <div class="grid grid-cols-2 sm:grid-cols-2 lg:grid-cols-4 gap-3 sm:gap-6">
-          <!-- Преимущество 1 -->
-          <div class="bg-white p-3 sm:p-6 rounded-lg shadow-card text-center card-hover">
-            <div class="w-8 h-8 sm:w-16 sm:h-16 mx-auto mb-2 sm:mb-4 flex items-center justify-center bg-gradient-to-br from-primary/20 to-primary/10 rounded-full text-primary shadow-lg">
-              <i class="ri-shield-check-line text-sm sm:ri-2x"></i>
-            </div>
-            <h3 class="text-xs sm:text-xl font-bold text-gray-900 mb-1 sm:mb-2">Гарантия 5 лет</h3>
-            <p class="text-xs text-gray-700">Самая длительная гарантия на оборудование и 1 год на монтажные работы.</p>
-          </div>
-          <!-- Преимущество 2 -->
-          <div class="bg-white p-3 sm:p-6 rounded-lg shadow-card text-center card-hover">
-            <div class="w-8 h-8 sm:w-16 sm:h-16 mx-auto mb-2 sm:mb-4 flex items-center justify-center bg-gradient-to-br from-secondary/20 to-secondary/10 rounded-full text-secondary shadow-lg">
-              <i class="ri-user-star-line text-sm sm:ri-2x"></i>
-            </div>
-            <h3 class="text-xs sm:text-xl font-bold text-gray-900 mb-1 sm:mb-2">Профессионализм</h3>
-            <p class="text-xs text-gray-700">Опытные мастера с профессиональной подготовкой и сертификатами.</p>
-          </div>
-          <!-- Преимущество 3 -->
-          <div class="bg-white p-3 sm:p-6 rounded-lg shadow-card text-center card-hover">
-            <div class="w-8 h-8 sm:w-16 sm:h-16 mx-auto mb-2 sm:mb-4 flex items-center justify-center bg-gradient-to-br from-accent/20 to-accent/10 rounded-full text-accent shadow-lg">
-              <i class="ri-time-line text-sm sm:ri-2x"></i>
-            </div>
-            <h3 class="text-xs sm:text-xl font-bold text-gray-900 mb-1 sm:mb-2">Быстрая установка</h3>
-            <p class="text-xs text-gray-700">Установка в течение 1-2 дней после заказа по всей Гомельской области.</p>
-          </div>
-          <!-- Преимущество 4 -->
-          <div class="bg-white p-3 sm:p-6 rounded-lg shadow-card text-center card-hover">
-            <div class="w-8 h-8 sm:w-16 sm:h-16 mx-auto mb-2 sm:mb-4 flex items-center justify-center bg-gradient-to-br from-primary/20 to-primary/10 rounded-full text-primary shadow-lg">
-              <i class="ri-money-dollar-circle-line text-sm sm:ri-2x"></i>
-            </div>
-            <h3 class="text-xs sm:text-xl font-bold text-gray-900 mb-1 sm:mb-2">Лучшие цены</h3>
-            <p class="text-xs text-gray-700">Оптимальное соотношение цены и качества.</p>
-          </div>
+          <div class="bg-white p-3 sm:p-6 rounded-lg shadow-card text-center card-hover"><div class="w-8 h-8 sm:w-16 sm:h-16 mx-auto mb-2 sm:mb-4 flex items-center justify-center bg-gradient-to-br from-primary/20 to-primary/10 rounded-full text-primary shadow-lg"><i class="ri-shield-check-line text-sm sm:ri-2x"></i></div><h3 class="text-xs sm:text-xl font-bold text-gray-900 mb-1 sm:mb-2">Гарантия 5 лет</h3><p class="text-xs text-gray-700">Самая длительная гарантия на оборудование и 1 год на монтажные работы.</p></div>
+          <div class="bg-white p-3 sm:p-6 rounded-lg shadow-card text-center card-hover"><div class="w-8 h-8 sm:w-16 sm:h-16 mx-auto mb-2 sm:mb-4 flex items-center justify-center bg-gradient-to-br from-secondary/20 to-secondary/10 rounded-full text-secondary shadow-lg"><i class="ri-user-star-line text-sm sm:ri-2x"></i></div><h3 class="text-xs sm:text-xl font-bold text-gray-900 mb-1 sm:mb-2">Профессионализм</h3><p class="text-xs text-gray-700">Опытные мастера с профессиональной подготовкой и сертификатами.</p></div>
+          <div class="bg-white p-3 sm:p-6 rounded-lg shadow-card text-center card-hover"><div class="w-8 h-8 sm:w-16 sm:h-16 mx-auto mb-2 sm:mb-4 flex items-center justify-center bg-gradient-to-br from-accent/20 to-accent/10 rounded-full text-accent shadow-lg"><i class="ri-time-line text-sm sm:ri-2x"></i></div><h3 class="text-xs sm:text-xl font-bold text-gray-900 mb-1 sm:mb-2">Быстрая установка</h3><p class="text-xs text-gray-700">Установка в течение 1-2 дней после заказа по всей Гомельской области.</p></div>
+          <div class="bg-white p-3 sm:p-6 rounded-lg shadow-card text-center card-hover"><div class="w-8 h-8 sm:w-16 sm:h-16 mx-auto mb-2 sm:mb-4 flex items-center justify-center bg-gradient-to-br from-primary/20 to-primary/10 rounded-full text-primary shadow-lg"><i class="ri-money-dollar-circle-line text-sm sm:ri-2x"></i></div><h3 class="text-xs sm:text-xl font-bold text-gray-900 mb-1 sm:mb-2">Лучшие цены</h3><p class="text-xs text-gray-700">Оптимальное соотношение цены и качества.</p></div>
         </div>
       </div>
     </section>
@@ -1857,72 +1686,12 @@
         <h2 class="text-lg sm:text-3xl font-bold text-center text-gray-900 mb-2">Часто задаваемые вопросы</h2>
         <p class="text-center text-gray-700 mb-4 sm:mb-10 text-xs sm:text-base">Ответы на самые популярные вопросы наших клиентов</p>
         <div class="max-w-3xl mx-auto">
-          <div class="faq-item">
-            <div class="faq-question" onclick="toggleFaq(1)">
-              <span class="font-medium text-xs sm:text-lg">Сколько времени занимает установка кондиционера?</span>
-              <i class="ri-arrow-down-s-line faq-icon"></i>
-            </div>
-            <div class="faq-answer">
-              <div class="pb-4 sm:pb-6 text-xs text-gray-700">
-                Стандартная установка занимает от 2 до 4 часов, в зависимости от сложности монтажа. Наши специалисты работают быстро и качественно, чтобы минимизировать неудобства для вас.
-              </div>
-            </div>
-          </div>
-          <div class="faq-item">
-            <div class="faq-question" onclick="toggleFaq(2)">
-              <span class="font-medium text-xs sm:text-lg">Как часто нужно обслуживать кондиционер?</span>
-              <i class="ri-arrow-down-s-line faq-icon"></i>
-            </div>
-            <div class="faq-answer">
-              <div class="pb-4 sm:pb-6 text-xs text-gray-700">
-                Рекомендуем проводить техническое обслуживание кондиционера не реже одного раза в год. Это продлевает срок службы оборудования, обеспечивает эффективную работу и экономит электроэнергию.
-              </div>
-            </div>
-          </div>
-          <div class="faq-item">
-            <div class="faq-question" onclick="toggleFaq(3)">
-              <span class="font-medium text-xs sm:text-lg">В чем разница между инверторным и обычным кондиционером?</span>
-              <i class="ri-arrow-down-s-line faq-icon"></i>
-            </div>
-            <div class="faq-answer">
-              <div class="pb-4 sm:pb-6 text-xs text-gray-700">
-                Инверторный кондиционер регулирует мощность компрессора плавно, что позволяет экономить до 30-40% электроэнергии, работать тише и поддерживать точную температуру. Обычный кондиционер работает по принципу "включил-выключил", что менее эффективно.
-              </div>
-            </div>
-          </div>
-          <div class="faq-item">
-            <div class="faq-question" onclick="toggleFaq(4)">
-              <span class="font-medium text-xs sm:text-lg">Можно ли установить кондиционер зимой?</span>
-              <i class="ri-arrow-down-s-line faq-icon"></i>
-            </div>
-            <div class="faq-answer">
-              <div class="pb-4 sm:pb-6 text-xs text-gray-700">
-                Да, установка возможна круглый год.
-              </div>
-            </div>
-          </div>
-          <div class="faq-item">
-            <div class="faq-question" onclick="toggleFaq(5)">
-              <span class="font-medium text-xs sm:text-lg">Какая гарантия на работу и оборудование?</span>
-              <i class="ri-arrow-down-s-line faq-icon"></i>
-            </div>
-            <div class="faq-answer">
-              <div class="pb-4 sm:pb-6 text-xs text-gray-700">
-                Мы предоставляем гарантию 5 лет на оборудование и 1 год на монтажные работы.
-              </div>
-            </div>
-          </div>
-          <div class="faq-item">
-            <div class="faq-question" onclick="toggleFaq(6)">
-              <span class="font-medium text-xs sm:text-lg">Нужно ли получать разрешение на установку кондиционера?</span>
-              <i class="ri-arrow-down-s-line faq-icon"></i>
-            </div>
-            <div class="faq-answer">
-              <div class="pb-4 sm:pb-6 text-xs text-gray-700">
-                В большинстве случаев установка кондиционера в квартире не требует специальных разрешений. Однако при монтаже в исторических зданиях или на фасадах многоэтажек могут потребоваться согласования.
-              </div>
-            </div>
-          </div>
+          <div class="faq-item"><div class="faq-question" onclick="toggleFaq(1)"><span class="font-medium text-xs sm:text-lg">Сколько времени занимает установка кондиционера?</span><i class="ri-arrow-down-s-line faq-icon"></i></div><div class="faq-answer"><div class="pb-4 sm:pb-6 text-xs text-gray-700">Стандартная установка занимает от 2 до 4 часов, в зависимости от сложности монтажа. Наши специалисты работают быстро и качественно, чтобы минимизировать неудобства для вас.</div></div></div>
+          <div class="faq-item"><div class="faq-question" onclick="toggleFaq(2)"><span class="font-medium text-xs sm:text-lg">Как часто нужно обслуживать кондиционер?</span><i class="ri-arrow-down-s-line faq-icon"></i></div><div class="faq-answer"><div class="pb-4 sm:pb-6 text-xs text-gray-700">Рекомендуем проводить техническое обслуживание кондиционера не реже одного раза в год. Это продлевает срок службы оборудования, обеспечивает эффективную работу и экономит электроэнергию.</div></div></div>
+          <div class="faq-item"><div class="faq-question" onclick="toggleFaq(3)"><span class="font-medium text-xs sm:text-lg">В чем разница между инверторным и обычным кондиционером?</span><i class="ri-arrow-down-s-line faq-icon"></i></div><div class="faq-answer"><div class="pb-4 sm:pb-6 text-xs text-gray-700">Инверторный кондиционер регулирует мощность компрессора плавно, что позволяет экономить до 30-40% электроэнергии, работать тише и поддерживать точную температуру. Обычный кондиционер работает по принципу "включил-выключил", что менее эффективно.</div></div></div>
+          <div class="faq-item"><div class="faq-question" onclick="toggleFaq(4)"><span class="font-medium text-xs sm:text-lg">Можно ли установить кондиционер зимой?</span><i class="ri-arrow-down-s-line faq-icon"></i></div><div class="faq-answer"><div class="pb-4 sm:pb-6 text-xs text-gray-700">Да, установка возможна круглый год.</div></div></div>
+          <div class="faq-item"><div class="faq-question" onclick="toggleFaq(5)"><span class="font-medium text-xs sm:text-lg">Какая гарантия на работу и оборудование?</span><i class="ri-arrow-down-s-line faq-icon"></i></div><div class="faq-answer"><div class="pb-4 sm:pb-6 text-xs text-gray-700">Мы предоставляем гарантию 5 лет на оборудование и 1 год на монтажные работы.</div></div></div>
+          <div class="faq-item"><div class="faq-question" onclick="toggleFaq(6)"><span class="font-medium text-xs sm:text-lg">Нужно ли получать разрешение на установку кондиционера?</span><i class="ri-arrow-down-s-line faq-icon"></i></div><div class="faq-answer"><div class="pb-4 sm:pb-6 text-xs text-gray-700">В большинстве случаев установка кондиционера в квартире не требует специальных разрешений. Однако при монтаже в исторических зданиях или на фасадах многоэтажек могут потребоваться согласования.</div></div></div>
         </div>
       </div>
     </section>
@@ -1933,78 +1702,11 @@
         <h2 class="text-lg sm:text-3xl font-bold text-center text-gray-900 mb-2">Отзывы наших клиентов</h2>
         <p class="text-center text-gray-700 mb-4 sm:mb-10 text-xs sm:text-base">Что говорят люди, которые уже воспользовались нашими услугами</p>
         <div class="grid grid-cols-1 md:grid-cols-3 gap-4 sm:gap-8">
-          <!-- Отзыв 1 -->
-          <div class="bg-white p-3 sm:p-6 rounded-lg shadow-card review-card">
-            <div class="flex items-center mb-2">
-              <div class="w-6 h-6 sm:w-10 sm:h-10 rounded-full bg-gradient-to-br from-primary/20 to-primary/10 flex items-center justify-center text-primary mr-2 sm:mr-3">
-                <i class="ri-user-line text-xs sm:text-base"></i>
-              </div>
-              <div>
-                <h4 class="font-bold text-xs sm:text-base text-gray-900">Анна С.</h4>
-                <div class="flex stars text-xs">
-                  <i class="ri-star-fill"></i>
-                  <i class="ri-star-fill"></i>
-                  <i class="ri-star-fill"></i>
-                  <i class="ri-star-fill"></i>
-                  <i class="ri-star-fill"></i>
-                </div>
-              </div>
-            </div>
-            <p class="text-xs text-gray-700 mb-2">
-              "Заказывали установку кондиционера в квартиру. Мастера приехали вовремя, все сделали быстро и аккуратно. Уже второй год работает без нареканий. Спасибо за качественную работу!"
-            </p>
-            <div class="text-xs text-gray-500">15 марта 2024</div>
-          </div>
-          <!-- Отзыв 2 -->
-          <div class="bg-white p-3 sm:p-6 rounded-lg shadow-card review-card">
-            <div class="flex items-center mb-2">
-              <div class="w-6 h-6 sm:w-10 sm:h-10 rounded-full bg-gradient-to-br from-secondary/20 to-secondary/10 flex items-center justify-center text-secondary mr-2 sm:mr-3">
-                <i class="ri-user-line text-xs sm:text-base"></i>
-              </div>
-              <div>
-                <h4 class="font-bold text-xs sm:text-base text-gray-900">Игорь П.</h4>
-                <div class="flex stars text-xs">
-                  <i class="ri-star-fill"></i>
-                  <i class="ri-star-fill"></i>
-                  <i class="ri-star-fill"></i>
-                  <i class="ri-star-fill"></i>
-                  <i class="ri-star-fill"></i>
-                </div>
-              </div>
-            </div>
-            <p class="text-xs text-gray-700 mb-2">
-              "Устанавливали кондиционер в офис. Профессиональная работа, аккуратный монтаж, все коммуникации спрятали в короб. Персонал вежливый, работу выполнили в срок. Рекомендую!"
-            </p>
-            <div class="text-xs text-gray-500">2 февраля 2025</div>
-          </div>
-          <!-- Отзыв 3 -->
-          <div class="bg-white p-3 sm:p-6 rounded-lg shadow-card review-card">
-            <div class="flex items-center mb-2">
-              <div class="w-6 h-6 sm:w-10 sm:h-10 rounded-full bg-gradient-to-br from-accent/20 to-accent/10 flex items-center justify-center text-accent mr-2 sm:mr-3">
-                <i class="ri-user-line text-xs sm:text-base"></i>
-              </div>
-              <div>
-                <h4 class="font-bold text-xs sm:text-base text-gray-900">Елена К.</h4>
-                <div class="flex stars text-xs">
-                  <i class="ri-star-fill"></i>
-                  <i class="ri-star-fill"></i>
-                  <i class="ri-star-fill"></i>
-                  <i class="ri-star-fill"></i>
-                  <i class="ri-star-fill"></i>
-                </div>
-              </div>
-            </div>
-            <p class="text-xs text-gray-700 mb-2">
-              "Очень довольна обслуживанием кондиционера. Приехали, почистили, все объяснили. Цена адекватная. Теперь буду пользоваться услугами регулярно. Спасибо за внимательное отношение!"
-            </p>
-            <div class="text-xs text-gray-500">10 августа 2025</div>
-          </div>
+          <div class="bg-white p-3 sm:p-6 rounded-lg shadow-card review-card"><div class="flex items-center mb-2"><div class="w-6 h-6 sm:w-10 sm:h-10 rounded-full bg-gradient-to-br from-primary/20 to-primary/10 flex items-center justify-center text-primary mr-2 sm:mr-3"><i class="ri-user-line text-xs sm:text-base"></i></div><div><h4 class="font-bold text-xs sm:text-base text-gray-900">Анна С.</h4><div class="flex stars text-xs"><i class="ri-star-fill"></i><i class="ri-star-fill"></i><i class="ri-star-fill"></i><i class="ri-star-fill"></i><i class="ri-star-fill"></i></div></div></div><p class="text-xs text-gray-700 mb-2">"Заказывали установку кондиционера в квартиру. Мастера приехали вовремя, все сделали быстро и аккуратно. Уже второй год работает без нареканий. Спасибо за качественную работу!"</p><div class="text-xs text-gray-500">15 марта 2024</div></div>
+          <div class="bg-white p-3 sm:p-6 rounded-lg shadow-card review-card"><div class="flex items-center mb-2"><div class="w-6 h-6 sm:w-10 sm:h-10 rounded-full bg-gradient-to-br from-secondary/20 to-secondary/10 flex items-center justify-center text-secondary mr-2 sm:mr-3"><i class="ri-user-line text-xs sm:text-base"></i></div><div><h4 class="font-bold text-xs sm:text-base text-gray-900">Игорь П.</h4><div class="flex stars text-xs"><i class="ri-star-fill"></i><i class="ri-star-fill"></i><i class="ri-star-fill"></i><i class="ri-star-fill"></i><i class="ri-star-fill"></i></div></div></div><p class="text-xs text-gray-700 mb-2">"Устанавливали кондиционер в офис. Профессиональная работа, аккуратный монтаж, все коммуникации спрятали в короб. Персонал вежливый, работу выполнили в срок. Рекомендую!"</p><div class="text-xs text-gray-500">2 февраля 2025</div></div>
+          <div class="bg-white p-3 sm:p-6 rounded-lg shadow-card review-card"><div class="flex items-center mb-2"><div class="w-6 h-6 sm:w-10 sm:h-10 rounded-full bg-gradient-to-br from-accent/20 to-accent/10 flex items-center justify-center text-accent mr-2 sm:mr-3"><i class="ri-user-line text-xs sm:text-base"></i></div><div><h4 class="font-bold text-xs sm:text-base text-gray-900">Елена К.</h4><div class="flex stars text-xs"><i class="ri-star-fill"></i><i class="ri-star-fill"></i><i class="ri-star-fill"></i><i class="ri-star-fill"></i><i class="ri-star-fill"></i></div></div></div><p class="text-xs text-gray-700 mb-2">"Очень довольна обслуживанием кондиционера. Приехали, почистили, все объяснили. Цена адекватная. Теперь буду пользоваться услугами регулярно. Спасибо за внимательное отношение!"</p><div class="text-xs text-gray-500">10 августа 2025</div></div>
         </div>
-        <div class="mt-4 sm:mt-10 text-center">
-          <button onclick="document.getElementById('contacts').scrollIntoView({behavior: 'smooth'})" class="gradient-bg text-white px-4 sm:px-8 py-1.5 sm:py-3 rounded-button font-medium hover:shadow-glow transition-all duration-300 btn-animate text-xs sm:text-base">
-            Оставить свой отзыв
-          </button>
-        </div>
+        <div class="mt-4 sm:mt-10 text-center"><button onclick="document.getElementById('contacts').scrollIntoView({behavior: 'smooth'})" class="gradient-bg text-white px-4 sm:px-8 py-1.5 sm:py-3 rounded-button font-medium hover:shadow-glow transition-all duration-300 btn-animate text-xs sm:text-base">Оставить свой отзыв</button></div>
       </div>
     </section>
 
@@ -2014,65 +1716,8 @@
         <h2 class="text-lg sm:text-3xl font-bold text-center text-gray-900 mb-2">Контакты</h2>
         <p class="text-center text-gray-700 mb-4 sm:mb-10 text-xs sm:text-base">Свяжитесь с нами любым удобным способом</p>
         <div class="grid grid-cols-1 md:grid-cols-2 gap-4 sm:gap-8 items-start">
-          <div>
-            <h3 class="text-base sm:text-xl font-bold text-gray-900 mb-3 sm:mb-6">Наши контакты</h3>
-            <div class="grid grid-cols-1 sm:grid-cols-2 gap-3 sm:gap-6">
-              <div class="bg-white p-3 sm:p-6 rounded-lg shadow-card card-hover">
-                <div class="w-6 h-6 sm:w-10 sm:h-10 flex items-center justify-center bg-gradient-to-br from-primary/20 to-primary/10 rounded-full text-primary mb-2 sm:mb-4 shadow-lg">
-                  <i class="ri-phone-line text-xs sm:text-base"></i>
-                </div>
-                <h4 class="text-xs sm:text-lg font-medium text-gray-900 mb-1">Телефон</h4>
-                <a href="tel:+375291050694" class="text-xs text-primary hover:underline">+375 (29) 105-06-94</a>
-              </div>
-              <div class="bg-white p-3 sm:p-6 rounded-lg shadow-card card-hover">
-                <div class="w-6 h-6 sm:w-10 sm:h-10 flex items-center justify-center bg-gradient-to-br from-secondary/20 to-secondary/10 rounded-full text-secondary mb-2 sm:mb-4 shadow-lg">
-                  <i class="ri-mail-line text-xs sm:text-base"></i>
-                </div>
-                <h4 class="text-xs sm:text-lg font-medium text-gray-900 mb-1">Email</h4>
-                <a href="mailto:aircomfortbel@gmail.com" class="text-xs text-primary hover:underline">aircomfortbel@gmail.com</a>
-              </div>
-              <div class="bg-white p-3 sm:p-6 rounded-lg shadow-card card-hover">
-                <div class="w-6 h-6 sm:w-10 sm:h-10 flex items-center justify-center bg-gradient-to-br from-accent/20 to-accent/10 rounded-full text-accent mb-2 sm:mb-4 shadow-lg">
-                  <i class="ri-time-line text-xs sm:text-base"></i>
-                </div>
-                <h4 class="text-xs sm:text-lg font-medium text-gray-900 mb-1">Время работы</h4>
-                <p class="text-xs text-gray-700">Пн-Пт: 9:00 - 20:00</p>
-                <p class="text-xs text-gray-700">Сб-Вс: 10:00 - 18:00</p>
-              </div>
-              <div class="bg-white p-3 sm:p-6 rounded-lg shadow-card card-hover">
-                <div class="w-6 h-6 sm:w-10 sm:h-10 flex items-center justify-center bg-gradient-to-br from-primary/20 to-primary/10 rounded-full text-primary mb-2 sm:mb-4 shadow-lg">
-                  <i class="ri-map-pin-line text-xs sm:text-base"></i>
-                </div>
-                <h4 class="text-xs sm:text-lg font-medium text-gray-900 mb-1">Регион</h4>
-                <p class="text-xs text-gray-700">Гомель и Гомельская область</p>
-              </div>
-            </div>
-          </div>
-          <div class="bg-white p-4 sm:p-8 rounded-lg shadow-hover border border-gray-100">
-            <h3 class="text-base sm:text-xl font-bold text-gray-900 mb-3 sm:mb-6">Оставить заявку</h3>
-            <form id="contact-form" action="https://formspree.io/f/mrbkdwwe" method="POST">
-              <input type="hidden" id="calculator-data" name="calculator_data">
-              <div class="mb-2 sm:mb-4">
-                <label for="form-name" class="block text-gray-700 font-medium mb-1 text-xs">Ваше имя *</label>
-                <input type="text" id="form-name" name="name" class="w-full px-2 sm:px-4 py-1.5 sm:py-3 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-primary/50 focus:border-primary text-xs" placeholder="Иван Петров" required>
-              </div>
-              <div class="mb-2 sm:mb-4">
-                <label for="form-phone" class="block text-gray-700 font-medium mb-1 text-xs">Телефон *</label>
-                <input type="tel" id="form-phone" name="phone" class="w-full px-2 sm:px-4 py-1.5 sm:py-3 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-primary/50 focus:border-primary text-xs" placeholder="+375 (XX) XXX-XX-XX" required>
-              </div>
-              <div class="mb-2 sm:mb-4">
-                <label for="form-email" class="block text-gray-700 font-medium mb-1 text-xs">Email (необязательно)</label>
-                <input type="email" id="form-email" name="email" class="w-full px-2 sm:px-4 py-1.5 sm:py-3 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-primary/50 focus:border-primary text-xs" placeholder="your@email.com">
-              </div>
-              <div class="mb-3 sm:mb-6">
-                <label for="form-message" class="block text-gray-700 font-medium mb-1 text-xs">Сообщение</label>
-                <textarea id="form-message" name="message" rows="3" class="w-full px-2 sm:px-4 py-1.5 sm:py-3 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-primary/50 focus:border-primary text-xs" placeholder="Опишите ваш вопрос"></textarea>
-              </div>
-              <button type="submit" class="w-full gradient-bg text-white px-4 sm:px-6 py-2 sm:py-3 rounded-button font-medium hover:shadow-glow transition-all duration-300 btn-animate text-xs">
-                Отправить заявку
-              </button>
-            </form>
-          </div>
+          <div><h3 class="text-base sm:text-xl font-bold text-gray-900 mb-3 sm:mb-6">Наши контакты</h3><div class="grid grid-cols-1 sm:grid-cols-2 gap-3 sm:gap-6"><div class="bg-white p-3 sm:p-6 rounded-lg shadow-card card-hover"><div class="w-6 h-6 sm:w-10 sm:h-10 flex items-center justify-center bg-gradient-to-br from-primary/20 to-primary/10 rounded-full text-primary mb-2 sm:mb-4 shadow-lg"><i class="ri-phone-line text-xs sm:text-base"></i></div><h4 class="text-xs sm:text-lg font-medium text-gray-900 mb-1">Телефон</h4><a href="tel:+375291050694" class="text-xs text-primary hover:underline">+375 (29) 105-06-94</a></div><div class="bg-white p-3 sm:p-6 rounded-lg shadow-card card-hover"><div class="w-6 h-6 sm:w-10 sm:h-10 flex items-center justify-center bg-gradient-to-br from-secondary/20 to-secondary/10 rounded-full text-secondary mb-2 sm:mb-4 shadow-lg"><i class="ri-mail-line text-xs sm:text-base"></i></div><h4 class="text-xs sm:text-lg font-medium text-gray-900 mb-1">Email</h4><a href="mailto:aircomfortbel@gmail.com" class="text-xs text-primary hover:underline">aircomfortbel@gmail.com</a></div><div class="bg-white p-3 sm:p-6 rounded-lg shadow-card card-hover"><div class="w-6 h-6 sm:w-10 sm:h-10 flex items-center justify-center bg-gradient-to-br from-accent/20 to-accent/10 rounded-full text-accent mb-2 sm:mb-4 shadow-lg"><i class="ri-time-line text-xs sm:text-base"></i></div><h4 class="text-xs sm:text-lg font-medium text-gray-900 mb-1">Время работы</h4><p class="text-xs text-gray-700">Пн-Пт: 9:00 - 20:00</p><p class="text-xs text-gray-700">Сб-Вс: 10:00 - 18:00</p></div><div class="bg-white p-3 sm:p-6 rounded-lg shadow-card card-hover"><div class="w-6 h-6 sm:w-10 sm:h-10 flex items-center justify-center bg-gradient-to-br from-primary/20 to-primary/10 rounded-full text-primary mb-2 sm:mb-4 shadow-lg"><i class="ri-map-pin-line text-xs sm:text-base"></i></div><h4 class="text-xs sm:text-lg font-medium text-gray-900 mb-1">Регион</h4><p class="text-xs text-gray-700">Гомель и Гомельская область</p></div></div></div>
+          <div class="bg-white p-4 sm:p-8 rounded-lg shadow-hover border border-gray-100"><h3 class="text-base sm:text-xl font-bold text-gray-900 mb-3 sm:mb-6">Оставить заявку</h3><form id="contact-form" action="https://formspree.io/f/mrbkdwwe" method="POST"><input type="hidden" id="calculator-data" name="calculator_data"><div class="mb-2 sm:mb-4"><label for="form-name" class="block text-gray-700 font-medium mb-1 text-xs">Ваше имя *</label><input type="text" id="form-name" name="name" class="w-full px-2 sm:px-4 py-1.5 sm:py-3 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-primary/50 focus:border-primary text-xs" placeholder="Иван Петров" required></div><div class="mb-2 sm:mb-4"><label for="form-phone" class="block text-gray-700 font-medium mb-1 text-xs">Телефон *</label><input type="tel" id="form-phone" name="phone" class="w-full px-2 sm:px-4 py-1.5 sm:py-3 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-primary/50 focus:border-primary text-xs" placeholder="+375 (XX) XXX-XX-XX" required></div><div class="mb-2 sm:mb-4"><label for="form-email" class="block text-gray-700 font-medium mb-1 text-xs">Email (необязательно)</label><input type="email" id="form-email" name="email" class="w-full px-2 sm:px-4 py-1.5 sm:py-3 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-primary/50 focus:border-primary text-xs" placeholder="your@email.com"></div><div class="mb-3 sm:mb-6"><label for="form-message" class="block text-gray-700 font-medium mb-1 text-xs">Сообщение</label><textarea id="form-message" name="message" rows="3" class="w-full px-2 sm:px-4 py-1.5 sm:py-3 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-primary/50 focus:border-primary text-xs" placeholder="Опишите ваш вопрос"></textarea></div><button type="submit" class="w-full gradient-bg text-white px-4 sm:px-6 py-2 sm:py-3 rounded-button font-medium hover:shadow-glow transition-all duration-300 btn-animate text-xs">Отправить заявку</button></form></div>
         </div>
       </div>
     </section>
@@ -2082,15 +1727,11 @@
       <div class="max-w-7xl mx-auto px-6">
         <div class="flex flex-col md:flex-row justify-between items-center">
           <div class="mb-3 md:mb-0">
-            <div class="flex items-center">
-              <span class="text-base sm:text-xl font-['Pacifico'] text-white mr-2">AirComfort</span>
-            </div>
+            <div class="flex items-center"><span class="text-base sm:text-xl font-['Pacifico'] text-white mr-2">AirComfort</span></div>
             <p class="text-xs text-gray-400 mt-1">Профессиональная установка кондиционеров в Гомеле</p>
             <p class="text-xs text-gray-500 mt-1">Общество с ограниченной ответственностью "ТеплоПрайм" УНП 491393506</p>
           </div>
-          <div class="flex flex-col items-center md:items-end">
-            <p class="text-xs text-gray-400">© 2026 AirComfort. Все права защищены.</p>
-          </div>
+          <div class="flex flex-col items-center md:items-end"><p class="text-xs text-gray-400">© 2026 AirComfort. Все права защищены.</p></div>
         </div>
       </div>
     </footer>
@@ -2348,12 +1989,7 @@
       localStorage.setItem('aircom_logs', JSON.stringify(actionLogs));
     }
     function addLog(type, action) {
-      actionLogs.unshift({
-        type,
-        action,
-        time: new Date().toLocaleString(),
-        user: 'admin'
-      });
+      actionLogs.unshift({ type, action, time: new Date().toLocaleString(), user: 'admin' });
       if (actionLogs.length > 100) actionLogs.pop();
       saveLogs();
     }
@@ -2398,34 +2034,19 @@
       document.getElementById('stats-cancelled').textContent = orders.filter(o => o.status === 'отменен').length;
       
       const productSales = {};
-      orders.forEach(o => {
-        o.items.forEach(i => {
-          productSales[i.name] = (productSales[i.name] || 0) + i.quantity;
-        });
-      });
-      
-      const topProducts = Object.entries(productSales)
-        .sort((a, b) => b[1] - a[1])
-        .slice(0, 5);
-      
-      const topHtml = topProducts.map(([name, count]) => 
-        `<div class="flex justify-between"><span>${name}</span><span class="font-bold">${count} шт</span></div>`
-      ).join('');
+      orders.forEach(o => o.items.forEach(i => productSales[i.name] = (productSales[i.name] || 0) + i.quantity));
+      const topProducts = Object.entries(productSales).sort((a, b) => b[1] - a[1]).slice(0, 5);
+      const topHtml = topProducts.map(([name, count]) => `<div class="flex justify-between"><span>${name}</span><span class="font-bold">${count} шт</span></div>`).join('');
       document.getElementById('dashboard-top-products').innerHTML = topHtml || '<p class="text-gray-500">Нет данных</p>';
       
-      const recentHtml = actionLogs.slice(0, 5).map(log => 
-        `<div class="text-xs border-b pb-1"><span class="text-gray-500">${log.time}</span> - ${log.action}</div>`
-      ).join('');
+      const recentHtml = actionLogs.slice(0, 5).map(log => `<div class="text-xs border-b pb-1"><span class="text-gray-500">${log.time}</span> - ${log.action}</div>`).join('');
       document.getElementById('recent-actions').innerHTML = recentHtml || '<p class="text-gray-500">Нет действий</p>';
     }
 
     function renderBrands() {
       const brandsList = document.getElementById('brands-list');
       if (!brandsList) return;
-      
-      brandsList.innerHTML = brands.map(b => 
-        `<button onclick="filterByBrand('${b.name}')" class="brand-chip px-2 sm:px-3 py-1 bg-gray-100 hover:bg-primary hover:text-white rounded-full text-xs transition-colors">${b.name}</button>`
-      ).join('');
+      brandsList.innerHTML = brands.map(b => `<button onclick="filterByBrand('${b.name}')" class="brand-chip px-2 sm:px-3 py-1 bg-gray-100 hover:bg-primary hover:text-white rounded-full text-xs transition-colors">${b.name}</button>`).join('');
     }
 
     function updateBrandSelects() {
@@ -2433,8 +2054,7 @@
       selects.forEach(id => {
         const select = document.getElementById(id);
         if (select) {
-          select.innerHTML = '<option value="">Без бренда</option>' + 
-            brands.map(b => `<option value="${b.name}">${b.name}</option>`).join('');
+          select.innerHTML = '<option value="">Без бренда</option>' + brands.map(b => `<option value="${b.name}">${b.name}</option>`).join('');
         }
       });
     }
@@ -2459,7 +2079,6 @@
       }
     }
 
-    // Переключение вкладок админки
     function switchAdminTab(tab) {
       const tabs = ['dashboard', 'products', 'orders', 'brands', 'customers', 'reports', 'settings', 'logs'];
       tabs.forEach(t => {
@@ -2489,16 +2108,7 @@
     function renderAdminBrands() {
       const list = document.getElementById('brands-admin-list');
       if (!list) return;
-      
-      list.innerHTML = brands.map(b => `
-        <div class="flex justify-between items-center p-2 border rounded mb-2">
-          <span class="text-xs sm:text-sm">${b.name}</span>
-          <div>
-            <button onclick="editBrand(${b.id})" class="text-blue-600 mr-2 text-xs">✏️</button>
-            <button onclick="deleteBrand(${b.id})" class="text-red-600 text-xs">🗑️</button>
-          </div>
-        </div>
-      `).join('');
+      list.innerHTML = brands.map(b => `<div class="flex justify-between items-center p-2 border rounded mb-2"><span class="text-xs sm:text-sm">${b.name}</span><div><button onclick="editBrand(${b.id})" class="text-blue-600 mr-2 text-xs">✏️</button><button onclick="deleteBrand(${b.id})" class="text-red-600 text-xs">🗑️</button></div></div>`).join('');
     }
 
     function addBrand() {
@@ -2532,7 +2142,6 @@
       }
     }
 
-    // Рендер каталога с фильтрацией
     function filterProducts() {
       const searchText = document.getElementById('search-input')?.value.toLowerCase() || '';
       const areas = Array.from(document.querySelectorAll('#catalog input[type="checkbox"][id^="area"]:checked')).map(cb => cb.value);
@@ -2545,14 +2154,9 @@
 
       const filtered = products.filter(p => {
         if (searchText) {
-          const matchesSearch = 
-            p.name.toLowerCase().includes(searchText) ||
-            (p.description && p.description.toLowerCase().includes(searchText)) ||
-            (p.brand && p.brand.toLowerCase().includes(searchText)) ||
-            (p.category && p.category.toLowerCase().includes(searchText));
+          const matchesSearch = p.name.toLowerCase().includes(searchText) || (p.description && p.description.toLowerCase().includes(searchText)) || (p.brand && p.brand.toLowerCase().includes(searchText)) || (p.category && p.category.toLowerCase().includes(searchText));
           if (!matchesSearch) return false;
         }
-        
         if (areas.length && !areas.includes(p.area)) return false;
         if (cats.length && !cats.includes(p.category)) return false;
         if (types.length && !types.includes(p.type)) return false;
@@ -2569,61 +2173,24 @@
       if (!grid) return;
       grid.innerHTML = '';
       productArray.forEach(p => {
-        const priceHtml = p.oldPrice ? 
-          `<span class="text-gray-400 line-through text-xs mr-1">${p.oldPrice} BYN</span>` : '';
-        const tagsHtml = p.tags?.map(t => 
-          `<span class="inline-block bg-${t === 'хит' ? 'red' : t === 'новинка' ? 'green' : 'orange'}-100 text-${t === 'хит' ? 'red' : t === 'новинка' ? 'green' : 'orange'}-800 text-xs px-1.5 py-0.5 rounded-full mr-1">${t}</span>`
-        ).join('') || '';
-        
+        const priceHtml = p.oldPrice ? `<span class="text-gray-400 line-through text-xs mr-1">${p.oldPrice} BYN</span>` : '';
+        const tagsHtml = p.tags?.map(t => `<span class="inline-block bg-${t === 'хит' ? 'red' : t === 'новинка' ? 'green' : 'orange'}-100 text-${t === 'хит' ? 'red' : t === 'новинка' ? 'green' : 'orange'}-800 text-xs px-1.5 py-0.5 rounded-full mr-1">${t}</span>`).join('') || '';
         const card = document.createElement('div');
         card.className = 'bg-white rounded-lg shadow-card overflow-hidden product-card';
         card.onclick = () => openProductPage(p.id);
-        card.innerHTML = `
-          <div class="relative">
-            <img src="${p.image}" alt="${p.name}" class="w-full h-28 sm:h-40 object-cover">
-            ${p.stock < 3 ? '<span class="absolute top-1 right-1 bg-red-500 text-white text-xs px-1.5 py-0.5 rounded-full">Мало</span>' : ''}
-          </div>
-          <div class="p-2 sm:p-4 flex-grow">
-            <div class="mb-1">${tagsHtml}</div>
-            <h3 class="font-bold text-xs sm:text-base mb-1">${p.name}</h3>
-            <div class="mb-1">${priceHtml}<span class="text-primary font-bold text-sm sm:text-lg">${p.price} BYN</span></div>
-            <p class="text-xs text-gray-600 mb-2 product-description">${p.description || 'Нет описания'}</p>
-            <button onclick="event.stopPropagation(); addToCart(${p.id})" class="w-full gradient-bg text-white px-2 py-1 sm:px-3 sm:py-1.5 rounded-button btn-animate text-xs">В корзину</button>
-          </div>
-        `;
+        card.innerHTML = `<div class="relative"><img src="${p.image}" alt="${p.name}" class="w-full h-28 sm:h-40 object-cover">${p.stock < 3 ? '<span class="absolute top-1 right-1 bg-red-500 text-white text-xs px-1.5 py-0.5 rounded-full">Мало</span>' : ''}</div><div class="p-2 sm:p-4 flex-grow"><div class="mb-1">${tagsHtml}</div><h3 class="font-bold text-xs sm:text-base mb-1">${p.name}</h3><div class="mb-1">${priceHtml}<span class="text-primary font-bold text-sm sm:text-lg">${p.price} BYN</span></div><p class="text-xs text-gray-600 mb-2 product-description">${p.description || 'Нет описания'}</p><button onclick="event.stopPropagation(); addToCart(${p.id})" class="w-full gradient-bg text-white px-2 py-1 sm:px-3 sm:py-1.5 rounded-button btn-animate text-xs">В корзину</button></div>`;
         grid.appendChild(card);
       });
     }
 
-    // Открытие отдельной страницы товара
     function openProductPage(id) {
       window.location.hash = `product-${id}`;
       const prod = products.find(p => p.id === id);
       if (!prod) return;
       const modal = document.getElementById('product-modal');
-      const priceHtml = prod.oldPrice ? 
-        `<span class="text-gray-400 line-through text-sm mr-2">${prod.oldPrice} BYN</span>` : '';
-      const tagsHtml = prod.tags?.map(t => 
-        `<span class="inline-block bg-${t === 'хит' ? 'red' : t === 'новинка' ? 'green' : 'orange'}-100 text-${t === 'хит' ? 'red' : t === 'новинка' ? 'green' : 'orange'}-800 text-xs px-2 py-1 rounded-full mr-2">${t}</span>`
-      ).join('') || '';
-      
-      document.getElementById('product-modal-detail').innerHTML = `
-        <img src="${prod.image}" alt="${prod.name}" class="w-full h-32 sm:h-48 object-cover rounded mb-3">
-        <div class="mb-2">${tagsHtml}</div>
-        <h3 class="text-base sm:text-xl font-bold mb-2">${prod.name}</h3>
-        <div class="mb-2">${priceHtml}<span class="text-primary text-base sm:text-xl font-bold">${prod.price} BYN</span></div>
-        <p class="text-xs sm:text-sm text-gray-700 mb-3">${prod.fullDescription || prod.description || 'Нет описания'}</p>
-        <ul class="text-xs text-gray-600 space-y-1">
-          <li><span class="font-medium">Бренд:</span> ${prod.brand || 'Не указан'}</li>
-          <li><span class="font-medium">Площадь:</span> ${prod.area} м²</li>
-          <li><span class="font-medium">Категория:</span> ${prod.category}</li>
-          <li><span class="font-medium">Тип:</span> ${prod.type}</li>
-          <li><span class="font-medium">Инвертор:</span> ${prod.inverter}</li>
-          <li><span class="font-medium">Обогрев зимой:</span> ${prod.heat}°C</li>
-          <li><span class="font-medium">Наличие:</span> ${prod.stock > 0 ? 'В наличии (' + prod.stock + ' шт)' : 'Нет в наличии'}</li>
-        </ul>
-        <button onclick="addToCart(${prod.id})" class="mt-3 gradient-bg text-white px-3 py-1.5 rounded-button btn-animate w-full text-sm">В корзину</button>
-      `;
+      const priceHtml = prod.oldPrice ? `<span class="text-gray-400 line-through text-sm mr-2">${prod.oldPrice} BYN</span>` : '';
+      const tagsHtml = prod.tags?.map(t => `<span class="inline-block bg-${t === 'хит' ? 'red' : t === 'новинка' ? 'green' : 'orange'}-100 text-${t === 'хит' ? 'red' : t === 'новинка' ? 'green' : 'orange'}-800 text-xs px-2 py-1 rounded-full mr-2">${t}</span>`).join('') || '';
+      document.getElementById('product-modal-detail').innerHTML = `<img src="${prod.image}" alt="${prod.name}" class="w-full h-32 sm:h-48 object-cover rounded mb-3"><div class="mb-2">${tagsHtml}</div><h3 class="text-base sm:text-xl font-bold mb-2">${prod.name}</h3><div class="mb-2">${priceHtml}<span class="text-primary text-base sm:text-xl font-bold">${prod.price} BYN</span></div><p class="text-xs sm:text-sm text-gray-700 mb-3">${prod.fullDescription || prod.description || 'Нет описания'}</p><ul class="text-xs text-gray-600 space-y-1"><li><span class="font-medium">Бренд:</span> ${prod.brand || 'Не указан'}</li><li><span class="font-medium">Площадь:</span> ${prod.area} м²</li><li><span class="font-medium">Категория:</span> ${prod.category}</li><li><span class="font-medium">Тип:</span> ${prod.type}</li><li><span class="font-medium">Инвертор:</span> ${prod.inverter}</li><li><span class="font-medium">Обогрев зимой:</span> ${prod.heat}°C</li><li><span class="font-medium">Наличие:</span> ${prod.stock > 0 ? 'В наличии (' + prod.stock + ' шт)' : 'Нет в наличии'}</li></ul><button onclick="addToCart(${prod.id})" class="mt-3 gradient-bg text-white px-3 py-1.5 rounded-button btn-animate w-full text-sm">В корзину</button>`;
       modal.style.display = 'flex';
     }
 
@@ -2644,71 +2211,40 @@
       filterProducts();
     }
 
-    // Корзина
     function addToCart(productId) {
       const prod = products.find(p => p.id === productId);
       if (!prod) return;
-      if (prod.stock < 1) {
-        alert('Товара нет в наличии');
-        return;
-      }
+      if (prod.stock < 1) { alert('Товара нет в наличии'); return; }
       const existing = cart.find(item => item.id === productId);
       if (existing) {
-        if (existing.quantity < prod.stock) {
-          existing.quantity++;
-        } else {
-          alert('Достигнуто максимальное количество на складе');
-          return;
-        }
-      } else {
-        cart.push({ ...prod, quantity: 1 });
-      }
+        if (existing.quantity < prod.stock) existing.quantity++;
+        else { alert('Достигнуто максимальное количество на складе'); return; }
+      } else cart.push({ ...prod, quantity: 1 });
       saveCart();
       alert(`${prod.name} добавлен в корзину`);
     }
 
     function addCalculatorToCart() {
       const modelSelect = document.getElementById('model');
-      if (!modelSelect) return;
-      if (!modelSelect.value) {
-        alert('Пожалуйста, выберите услугу');
-        return;
-      }
+      if (!modelSelect || !modelSelect.value) { alert('Пожалуйста, выберите услугу'); return; }
       const modelText = modelSelect.options[modelSelect.selectedIndex].text;
       const length = parseInt(document.getElementById('length').value);
       const demontage = document.getElementById('demontage').checked;
       const service = document.getElementById('service').checked;
-      
       let total = parseInt(modelSelect.value);
-      
-      if (modelSelect.value !== '100' || !modelText.includes('Только')) {
-        const additionalLength = Math.max(0, length - 3);
-        total += additionalLength * 50;
-      }
-      
+      if (modelSelect.value !== '100' || !modelText.includes('Только')) total += Math.max(0, length - 3) * 50;
       if (demontage) total += 100;
       if (service) total += 100;
-      
-      const calcItem = {
-        id: 'calc-' + Date.now(),
-        name: modelText + (demontage ? ' + демонтаж' : '') + (service ? ' + обслуживание' : ''),
-        price: total,
-        quantity: 1,
-        image: 'https://via.placeholder.com/200x150?text=Service'
-      };
+      const calcItem = { id: 'calc-' + Date.now(), name: modelText + (demontage ? ' + демонтаж' : '') + (service ? ' + обслуживание' : ''), price: total, quantity: 1, image: 'https://via.placeholder.com/200x150?text=Service' };
       const existing = cart.find(item => item.id === calcItem.id);
-      if (existing) existing.quantity++;
-      else cart.push(calcItem);
+      if (existing) existing.quantity++; else cart.push(calcItem);
       saveCart();
       alert('Услуга добавлена в корзину');
     }
 
     function toggleCartModal() {
       const modal = document.getElementById('cart-modal');
-      if (modal) {
-        renderCartItems();
-        modal.style.display = 'flex';
-      }
+      if (modal) { renderCartItems(); modal.style.display = 'flex'; }
     }
 
     function renderCartItems() {
@@ -2720,27 +2256,12 @@
         if (totalDisplay) totalDisplay.textContent = 'Общая сумма: 0 BYN';
         return;
       }
-      let html = '';
-      let total = 0;
+      let html = ''; let total = 0;
       cart.forEach(item => {
         total += item.price * item.quantity;
         const prod = products.find(p => p.id === item.id);
         const maxStock = prod ? prod.stock : Infinity;
-        
-        html += `
-          <div class="flex flex-col sm:flex-row justify-between items-start sm:items-center border-b py-2 gap-2">
-            <div class="flex-1">
-              <span class="font-medium text-xs sm:text-sm">${item.name}</span><br>
-              <span class="text-xs">${item.price} BYN x ${item.quantity}</span>
-            </div>
-            <div class="flex items-center gap-1">
-              <button onclick="changeQuantity('${item.id}', -1)" class="px-1.5 py-0.5 bg-gray-200 rounded text-xs">-</button>
-              <span class="mx-1 text-xs">${item.quantity}</span>
-              <button onclick="changeQuantity('${item.id}', 1, ${maxStock})" class="px-1.5 py-0.5 bg-gray-200 rounded text-xs">+</button>
-              <button onclick="removeFromCart('${item.id}')" class="ml-1 text-red-600 text-xs"><i class="ri-delete-bin-line"></i></button>
-            </div>
-          </div>
-        `;
+        html += `<div class="flex flex-col sm:flex-row justify-between items-start sm:items-center border-b py-2 gap-2"><div class="flex-1"><span class="font-medium text-xs sm:text-sm">${item.name}</span><br><span class="text-xs">${item.price} BYN x ${item.quantity}</span></div><div class="flex items-center gap-1"><button onclick="changeQuantity('${item.id}', -1)" class="px-1.5 py-0.5 bg-gray-200 rounded text-xs">-</button><span class="mx-1 text-xs">${item.quantity}</span><button onclick="changeQuantity('${item.id}', 1, ${maxStock})" class="px-1.5 py-0.5 bg-gray-200 rounded text-xs">+</button><button onclick="removeFromCart('${item.id}')" class="ml-1 text-red-600 text-xs"><i class="ri-delete-bin-line"></i></button></div></div>`;
       });
       container.innerHTML = html;
       if (totalDisplay) totalDisplay.textContent = 'Общая сумма: ' + total + ' BYN';
@@ -2750,125 +2271,43 @@
       const item = cart.find(i => i.id == id);
       if (item) {
         const newQty = item.quantity + delta;
-        if (newQty <= 0) {
-          cart = cart.filter(i => i.id != id);
-        } else if (newQty <= maxStock) {
-          item.quantity = newQty;
-        } else {
-          alert('Достигнуто максимальное количество на складе');
-          return;
-        }
+        if (newQty <= 0) cart = cart.filter(i => i.id != id);
+        else if (newQty <= maxStock) item.quantity = newQty;
+        else { alert('Достигнуто максимальное количество на складе'); return; }
         saveCart();
         renderCartItems();
       }
     }
 
-    function removeFromCart(id) {
-      cart = cart.filter(i => i.id != id);
-      saveCart();
-      renderCartItems();
-    }
-
-    function clearCart() {
-      if (confirm('Очистить корзину?')) {
-        cart = [];
-        saveCart();
-        renderCartItems();
-      }
-    }
+    function removeFromCart(id) { cart = cart.filter(i => i.id != id); saveCart(); renderCartItems(); }
+    function clearCart() { if (confirm('Очистить корзину?')) { cart = []; saveCart(); renderCartItems(); } }
 
     function checkoutCart() {
-      if (cart.length === 0) {
-        alert('Корзина пуста');
-        return;
-      }
-      
+      if (cart.length === 0) { alert('Корзина пуста'); return; }
       const name = document.getElementById('order-name').value;
       const phone = document.getElementById('order-phone').value;
       const address = document.getElementById('order-address').value;
       const payment = document.querySelector('input[name="payment"]:checked')?.value || 'Наличные';
-      
-      if (!name || !phone || !address) {
-        alert('Пожалуйста, заполните все поля');
-        return;
-      }
-
+      if (!name || !phone || !address) { alert('Пожалуйста, заполните все поля'); return; }
       const total = cart.reduce((acc, i) => acc + i.price * i.quantity, 0);
-      const order = {
-        id: Date.now(),
-        customer: { name, phone, address, payment },
-        items: [...cart],
-        total: total,
-        date: new Date().toLocaleString(),
-        status: 'новый'
-      };
-      
+      const order = { id: Date.now(), customer: { name, phone, address, payment }, items: [...cart], total: total, date: new Date().toLocaleString(), status: 'новый' };
       orders.push(order);
       saveOrders();
-      
-      cart.forEach(item => {
-        const prod = products.find(p => p.id === item.id);
-        if (prod) {
-          prod.stock -= item.quantity;
-        }
-      });
+      cart.forEach(item => { const prod = products.find(p => p.id === item.id); if (prod) prod.stock -= item.quantity; });
       saveProducts();
-      
       const formData = new FormData();
-      formData.append('name', name);
-      formData.append('phone', phone);
-      formData.append('address', address);
-      formData.append('payment', payment);
-      formData.append('order', JSON.stringify(order));
-      
-      fetch('https://formspree.io/f/mrbkdwwe', {
-        method: 'POST',
-        body: formData,
-        headers: { 'Accept': 'application/json' }
-      }).then(response => {
-        if (response.ok) {
-          alert('Заказ оформлен! Мы свяжемся с вами.');
-        } else {
-          alert('Заказ оформлен, но не удалось отправить уведомление на email.');
-        }
-      }).catch(() => {
-        alert('Заказ оформлен, но не удалось отправить уведомление на email.');
-      });
-      
-      clearCart();
-      renderCartItems();
-      document.getElementById('cart-modal').style.display = 'none';
-      
-      document.getElementById('order-name').value = '';
-      document.getElementById('order-phone').value = '';
-      document.getElementById('order-address').value = '';
+      formData.append('name', name); formData.append('phone', phone); formData.append('address', address); formData.append('payment', payment); formData.append('order', JSON.stringify(order));
+      fetch('https://formspree.io/f/mrbkdwwe', { method: 'POST', body: formData, headers: { 'Accept': 'application/json' } }).then(response => { if (response.ok) alert('Заказ оформлен! Мы свяжемся с вами.'); else alert('Заказ оформлен, но не удалось отправить уведомление на email.'); }).catch(() => alert('Заказ оформлен, но не удалось отправить уведомление на email.'));
+      clearCart(); renderCartItems(); document.getElementById('cart-modal').style.display = 'none';
+      document.getElementById('order-name').value = ''; document.getElementById('order-phone').value = ''; document.getElementById('order-address').value = '';
       addLog('order', 'Новый заказ #' + order.id);
     }
 
-    // Админка
     function checkAdminHash() {
-      if (window.location.hash === '#admin') {
-        document.getElementById('admin-login-modal').style.display = 'flex';
-      }
+      if (window.location.hash === '#admin') document.getElementById('admin-login-modal').style.display = 'flex';
     }
-
-    (function() {
-      if (window.location.hash === '#admin') {
-        if (document.readyState === 'loading') {
-          document.addEventListener('DOMContentLoaded', () => {
-            document.getElementById('admin-login-modal').style.display = 'flex';
-          });
-        } else {
-          document.getElementById('admin-login-modal').style.display = 'flex';
-        }
-      }
-    })();
-
-    window.addEventListener('hashchange', function() {
-      if (window.location.hash === '#admin') {
-        document.getElementById('admin-login-modal').style.display = 'flex';
-      }
-    });
+    (function() { if (window.location.hash === '#admin') { if (document.readyState === 'loading') document.addEventListener('DOMContentLoaded', () => document.getElementById('admin-login-modal').style.display = 'flex'); else document.getElementById('admin-login-modal').style.display = 'flex'; } })();
+    window.addEventListener('hashchange', function() { if (window.location.hash === '#admin') document.getElementById('admin-login-modal').style.display = 'flex'; });
 
     function loginAdmin() {
       const login = document.getElementById('admin-login-input').value;
@@ -2881,134 +2320,49 @@
         updateDashboard();
         history.pushState('', document.title, window.location.pathname);
         addLog('user', 'Вход в админ-панель');
-      } else {
-        alert('Неверный логин или пароль');
-      }
+      } else alert('Неверный логин или пароль');
     }
 
-    function closeAdminPanel() {
-      document.getElementById('admin-panel').style.display = 'none';
-      window.location.hash = '';
-    }
+    function closeAdminPanel() { document.getElementById('admin-panel').style.display = 'none'; window.location.hash = ''; }
 
     function renderAdminProducts() {
       const list = document.getElementById('admin-product-list');
       if (!list) return;
-      
       const categoryFilter = document.getElementById('admin-category-filter')?.value || '';
       const statusFilter = document.getElementById('admin-status-filter')?.value || '';
       const searchText = document.getElementById('admin-search')?.value.toLowerCase() || '';
       const sortBy = document.getElementById('admin-sort')?.value || 'name';
-      
       let filteredProducts = [...products];
-      
-      if (categoryFilter) {
-        filteredProducts = filteredProducts.filter(p => p.category === categoryFilter);
-      }
-      
-      if (statusFilter) {
-        filteredProducts = filteredProducts.filter(p => p.status === statusFilter);
-      }
-      
-      if (searchText) {
-        filteredProducts = filteredProducts.filter(p => 
-          p.name.toLowerCase().includes(searchText) || 
-          (p.description && p.description.toLowerCase().includes(searchText)) ||
-          (p.brand && p.brand.toLowerCase().includes(searchText))
-        );
-      }
-      
-      if (sortBy === 'price-asc') {
-        filteredProducts.sort((a, b) => a.price - b.price);
-      } else if (sortBy === 'price-desc') {
-        filteredProducts.sort((a, b) => b.price - a.price);
-      } else if (sortBy === 'date') {
-        filteredProducts.sort((a, b) => new Date(b.createdAt) - new Date(a.createdAt));
-      } else {
-        filteredProducts.sort((a, b) => a.name.localeCompare(b.name));
-      }
-      
+      if (categoryFilter) filteredProducts = filteredProducts.filter(p => p.category === categoryFilter);
+      if (statusFilter) filteredProducts = filteredProducts.filter(p => p.status === statusFilter);
+      if (searchText) filteredProducts = filteredProducts.filter(p => p.name.toLowerCase().includes(searchText) || (p.description && p.description.toLowerCase().includes(searchText)) || (p.brand && p.brand.toLowerCase().includes(searchText)));
+      if (sortBy === 'price-asc') filteredProducts.sort((a, b) => a.price - b.price);
+      else if (sortBy === 'price-desc') filteredProducts.sort((a, b) => b.price - a.price);
+      else if (sortBy === 'date') filteredProducts.sort((a, b) => new Date(b.createdAt) - new Date(a.createdAt));
+      else filteredProducts.sort((a, b) => a.name.localeCompare(b.name));
       list.innerHTML = '';
       filteredProducts.forEach(p => {
         const tags = p.tags?.map(t => `<span class="text-xs bg-gray-100 px-1 py-0.5 rounded ml-1">${t}</span>`).join('') || '';
         const statusClass = p.status === 'active' ? 'bg-green-100 text-green-800' : 'bg-gray-100 text-gray-800';
         const stockClass = p.stock < 3 ? 'text-red-600 font-bold' : '';
-        
         const row = document.createElement('tr');
-        row.innerHTML = `
-          <td class="px-2 sm:px-4 py-2 whitespace-nowrap">
-            <input type="checkbox" class="product-checkbox" value="${p.id}" ${selectedProducts.has(p.id) ? 'checked' : ''} onchange="toggleProductSelection(${p.id})">
-          </td>
-          <td class="px-2 sm:px-4 py-2 whitespace-nowrap">
-            <img src="${p.image}" alt="${p.name}" class="w-6 h-6 sm:w-8 sm:h-8 object-cover rounded">
-          </td>
-          <td class="px-2 sm:px-4 py-2">
-            <div class="text-xs font-medium text-gray-900">${p.name}</div>
-            <div class="text-xs text-gray-500">${p.brand || ''} ${tags}</div>
-          </td>
-          <td class="px-2 sm:px-4 py-2 whitespace-nowrap text-xs text-gray-500">${p.category}</td>
-          <td class="px-2 sm:px-4 py-2 whitespace-nowrap">
-            <div class="text-xs text-gray-900">${p.price} BYN</div>
-            <div class="text-xs ${stockClass}">Ост: ${p.stock}</div>
-          </td>
-          <td class="px-2 sm:px-4 py-2 whitespace-nowrap">
-            <span class="px-1.5 py-0.5 text-xs rounded-full ${statusClass}">${p.status === 'active' ? 'Акт' : 'Неакт'}</span>
-          </td>
-          <td class="px-2 sm:px-4 py-2 whitespace-nowrap text-xs">
-            <button onclick="openEditModal(${p.id})" class="text-blue-600 hover:text-blue-900 mr-1" title="Ред.">✏️</button>
-            <button onclick="cloneProduct(${p.id})" class="text-green-600 hover:text-green-900 mr-1" title="Коп.">📋</button>
-            <button onclick="deleteProduct(${p.id})" class="text-red-600 hover:text-red-900" title="Удал.">🗑️</button>
-          </td>
-        `;
+        row.innerHTML = `<td class="px-2 sm:px-4 py-2 whitespace-nowrap"><input type="checkbox" class="product-checkbox" value="${p.id}" ${selectedProducts.has(p.id) ? 'checked' : ''} onchange="toggleProductSelection(${p.id})"></td><td class="px-2 sm:px-4 py-2 whitespace-nowrap"><img src="${p.image}" alt="${p.name}" class="w-6 h-6 sm:w-8 sm:h-8 object-cover rounded"></td><td class="px-2 sm:px-4 py-2"><div class="text-xs font-medium text-gray-900">${p.name}</div><div class="text-xs text-gray-500">${p.brand || ''} ${tags}</div></td><td class="px-2 sm:px-4 py-2 whitespace-nowrap text-xs text-gray-500">${p.category}</td><td class="px-2 sm:px-4 py-2 whitespace-nowrap"><div class="text-xs text-gray-900">${p.price} BYN</div><div class="text-xs ${stockClass}">Ост: ${p.stock}</div></td><td class="px-2 sm:px-4 py-2 whitespace-nowrap"><span class="px-1.5 py-0.5 text-xs rounded-full ${statusClass}">${p.status === 'active' ? 'Акт' : 'Неакт'}</span></td><td class="px-2 sm:px-4 py-2 whitespace-nowrap text-xs"><button onclick="openEditModal(${p.id})" class="text-blue-600 hover:text-blue-900 mr-1" title="Ред.">✏️</button><button onclick="cloneProduct(${p.id})" class="text-green-600 hover:text-green-900 mr-1" title="Коп.">📋</button><button onclick="deleteProduct(${p.id})" class="text-red-600 hover:text-red-900" title="Удал.">🗑️</button></td>`;
         list.appendChild(row);
       });
     }
 
-    function filterAdminProducts() {
-      renderAdminProducts();
-    }
-
-    function filterAdminOrders() {
-      renderAdminOrders();
-    }
-
-    function toggleProductSelection(id) {
-      if (selectedProducts.has(id)) {
-        selectedProducts.delete(id);
-      } else {
-        selectedProducts.add(id);
-      }
-    }
-
+    function filterAdminProducts() { renderAdminProducts(); }
+    function filterAdminOrders() { renderAdminOrders(); }
+    function toggleProductSelection(id) { if (selectedProducts.has(id)) selectedProducts.delete(id); else selectedProducts.add(id); }
     function toggleSelectAll() {
       const checkboxes = document.querySelectorAll('.product-checkbox');
       const allChecked = document.getElementById('select-all-products').checked;
-      checkboxes.forEach(cb => {
-        cb.checked = allChecked;
-        const id = parseInt(cb.value);
-        if (allChecked) {
-          selectedProducts.add(id);
-        } else {
-          selectedProducts.delete(id);
-        }
-      });
+      checkboxes.forEach(cb => { cb.checked = allChecked; const id = parseInt(cb.value); if (allChecked) selectedProducts.add(id); else selectedProducts.delete(id); });
     }
-
-    function selectAllProducts() {
-      document.getElementById('select-all-products').checked = true;
-      toggleSelectAll();
-    }
-
-    function deselectAllProducts() {
-      document.getElementById('select-all-products').checked = false;
-      toggleSelectAll();
-    }
-
+    function selectAllProducts() { document.getElementById('select-all-products').checked = true; toggleSelectAll(); }
+    function deselectAllProducts() { document.getElementById('select-all-products').checked = false; toggleSelectAll(); }
     function deleteSelectedProducts() {
-      if (selectedProducts.size === 0) {
-        alert('Выберите товары для удаления');
-        return;
-      }
+      if (selectedProducts.size === 0) { alert('Выберите товары для удаления'); return; }
       if (confirm(`Удалить ${selectedProducts.size} товар(ов)?`)) {
         products = products.filter(p => !selectedProducts.has(p.id));
         selectedProducts.clear();
@@ -3018,397 +2372,140 @@
         addLog('product', `Удалено ${selectedProducts.size} товаров`);
       }
     }
-
     function exportProducts() {
-      const data = products.map(p => ({
-        Название: p.name,
-        Бренд: p.brand,
-        Цена: p.price,
-        Категория: p.category,
-        Тип: p.type,
-        Площадь: p.area,
-        Инвертор: p.inverter,
-        Обогрев: p.heat,
-        Описание: p.description,
-        'Полное описание': p.fullDescription,
-        Изображение: p.image,
-        Теги: p.tags?.join(', '),
-        Статус: p.status,
-        Остаток: p.stock
-      }));
-      
-      const csv = [
-        Object.keys(data[0]).join(','),
-        ...data.map(row => Object.values(row).map(v => `"${v}"`).join(','))
-      ].join('\n');
-      
+      const data = products.map(p => ({ Название: p.name, Бренд: p.brand, Цена: p.price, Категория: p.category, Тип: p.type, Площадь: p.area, Инвертор: p.inverter, Обогрев: p.heat, Описание: p.description, 'Полное описание': p.fullDescription, Изображение: p.image, Теги: p.tags?.join(', '), Статус: p.status, Остаток: p.stock }));
+      const csv = [Object.keys(data[0]).join(','), ...data.map(row => Object.values(row).map(v => `"${v}"`).join(','))].join('\n');
       const blob = new Blob(['\uFEFF' + csv], { type: 'text/csv;charset=utf-8;' });
-      const link = document.createElement('a');
-      link.href = URL.createObjectURL(blob);
-      link.download = 'products_export.csv';
-      link.click();
+      const link = document.createElement('a'); link.href = URL.createObjectURL(blob); link.download = 'products_export.csv'; link.click();
       addLog('product', 'Экспорт товаров в CSV');
     }
-
     function importProducts(input) {
       const file = input.files[0];
       if (!file) return;
-      
       const reader = new FileReader();
       reader.onload = (e) => {
         const text = e.target.result;
         const lines = text.split('\n');
         const headers = lines[0].split(',').map(h => h.trim());
-        
         for (let i = 1; i < lines.length; i++) {
           if (!lines[i].trim()) continue;
           const values = lines[i].split(',').map(v => v.replace(/^"|"$/g, '').trim());
           const product = {};
-          headers.forEach((h, idx) => {
-            product[h] = values[idx];
-          });
-          
-          const newProduct = {
-            id: Math.max(...products.map(p => p.id), 0) + i,
-            name: product['Название'],
-            brand: product['Бренд'],
-            price: parseFloat(product['Цена']),
-            area: product['Площадь'] || 'до 20',
-            category: product['Категория'] || 'Настенные',
-            type: product['Тип'] || 'Настенный',
-            inverter: product['Инвертор'] || 'Да',
-            heat: product['Обогрев'] || '-15',
-            description: product['Описание'] || '',
-            fullDescription: product['Полное описание'] || '',
-            image: product['Изображение'] || 'https://via.placeholder.com/200x150?text=New',
-            tags: product['Теги'] ? product['Теги'].split(',').map(t => t.trim()) : [],
-            status: product['Статус'] || 'active',
-            stock: parseInt(product['Остаток']) || 10,
-            createdAt: new Date().toISOString()
-          };
+          headers.forEach((h, idx) => { product[h] = values[idx]; });
+          const newProduct = { id: Math.max(...products.map(p => p.id), 0) + i, name: product['Название'], brand: product['Бренд'], price: parseFloat(product['Цена']), area: product['Площадь'] || 'до 20', category: product['Категория'] || 'Настенные', type: product['Тип'] || 'Настенный', inverter: product['Инвертор'] || 'Да', heat: product['Обогрев'] || '-15', description: product['Описание'] || '', fullDescription: product['Полное описание'] || '', image: product['Изображение'] || 'https://via.placeholder.com/200x150?text=New', tags: product['Теги'] ? product['Теги'].split(',').map(t => t.trim()) : [], status: product['Статус'] || 'active', stock: parseInt(product['Остаток']) || 10, createdAt: new Date().toISOString() };
           products.push(newProduct);
         }
-        saveProducts();
-        renderAdminProducts();
-        filterProducts();
-        addLog('product', 'Импорт товаров из CSV');
-        alert('Товары импортированы');
+        saveProducts(); renderAdminProducts(); filterProducts(); addLog('product', 'Импорт товаров из CSV'); alert('Товары импортированы');
       };
       reader.readAsText(file, 'UTF-8');
     }
-
-    function openAddProductForm() {
-      document.getElementById('add-product-form').classList.remove('hidden');
-      updateBrandSelects();
-    }
-
-    function closeAddProductForm() {
-      document.getElementById('add-product-form').classList.add('hidden');
-    }
-
+    function openAddProductForm() { document.getElementById('add-product-form').classList.remove('hidden'); updateBrandSelects(); }
+    function closeAddProductForm() { document.getElementById('add-product-form').classList.add('hidden'); }
     function saveNewProduct() {
       const name = document.getElementById('new-name').value;
-      if (!name) {
-        alert('Введите название товара');
-        return;
-      }
+      if (!name) { alert('Введите название товара'); return; }
       const price = parseFloat(document.getElementById('new-price').value);
-      if (isNaN(price)) {
-        alert('Введите цену');
-        return;
-      }
-      
+      if (isNaN(price)) { alert('Введите цену'); return; }
       const tags = [];
       if (document.getElementById('new-tag-hit').checked) tags.push('хит');
       if (document.getElementById('new-tag-new').checked) tags.push('новинка');
       if (document.getElementById('new-tag-sale').checked) tags.push('распродажа');
-      
       const newId = Math.max(...products.map(p => p.id), 0) + 1;
-      products.push({ 
-        id: newId, 
-        name: name,
-        brand: document.getElementById('new-brand').value,
-        price: price,
-        oldPrice: document.getElementById('new-old-price').value ? parseFloat(document.getElementById('new-old-price').value) : null,
-        stock: parseInt(document.getElementById('new-stock').value) || 10,
-        area: document.getElementById('new-area').value,
-        category: document.getElementById('new-category').value,
-        type: document.getElementById('new-type').value,
-        inverter: document.getElementById('new-inverter').value,
-        heat: document.getElementById('new-heat').value || '-15',
-        description: document.getElementById('new-description').value,
-        fullDescription: document.getElementById('new-fullDescription').value,
-        image: document.getElementById('new-image').value,
-        tags: tags,
-        status: 'active',
-        seoTitle: name,
-        seoDesc: document.getElementById('new-description').value,
-        createdAt: new Date().toISOString()
-      });
-      
-      saveProducts();
-      renderAdminProducts();
-      filterProducts();
-      closeAddProductForm();
-      
-      document.getElementById('new-name').value = '';
-      document.getElementById('new-price').value = '';
-      document.getElementById('new-old-price').value = '';
-      document.getElementById('new-stock').value = '10';
-      document.getElementById('new-description').value = '';
-      document.getElementById('new-fullDescription').value = '';
-      document.getElementById('new-image').value = 'https://via.placeholder.com/200x150?text=New';
-      document.getElementById('new-tag-hit').checked = false;
-      document.getElementById('new-tag-new').checked = false;
-      document.getElementById('new-tag-sale').checked = false;
-      
+      products.push({ id: newId, name: name, brand: document.getElementById('new-brand').value, price: price, oldPrice: document.getElementById('new-old-price').value ? parseFloat(document.getElementById('new-old-price').value) : null, stock: parseInt(document.getElementById('new-stock').value) || 10, area: document.getElementById('new-area').value, category: document.getElementById('new-category').value, type: document.getElementById('new-type').value, inverter: document.getElementById('new-inverter').value, heat: document.getElementById('new-heat').value || '-15', description: document.getElementById('new-description').value, fullDescription: document.getElementById('new-fullDescription').value, image: document.getElementById('new-image').value, tags: tags, status: 'active', seoTitle: name, seoDesc: document.getElementById('new-description').value, createdAt: new Date().toISOString() });
+      saveProducts(); renderAdminProducts(); filterProducts(); closeAddProductForm();
+      document.getElementById('new-name').value = ''; document.getElementById('new-price').value = ''; document.getElementById('new-old-price').value = ''; document.getElementById('new-stock').value = '10'; document.getElementById('new-description').value = ''; document.getElementById('new-fullDescription').value = ''; document.getElementById('new-image').value = 'https://via.placeholder.com/200x150?text=New'; document.getElementById('new-tag-hit').checked = false; document.getElementById('new-tag-new').checked = false; document.getElementById('new-tag-sale').checked = false;
       addLog('product', 'Добавлен товар ' + name);
     }
-
     function cloneProduct(id) {
       const prod = products.find(p => p.id === id);
       if (!prod) return;
-      
-      const newProd = {
-        ...prod,
-        id: Math.max(...products.map(p => p.id), 0) + 1,
-        name: prod.name + ' (копия)',
-        createdAt: new Date().toISOString()
-      };
-      products.push(newProd);
-      saveProducts();
-      renderAdminProducts();
-      filterProducts();
-      addLog('product', 'Копирование товара ' + prod.name);
+      const newProd = { ...prod, id: Math.max(...products.map(p => p.id), 0) + 1, name: prod.name + ' (копия)', createdAt: new Date().toISOString() };
+      products.push(newProd); saveProducts(); renderAdminProducts(); filterProducts(); addLog('product', 'Копирование товара ' + prod.name);
     }
-
     function renderAdminOrders() {
       const list = document.getElementById('admin-orders-list');
       if (!list) return;
-      
       const statusFilter = document.getElementById('order-status-filter')?.value || '';
       const searchText = document.getElementById('order-search')?.value.toLowerCase() || '';
       const dateFilter = document.getElementById('order-date-filter')?.value || '';
-      
       let filteredOrders = [...orders];
-      
-      if (statusFilter) {
-        filteredOrders = filteredOrders.filter(o => o.status === statusFilter);
-      }
-      
-      if (searchText) {
-        filteredOrders = filteredOrders.filter(o => 
-          o.customer.name.toLowerCase().includes(searchText) || 
-          o.customer.phone.includes(searchText)
-        );
-      }
-      
-      if (dateFilter) {
-        filteredOrders = filteredOrders.filter(o => {
-          const orderDate = new Date(o.date).toISOString().split('T')[0];
-          return orderDate === dateFilter;
-        });
-      }
-      
+      if (statusFilter) filteredOrders = filteredOrders.filter(o => o.status === statusFilter);
+      if (searchText) filteredOrders = filteredOrders.filter(o => o.customer.name.toLowerCase().includes(searchText) || o.customer.phone.includes(searchText));
+      if (dateFilter) filteredOrders = filteredOrders.filter(o => { const orderDate = new Date(o.date).toISOString().split('T')[0]; return orderDate === dateFilter; });
       list.innerHTML = '';
-      if (filteredOrders.length === 0) {
-        list.innerHTML = '<p class="text-gray-500 text-center py-4 text-xs">Нет заказов</p>';
-        return;
-      }
+      if (filteredOrders.length === 0) { list.innerHTML = '<p class="text-gray-500 text-center py-4 text-xs">Нет заказов</p>'; return; }
       filteredOrders.forEach(o => {
-        list.innerHTML += `
-          <div class="border p-3 rounded-lg hover:shadow-md transition-shadow">
-            <div class="flex flex-col sm:flex-row justify-between items-start gap-1 mb-1">
-              <span class="font-bold text-xs">Заказ #${o.id}</span>
-              <span class="text-xs text-gray-500">${o.date}</span>
-            </div>
-            <div class="grid grid-cols-1 sm:grid-cols-2 gap-1 text-xs">
-              <div><span class="font-medium">Клиент:</span> ${o.customer.name}</div>
-              <div><span class="font-medium">Тел:</span> ${o.customer.phone}</div>
-              <div><span class="font-medium">Адрес:</span> ${o.customer.address}</div>
-              <div><span class="font-medium">Оплата:</span> ${o.customer.payment || 'Наличные'}</div>
-            </div>
-            <div class="mt-2 flex flex-col sm:flex-row justify-between items-start sm:items-center gap-2">
-              <div>
-                <span class="font-medium text-xs">Сумма:</span> ${o.total} BYN
-                <span class="ml-2 px-1.5 py-0.5 bg-blue-100 text-blue-800 rounded text-xs">${o.status}</span>
-              </div>
-              <div class="flex gap-1">
-                <select onchange="updateOrderStatus(${o.id}, this.value)" class="border rounded px-1.5 py-0.5 text-xs">
-                  <option value="новый" ${o.status === 'новый' ? 'selected' : ''}>Новый</option>
-                  <option value="в обработке" ${o.status === 'в обработке' ? 'selected' : ''}>В обр.</option>
-                  <option value="выполнен" ${o.status === 'выполнен' ? 'selected' : ''}>Выполн.</option>
-                  <option value="отменен" ${o.status === 'отменен' ? 'selected' : ''}>Отмен.</option>
-                </select>
-                <button onclick="deleteOrder(${o.id})" class="text-red-600 hover:text-red-800 px-1.5 py-0.5 border border-red-300 rounded text-xs">🗑️</button>
-              </div>
-            </div>
-            <div class="mt-1 text-xs text-gray-600">
-              <span class="font-medium">Товары:</span> ${o.items.map(i => i.name + ' x' + i.quantity).join(', ')}
-            </div>
-          </div>
-        `;
+        list.innerHTML += `<div class="border p-3 rounded-lg hover:shadow-md transition-shadow"><div class="flex flex-col sm:flex-row justify-between items-start gap-1 mb-1"><span class="font-bold text-xs">Заказ #${o.id}</span><span class="text-xs text-gray-500">${o.date}</span></div><div class="grid grid-cols-1 sm:grid-cols-2 gap-1 text-xs"><div><span class="font-medium">Клиент:</span> ${o.customer.name}</div><div><span class="font-medium">Тел:</span> ${o.customer.phone}</div><div><span class="font-medium">Адрес:</span> ${o.customer.address}</div><div><span class="font-medium">Оплата:</span> ${o.customer.payment || 'Наличные'}</div></div><div class="mt-2 flex flex-col sm:flex-row justify-between items-start sm:items-center gap-2"><div><span class="font-medium text-xs">Сумма:</span> ${o.total} BYN <span class="ml-2 px-1.5 py-0.5 bg-blue-100 text-blue-800 rounded text-xs">${o.status}</span></div><div class="flex gap-1"><select onchange="updateOrderStatus(${o.id}, this.value)" class="border rounded px-1.5 py-0.5 text-xs"><option value="новый" ${o.status === 'новый' ? 'selected' : ''}>Новый</option><option value="в обработке" ${o.status === 'в обработке' ? 'selected' : ''}>В обр.</option><option value="выполнен" ${o.status === 'выполнен' ? 'selected' : ''}>Выполн.</option><option value="отменен" ${o.status === 'отменен' ? 'selected' : ''}>Отмен.</option></select><button onclick="deleteOrder(${o.id})" class="text-red-600 hover:text-red-800 px-1.5 py-0.5 border border-red-300 rounded text-xs">🗑️</button></div></div><div class="mt-1 text-xs text-gray-600"><span class="font-medium">Товары:</span> ${o.items.map(i => i.name + ' x' + i.quantity).join(', ')}</div></div>`;
       });
       updateOrderStats();
     }
-
-    function updateOrderStatus(id, newStatus) {
-      const order = orders.find(o => o.id === id);
-      if (order) {
-        order.status = newStatus;
-        saveOrders();
-        renderAdminOrders();
-        addLog('order', `Изменен статус заказа #${id} на ${newStatus}`);
-      }
-    }
-
-    function deleteOrder(id) {
-      if (confirm('Удалить этот заказ?')) {
-        orders = orders.filter(o => o.id !== id);
-        saveOrders();
-        renderAdminOrders();
-        addLog('order', `Удален заказ #${id}`);
-      }
-    }
-
-    function deleteAllOrders() {
-      if (confirm('Удалить все заказы?')) {
-        orders = [];
-        saveOrders();
-        renderAdminOrders();
-        addLog('order', 'Удалены все заказы');
-      }
-    }
-
+    function updateOrderStatus(id, newStatus) { const order = orders.find(o => o.id === id); if (order) { order.status = newStatus; saveOrders(); renderAdminOrders(); addLog('order', `Изменен статус заказа #${id} на ${newStatus}`); } }
+    function deleteOrder(id) { if (confirm('Удалить этот заказ?')) { orders = orders.filter(o => o.id !== id); saveOrders(); renderAdminOrders(); addLog('order', `Удален заказ #${id}`); } }
+    function deleteAllOrders() { if (confirm('Удалить все заказы?')) { orders = []; saveOrders(); renderAdminOrders(); addLog('order', 'Удалены все заказы'); } }
     function exportOrders() {
-      const data = orders.map(o => ({
-        'Номер заказа': o.id,
-        Дата: o.date,
-        Клиент: o.customer.name,
-        Телефон: o.customer.phone,
-        Адрес: o.customer.address,
-        Оплата: o.customer.payment,
-        Сумма: o.total,
-        Статус: o.status,
-        Товары: o.items.map(i => `${i.name} (${i.quantity})`).join('; ')
-      }));
-      
-      const csv = [
-        Object.keys(data[0]).join(','),
-        ...data.map(row => Object.values(row).map(v => `"${v}"`).join(','))
-      ].join('\n');
-      
+      const data = orders.map(o => ({ 'Номер заказа': o.id, Дата: o.date, Клиент: o.customer.name, Телефон: o.customer.phone, Адрес: o.customer.address, Оплата: o.customer.payment, Сумма: o.total, Статус: o.status, Товары: o.items.map(i => `${i.name} (${i.quantity})`).join('; ') }));
+      const csv = [Object.keys(data[0]).join(','), ...data.map(row => Object.values(row).map(v => `"${v}"`).join(','))].join('\n');
       const blob = new Blob(['\uFEFF' + csv], { type: 'text/csv;charset=utf-8;' });
-      const link = document.createElement('a');
-      link.href = URL.createObjectURL(blob);
-      link.download = 'orders_export.csv';
-      link.click();
+      const link = document.createElement('a'); link.href = URL.createObjectURL(blob); link.download = 'orders_export.csv'; link.click();
       addLog('order', 'Экспорт заказов в CSV');
     }
-
-    function filterCustomers() {
-      // Заглушка
-    }
-
-    function generateFullReport() {
-      alert('Функция будет доступна в следующем обновлении');
-    }
-
+    function filterCustomers() {}
+    function generateFullReport() { alert('Функция будет доступна в следующем обновлении'); }
     function saveSettings() {
-      const settings = {
-        siteName: document.getElementById('site-name').value,
-        siteEmail: document.getElementById('site-email').value,
-        sitePhone: document.getElementById('site-phone').value,
-        siteAddress: document.getElementById('site-address').value,
-        siteCurrency: document.getElementById('site-currency').value,
-        siteSeo: document.getElementById('site-seo').value
-      };
+      const settings = { siteName: document.getElementById('site-name').value, siteEmail: document.getElementById('site-email').value, sitePhone: document.getElementById('site-phone').value, siteAddress: document.getElementById('site-address').value, siteCurrency: document.getElementById('site-currency').value, siteSeo: document.getElementById('site-seo').value };
       localStorage.setItem('aircom_settings', JSON.stringify(settings));
       addLog('settings', 'Изменены настройки сайта');
       alert('Настройки сохранены');
     }
-
     function renderLogs() {
       const list = document.getElementById('logs-list');
       const filter = document.getElementById('log-filter')?.value || '';
       const filtered = filter ? actionLogs.filter(l => l.type === filter) : actionLogs;
-      list.innerHTML = filtered.map(l => `
-        <div class="text-xs border-b pb-1">
-          <span class="text-gray-500">${l.time}</span> - 
-          <span class="font-medium">${l.type}:</span> ${l.action}
-        </div>
-      `).join('') || '<p class="text-gray-500 text-xs">Нет записей</p>';
+      list.innerHTML = filtered.map(l => `<div class="text-xs border-b pb-1"><span class="text-gray-500">${l.time}</span> - <span class="font-medium">${l.type}:</span> ${l.action}</div>`).join('') || '<p class="text-gray-500 text-xs">Нет записей</p>';
     }
-
-    function filterLogs() {
-      renderLogs();
-    }
-
+    function filterLogs() { renderLogs(); }
     function openEditModal(id) {
       const prod = products.find(p => p.id === id);
       if (!prod) return;
-      
       document.getElementById('edit-product-id').value = prod.id;
       document.getElementById('edit-name').value = prod.name;
       document.getElementById('edit-price').value = prod.price;
       document.getElementById('edit-old-price').value = prod.oldPrice || '';
       document.getElementById('edit-stock').value = prod.stock || 10;
       document.getElementById('edit-image').value = prod.image || '';
-      if (document.getElementById('edit-brand')) {
-        document.getElementById('edit-brand').value = prod.brand || '';
-      }
-      
-      if (prod.image) {
-        document.getElementById('image-preview').innerHTML = `<img src="${prod.image}" class="w-12 h-12 object-cover rounded">`;
-      }
-      
+      if (document.getElementById('edit-brand')) document.getElementById('edit-brand').value = prod.brand || '';
+      if (prod.image) document.getElementById('image-preview').innerHTML = `<img src="${prod.image}" class="w-12 h-12 object-cover rounded">`;
       document.getElementById('edit-product-modal').style.display = 'flex';
     }
-
     function previewImage(input) {
       if (input.files && input.files[0]) {
         const reader = new FileReader();
-        reader.onload = (e) => {
-          document.getElementById('image-preview').innerHTML = `<img src="${e.target.result}" class="w-12 h-12 object-cover rounded">`;
-          document.getElementById('edit-image').value = e.target.result;
-        };
+        reader.onload = (e) => { document.getElementById('image-preview').innerHTML = `<img src="${e.target.result}" class="w-12 h-12 object-cover rounded">`; document.getElementById('edit-image').value = e.target.result; };
         reader.readAsDataURL(input.files[0]);
       }
     }
-
     function saveEditedProduct() {
       const id = parseInt(document.getElementById('edit-product-id').value);
       const prod = products.find(p => p.id === id);
       if (!prod) return;
-      
       prod.name = document.getElementById('edit-name').value;
       prod.price = parseFloat(document.getElementById('edit-price').value);
       prod.oldPrice = document.getElementById('edit-old-price').value ? parseFloat(document.getElementById('edit-old-price').value) : null;
       prod.stock = parseInt(document.getElementById('edit-stock').value) || 10;
       prod.image = document.getElementById('edit-image').value;
-      if (document.getElementById('edit-brand')) {
-        prod.brand = document.getElementById('edit-brand').value;
-      }
-      
-      saveProducts();
-      renderAdminProducts();
-      filterProducts();
-      document.getElementById('edit-product-modal').style.display = 'none';
+      if (document.getElementById('edit-brand')) prod.brand = document.getElementById('edit-brand').value;
+      saveProducts(); renderAdminProducts(); filterProducts(); document.getElementById('edit-product-modal').style.display = 'none';
       addLog('product', 'Изменен товар ' + prod.name);
       alert('Товар сохранен');
     }
-
     function deleteProduct(id) {
       if (confirm('Удалить товар?')) {
         const prod = products.find(p => p.id === id);
         products = products.filter(p => p.id !== id);
-        saveProducts();
-        renderAdminProducts();
-        filterProducts();
+        saveProducts(); renderAdminProducts(); filterProducts();
         addLog('product', 'Удален товар ' + (prod ? prod.name : ''));
       }
     }
-
     function changeAdminCredentials() {
       const newLogin = document.getElementById('admin-login').value;
       const newPass = document.getElementById('admin-pass').value;
@@ -3417,19 +2514,13 @@
       addLog('user', 'Изменены учетные данные');
       alert('Данные изменены');
     }
-
     function toggleFilterCollapse(el) {
       const content = el.nextElementSibling;
       if (content) {
-        if (content.style.display === 'none' || content.style.display === '') {
-          content.style.display = 'block';
-        } else {
-          content.style.display = 'none';
-        }
+        if (content.style.display === 'none' || content.style.display === '') content.style.display = 'block';
+        else content.style.display = 'none';
       }
     }
-
-    // Калькулятор
     document.addEventListener('DOMContentLoaded', function() {
       const modelSelect = document.getElementById('model');
       const lengthInput = document.getElementById('length');
@@ -3439,82 +2530,32 @@
       const demontageCheck = document.getElementById('demontage');
       const serviceCheck = document.getElementById('service');
       const lengthSection = document.getElementById('length-section');
-
       function calculateTotal() {
-        if (!modelSelect.value) {
-          totalPrice.textContent = '0 BYN';
-          return 0;
-        }
-        
+        if (!modelSelect.value) { totalPrice.textContent = '0 BYN'; return 0; }
         let total = parseInt(modelSelect.value);
         const length = parseInt(lengthInput.value);
-        
         if (modelSelect.value !== '100' || !modelSelect.options[modelSelect.selectedIndex].text.includes('Только')) {
-          const additionalLength = Math.max(0, length - 3);
-          total += additionalLength * 50;
+          total += Math.max(0, length - 3) * 50;
           lengthSection.style.display = 'block';
-        } else {
-          lengthSection.style.display = 'none';
-        }
-        
+        } else lengthSection.style.display = 'none';
         if (demontageCheck.checked) total += 100;
         if (serviceCheck.checked) total += 100;
-        
         totalPrice.textContent = total + ' BYN';
         return total;
       }
-
       if (modelSelect) modelSelect.addEventListener('change', calculateTotal);
-      if (decreaseBtn) {
-        decreaseBtn.addEventListener('click', () => {
-          if (parseInt(lengthInput.value) > 3) {
-            lengthInput.value = parseInt(lengthInput.value) - 1;
-            calculateTotal();
-          }
-        });
-      }
-      if (increaseBtn) {
-        increaseBtn.addEventListener('click', () => {
-          lengthInput.value = parseInt(lengthInput.value) + 1;
-          calculateTotal();
-        });
-      }
+      if (decreaseBtn) decreaseBtn.addEventListener('click', () => { if (parseInt(lengthInput.value) > 3) { lengthInput.value = parseInt(lengthInput.value) - 1; calculateTotal(); } });
+      if (increaseBtn) increaseBtn.addEventListener('click', () => { lengthInput.value = parseInt(lengthInput.value) + 1; calculateTotal(); });
       if (demontageCheck) demontageCheck.addEventListener('change', calculateTotal);
       if (serviceCheck) serviceCheck.addEventListener('change', calculateTotal);
-      
       calculateTotal();
     });
-
-    // Инициализация
-    loadProducts();
-    loadBrands();
-    loadOrders();
-    loadCart();
-    loadLogs();
-    loadVisits();
-    filterProducts();
-
+    loadProducts(); loadBrands(); loadOrders(); loadCart(); loadLogs(); loadVisits(); filterProducts();
     const priceRange = document.getElementById('priceRange');
     const maxPrice = document.getElementById('maxPrice');
-    if (priceRange) {
-      priceRange.addEventListener('input', function(e) {
-        if (maxPrice) maxPrice.value = e.target.value;
-        filterProducts();
-      });
-    }
-    if (maxPrice) {
-      maxPrice.addEventListener('change', function(e) {
-        if (priceRange) priceRange.value = e.target.value;
-        filterProducts();
-      });
-    }
-
-    window.addEventListener('click', function(event) {
-      if (event.target.classList.contains('modal')) {
-        event.target.style.display = 'none';
-      }
-    });
-    
+    if (priceRange) priceRange.addEventListener('input', function(e) { if (maxPrice) maxPrice.value = e.target.value; filterProducts(); });
+    if (maxPrice) maxPrice.addEventListener('change', function(e) { if (priceRange) priceRange.value = e.target.value; filterProducts(); });
+    window.addEventListener('click', function(event) { if (event.target.classList.contains('modal')) event.target.style.display = 'none'; });
     window.addEventListener('hashchange', checkProductHash);
   </script>
 </body>
