@@ -706,7 +706,7 @@
     .mobile-menu {
       display: none;
       position: fixed;
-      top: 55px;
+      top: 52px;
       left: 0;
       right: 0;
       background: white;
@@ -775,7 +775,7 @@
         display: flex;
       }
       .cart-icon {
-        margin-right: 8px;
+        margin-right: 4px;
       }
       #product-grid {
         grid-template-columns: 1fr !important;
@@ -815,15 +815,19 @@
         display: block;
       }
       nav {
-        padding-top: 6px !important;
-        padding-bottom: 6px !important;
+        padding-top: 4px !important;
+        padding-bottom: 4px !important;
       }
       .pt-20 {
-        padding-top: 3.5rem !important;
+        padding-top: 3.2rem !important;
       }
       .brand-chip {
         font-size: 0.75rem;
         padding: 0.25rem 0.5rem;
+      }
+      /* Скрываем номер телефона на мобильных */
+      .nav .phone-link {
+        display: none !important;
       }
     }
   </style>
@@ -849,15 +853,15 @@
   <div id="content">
 
     <!-- Навигация -->
-    <nav class="glass-effect shadow-lg py-2 px-4 sm:px-6 fixed w-full z-50 border-b border-white/20">
+    <nav class="glass-effect shadow-lg py-1.5 px-4 sm:px-6 fixed w-full z-50 border-b border-white/20">
       <div class="max-w-7xl mx-auto flex justify-between items-center">
         <div class="flex items-center">
           <div class="mr-2 text-primary">
-            <div class="bg-gradient-to-br from-primary/20 to-primary/10 rounded-full p-1.5 shadow-lg">
-              <i class="ri-temp-cold-line text-xl"></i>
+            <div class="bg-gradient-to-br from-primary/20 to-primary/10 rounded-full p-1 shadow-lg">
+              <i class="ri-temp-cold-line text-lg sm:text-xl"></i>
             </div>
           </div>
-          <span class="text-lg sm:text-2xl font-['Pacifico'] text-gradient flex items-center">AirComfort</span>
+          <span class="text-base sm:text-2xl font-['Pacifico'] text-gradient flex items-center">AirComfort</span>
         </div>
         <div class="hidden md:flex space-x-2 desktop-menu">
           <button onclick="document.getElementById('catalog').scrollIntoView({behavior: 'smooth'})" class="nav-link">
@@ -875,9 +879,9 @@
             <i class="ri-shopping-cart-line mr-1"></i>Корзина
             <span id="cart-count" class="cart-badge hidden">0</span>
           </button>
-          <a href="tel:+375291050694" class="text-primary font-medium flex items-center bg-white/50 px-2 py-1.5 rounded-button hover:bg-white/70 transition-colors nav-link">
+          <a href="tel:+375291050694" class="text-primary font-medium flex items-center bg-white/50 px-2 py-1.5 rounded-button hover:bg-white/70 transition-colors nav-link phone-link">
             <i class="ri-phone-line mr-1"></i>
-            +375 (29) 105-06-94
+            <span class="hidden sm:inline">+375 (29) 105-06-94</span>
           </a>
           <!-- Гамбургер меню -->
           <div class="hamburger-menu md:hidden" onclick="toggleMobileMenu()">
@@ -898,20 +902,23 @@
         <button onclick="document.getElementById('contacts').scrollIntoView({behavior: 'smooth'}); toggleMobileMenu()" class="nav-link w-full text-left">
           <i class="ri-contacts-line mr-2"></i>Контакты
         </button>
+        <a href="tel:+375291050694" class="nav-link w-full text-left">
+          <i class="ri-phone-line mr-2"></i>+375 (29) 105-06-94
+        </a>
       </div>
     </nav>
 
     <!-- Главный экран -->
-    <section class="pt-14 sm:pt-20 pb-8 sm:pb-12 relative overflow-hidden" style="background-image: url('https://readdy.ai/api/search-image?query=Modern%20air%20conditioner%20unit%20mounted%20on%20a%20light%20wall%20with%20soft%20natural%20lighting%2C%20green%20plants%20visible%20in%20foreground%2C%20minimalist%20interior%20design%2C%20professional%20installation%2C%20high-quality%20air%20conditioning%20system%2C%20energy%20efficient%20cooling%20system%2C%20comfortable%20home%20environment&width=1600&height=800&seq=1&orientation=landscape'); background-size: cover; background-position: center right;">
+    <section class="pt-12 sm:pt-20 pb-6 sm:pb-12 relative overflow-hidden" style="background-image: url('https://readdy.ai/api/search-image?query=Modern%20air%20conditioner%20unit%20mounted%20on%20a%20light%20wall%20with%20soft%20natural%20lighting%2C%20green%20plants%20visible%20in%20foreground%2C%20minimalist%20interior%20design%2C%20professional%20installation%2C%20high-quality%20air%20conditioning%20system%2C%20energy%20efficient%20cooling%20system%2C%20comfortable%20home%20environment&width=1600&height=800&seq=1&orientation=landscape'); background-size: cover; background-position: center right;">
       <div class="absolute inset-0 bg-gradient-to-r from-white via-white/95 to-white/30"></div>
       <div class="absolute inset-0 bg-gradient-to-b from-transparent via-transparent to-white/20"></div>
       <div class="max-w-7xl mx-auto px-4 sm:px-6 relative z-10">
         <div class="max-w-2xl">
-          <h1 class="text-2xl sm:text-3xl md:text-4xl font-bold text-gray-900 mb-3 sm:mb-4 leading-tight">Профессиональная установка и продажа <span class="text-gradient">кондиционеров</span> с гарантией!</h1>
-          <p class="text-sm sm:text-base text-gray-700 mb-4 sm:mb-6 leading-relaxed">Бесплатный выезд замерщика, точный расчет стоимости и монтаж за 1 день! Мы предлагаем полный спектр услуг по установке климатического оборудования с гарантией качества.</p>
-          <div class="flex flex-col sm:flex-row gap-3 items-start">
-            <button onclick="document.getElementById('calculator').scrollIntoView({behavior: 'smooth'})" class="gradient-bg text-white px-5 py-2 rounded-button font-medium hover:shadow-glow transition-all duration-300 shadow-lg shadow-primary/20 whitespace-nowrap flex items-center justify-center btn-animate text-sm sm:text-base">
-              <div class="w-4 h-4 flex items-center justify-center mr-2">
+          <h1 class="text-xl sm:text-3xl md:text-4xl font-bold text-gray-900 mb-2 sm:mb-4 leading-tight">Профессиональная установка и продажа <span class="text-gradient">кондиционеров</span> с гарантией!</h1>
+          <p class="text-xs sm:text-base text-gray-700 mb-3 sm:mb-6 leading-relaxed">Бесплатный выезд замерщика, точный расчет стоимости и монтаж за 1 день! Мы предлагаем полный спектр услуг по установке климатического оборудования с гарантией качества.</p>
+          <div class="flex flex-col sm:flex-row gap-2 items-start">
+            <button onclick="document.getElementById('calculator').scrollIntoView({behavior: 'smooth'})" class="gradient-bg text-white px-4 sm:px-6 py-1.5 sm:py-2.5 rounded-button font-medium hover:shadow-glow transition-all duration-300 shadow-lg shadow-primary/20 whitespace-nowrap flex items-center justify-center btn-animate text-xs sm:text-base">
+              <div class="w-3 h-3 sm:w-4 sm:h-4 flex items-center justify-center mr-1 sm:mr-2">
                 <i class="ri-calculator-line"></i>
               </div>
               Рассчитать стоимость
@@ -922,110 +929,113 @@
     </section>
 
     <!-- Наши услуги -->
-    <section id="services" class="py-10 sm:py-16 bg-gradient-to-b from-gray-50 to-white">
+    <section id="services" class="py-8 sm:py-16 bg-gradient-to-b from-gray-50 to-white">
       <div class="max-w-7xl mx-auto px-6">
-        <h2 class="text-2xl sm:text-3xl font-bold text-center text-gray-900 mb-6 sm:mb-12">Наши услуги</h2>
-        <div class="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 gap-4 sm:gap-6">
+        <h2 class="text-xl sm:text-3xl font-bold text-center text-gray-900 mb-4 sm:mb-12">Наши услуги</h2>
+        <div class="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 gap-3 sm:gap-6">
           <!-- Услуга 1 -->
           <div class="bg-white rounded-lg shadow-card overflow-hidden card-hover">
-            <div class="h-36 sm:h-48 bg-gradient-to-br from-primary/10 to-primary/5 flex items-center justify-center relative">
+            <div class="h-32 sm:h-48 bg-gradient-to-br from-primary/10 to-primary/5 flex items-center justify-center relative">
               <div class="absolute inset-0 bg-gradient-to-br from-transparent to-primary/5"></div>
-              <div class="w-16 h-16 sm:w-24 sm:h-24 flex items-center justify-center text-primary relative z-10">
-                <i class="ri-install-line ri-2x sm:ri-4x"></i>
+              <div class="w-12 h-12 sm:w-24 sm:h-24 flex items-center justify-center text-primary relative z-10">
+                <i class="ri-install-line ri-xl sm:ri-4x"></i>
               </div>
             </div>
-            <div class="p-3 sm:p-6">
-              <h3 class="text-base sm:text-xl font-bold text-gray-900 mb-2">Установка кондиционеров</h3>
-              <p class="text-xs sm:text-base text-gray-700 mb-2">Профессиональный монтаж кондиционеров любого типа с гарантией качества работы.</p>
-              <div class="flex justify-between items-center pt-2 border-t border-gray-100">
+            <div class="p-2 sm:p-6">
+              <h3 class="text-sm sm:text-xl font-bold text-gray-900 mb-1 sm:mb-2">Установка кондиционеров</h3>
+              <p class="text-xs sm:text-base text-gray-700 mb-1 sm:mb-3">Профессиональный монтаж кондиционеров любого типа с гарантией качества работы.</p>
+              <div class="flex justify-between items-center pt-1 sm:pt-3 border-t border-gray-100">
                 <span class="text-xs sm:text-base text-gray-600">Стоимость:</span>
-                <span class="text-base sm:text-xl font-bold text-primary">от 400 BYN</span>
+                <span class="text-sm sm:text-xl font-bold text-primary">от 400 BYN</span>
               </div>
             </div>
           </div>
           <!-- Услуга 2 -->
           <div class="bg-white rounded-lg shadow-card overflow-hidden card-hover">
-            <div class="h-36 sm:h-48 bg-gradient-to-br from-secondary/10 to-secondary/5 flex items-center justify-center relative">
+            <div class="h-32 sm:h-48 bg-gradient-to-br from-secondary/10 to-secondary/5 flex items-center justify-center relative">
               <div class="absolute inset-0 bg-gradient-to-br from-transparent to-secondary/5"></div>
-              <div class="w-16 h-16 sm:w-24 sm:h-24 flex items-center justify-center text-secondary relative z-10">
-                <i class="ri-tools-line ri-2x sm:ri-4x"></i>
+              <div class="w-12 h-12 sm:w-24 sm:h-24 flex items-center justify-center text-secondary relative z-10">
+                <i class="ri-tools-line ri-xl sm:ri-4x"></i>
               </div>
             </div>
-            <div class="p-3 sm:p-6">
-              <h3 class="text-base sm:text-xl font-bold text-gray-900 mb-2">Демонтаж оборудования</h3>
-              <p class="text-xs sm:text-base text-gray-700 mb-2">Аккуратный демонтаж старых кондиционеров с сохранением стен.</p>
-              <div class="flex justify-between items-center pt-2 border-t border-gray-100">
+            <div class="p-2 sm:p-6">
+              <h3 class="text-sm sm:text-xl font-bold text-gray-900 mb-1 sm:mb-2">Демонтаж оборудования</h3>
+              <p class="text-xs sm:text-base text-gray-700 mb-1 sm:mb-3">Аккуратный демонтаж старых кондиционеров с сохранением стен.</p>
+              <div class="flex justify-between items-center pt-1 sm:pt-3 border-t border-gray-100">
                 <span class="text-xs sm:text-base text-gray-600">Стоимость:</span>
-                <span class="text-base sm:text-xl font-bold text-primary">100 BYN</span>
+                <span class="text-sm sm:text-xl font-bold text-primary">100 BYN</span>
               </div>
             </div>
           </div>
           <!-- Услуга 3 -->
           <div class="bg-white rounded-lg shadow-card overflow-hidden card-hover">
-            <div class="h-36 sm:h-48 bg-gradient-to-br from-accent/10 to-accent/5 flex items-center justify-center relative">
+            <div class="h-32 sm:h-48 bg-gradient-to-br from-accent/10 to-accent/5 flex items-center justify-center relative">
               <div class="absolute inset-0 bg-gradient-to-br from-transparent to-accent/5"></div>
-              <div class="w-16 h-16 sm:w-24 sm:h-24 flex items-center justify-center text-accent relative z-10">
-                <i class="ri-service-line ri-2x sm:ri-4x"></i>
+              <div class="w-12 h-12 sm:w-24 sm:h-24 flex items-center justify-center text-accent relative z-10">
+                <i class="ri-service-line ri-xl sm:ri-4x"></i>
               </div>
             </div>
-            <div class="p-3 sm:p-6">
-              <h3 class="text-base sm:text-xl font-bold text-gray-900 mb-2">Обслуживание кондиционера</h3>
-              <p class="text-xs sm:text-base text-gray-700 mb-2">Регулярное ТО, чистка, дезинфекция и заправка фреоном.</p>
-              <div class="flex justify-between items-center pt-2 border-t border-gray-100">
+            <div class="p-2 sm:p-6">
+              <h3 class="text-sm sm:text-xl font-bold text-gray-900 mb-1 sm:mb-2">Обслуживание кондиционера</h3>
+              <p class="text-xs sm:text-base text-gray-700 mb-1 sm:mb-3">Регулярное ТО, чистка, дезинфекция и заправка фреоном.</p>
+              <div class="flex justify-between items-center pt-1 sm:pt-3 border-t border-gray-100">
                 <span class="text-xs sm:text-base text-gray-600">Стоимость:</span>
-                <span class="text-base sm:text-xl font-bold text-primary">100 BYN</span>
+                <span class="text-sm sm:text-xl font-bold text-primary">100 BYN</span>
               </div>
             </div>
           </div>
         </div>
-        <div class="mt-4 sm:mt-8 p-4 sm:p-6 bg-gradient-to-r from-primary/5 to-secondary/5 rounded-lg border border-primary/20 shadow-card">
+        <div class="mt-3 sm:mt-8 p-3 sm:p-6 bg-gradient-to-r from-primary/5 to-secondary/5 rounded-lg border border-primary/20 shadow-card">
           <p class="text-xs sm:text-base text-gray-700">Регулярное обслуживание кондиционера не только продлевает срок его службы, но и обеспечивает эффективную работу, экономит электроэнергию и поддерживает чистоту воздуха в помещении. Рекомендуем проводить профилактику не реже 1 раза в год.</p>
         </div>
       </div>
     </section>
 
     <!-- КАТАЛОГ ТОВАРОВ -->
-    <section id="catalog" class="py-10 sm:py-16 bg-white">
+    <section id="catalog" class="py-8 sm:py-16 bg-white">
       <div class="max-w-7xl mx-auto px-6">
-        <h2 class="text-2xl sm:text-3xl font-bold text-center text-gray-900 mb-3">Каталог кондиционеров</h2>
-        <p class="text-center text-gray-700 mb-6 sm:mb-10">Широкий выбор сплит-систем для вашего комфорта</p>
+        <h2 class="text-xl sm:text-3xl font-bold text-center text-gray-900 mb-2">Каталог кондиционеров</h2>
+        <p class="text-center text-gray-700 mb-4 sm:mb-10 text-xs sm:text-base">Широкий выбор сплит-систем для вашего комфорта</p>
         
         <!-- Поиск -->
-        <div class="mb-6 max-w-2xl mx-auto">
+        <div class="mb-4 sm:mb-6 max-w-2xl mx-auto">
           <div class="relative">
-            <input type="text" id="search-input" placeholder="🔍 Поиск по названию, описанию или характеристикам..." class="w-full border border-gray-300 rounded-lg px-4 py-3 pl-10 focus:outline-none focus:ring-2 focus:ring-primary/50 focus:border-primary" onkeyup="filterProducts()">
-            <i class="ri-search-line absolute left-3 top-1/2 transform -translate-y-1/2 text-gray-400"></i>
+            <input type="text" id="search-input" placeholder="🔍 Поиск по названию, описанию или характеристикам..." class="w-full border border-gray-300 rounded-lg px-4 py-2 sm:py-3 pl-8 sm:pl-10 text-xs sm:text-sm focus:outline-none focus:ring-2 focus:ring-primary/50 focus:border-primary" onkeyup="filterProducts()">
+            <i class="ri-search-line absolute left-2 sm:left-3 top-1/2 transform -translate-y-1/2 text-gray-400 text-sm sm:text-base"></i>
           </div>
         </div>
         
         <!-- Кнопка для мобильных фильтров -->
         <div class="mobile-filter-toggle">
-          <button onclick="toggleMobileFilters()" class="w-full gradient-bg text-white px-4 py-3 rounded-button font-medium">
+          <button onclick="toggleMobileFilters()" class="w-full gradient-bg text-white px-4 py-2 sm:py-3 rounded-button font-medium text-sm">
             <i class="ri-filter-line mr-2"></i>Показать фильтры
           </button>
         </div>
         
-        <div class="flex flex-col lg:flex-row gap-6 sm:gap-8">
+        <div class="flex flex-col lg:flex-row gap-4 sm:gap-8">
           <!-- Фильтры (сайдбар) -->
-          <div class="lg:w-1/4 bg-gray-50 p-4 sm:p-6 rounded-lg shadow-card h-fit sticky top-20 filter-sidebar" id="filterSidebar">
+          <div class="lg:w-1/4 bg-gray-50 p-3 sm:p-6 rounded-lg shadow-card h-fit sticky top-16 sm:top-20 filter-sidebar" id="filterSidebar">
             
-            <!-- Каталог кондиционеров (бренды) -->
-            <div class="mb-6">
-              <h3 class="text-lg sm:text-xl font-bold mb-3">Каталог кондиционеров</h3>
-              <div id="brands-list" class="flex flex-wrap gap-2">
-                <!-- Бренды будут загружены из админки -->
+            <!-- Каталог кондиционеров (бренды) - скрывающийся блок -->
+            <div class="mb-4 sm:mb-6">
+              <div class="filter-section-title text-base sm:text-lg font-bold mb-2 cursor-pointer" onclick="toggleBrandsCollapse()">
+                <span>Каталог кондиционеров</span>
+                <i class="ri-arrow-down-s-line" id="brands-arrow"></i>
+              </div>
+              <div id="brands-list" class="flex flex-wrap gap-1 sm:gap-2" style="display: none;">
+                <!-- Бренды будут загружены из админки (без количества) -->
               </div>
             </div>
             
-            <h3 class="text-lg sm:text-xl font-bold mb-4 mt-2">Фильтры</h3>
+            <h3 class="text-base sm:text-xl font-bold mb-3 sm:mb-4 mt-2">Фильтры</h3>
             
             <!-- Площадь помещения -->
             <div class="filter-section">
-              <div class="filter-section-title" onclick="toggleFilterCollapse(this)">
+              <div class="filter-section-title text-sm sm:text-base" onclick="toggleFilterCollapse(this)">
                 <span>Площадь помещения</span>
                 <i class="ri-arrow-down-s-line"></i>
               </div>
-              <div class="filter-collapse space-y-1" style="display: none;">
+              <div class="filter-collapse space-y-1 text-xs sm:text-sm" style="display: none;">
                 <div class="filter-option"><input type="checkbox" id="area1" value="до 20" onchange="filterProducts()"> <label for="area1">до 20 кв.м.</label></div>
                 <div class="filter-option"><input type="checkbox" id="area2" value="21-29" onchange="filterProducts()"> <label for="area2">21-29 кв.м.</label></div>
                 <div class="filter-option"><input type="checkbox" id="area3" value="30-39" onchange="filterProducts()"> <label for="area3">30-39 кв.м.</label></div>
@@ -1038,11 +1048,11 @@
 
             <!-- Категории -->
             <div class="filter-section">
-              <div class="filter-section-title" onclick="toggleFilterCollapse(this)">
+              <div class="filter-section-title text-sm sm:text-base" onclick="toggleFilterCollapse(this)">
                 <span>Категории</span>
                 <i class="ri-arrow-down-s-line"></i>
               </div>
-              <div class="filter-collapse space-y-1" style="display: none;">
+              <div class="filter-collapse space-y-1 text-xs sm:text-sm" style="display: none;">
                 <div class="filter-option"><input type="checkbox" id="cat2" value="Настенные" onchange="filterProducts()"> <label for="cat2">Настенные кондиционеры</label></div>
                 <div class="filter-option"><input type="checkbox" id="cat3" value="Мульти-сплит" onchange="filterProducts()"> <label for="cat3">Мульти-сплит системы</label></div>
                 <div class="filter-option"><input type="checkbox" id="cat4" value="Мобильные" onchange="filterProducts()"> <label for="cat4">Мобильные кондиционеры</label></div>
@@ -1054,15 +1064,15 @@
 
             <!-- Цена -->
             <div class="filter-section">
-              <div class="filter-section-title" onclick="toggleFilterCollapse(this)">
+              <div class="filter-section-title text-sm sm:text-base" onclick="toggleFilterCollapse(this)">
                 <span>Цена, руб</span>
                 <i class="ri-arrow-down-s-line"></i>
               </div>
               <div class="filter-collapse" style="display: none;">
-                <div class="flex gap-2 items-center mb-2">
-                  <input type="number" id="minPrice" placeholder="0" class="w-1/2 px-2 py-1 border rounded" value="0" onchange="filterProducts()">
-                  <span>-</span>
-                  <input type="number" id="maxPrice" placeholder="20929" class="w-1/2 px-2 py-1 border rounded" value="20929" onchange="filterProducts()">
+                <div class="flex gap-1 sm:gap-2 items-center mb-2">
+                  <input type="number" id="minPrice" placeholder="0" class="w-1/2 px-1 sm:px-2 py-1 border rounded text-xs sm:text-sm" value="0" onchange="filterProducts()">
+                  <span class="text-xs sm:text-sm">-</span>
+                  <input type="number" id="maxPrice" placeholder="20929" class="w-1/2 px-1 sm:px-2 py-1 border rounded text-xs sm:text-sm" value="20929" onchange="filterProducts()">
                 </div>
                 <input type="range" id="priceRange" min="0" max="20929" value="20929" class="w-full" oninput="document.getElementById('maxPrice').value=this.value; filterProducts()">
               </div>
@@ -1070,11 +1080,11 @@
 
             <!-- Тип -->
             <div class="filter-section">
-              <div class="filter-section-title" onclick="toggleFilterCollapse(this)">
+              <div class="filter-section-title text-sm sm:text-base" onclick="toggleFilterCollapse(this)">
                 <span>Тип</span>
                 <i class="ri-arrow-down-s-line"></i>
               </div>
-              <div class="filter-collapse space-y-1" style="display: none;">
+              <div class="filter-collapse space-y-1 text-xs sm:text-sm" style="display: none;">
                 <div class="filter-option"><input type="checkbox" id="type1" value="Канальная сплит-система" onchange="filterProducts()"> <label for="type1">Канальная сплит-система</label></div>
                 <div class="filter-option"><input type="checkbox" id="type2" value="Канальный" onchange="filterProducts()"> <label for="type2">Канальный</label></div>
                 <div class="filter-option"><input type="checkbox" id="type3" value="Кассетный" onchange="filterProducts()"> <label for="type3">Кассетный</label></div>
@@ -1086,11 +1096,11 @@
 
             <!-- Инвертор -->
             <div class="filter-section">
-              <div class="filter-section-title" onclick="toggleFilterCollapse(this)">
+              <div class="filter-section-title text-sm sm:text-base" onclick="toggleFilterCollapse(this)">
                 <span>Инвертор</span>
                 <i class="ri-arrow-down-s-line"></i>
               </div>
-              <div class="filter-collapse flex gap-4" style="display: none;">
+              <div class="filter-collapse flex gap-2 sm:gap-4 text-xs sm:text-sm" style="display: none;">
                 <label class="filter-option"><input type="radio" name="inverter" value="Да" onchange="filterProducts()"> Да</label>
                 <label class="filter-option"><input type="radio" name="inverter" value="Нет" onchange="filterProducts()"> Нет</label>
                 <label class="filter-option"><input type="radio" name="inverter" value="" checked onchange="filterProducts()"> Все</label>
@@ -1099,11 +1109,11 @@
 
             <!-- Обогрев зимой -->
             <div class="filter-section">
-              <div class="filter-section-title" onclick="toggleFilterCollapse(this)">
+              <div class="filter-section-title text-sm sm:text-base" onclick="toggleFilterCollapse(this)">
                 <span>Обогрев зимой</span>
                 <i class="ri-arrow-down-s-line"></i>
               </div>
-              <div class="filter-collapse space-y-1" style="display: none;">
+              <div class="filter-collapse space-y-1 text-xs sm:text-sm" style="display: none;">
                 <div class="filter-option"><input type="checkbox" id="heat1" value="-18" onchange="filterProducts()"> <label for="heat1">-18°С</label></div>
                 <div class="filter-option"><input type="checkbox" id="heat2" value="-7" onchange="filterProducts()"> <label for="heat2">-7°С</label></div>
                 <div class="filter-option"><input type="checkbox" id="heat3" value="-10" onchange="filterProducts()"> <label for="heat3">-10°C</label></div>
@@ -1116,16 +1126,16 @@
             </div>
             
             <!-- Кнопка Применить -->
-            <button onclick="applyFilters()" class="mt-4 w-full gradient-bg text-white px-4 py-2.5 rounded-button font-medium hover:shadow-glow transition-all duration-300 btn-animate text-sm">
+            <button onclick="applyFilters()" class="mt-3 sm:mt-4 w-full gradient-bg text-white px-3 sm:px-4 py-2 sm:py-2.5 rounded-button font-medium hover:shadow-glow transition-all duration-300 btn-animate text-xs sm:text-sm">
               Применить фильтры
             </button>
             
-            <button onclick="resetFilters()" class="mt-2 w-full bg-gray-200 text-gray-800 px-4 py-2 rounded-button hover:bg-gray-300 btn-animate text-sm">Сбросить фильтры</button>
+            <button onclick="resetFilters()" class="mt-1 sm:mt-2 w-full bg-gray-200 text-gray-800 px-3 sm:px-4 py-1.5 sm:py-2 rounded-button hover:bg-gray-300 btn-animate text-xs sm:text-sm">Сбросить фильтры</button>
           </div>
 
           <!-- Сетка товаров -->
           <div class="lg:w-3/4">
-            <div id="product-grid" class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-4 sm:gap-6">
+            <div id="product-grid" class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-3 sm:gap-6">
               <!-- Товары будут загружены из localStorage или по умолчанию -->
             </div>
           </div>
@@ -1185,78 +1195,80 @@
 
     <!-- Админ-панель (доступна только по прямой ссылке /#admin) -->
     <div id="admin-panel" class="fixed inset-0 bg-white z-50 overflow-y-auto" style="display: none;">
-      <div class="max-w-7xl mx-auto px-4 sm:px-6 py-6">
-        <div class="flex justify-between items-center mb-6">
-          <h2 class="text-2xl font-bold">Админ-панель AirComfort</h2>
-          <a href="#" onclick="closeAdminPanel(); return false;" class="text-gray-600 hover:text-gray-900"><i class="ri-close-line ri-2x"></i></a>
+      <div class="max-w-7xl mx-auto px-4 sm:px-6 py-4 sm:py-6">
+        <div class="flex justify-between items-center mb-4 sm:mb-6">
+          <h2 class="text-xl sm:text-2xl font-bold">Админ-панель AirComfort</h2>
+          <div class="flex items-center gap-3">
+            <span class="text-xs sm:text-sm text-gray-600">Посещений сегодня: <span id="today-visits">0</span></span>
+            <a href="#" onclick="closeAdminPanel(); return false;" class="text-gray-600 hover:text-gray-900"><i class="ri-close-line ri-xl sm:ri-2x"></i></a>
+          </div>
         </div>
         
         <!-- Вкладки -->
-        <div class="border-b border-gray-200 mb-6 overflow-x-auto">
-          <nav class="flex gap-4 min-w-max">
-            <button onclick="switchAdminTab('dashboard')" class="px-4 py-2 font-medium text-gray-500 hover:text-gray-700" id="tab-dashboard-btn">Дашборд</button>
-            <button onclick="switchAdminTab('products')" class="px-4 py-2 font-medium text-primary border-b-2 border-primary" id="tab-products-btn">Товары</button>
-            <button onclick="switchAdminTab('orders')" class="px-4 py-2 font-medium text-gray-500 hover:text-gray-700" id="tab-orders-btn">Заказы</button>
-            <button onclick="switchAdminTab('brands')" class="px-4 py-2 font-medium text-gray-500 hover:text-gray-700" id="tab-brands-btn">Бренды</button>
-            <button onclick="switchAdminTab('categories')" class="px-4 py-2 font-medium text-gray-500 hover:text-gray-700" id="tab-categories-btn">Категории</button>
-            <button onclick="switchAdminTab('customers')" class="px-4 py-2 font-medium text-gray-500 hover:text-gray-700" id="tab-customers-btn">Клиенты</button>
-            <button onclick="switchAdminTab('reports')" class="px-4 py-2 font-medium text-gray-500 hover:text-gray-700" id="tab-reports-btn">Отчеты</button>
-            <button onclick="switchAdminTab('settings')" class="px-4 py-2 font-medium text-gray-500 hover:text-gray-700" id="tab-settings-btn">Настройки</button>
-            <button onclick="switchAdminTab('logs')" class="px-4 py-2 font-medium text-gray-500 hover:text-gray-700" id="tab-logs-btn">Логи</button>
+        <div class="border-b border-gray-200 mb-4 sm:mb-6 overflow-x-auto">
+          <nav class="flex gap-2 sm:gap-4 min-w-max">
+            <button onclick="switchAdminTab('dashboard')" class="px-2 sm:px-4 py-1 sm:py-2 font-medium text-xs sm:text-base text-gray-500 hover:text-gray-700" id="tab-dashboard-btn">Дашборд</button>
+            <button onclick="switchAdminTab('products')" class="px-2 sm:px-4 py-1 sm:py-2 font-medium text-xs sm:text-base text-primary border-b-2 border-primary" id="tab-products-btn">Товары</button>
+            <button onclick="switchAdminTab('orders')" class="px-2 sm:px-4 py-1 sm:py-2 font-medium text-xs sm:text-base text-gray-500 hover:text-gray-700" id="tab-orders-btn">Заказы</button>
+            <button onclick="switchAdminTab('brands')" class="px-2 sm:px-4 py-1 sm:py-2 font-medium text-xs sm:text-base text-gray-500 hover:text-gray-700" id="tab-brands-btn">Бренды</button>
+            <button onclick="switchAdminTab('customers')" class="px-2 sm:px-4 py-1 sm:py-2 font-medium text-xs sm:text-base text-gray-500 hover:text-gray-700" id="tab-customers-btn">Клиенты</button>
+            <button onclick="switchAdminTab('reports')" class="px-2 sm:px-4 py-1 sm:py-2 font-medium text-xs sm:text-base text-gray-500 hover:text-gray-700" id="tab-reports-btn">Отчеты</button>
+            <button onclick="switchAdminTab('settings')" class="px-2 sm:px-4 py-1 sm:py-2 font-medium text-xs sm:text-base text-gray-500 hover:text-gray-700" id="tab-settings-btn">Настройки</button>
+            <button onclick="switchAdminTab('logs')" class="px-2 sm:px-4 py-1 sm:py-2 font-medium text-xs sm:text-base text-gray-500 hover:text-gray-700" id="tab-logs-btn">Логи</button>
           </nav>
         </div>
 
         <!-- Вкладка Дашборд -->
         <div id="admin-dashboard-tab" class="hidden">
-          <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-4 mb-6">
-            <div class="bg-white p-6 rounded-lg shadow border-l-4 border-primary">
+          <div class="grid grid-cols-2 sm:grid-cols-2 lg:grid-cols-4 gap-2 sm:gap-4 mb-4 sm:mb-6">
+            <div class="bg-white p-3 sm:p-6 rounded-lg shadow border-l-4 border-primary">
               <div class="flex justify-between items-center">
                 <div>
-                  <p class="text-sm text-gray-600">Выручка сегодня</p>
-                  <p class="text-2xl font-bold" id="dashboard-today-revenue">0 BYN</p>
+                  <p class="text-xs sm:text-sm text-gray-600">Выручка сегодня</p>
+                  <p class="text-sm sm:text-2xl font-bold" id="dashboard-today-revenue">0 BYN</p>
                 </div>
-                <i class="ri-money-dollar-circle-line text-3xl text-primary"></i>
+                <i class="ri-money-dollar-circle-line text-xl sm:text-3xl text-primary"></i>
               </div>
             </div>
-            <div class="bg-white p-6 rounded-lg shadow border-l-4 border-secondary">
+            <div class="bg-white p-3 sm:p-6 rounded-lg shadow border-l-4 border-secondary">
               <div class="flex justify-between items-center">
                 <div>
-                  <p class="text-sm text-gray-600">Заказов сегодня</p>
-                  <p class="text-2xl font-bold" id="dashboard-today-orders">0</p>
+                  <p class="text-xs sm:text-sm text-gray-600">Заказов сегодня</p>
+                  <p class="text-sm sm:text-2xl font-bold" id="dashboard-today-orders">0</p>
                 </div>
-                <i class="ri-shopping-cart-line text-3xl text-secondary"></i>
+                <i class="ri-shopping-cart-line text-xl sm:text-3xl text-secondary"></i>
               </div>
             </div>
-            <div class="bg-white p-6 rounded-lg shadow border-l-4 border-accent">
+            <div class="bg-white p-3 sm:p-6 rounded-lg shadow border-l-4 border-accent">
               <div class="flex justify-between items-center">
                 <div>
-                  <p class="text-sm text-gray-600">Всего товаров</p>
-                  <p class="text-2xl font-bold" id="dashboard-total-products">0</p>
+                  <p class="text-xs sm:text-sm text-gray-600">Всего товаров</p>
+                  <p class="text-sm sm:text-2xl font-bold" id="dashboard-total-products">0</p>
                 </div>
-                <i class="ri-stack-line text-3xl text-accent"></i>
+                <i class="ri-stack-line text-xl sm:text-3xl text-accent"></i>
               </div>
             </div>
-            <div class="bg-white p-6 rounded-lg shadow border-l-4 border-green-500">
+            <div class="bg-white p-3 sm:p-6 rounded-lg shadow border-l-4 border-green-500">
               <div class="flex justify-between items-center">
                 <div>
-                  <p class="text-sm text-gray-600">Ср. чек</p>
-                  <p class="text-2xl font-bold" id="dashboard-average-order">0 BYN</p>
+                  <p class="text-xs sm:text-sm text-gray-600">Ср. чек</p>
+                  <p class="text-sm sm:text-2xl font-bold" id="dashboard-average-order">0 BYN</p>
                 </div>
-                <i class="ri-bar-chart-line text-3xl text-green-500"></i>
+                <i class="ri-bar-chart-line text-xl sm:text-3xl text-green-500"></i>
               </div>
             </div>
           </div>
 
-          <div class="grid grid-cols-1 lg:grid-cols-2 gap-6 mb-6">
-            <div class="bg-white p-6 rounded-lg shadow">
-              <h3 class="text-lg font-bold mb-4">Популярные товары</h3>
-              <div id="dashboard-top-products" class="space-y-3">
+          <div class="grid grid-cols-1 lg:grid-cols-2 gap-4 sm:gap-6 mb-4 sm:mb-6">
+            <div class="bg-white p-3 sm:p-6 rounded-lg shadow">
+              <h3 class="text-sm sm:text-lg font-bold mb-2 sm:mb-4">Популярные товары</h3>
+              <div id="dashboard-top-products" class="space-y-2 text-xs sm:text-sm">
                 <!-- Будут загружены через JS -->
               </div>
             </div>
-            <div class="bg-white p-6 rounded-lg shadow">
-              <h3 class="text-lg font-bold mb-4">Статистика заказов</h3>
-              <div class="space-y-3">
+            <div class="bg-white p-3 sm:p-6 rounded-lg shadow">
+              <h3 class="text-sm sm:text-lg font-bold mb-2 sm:mb-4">Статистика заказов</h3>
+              <div class="space-y-2 text-xs sm:text-sm">
                 <div class="flex justify-between items-center">
                   <span>Новые</span>
                   <span class="font-bold" id="stats-new">0</span>
@@ -1277,9 +1289,9 @@
             </div>
           </div>
 
-          <div class="bg-white p-6 rounded-lg shadow">
-            <h3 class="text-lg font-bold mb-4">Последние действия</h3>
-            <div id="recent-actions" class="space-y-2">
+          <div class="bg-white p-3 sm:p-6 rounded-lg shadow">
+            <h3 class="text-sm sm:text-lg font-bold mb-2 sm:mb-4">Последние действия</h3>
+            <div id="recent-actions" class="space-y-1 sm:space-y-2 text-xs sm:text-sm">
               <!-- Будут загружены через JS -->
             </div>
           </div>
@@ -1287,26 +1299,26 @@
 
         <!-- Вкладка Товары -->
         <div id="admin-products-tab" class="block">
-          <div class="mb-6 p-4 bg-yellow-50 border border-yellow-200 rounded">
-            <h3 class="font-bold mb-2">Изменение логина/пароля</h3>
-            <p class="text-sm text-gray-600 mb-2">Текущие: admin / admin123</p>
+          <div class="mb-4 sm:mb-6 p-3 sm:p-4 bg-yellow-50 border border-yellow-200 rounded">
+            <h3 class="font-bold mb-2 text-sm sm:text-base">Изменение логина/пароля</h3>
+            <p class="text-xs sm:text-sm text-gray-600 mb-2">Текущие: admin / admin123</p>
             <div class="flex flex-wrap gap-2">
-              <input type="text" id="admin-login" placeholder="Новый логин" class="border px-3 py-2 rounded w-full sm:w-auto">
-              <input type="password" id="admin-pass" placeholder="Новый пароль" class="border px-3 py-2 rounded w-full sm:w-auto">
-              <button onclick="changeAdminCredentials()" class="bg-primary text-white px-4 py-2 rounded-button">Сохранить</button>
+              <input type="text" id="admin-login" placeholder="Новый логин" class="border px-2 sm:px-3 py-1 sm:py-2 rounded w-full sm:w-auto text-xs sm:text-sm">
+              <input type="password" id="admin-pass" placeholder="Новый пароль" class="border px-2 sm:px-3 py-1 sm:py-2 rounded w-full sm:w-auto text-xs sm:text-sm">
+              <button onclick="changeAdminCredentials()" class="bg-primary text-white px-3 sm:px-4 py-1 sm:py-2 rounded-button text-xs sm:text-sm">Сохранить</button>
             </div>
           </div>
 
           <!-- Фильтры для товаров -->
-          <div class="grid grid-cols-1 md:grid-cols-4 gap-4 mb-6">
+          <div class="grid grid-cols-2 sm:grid-cols-4 gap-2 sm:gap-4 mb-4 sm:mb-6">
             <div>
-              <label class="block text-sm font-medium text-gray-700 mb-1">Поиск</label>
-              <input type="text" id="admin-search" placeholder="🔍 Поиск товаров..." class="w-full border px-4 py-2 rounded-lg" onkeyup="filterAdminProducts()">
+              <label class="block text-xs sm:text-sm font-medium text-gray-700 mb-1">Поиск</label>
+              <input type="text" id="admin-search" placeholder="🔍 Поиск..." class="w-full border px-2 sm:px-4 py-1 sm:py-2 rounded-lg text-xs sm:text-sm" onkeyup="filterAdminProducts()">
             </div>
             <div>
-              <label class="block text-sm font-medium text-gray-700 mb-1">Категория</label>
-              <select id="admin-category-filter" onchange="filterAdminProducts()" class="w-full border px-4 py-2 rounded-lg">
-                <option value="">Все категории</option>
+              <label class="block text-xs sm:text-sm font-medium text-gray-700 mb-1">Категория</label>
+              <select id="admin-category-filter" onchange="filterAdminProducts()" class="w-full border px-2 sm:px-4 py-1 sm:py-2 rounded-lg text-xs sm:text-sm">
+                <option value="">Все</option>
                 <option value="Настенные">Настенные</option>
                 <option value="Канальные">Канальные</option>
                 <option value="Мобильные">Мобильные</option>
@@ -1316,36 +1328,132 @@
               </select>
             </div>
             <div>
-              <label class="block text-sm font-medium text-gray-700 mb-1">Статус</label>
-              <select id="admin-status-filter" onchange="filterAdminProducts()" class="w-full border px-4 py-2 rounded-lg">
+              <label class="block text-xs sm:text-sm font-medium text-gray-700 mb-1">Статус</label>
+              <select id="admin-status-filter" onchange="filterAdminProducts()" class="w-full border px-2 sm:px-4 py-1 sm:py-2 rounded-lg text-xs sm:text-sm">
                 <option value="">Все</option>
                 <option value="active">Активные</option>
                 <option value="inactive">Неактивные</option>
               </select>
             </div>
             <div>
-              <label class="block text-sm font-medium text-gray-700 mb-1">Сортировка</label>
-              <select id="admin-sort" onchange="filterAdminProducts()" class="w-full border px-4 py-2 rounded-lg">
+              <label class="block text-xs sm:text-sm font-medium text-gray-700 mb-1">Сортировка</label>
+              <select id="admin-sort" onchange="filterAdminProducts()" class="w-full border px-2 sm:px-4 py-1 sm:py-2 rounded-lg text-xs sm:text-sm">
                 <option value="name">По названию</option>
-                <option value="price-asc">По цене (возр.)</option>
-                <option value="price-desc">По цене (убыв.)</option>
+                <option value="price-asc">Цена (возр.)</option>
+                <option value="price-desc">Цена (убыв.)</option>
                 <option value="date">По дате</option>
               </select>
             </div>
           </div>
 
           <!-- Массовые операции -->
-          <div class="mb-4 flex flex-wrap gap-2">
-            <button onclick="selectAllProducts()" class="bg-gray-200 text-gray-800 px-4 py-2 rounded-button">Выбрать все</button>
-            <button onclick="deselectAllProducts()" class="bg-gray-200 text-gray-800 px-4 py-2 rounded-button">Снять выделение</button>
-            <button onclick="deleteSelectedProducts()" class="bg-red-500 text-white px-4 py-2 rounded-button">Удалить выбранные</button>
-            <button onclick="bulkEditProducts()" class="bg-blue-500 text-white px-4 py-2 rounded-button">Массовое редактирование</button>
-            <button onclick="exportProducts()" class="bg-green-500 text-white px-4 py-2 rounded-button">Экспорт в Excel</button>
-            <label class="bg-purple-500 text-white px-4 py-2 rounded-button cursor-pointer">
-              Импорт из Excel
+          <div class="mb-4 flex flex-wrap gap-1 sm:gap-2">
+            <button onclick="selectAllProducts()" class="bg-gray-200 text-gray-800 px-2 sm:px-4 py-1 sm:py-2 rounded-button text-xs sm:text-sm">Выбрать все</button>
+            <button onclick="deselectAllProducts()" class="bg-gray-200 text-gray-800 px-2 sm:px-4 py-1 sm:py-2 rounded-button text-xs sm:text-sm">Снять</button>
+            <button onclick="deleteSelectedProducts()" class="bg-red-500 text-white px-2 sm:px-4 py-1 sm:py-2 rounded-button text-xs sm:text-sm">Удалить</button>
+            <button onclick="exportProducts()" class="bg-green-500 text-white px-2 sm:px-4 py-1 sm:py-2 rounded-button text-xs sm:text-sm">Экспорт</button>
+            <label class="bg-purple-500 text-white px-2 sm:px-4 py-1 sm:py-2 rounded-button cursor-pointer text-xs sm:text-sm">
+              Импорт
               <input type="file" accept=".xlsx,.xls,.csv" class="hidden" onchange="importProducts(this)">
             </label>
-            <button onclick="addProductForm()" class="bg-primary text-white px-4 py-2 rounded-button btn-animate">+ Добавить товар</button>
+            <button onclick="openAddProductForm()" class="bg-primary text-white px-2 sm:px-4 py-1 sm:py-2 rounded-button btn-animate text-xs sm:text-sm">+ Добавить</button>
+          </div>
+
+          <!-- Форма добавления товара -->
+          <div id="add-product-form" class="hidden bg-gray-50 p-3 sm:p-4 rounded-lg mb-4 border">
+            <h3 class="font-bold mb-3 text-sm sm:text-base">Добавление нового товара</h3>
+            <div class="grid grid-cols-1 sm:grid-cols-2 gap-3">
+              <div>
+                <label class="block text-xs sm:text-sm font-medium text-gray-700 mb-1">Название *</label>
+                <input type="text" id="new-name" class="w-full border px-2 sm:px-3 py-1 sm:py-2 rounded text-xs sm:text-sm">
+              </div>
+              <div>
+                <label class="block text-xs sm:text-sm font-medium text-gray-700 mb-1">Цена *</label>
+                <input type="number" id="new-price" class="w-full border px-2 sm:px-3 py-1 sm:py-2 rounded text-xs sm:text-sm">
+              </div>
+              <div>
+                <label class="block text-xs sm:text-sm font-medium text-gray-700 mb-1">Старая цена</label>
+                <input type="number" id="new-old-price" class="w-full border px-2 sm:px-3 py-1 sm:py-2 rounded text-xs sm:text-sm">
+              </div>
+              <div>
+                <label class="block text-xs sm:text-sm font-medium text-gray-700 mb-1">Количество</label>
+                <input type="number" id="new-stock" value="10" class="w-full border px-2 sm:px-3 py-1 sm:py-2 rounded text-xs sm:text-sm">
+              </div>
+              <div>
+                <label class="block text-xs sm:text-sm font-medium text-gray-700 mb-1">Бренд</label>
+                <select id="new-brand" class="w-full border px-2 sm:px-3 py-1 sm:py-2 rounded text-xs sm:text-sm">
+                  <option value="">Без бренда</option>
+                </select>
+              </div>
+              <div>
+                <label class="block text-xs sm:text-sm font-medium text-gray-700 mb-1">Категория</label>
+                <select id="new-category" class="w-full border px-2 sm:px-3 py-1 sm:py-2 rounded text-xs sm:text-sm">
+                  <option value="Настенные">Настенные</option>
+                  <option value="Канальные">Канальные</option>
+                  <option value="Мобильные">Мобильные</option>
+                  <option value="Кассетные">Кассетные</option>
+                  <option value="Мульти-сплит">Мульти-сплит</option>
+                  <option value="Напольно-потолочные">Напольно-потолочные</option>
+                </select>
+              </div>
+              <div>
+                <label class="block text-xs sm:text-sm font-medium text-gray-700 mb-1">Тип</label>
+                <select id="new-type" class="w-full border px-2 sm:px-3 py-1 sm:py-2 rounded text-xs sm:text-sm">
+                  <option value="Настенный">Настенный</option>
+                  <option value="Канальный">Канальный</option>
+                  <option value="Кассетный">Кассетный</option>
+                  <option value="Мобильный">Мобильный</option>
+                  <option value="Напольно-потолочный">Напольно-потолочный</option>
+                </select>
+              </div>
+              <div>
+                <label class="block text-xs sm:text-sm font-medium text-gray-700 mb-1">Инвертор</label>
+                <select id="new-inverter" class="w-full border px-2 sm:px-3 py-1 sm:py-2 rounded text-xs sm:text-sm">
+                  <option value="Да">Да</option>
+                  <option value="Нет">Нет</option>
+                </select>
+              </div>
+              <div>
+                <label class="block text-xs sm:text-sm font-medium text-gray-700 mb-1">Площадь</label>
+                <select id="new-area" class="w-full border px-2 sm:px-3 py-1 sm:py-2 rounded text-xs sm:text-sm">
+                  <option value="до 20">до 20 кв.м.</option>
+                  <option value="21-29">21-29 кв.м.</option>
+                  <option value="30-39">30-39 кв.м.</option>
+                  <option value="40-49">40-49 кв.м.</option>
+                  <option value="50-69">50-69 кв.м.</option>
+                  <option value="70-99">70-99 кв.м.</option>
+                  <option value="100+">от 100 кв.м.</option>
+                </select>
+              </div>
+              <div>
+                <label class="block text-xs sm:text-sm font-medium text-gray-700 mb-1">Обогрев</label>
+                <input type="text" id="new-heat" placeholder="-15" class="w-full border px-2 sm:px-3 py-1 sm:py-2 rounded text-xs sm:text-sm">
+              </div>
+              <div class="sm:col-span-2">
+                <label class="block text-xs sm:text-sm font-medium text-gray-700 mb-1">Краткое описание</label>
+                <textarea id="new-description" rows="2" class="w-full border px-2 sm:px-3 py-1 sm:py-2 rounded text-xs sm:text-sm"></textarea>
+              </div>
+              <div class="sm:col-span-2">
+                <label class="block text-xs sm:text-sm font-medium text-gray-700 mb-1">Полное описание</label>
+                <textarea id="new-fullDescription" rows="3" class="w-full border px-2 sm:px-3 py-1 sm:py-2 rounded text-xs sm:text-sm"></textarea>
+              </div>
+              <div class="sm:col-span-2">
+                <label class="block text-xs sm:text-sm font-medium text-gray-700 mb-1">Ссылка на изображение</label>
+                <input type="text" id="new-image" value="https://via.placeholder.com/200x150?text=New" class="w-full border px-2 sm:px-3 py-1 sm:py-2 rounded text-xs sm:text-sm">
+              </div>
+              <div class="sm:col-span-2">
+                <label class="block text-xs sm:text-sm font-medium text-gray-700 mb-1">Теги</label>
+                <div class="flex gap-3">
+                  <label class="flex items-center text-xs sm:text-sm"><input type="checkbox" id="new-tag-hit" class="mr-1"> Хит</label>
+                  <label class="flex items-center text-xs sm:text-sm"><input type="checkbox" id="new-tag-new" class="mr-1"> Новинка</label>
+                  <label class="flex items-center text-xs sm:text-sm"><input type="checkbox" id="new-tag-sale" class="mr-1"> Распродажа</label>
+                </div>
+              </div>
+            </div>
+            <div class="flex gap-2 mt-3">
+              <button onclick="saveNewProduct()" class="bg-primary text-white px-4 py-2 rounded-button text-xs sm:text-sm">Сохранить</button>
+              <button onclick="closeAddProductForm()" class="bg-gray-200 text-gray-800 px-4 py-2 rounded-button text-xs sm:text-sm">Отмена</button>
+            </div>
           </div>
 
           <!-- Список товаров -->
@@ -1353,15 +1461,15 @@
             <table class="min-w-full divide-y divide-gray-200">
               <thead class="bg-gray-50">
                 <tr>
-                  <th class="px-4 sm:px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">
+                  <th class="px-2 sm:px-6 py-2 sm:py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">
                     <input type="checkbox" id="select-all-products" onclick="toggleSelectAll()">
                   </th>
-                  <th class="px-4 sm:px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">Изображение</th>
-                  <th class="px-4 sm:px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">Товар</th>
-                  <th class="px-4 sm:px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">Категория</th>
-                  <th class="px-4 sm:px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">Цена</th>
-                  <th class="px-4 sm:px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">Статус</th>
-                  <th class="px-4 sm:px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">Действия</th>
+                  <th class="px-2 sm:px-6 py-2 sm:py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">Фото</th>
+                  <th class="px-2 sm:px-6 py-2 sm:py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">Товар</th>
+                  <th class="px-2 sm:px-6 py-2 sm:py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">Категория</th>
+                  <th class="px-2 sm:px-6 py-2 sm:py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">Цена</th>
+                  <th class="px-2 sm:px-6 py-2 sm:py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">Статус</th>
+                  <th class="px-2 sm:px-6 py-2 sm:py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">Действия</th>
                 </tr>
               </thead>
               <tbody id="admin-product-list" class="bg-white divide-y divide-gray-200">
@@ -1374,11 +1482,11 @@
         <!-- Вкладка Заказы -->
         <div id="admin-orders-tab" class="hidden">
           <!-- Фильтры для заказов -->
-          <div class="grid grid-cols-1 md:grid-cols-3 gap-4 mb-6">
+          <div class="grid grid-cols-2 sm:grid-cols-3 gap-2 sm:gap-4 mb-4 sm:mb-6">
             <div>
-              <label class="block text-sm font-medium text-gray-700 mb-1">Статус заказа</label>
-              <select id="order-status-filter" onchange="filterAdminOrders()" class="w-full border px-4 py-2 rounded-lg">
-                <option value="">Все статусы</option>
+              <label class="block text-xs sm:text-sm font-medium text-gray-700 mb-1">Статус</label>
+              <select id="order-status-filter" onchange="filterAdminOrders()" class="w-full border px-2 sm:px-4 py-1 sm:py-2 rounded-lg text-xs sm:text-sm">
+                <option value="">Все</option>
                 <option value="новый">Новые</option>
                 <option value="в обработке">В обработке</option>
                 <option value="выполнен">Выполненные</option>
@@ -1386,71 +1494,60 @@
               </select>
             </div>
             <div>
-              <label class="block text-sm font-medium text-gray-700 mb-1">Поиск по клиенту</label>
-              <input type="text" id="order-search" placeholder="🔍 Имя или телефон..." class="w-full border px-4 py-2 rounded-lg" onkeyup="filterAdminOrders()">
+              <label class="block text-xs sm:text-sm font-medium text-gray-700 mb-1">Поиск</label>
+              <input type="text" id="order-search" placeholder="Имя или телефон..." class="w-full border px-2 sm:px-4 py-1 sm:py-2 rounded-lg text-xs sm:text-sm" onkeyup="filterAdminOrders()">
             </div>
             <div>
-              <label class="block text-sm font-medium text-gray-700 mb-1">Дата</label>
-              <input type="date" id="order-date-filter" class="w-full border px-4 py-2 rounded-lg" onchange="filterAdminOrders()">
+              <label class="block text-xs sm:text-sm font-medium text-gray-700 mb-1">Дата</label>
+              <input type="date" id="order-date-filter" class="w-full border px-2 sm:px-4 py-1 sm:py-2 rounded-lg text-xs sm:text-sm" onchange="filterAdminOrders()">
             </div>
           </div>
 
           <!-- Кнопки массовых операций -->
-          <div class="mb-4 flex flex-wrap gap-2">
-            <button onclick="deleteAllOrders()" class="bg-red-500 text-white px-4 py-2 rounded-button">Удалить все заказы</button>
-            <button onclick="exportOrders()" class="bg-green-500 text-white px-4 py-2 rounded-button">Экспорт в Excel</button>
-            <button onclick="bulkUpdateOrderStatus()" class="bg-blue-500 text-white px-4 py-2 rounded-button">Изменить статус выбранных</button>
+          <div class="mb-4 flex flex-wrap gap-1 sm:gap-2">
+            <button onclick="deleteAllOrders()" class="bg-red-500 text-white px-2 sm:px-4 py-1 sm:py-2 rounded-button text-xs sm:text-sm">Удалить все</button>
+            <button onclick="exportOrders()" class="bg-green-500 text-white px-2 sm:px-4 py-1 sm:py-2 rounded-button text-xs sm:text-sm">Экспорт</button>
           </div>
 
           <!-- Список заказов -->
-          <div id="admin-orders-list" class="space-y-4"></div>
+          <div id="admin-orders-list" class="space-y-3 sm:space-y-4"></div>
           
           <!-- Статистика -->
-          <div class="mt-4 p-4 bg-blue-50 rounded">
-            <h4 class="font-bold">Статистика заказов:</h4>
-            <p>Всего заказов: <span id="total-orders">0</span></p>
-            <p>Общая сумма: <span id="total-amount">0</span> BYN</p>
+          <div class="mt-4 p-3 sm:p-4 bg-blue-50 rounded">
+            <h4 class="font-bold text-xs sm:text-sm">Статистика заказов:</h4>
+            <p class="text-xs sm:text-sm">Всего заказов: <span id="total-orders">0</span></p>
+            <p class="text-xs sm:text-sm">Общая сумма: <span id="total-amount">0</span> BYN</p>
           </div>
         </div>
 
         <!-- Вкладка Бренды -->
         <div id="admin-brands-tab" class="hidden">
           <div class="mb-4">
-            <button onclick="addBrand()" class="bg-primary text-white px-4 py-2 rounded-button">+ Добавить бренд</button>
+            <button onclick="addBrand()" class="bg-primary text-white px-3 sm:px-4 py-1 sm:py-2 rounded-button text-xs sm:text-sm">+ Добавить бренд</button>
           </div>
-          <div id="brands-admin-list" class="bg-white rounded-lg shadow p-4 space-y-2">
+          <div id="brands-admin-list" class="bg-white rounded-lg shadow p-3 sm:p-4 space-y-2">
             <!-- Бренды будут загружены через JS -->
-          </div>
-        </div>
-
-        <!-- Вкладка Категории -->
-        <div id="admin-categories-tab" class="hidden">
-          <div class="mb-4">
-            <button onclick="addCategory()" class="bg-primary text-white px-4 py-2 rounded-button">+ Добавить категорию</button>
-          </div>
-          <div id="categories-list" class="bg-white rounded-lg shadow p-4">
-            <!-- Категории будут загружены через JS -->
           </div>
         </div>
 
         <!-- Вкладка Клиенты -->
         <div id="admin-customers-tab" class="hidden">
-          <div class="grid grid-cols-1 md:grid-cols-2 gap-4 mb-6">
+          <div class="grid grid-cols-1 md:grid-cols-2 gap-2 sm:gap-4 mb-4 sm:mb-6">
             <div>
-              <input type="text" id="customer-search" placeholder="🔍 Поиск клиентов..." class="w-full border px-4 py-2 rounded-lg" onkeyup="filterCustomers()">
+              <input type="text" id="customer-search" placeholder="🔍 Поиск клиентов..." class="w-full border px-2 sm:px-4 py-1 sm:py-2 rounded-lg text-xs sm:text-sm" onkeyup="filterCustomers()">
             </div>
           </div>
-          <div id="customers-list" class="bg-white rounded-lg shadow p-4">
+          <div id="customers-list" class="bg-white rounded-lg shadow p-3 sm:p-4">
             <!-- Клиенты будут загружены через JS -->
           </div>
         </div>
 
         <!-- Вкладка Отчеты -->
         <div id="admin-reports-tab" class="hidden">
-          <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
-            <div class="bg-white p-6 rounded-lg shadow">
-              <h3 class="text-lg font-bold mb-4">Отчет по продажам</h3>
-              <div class="space-y-3">
+          <div class="grid grid-cols-1 sm:grid-cols-2 gap-4 sm:gap-6">
+            <div class="bg-white p-3 sm:p-6 rounded-lg shadow">
+              <h3 class="text-sm sm:text-lg font-bold mb-2 sm:mb-4">Отчет по продажам</h3>
+              <div class="space-y-2 text-xs sm:text-sm">
                 <div class="flex justify-between">
                   <span>За сегодня:</span>
                   <span class="font-bold" id="report-today">0 BYN</span>
@@ -1468,11 +1565,11 @@
                   <span class="font-bold" id="report-year">0 BYN</span>
                 </div>
               </div>
-              <button onclick="generateFullReport()" class="mt-4 w-full bg-primary text-white px-4 py-2 rounded-button">Сформировать полный отчет</button>
+              <button onclick="generateFullReport()" class="mt-3 sm:mt-4 w-full bg-primary text-white px-3 sm:px-4 py-1 sm:py-2 rounded-button text-xs sm:text-sm">Полный отчет</button>
             </div>
-            <div class="bg-white p-6 rounded-lg shadow">
-              <h3 class="text-lg font-bold mb-4">Топ-10 товаров</h3>
-              <div id="top-products-report" class="space-y-2">
+            <div class="bg-white p-3 sm:p-6 rounded-lg shadow">
+              <h3 class="text-sm sm:text-lg font-bold mb-2 sm:mb-4">Топ-10 товаров</h3>
+              <div id="top-products-report" class="space-y-1 sm:space-y-2 text-xs sm:text-sm">
                 <!-- Будут загружены -->
               </div>
             </div>
@@ -1481,28 +1578,28 @@
 
         <!-- Вкладка Настройки -->
         <div id="admin-settings-tab" class="hidden">
-          <div class="bg-white p-6 rounded-lg shadow">
-            <h3 class="text-lg font-bold mb-4">Настройки сайта</h3>
-            <div class="space-y-4">
+          <div class="bg-white p-3 sm:p-6 rounded-lg shadow">
+            <h3 class="text-sm sm:text-lg font-bold mb-3 sm:mb-4">Настройки сайта</h3>
+            <div class="space-y-3 sm:space-y-4">
               <div>
-                <label class="block text-sm font-medium text-gray-700 mb-1">Название магазина</label>
-                <input type="text" id="site-name" value="AirComfort" class="w-full border px-4 py-2 rounded-lg">
+                <label class="block text-xs sm:text-sm font-medium text-gray-700 mb-1">Название магазина</label>
+                <input type="text" id="site-name" value="AirComfort" class="w-full border px-2 sm:px-4 py-1 sm:py-2 rounded-lg text-xs sm:text-sm">
               </div>
               <div>
-                <label class="block text-sm font-medium text-gray-700 mb-1">Email для уведомлений</label>
-                <input type="email" id="site-email" value="aircomfortbel@gmail.com" class="w-full border px-4 py-2 rounded-lg">
+                <label class="block text-xs sm:text-sm font-medium text-gray-700 mb-1">Email для уведомлений</label>
+                <input type="email" id="site-email" value="aircomfortbel@gmail.com" class="w-full border px-2 sm:px-4 py-1 sm:py-2 rounded-lg text-xs sm:text-sm">
               </div>
               <div>
-                <label class="block text-sm font-medium text-gray-700 mb-1">Телефон</label>
-                <input type="text" id="site-phone" value="+375 (29) 105-06-94" class="w-full border px-4 py-2 rounded-lg">
+                <label class="block text-xs sm:text-sm font-medium text-gray-700 mb-1">Телефон</label>
+                <input type="text" id="site-phone" value="+375 (29) 105-06-94" class="w-full border px-2 sm:px-4 py-1 sm:py-2 rounded-lg text-xs sm:text-sm">
               </div>
               <div>
-                <label class="block text-sm font-medium text-gray-700 mb-1">Адрес</label>
-                <input type="text" id="site-address" value="г. Гомель" class="w-full border px-4 py-2 rounded-lg">
+                <label class="block text-xs sm:text-sm font-medium text-gray-700 mb-1">Адрес</label>
+                <input type="text" id="site-address" value="г. Гомель" class="w-full border px-2 sm:px-4 py-1 sm:py-2 rounded-lg text-xs sm:text-sm">
               </div>
               <div>
-                <label class="block text-sm font-medium text-gray-700 mb-1">Валюта</label>
-                <select id="site-currency" class="w-full border px-4 py-2 rounded-lg">
+                <label class="block text-xs sm:text-sm font-medium text-gray-700 mb-1">Валюта</label>
+                <select id="site-currency" class="w-full border px-2 sm:px-4 py-1 sm:py-2 rounded-lg text-xs sm:text-sm">
                   <option value="BYN">BYN</option>
                   <option value="USD">USD</option>
                   <option value="EUR">EUR</option>
@@ -1510,58 +1607,45 @@
                 </select>
               </div>
               <div>
-                <label class="block text-sm font-medium text-gray-700 mb-1">Способы доставки</label>
-                <div class="space-y-2">
-                  <label class="flex items-center">
-                    <input type="checkbox" checked class="mr-2"> Самовывоз
-                  </label>
-                  <label class="flex items-center">
-                    <input type="checkbox" checked class="mr-2"> Курьером по городу
-                  </label>
-                  <label class="flex items-center">
-                    <input type="checkbox" class="mr-2"> Почтой по РБ
-                  </label>
+                <label class="block text-xs sm:text-sm font-medium text-gray-700 mb-1">Способы доставки</label>
+                <div class="space-y-1 text-xs sm:text-sm">
+                  <label class="flex items-center"><input type="checkbox" checked class="mr-2"> Самовывоз</label>
+                  <label class="flex items-center"><input type="checkbox" checked class="mr-2"> Курьером по городу</label>
+                  <label class="flex items-center"><input type="checkbox" class="mr-2"> Почтой по РБ</label>
                 </div>
               </div>
               <div>
-                <label class="block text-sm font-medium text-gray-700 mb-1">Способы оплаты</label>
-                <div class="space-y-2">
-                  <label class="flex items-center">
-                    <input type="checkbox" checked class="mr-2"> Наличные
-                  </label>
-                  <label class="flex items-center">
-                    <input type="checkbox" checked class="mr-2"> Картой онлайн
-                  </label>
-                  <label class="flex items-center">
-                    <input type="checkbox" checked class="mr-2"> Безналичный расчет
-                  </label>
+                <label class="block text-xs sm:text-sm font-medium text-gray-700 mb-1">Способы оплаты</label>
+                <div class="space-y-1 text-xs sm:text-sm">
+                  <label class="flex items-center"><input type="checkbox" checked class="mr-2"> Наличные</label>
+                  <label class="flex items-center"><input type="checkbox" checked class="mr-2"> Картой онлайн</label>
+                  <label class="flex items-center"><input type="checkbox" checked class="mr-2"> Безналичный расчет</label>
                 </div>
               </div>
               <div>
-                <label class="block text-sm font-medium text-gray-700 mb-1">SEO настройки</label>
-                <textarea id="site-seo" rows="3" class="w-full border px-4 py-2 rounded-lg" placeholder="Мета-теги по умолчанию"></textarea>
+                <label class="block text-xs sm:text-sm font-medium text-gray-700 mb-1">SEO настройки</label>
+                <textarea id="site-seo" rows="3" class="w-full border px-2 sm:px-4 py-1 sm:py-2 rounded-lg text-xs sm:text-sm"></textarea>
               </div>
-              <button onclick="saveSettings()" class="bg-primary text-white px-6 py-2 rounded-button">Сохранить настройки</button>
+              <button onclick="saveSettings()" class="bg-primary text-white px-4 sm:px-6 py-1 sm:py-2 rounded-button text-xs sm:text-sm">Сохранить</button>
             </div>
           </div>
         </div>
 
         <!-- Вкладка Логи -->
         <div id="admin-logs-tab" class="hidden">
-          <div class="bg-white p-6 rounded-lg shadow">
-            <h3 class="text-lg font-bold mb-4">История действий</h3>
-            <div class="mb-4">
-              <select id="log-filter" onchange="filterLogs()" class="border px-4 py-2 rounded-lg">
+          <div class="bg-white p-3 sm:p-6 rounded-lg shadow">
+            <h3 class="text-sm sm:text-lg font-bold mb-2 sm:mb-4">История действий</h3>
+            <div class="mb-3 sm:mb-4">
+              <select id="log-filter" onchange="filterLogs()" class="border px-2 sm:px-4 py-1 sm:py-2 rounded-lg text-xs sm:text-sm">
                 <option value="">Все действия</option>
                 <option value="product">Товары</option>
                 <option value="order">Заказы</option>
                 <option value="brand">Бренды</option>
-                <option value="category">Категории</option>
                 <option value="user">Пользователи</option>
                 <option value="settings">Настройки</option>
               </select>
             </div>
-            <div id="logs-list" class="space-y-2 max-h-96 overflow-y-auto">
+            <div id="logs-list" class="space-y-1 sm:space-y-2 max-h-96 overflow-y-auto text-xs sm:text-sm">
               <!-- Логи будут загружены -->
             </div>
           </div>
@@ -1572,13 +1656,12 @@
     <!-- Форма входа в админку -->
     <div id="admin-login-modal" class="modal" style="display: none;">
       <div class="modal-content">
-        <h3 class="text-xl font-bold mb-4">Вход в админ-панель</h3>
-        <p class="text-sm text-gray-600 mb-3">Логин: admin, Пароль: admin123</p>
-        <input type="text" id="admin-login-input" placeholder="Логин" class="w-full border px-4 py-2 rounded mb-3">
-        <input type="password" id="admin-pass-input" placeholder="Пароль" class="w-full border px-4 py-2 rounded mb-4">
+        <h3 class="text-lg sm:text-xl font-bold mb-3 sm:mb-4">Вход в админ-панель</h3>
+        <input type="text" id="admin-login-input" placeholder="Логин" class="w-full border px-3 sm:px-4 py-2 sm:py-3 rounded mb-2 sm:mb-3 text-sm sm:text-base">
+        <input type="password" id="admin-pass-input" placeholder="Пароль" class="w-full border px-3 sm:px-4 py-2 sm:py-3 rounded mb-3 sm:mb-4 text-sm sm:text-base">
         <div class="flex gap-2">
-          <button onclick="loginAdmin()" class="flex-1 gradient-bg text-white px-4 py-2 rounded-button">Войти</button>
-          <button onclick="document.getElementById('admin-login-modal').style.display='none'" class="flex-1 bg-gray-200 px-4 py-2 rounded-button">Отмена</button>
+          <button onclick="loginAdmin()" class="flex-1 gradient-bg text-white px-3 sm:px-4 py-2 sm:py-3 rounded-button text-sm sm:text-base">Войти</button>
+          <button onclick="document.getElementById('admin-login-modal').style.display='none'" class="flex-1 bg-gray-200 text-gray-800 px-3 sm:px-4 py-2 sm:py-3 rounded-button text-sm sm:text-base">Отмена</button>
         </div>
       </div>
     </div>
@@ -1586,136 +1669,55 @@
     <!-- Форма редактирования товара -->
     <div id="edit-product-modal" class="modal" style="display: none;">
       <div class="modal-content max-w-2xl">
-        <h3 class="text-xl font-bold mb-4" id="edit-modal-title">Редактирование товара</h3>
-        <form id="edit-product-form" class="space-y-4">
+        <h3 class="text-lg sm:text-xl font-bold mb-3 sm:mb-4" id="edit-modal-title">Редактирование товара</h3>
+        <form id="edit-product-form" class="space-y-3 sm:space-y-4">
           <input type="hidden" id="edit-product-id">
           <div>
-            <label class="block text-gray-700 font-medium mb-2">Название товара *</label>
-            <input type="text" id="edit-name" class="w-full border px-4 py-2 rounded" required>
+            <label class="block text-xs sm:text-sm font-medium text-gray-700 mb-1">Название товара *</label>
+            <input type="text" id="edit-name" class="w-full border px-2 sm:px-3 py-1 sm:py-2 rounded text-xs sm:text-sm" required>
           </div>
           <div>
-            <label class="block text-gray-700 font-medium mb-2">Цена (BYN) *</label>
-            <input type="number" id="edit-price" class="w-full border px-4 py-2 rounded" required>
+            <label class="block text-xs sm:text-sm font-medium text-gray-700 mb-1">Цена (BYN) *</label>
+            <input type="number" id="edit-price" class="w-full border px-2 sm:px-3 py-1 sm:py-2 rounded text-xs sm:text-sm" required>
           </div>
           <div>
-            <label class="block text-gray-700 font-medium mb-2">Старая цена (для скидки)</label>
-            <input type="number" id="edit-old-price" class="w-full border px-4 py-2 rounded">
+            <label class="block text-xs sm:text-sm font-medium text-gray-700 mb-1">Старая цена (для скидки)</label>
+            <input type="number" id="edit-old-price" class="w-full border px-2 sm:px-3 py-1 sm:py-2 rounded text-xs sm:text-sm">
           </div>
           <div>
-            <label class="block text-gray-700 font-medium mb-2">Количество на складе</label>
-            <input type="number" id="edit-stock" value="10" class="w-full border px-4 py-2 rounded">
+            <label class="block text-xs sm:text-sm font-medium text-gray-700 mb-1">Количество на складе</label>
+            <input type="number" id="edit-stock" value="10" class="w-full border px-2 sm:px-3 py-1 sm:py-2 rounded text-xs sm:text-sm">
           </div>
           <div>
-            <label class="block text-gray-700 font-medium mb-2">Загрузить изображение</label>
-            <input type="file" id="edit-image-file" accept="image/*" class="w-full border px-4 py-2 rounded" onchange="previewImage(this)">
+            <label class="block text-xs sm:text-sm font-medium text-gray-700 mb-1">Загрузить изображение</label>
+            <input type="file" id="edit-image-file" accept="image/*" class="w-full border px-2 sm:px-3 py-1 sm:py-2 rounded text-xs sm:text-sm" onchange="previewImage(this)">
             <input type="hidden" id="edit-image">
             <div id="image-preview" class="mt-2"></div>
           </div>
           <div>
-            <label class="block text-gray-700 font-medium mb-2">Площадь помещения</label>
-            <select id="edit-area" class="w-full border px-4 py-2 rounded">
-              <option value="до 20">до 20 кв.м.</option>
-              <option value="21-29">21-29 кв.м.</option>
-              <option value="30-39">30-39 кв.м.</option>
-              <option value="40-49">40-49 кв.м.</option>
-              <option value="50-69">50-69 кв.м.</option>
-              <option value="70-99">70-99 кв.м.</option>
-              <option value="100+">от 100 кв.м.</option>
-            </select>
-          </div>
-          <div>
-            <label class="block text-gray-700 font-medium mb-2">Категория</label>
-            <select id="edit-category" class="w-full border px-4 py-2 rounded">
-              <option value="Настенные">Настенные</option>
-              <option value="Канальные">Канальные</option>
-              <option value="Мобильные">Мобильные</option>
-              <option value="Кассетные">Кассетные</option>
-              <option value="Мульти-сплит">Мульти-сплит</option>
-              <option value="Напольно-потолочные">Напольно-потолочные</option>
-            </select>
-          </div>
-          <div>
-            <label class="block text-gray-700 font-medium mb-2">Бренд</label>
-            <select id="edit-brand" class="w-full border px-4 py-2 rounded">
+            <label class="block text-xs sm:text-sm font-medium text-gray-700 mb-1">Бренд</label>
+            <select id="edit-brand" class="w-full border px-2 sm:px-3 py-1 sm:py-2 rounded text-xs sm:text-sm">
               <option value="">Без бренда</option>
             </select>
           </div>
-          <div>
-            <label class="block text-gray-700 font-medium mb-2">Тип</label>
-            <select id="edit-type" class="w-full border px-4 py-2 rounded">
-              <option value="Настенный">Настенный</option>
-              <option value="Канальный">Канальный</option>
-              <option value="Кассетный">Кассетный</option>
-              <option value="Мобильный">Мобильный</option>
-              <option value="Напольно-потолочный">Напольно-потолочный</option>
-            </select>
-          </div>
-          <div>
-            <label class="block text-gray-700 font-medium mb-2">Инвертор</label>
-            <select id="edit-inverter" class="w-full border px-4 py-2 rounded">
-              <option value="Да">Да</option>
-              <option value="Нет">Нет</option>
-            </select>
-          </div>
-          <div>
-            <label class="block text-gray-700 font-medium mb-2">Обогрев зимой</label>
-            <input type="text" id="edit-heat" placeholder="-15" class="w-full border px-4 py-2 rounded">
-          </div>
-          <div>
-            <label class="block text-gray-700 font-medium mb-2">Теги (хит, новинка, распродажа)</label>
-            <div class="flex gap-2">
-              <label class="flex items-center">
-                <input type="checkbox" id="edit-tag-hit" class="mr-1"> Хит
-              </label>
-              <label class="flex items-center">
-                <input type="checkbox" id="edit-tag-new" class="mr-1"> Новинка
-              </label>
-              <label class="flex items-center">
-                <input type="checkbox" id="edit-tag-sale" class="mr-1"> Распродажа
-              </label>
-            </div>
-          </div>
-          <div>
-            <label class="block text-gray-700 font-medium mb-2">Краткое описание</label>
-            <textarea id="edit-description" rows="2" class="w-full border px-4 py-2 rounded"></textarea>
-          </div>
-          <div>
-            <label class="block text-gray-700 font-medium mb-2">Полное описание</label>
-            <textarea id="edit-fullDescription" rows="4" class="w-full border px-4 py-2 rounded"></textarea>
-          </div>
-          <div>
-            <label class="block text-gray-700 font-medium mb-2">SEO заголовок</label>
-            <input type="text" id="edit-seo-title" class="w-full border px-4 py-2 rounded">
-          </div>
-          <div>
-            <label class="block text-gray-700 font-medium mb-2">SEO описание</label>
-            <textarea id="edit-seo-desc" rows="2" class="w-full border px-4 py-2 rounded"></textarea>
-          </div>
-          <div>
-            <label class="block text-gray-700 font-medium mb-2">Статус</label>
-            <select id="edit-status" class="w-full border px-4 py-2 rounded">
-              <option value="active">Активен</option>
-              <option value="inactive">Неактивен</option>
-            </select>
-          </div>
           <div class="flex gap-2">
-            <button type="button" onclick="saveEditedProduct()" class="flex-1 gradient-bg text-white px-4 py-2 rounded-button">Сохранить</button>
-            <button type="button" onclick="document.getElementById('edit-product-modal').style.display='none'" class="flex-1 bg-gray-200 text-gray-800 px-4 py-2 rounded-button">Отмена</button>
+            <button type="button" onclick="saveEditedProduct()" class="flex-1 gradient-bg text-white px-3 sm:px-4 py-1 sm:py-2 rounded-button text-xs sm:text-sm">Сохранить</button>
+            <button type="button" onclick="document.getElementById('edit-product-modal').style.display='none'" class="flex-1 bg-gray-200 text-gray-800 px-3 sm:px-4 py-1 sm:py-2 rounded-button text-xs sm:text-sm">Отмена</button>
           </div>
         </form>
       </div>
     </div>
 
     <!-- Калькулятор расчета стоимости -->
-    <section id="calculator" class="py-10 sm:py-16 bg-white">
+    <section id="calculator" class="py-8 sm:py-16 bg-white">
       <div class="max-w-7xl mx-auto px-6">
-        <h2 class="text-2xl sm:text-3xl font-bold text-center text-gray-900 mb-6 sm:mb-12">Расчет стоимости монтажа</h2>
+        <h2 class="text-lg sm:text-3xl font-bold text-center text-gray-900 mb-4 sm:mb-12">Расчет стоимости монтажа</h2>
         <div class="bg-white rounded-lg shadow-hover overflow-hidden max-w-3xl mx-auto border border-gray-100">
-          <div class="p-5 sm:p-8">
-            <div class="mb-6">
-              <label for="model" class="block text-gray-700 font-medium mb-2">Выберите услугу *</label>
+          <div class="p-4 sm:p-8">
+            <div class="mb-4 sm:mb-6">
+              <label for="model" class="block text-gray-700 font-medium mb-1 sm:mb-2 text-xs sm:text-sm">Выберите услугу *</label>
               <div class="relative">
-                <select id="model" class="w-full px-4 py-3 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-primary/50 focus:border-primary appearance-none pr-8" required>
+                <select id="model" class="w-full px-3 sm:px-4 py-2 sm:py-3 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-primary/50 focus:border-primary appearance-none pr-8 text-xs sm:text-sm" required>
                   <option value="">-- Выберите услугу --</option>
                   <option value="400">Монтаж кондиционера (до 30м²) 400 BYN</option>
                   <option value="430">Монтаж кондиционера (35м²) 430 BYN</option>
@@ -1726,43 +1728,35 @@
                   <option value="0">Модель 42 и выше (индивидуально)</option>
                 </select>
                 <div class="absolute inset-y-0 right-0 flex items-center px-2 pointer-events-none">
-                  <div class="w-5 h-5 flex items-center justify-center text-gray-500">
+                  <div class="w-4 h-4 sm:w-5 sm:h-5 flex items-center justify-center text-gray-500">
                     <i class="ri-arrow-down-s-line"></i>
                   </div>
                 </div>
               </div>
             </div>
-            <div class="mb-6" id="length-section">
-              <label for="length" class="block text-gray-700 font-medium mb-2">Длина трассы (метры)</label>
+            <div class="mb-4 sm:mb-6" id="length-section">
+              <label for="length" class="block text-gray-700 font-medium mb-1 sm:mb-2 text-xs sm:text-sm">Длина трассы (метры)</label>
               <div class="flex items-center">
-                <button id="decrease-length" class="px-4 py-2 bg-gray-200 rounded-l-lg hover:bg-gray-300 focus:outline-none btn-animate">
-                  <div class="w-5 h-5 flex items-center justify-center">
-                    <i class="ri-subtract-line"></i>
-                  </div>
-                </button>
-                <input type="number" id="length" value="3" min="3" class="w-full px-4 py-2 border-y border-gray-300 text-center focus:outline-none border-none" readonly>
-                <button id="increase-length" class="px-4 py-2 bg-gray-200 rounded-r-lg hover:bg-gray-300 focus:outline-none btn-animate">
-                  <div class="w-5 h-5 flex items-center justify-center">
-                    <i class="ri-add-line"></i>
-                  </div>
-                </button>
+                <button id="decrease-length" class="px-3 sm:px-4 py-1 sm:py-2 bg-gray-200 rounded-l-lg hover:bg-gray-300 focus:outline-none btn-animate text-sm">-</button>
+                <input type="number" id="length" value="3" min="3" class="w-full px-3 sm:px-4 py-1 sm:py-2 border-y border-gray-300 text-center focus:outline-none border-none text-xs sm:text-sm" readonly>
+                <button id="increase-length" class="px-3 sm:px-4 py-1 sm:py-2 bg-gray-200 rounded-r-lg hover:bg-gray-300 focus:outline-none btn-animate text-sm">+</button>
               </div>
-              <p class="text-sm text-gray-600 mt-2">Стандартная длина - 3 метра. Каждый дополнительный метр: +50 BYN</p>
+              <p class="text-xs text-gray-600 mt-1 sm:mt-2">Стандартная длина - 3 метра. Каждый дополнительный метр: +50 BYN</p>
             </div>
-            <div class="mb-8">
-              <p class="block text-gray-700 font-medium mb-3">Дополнительные услуги</p>
-              <div class="space-y-3">
-                <label class="checkbox-container">
+            <div class="mb-4 sm:mb-8">
+              <p class="block text-gray-700 font-medium mb-2 sm:mb-3 text-xs sm:text-sm">Дополнительные услуги</p>
+              <div class="space-y-2">
+                <label class="checkbox-container text-xs sm:text-sm">
                   <input type="checkbox" id="demontage" name="demontage" value="100">
-                  <span class="checkbox-custom"></span>
+                  <span class="checkbox-custom w-5 h-5 sm:w-6 sm:h-6"></span>
                   <span class="flex-1">
                     <span class="text-gray-700">Демонтаж старого оборудования</span>
                     <span class="ml-1 text-primary font-medium">+100 BYN</span>
                   </span>
                 </label>
-                <label class="checkbox-container">
+                <label class="checkbox-container text-xs sm:text-sm">
                   <input type="checkbox" id="service" name="service" value="100">
-                  <span class="checkbox-custom"></span>
+                  <span class="checkbox-custom w-5 h-5 sm:w-6 sm:h-6"></span>
                   <span class="flex-1">
                     <span class="text-gray-700">Обслуживание кондиционера</span>
                     <span class="ml-1 text-primary font-medium">+100 BYN</span>
@@ -1770,15 +1764,15 @@
                 </label>
               </div>
             </div>
-            <div class="bg-gradient-to-r from-gray-50 to-primary/5 p-5 sm:p-6 rounded-lg border border-primary/10">
+            <div class="bg-gradient-to-r from-gray-50 to-primary/5 p-4 sm:p-6 rounded-lg border border-primary/10">
               <div class="flex justify-between items-center">
-                <span class="text-base sm:text-lg font-medium text-gray-700">Итоговая стоимость:</span>
-                <span id="total-price" class="text-xl sm:text-2xl font-bold text-primary">0 BYN</span>
+                <span class="text-sm sm:text-lg font-medium text-gray-700">Итоговая стоимость:</span>
+                <span id="total-price" class="text-lg sm:text-2xl font-bold text-primary">0 BYN</span>
               </div>
             </div>
-            <div class="mt-6">
-              <button onclick="addCalculatorToCart()" class="w-full gradient-bg text-white px-5 py-2.5 sm:py-3 rounded-button font-medium hover:shadow-glow transition-all duration-300 flex items-center justify-center btn-animate text-sm sm:text-base">
-                <div class="w-4 h-4 sm:w-5 sm:h-5 flex items-center justify-center mr-2">
+            <div class="mt-4 sm:mt-6">
+              <button onclick="addCalculatorToCart()" class="w-full gradient-bg text-white px-4 sm:px-6 py-2 sm:py-3 rounded-button font-medium hover:shadow-glow transition-all duration-300 flex items-center justify-center btn-animate text-xs sm:text-base">
+                <div class="w-3 h-3 sm:w-5 sm:h-5 flex items-center justify-center mr-1 sm:mr-2">
                   <i class="ri-shopping-cart-line"></i>
                 </div>
                 Добавить в корзину
@@ -1792,139 +1786,139 @@
     <!-- Модальное окно выбора способа связи -->
     <div id="contact-modal" class="modal">
       <div class="modal-content">
-        <h3 class="text-xl font-bold text-gray-900 mb-6">Выберите способ связи</h3>
-        <div class="space-y-4">
-          <a href="tel:+375291050694" class="flex items-center justify-center gradient-bg text-white px-6 py-3 rounded-button font-medium hover:shadow-glow transition-all duration-300 btn-animate">
+        <h3 class="text-lg sm:text-xl font-bold text-gray-900 mb-4 sm:mb-6">Выберите способ связи</h3>
+        <div class="space-y-3 sm:space-y-4">
+          <a href="tel:+375291050694" class="flex items-center justify-center gradient-bg text-white px-4 sm:px-6 py-2 sm:py-3 rounded-button font-medium hover:shadow-glow transition-all duration-300 btn-animate text-xs sm:text-base">
             <i class="ri-phone-line mr-2"></i>
             Позвонить
           </a>
-          <a href="https://t.me/AirComforto" target="_blank" class="flex items-center justify-center bg-blue-500 text-white px-6 py-3 rounded-button font-medium hover:shadow-glow transition-all duration-300 btn-animate">
+          <a href="https://t.me/AirComforto" target="_blank" class="flex items-center justify-center bg-blue-500 text-white px-4 sm:px-6 py-2 sm:py-3 rounded-button font-medium hover:shadow-glow transition-all duration-300 btn-animate text-xs sm:text-base">
             <i class="ri-telegram-line mr-2"></i>
             Написать в Telegram
           </a>
-          <a href="https://msngr.link/vi/375291050694?text=" target="_blank" class="flex items-center justify-center bg-purple-600 text-white px-6 py-3 rounded-button font-medium hover:shadow-glow transition-all duration-300 btn-animate">
+          <a href="https://msngr.link/vi/375291050694?text=" target="_blank" class="flex items-center justify-center bg-purple-600 text-white px-4 sm:px-6 py-2 sm:py-3 rounded-button font-medium hover:shadow-glow transition-all duration-300 btn-animate text-xs sm:text-base">
             <i class="ri-chat-3-line mr-2"></i>
             Написать в Viber
           </a>
-          <button onclick="document.getElementById('contacts').scrollIntoView({behavior: 'smooth'}); document.getElementById('contact-modal').style.display = 'none';" class="w-full bg-gray-200 text-gray-800 px-6 py-3 rounded-button font-medium hover:bg-gray-300 transition-all duration-300 btn-animate">
+          <button onclick="document.getElementById('contacts').scrollIntoView({behavior: 'smooth'}); document.getElementById('contact-modal').style.display = 'none';" class="w-full bg-gray-200 text-gray-800 px-4 sm:px-6 py-2 sm:py-3 rounded-button font-medium hover:bg-gray-300 transition-all duration-300 btn-animate text-xs sm:text-base">
             Заполнить форму на сайте
           </button>
         </div>
-        <button onclick="document.getElementById('contact-modal').style.display = 'none';" class="mt-6 text-gray-500 hover:text-gray-700">
+        <button onclick="document.getElementById('contact-modal').style.display = 'none';" class="mt-4 sm:mt-6 text-gray-500 hover:text-gray-700 text-xs sm:text-sm">
           <i class="ri-close-line"></i> Закрыть
         </button>
       </div>
-    </div>
+    </section>
 
     <!-- Наши преимущества -->
-    <section id="advantages" class="py-10 sm:py-16 bg-gradient-to-b from-white to-gray-50">
+    <section id="advantages" class="py-8 sm:py-16 bg-gradient-to-b from-white to-gray-50">
       <div class="max-w-7xl mx-auto px-6">
-        <h2 class="text-2xl sm:text-3xl font-bold text-center text-gray-900 mb-6 sm:mb-12">Наши преимущества</h2>
-        <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-4 sm:gap-6">
+        <h2 class="text-lg sm:text-3xl font-bold text-center text-gray-900 mb-4 sm:mb-12">Наши преимущества</h2>
+        <div class="grid grid-cols-2 sm:grid-cols-2 lg:grid-cols-4 gap-3 sm:gap-6">
           <!-- Преимущество 1 -->
-          <div class="bg-white p-4 sm:p-6 rounded-lg shadow-card text-center card-hover">
-            <div class="w-12 h-12 sm:w-16 sm:h-16 mx-auto mb-3 sm:mb-4 flex items-center justify-center bg-gradient-to-br from-primary/20 to-primary/10 rounded-full text-primary shadow-lg">
-              <i class="ri-shield-check-line ri-lg sm:ri-2x"></i>
+          <div class="bg-white p-3 sm:p-6 rounded-lg shadow-card text-center card-hover">
+            <div class="w-8 h-8 sm:w-16 sm:h-16 mx-auto mb-2 sm:mb-4 flex items-center justify-center bg-gradient-to-br from-primary/20 to-primary/10 rounded-full text-primary shadow-lg">
+              <i class="ri-shield-check-line text-sm sm:ri-2x"></i>
             </div>
-            <h3 class="text-base sm:text-xl font-bold text-gray-900 mb-2">Гарантия 5 лет</h3>
-            <p class="text-xs sm:text-base text-gray-700">Самая длительная гарантия на оборудование и 1 год на монтажные работы.</p>
+            <h3 class="text-xs sm:text-xl font-bold text-gray-900 mb-1 sm:mb-2">Гарантия 5 лет</h3>
+            <p class="text-xs text-gray-700">Самая длительная гарантия на оборудование и 1 год на монтажные работы.</p>
           </div>
           <!-- Преимущество 2 -->
-          <div class="bg-white p-4 sm:p-6 rounded-lg shadow-card text-center card-hover">
-            <div class="w-12 h-12 sm:w-16 sm:h-16 mx-auto mb-3 sm:mb-4 flex items-center justify-center bg-gradient-to-br from-secondary/20 to-secondary/10 rounded-full text-secondary shadow-lg">
-              <i class="ri-user-star-line ri-lg sm:ri-2x"></i>
+          <div class="bg-white p-3 sm:p-6 rounded-lg shadow-card text-center card-hover">
+            <div class="w-8 h-8 sm:w-16 sm:h-16 mx-auto mb-2 sm:mb-4 flex items-center justify-center bg-gradient-to-br from-secondary/20 to-secondary/10 rounded-full text-secondary shadow-lg">
+              <i class="ri-user-star-line text-sm sm:ri-2x"></i>
             </div>
-            <h3 class="text-base sm:text-xl font-bold text-gray-900 mb-2">Профессионализм</h3>
-            <p class="text-xs sm:text-base text-gray-700">Опытные мастера с профессиональной подготовкой и сертификатами.</p>
+            <h3 class="text-xs sm:text-xl font-bold text-gray-900 mb-1 sm:mb-2">Профессионализм</h3>
+            <p class="text-xs text-gray-700">Опытные мастера с профессиональной подготовкой и сертификатами.</p>
           </div>
           <!-- Преимущество 3 -->
-          <div class="bg-white p-4 sm:p-6 rounded-lg shadow-card text-center card-hover">
-            <div class="w-12 h-12 sm:w-16 sm:h-16 mx-auto mb-3 sm:mb-4 flex items-center justify-center bg-gradient-to-br from-accent/20 to-accent/10 rounded-full text-accent shadow-lg">
-              <i class="ri-time-line ri-lg sm:ri-2x"></i>
+          <div class="bg-white p-3 sm:p-6 rounded-lg shadow-card text-center card-hover">
+            <div class="w-8 h-8 sm:w-16 sm:h-16 mx-auto mb-2 sm:mb-4 flex items-center justify-center bg-gradient-to-br from-accent/20 to-accent/10 rounded-full text-accent shadow-lg">
+              <i class="ri-time-line text-sm sm:ri-2x"></i>
             </div>
-            <h3 class="text-base sm:text-xl font-bold text-gray-900 mb-2">Быстрая установка</h3>
-            <p class="text-xs sm:text-base text-gray-700">Установка в течение 1-2 дней после заказа по всей Гомельской области.</p>
+            <h3 class="text-xs sm:text-xl font-bold text-gray-900 mb-1 sm:mb-2">Быстрая установка</h3>
+            <p class="text-xs text-gray-700">Установка в течение 1-2 дней после заказа по всей Гомельской области.</p>
           </div>
           <!-- Преимущество 4 -->
-          <div class="bg-white p-4 sm:p-6 rounded-lg shadow-card text-center card-hover">
-            <div class="w-12 h-12 sm:w-16 sm:h-16 mx-auto mb-3 sm:mb-4 flex items-center justify-center bg-gradient-to-br from-primary/20 to-primary/10 rounded-full text-primary shadow-lg">
-              <i class="ri-money-dollar-circle-line ri-lg sm:ri-2x"></i>
+          <div class="bg-white p-3 sm:p-6 rounded-lg shadow-card text-center card-hover">
+            <div class="w-8 h-8 sm:w-16 sm:h-16 mx-auto mb-2 sm:mb-4 flex items-center justify-center bg-gradient-to-br from-primary/20 to-primary/10 rounded-full text-primary shadow-lg">
+              <i class="ri-money-dollar-circle-line text-sm sm:ri-2x"></i>
             </div>
-            <h3 class="text-base sm:text-xl font-bold text-gray-900 mb-2">Лучшие цены</h3>
-            <p class="text-xs sm:text-base text-gray-700">Оптимальное соотношение цены и качества.</p>
+            <h3 class="text-xs sm:text-xl font-bold text-gray-900 mb-1 sm:mb-2">Лучшие цены</h3>
+            <p class="text-xs text-gray-700">Оптимальное соотношение цены и качества.</p>
           </div>
         </div>
       </div>
     </section>
 
     <!-- Часто задаваемые вопросы -->
-    <section id="faq" class="py-10 sm:py-16 bg-white">
+    <section id="faq" class="py-8 sm:py-16 bg-white">
       <div class="max-w-7xl mx-auto px-6">
-        <h2 class="text-2xl sm:text-3xl font-bold text-center text-gray-900 mb-3">Часто задаваемые вопросы</h2>
-        <p class="text-center text-gray-700 mb-6 sm:mb-10">Ответы на самые популярные вопросы наших клиентов</p>
+        <h2 class="text-lg sm:text-3xl font-bold text-center text-gray-900 mb-2">Часто задаваемые вопросы</h2>
+        <p class="text-center text-gray-700 mb-4 sm:mb-10 text-xs sm:text-base">Ответы на самые популярные вопросы наших клиентов</p>
         <div class="max-w-3xl mx-auto">
           <div class="faq-item">
             <div class="faq-question" onclick="toggleFaq(1)">
-              <span class="font-medium text-sm sm:text-lg">Сколько времени занимает установка кондиционера?</span>
+              <span class="font-medium text-xs sm:text-lg">Сколько времени занимает установка кондиционера?</span>
               <i class="ri-arrow-down-s-line faq-icon"></i>
             </div>
             <div class="faq-answer">
-              <div class="pb-6 text-xs sm:text-base text-gray-700">
+              <div class="pb-4 sm:pb-6 text-xs text-gray-700">
                 Стандартная установка занимает от 2 до 4 часов, в зависимости от сложности монтажа. Наши специалисты работают быстро и качественно, чтобы минимизировать неудобства для вас.
               </div>
             </div>
           </div>
           <div class="faq-item">
             <div class="faq-question" onclick="toggleFaq(2)">
-              <span class="font-medium text-sm sm:text-lg">Как часто нужно обслуживать кондиционер?</span>
+              <span class="font-medium text-xs sm:text-lg">Как часто нужно обслуживать кондиционер?</span>
               <i class="ri-arrow-down-s-line faq-icon"></i>
             </div>
             <div class="faq-answer">
-              <div class="pb-6 text-xs sm:text-base text-gray-700">
+              <div class="pb-4 sm:pb-6 text-xs text-gray-700">
                 Рекомендуем проводить техническое обслуживание кондиционера не реже одного раза в год. Это продлевает срок службы оборудования, обеспечивает эффективную работу и экономит электроэнергию.
               </div>
             </div>
           </div>
           <div class="faq-item">
             <div class="faq-question" onclick="toggleFaq(3)">
-              <span class="font-medium text-sm sm:text-lg">В чем разница между инверторным и обычным кондиционером?</span>
+              <span class="font-medium text-xs sm:text-lg">В чем разница между инверторным и обычным кондиционером?</span>
               <i class="ri-arrow-down-s-line faq-icon"></i>
             </div>
             <div class="faq-answer">
-              <div class="pb-6 text-xs sm:text-base text-gray-700">
+              <div class="pb-4 sm:pb-6 text-xs text-gray-700">
                 Инверторный кондиционер регулирует мощность компрессора плавно, что позволяет экономить до 30-40% электроэнергии, работать тише и поддерживать точную температуру. Обычный кондиционер работает по принципу "включил-выключил", что менее эффективно.
               </div>
             </div>
           </div>
           <div class="faq-item">
             <div class="faq-question" onclick="toggleFaq(4)">
-              <span class="font-medium text-sm sm:text-lg">Можно ли установить кондиционер зимой?</span>
+              <span class="font-medium text-xs sm:text-lg">Можно ли установить кондиционер зимой?</span>
               <i class="ri-arrow-down-s-line faq-icon"></i>
             </div>
             <div class="faq-answer">
-              <div class="pb-6 text-xs sm:text-base text-gray-700">
+              <div class="pb-4 sm:pb-6 text-xs text-gray-700">
                 Да, установка возможна круглый год.
               </div>
             </div>
           </div>
           <div class="faq-item">
             <div class="faq-question" onclick="toggleFaq(5)">
-              <span class="font-medium text-sm sm:text-lg">Какая гарантия на работу и оборудование?</span>
+              <span class="font-medium text-xs sm:text-lg">Какая гарантия на работу и оборудование?</span>
               <i class="ri-arrow-down-s-line faq-icon"></i>
             </div>
             <div class="faq-answer">
-              <div class="pb-6 text-xs sm:text-base text-gray-700">
+              <div class="pb-4 sm:pb-6 text-xs text-gray-700">
                 Мы предоставляем гарантию 5 лет на оборудование и 1 год на монтажные работы.
               </div>
             </div>
           </div>
           <div class="faq-item">
             <div class="faq-question" onclick="toggleFaq(6)">
-              <span class="font-medium text-sm sm:text-lg">Нужно ли получать разрешение на установку кондиционера?</span>
+              <span class="font-medium text-xs sm:text-lg">Нужно ли получать разрешение на установку кондиционера?</span>
               <i class="ri-arrow-down-s-line faq-icon"></i>
             </div>
             <div class="faq-answer">
-              <div class="pb-6 text-xs sm:text-base text-gray-700">
+              <div class="pb-4 sm:pb-6 text-xs text-gray-700">
                 В большинстве случаев установка кондиционера в квартире не требует специальных разрешений. Однако при монтаже в исторических зданиях или на фасадах многоэтажек могут потребоваться согласования.
               </div>
             </div>
@@ -1934,19 +1928,19 @@
     </section>
 
     <!-- Отзывы клиентов -->
-    <section id="reviews" class="py-10 sm:py-16 bg-gradient-to-b from-gray-50 to-white">
+    <section id="reviews" class="py-8 sm:py-16 bg-gradient-to-b from-gray-50 to-white">
       <div class="max-w-7xl mx-auto px-6">
-        <h2 class="text-2xl sm:text-3xl font-bold text-center text-gray-900 mb-3">Отзывы наших клиентов</h2>
-        <p class="text-center text-gray-700 mb-6 sm:mb-10">Что говорят люди, которые уже воспользовались нашими услугами</p>
+        <h2 class="text-lg sm:text-3xl font-bold text-center text-gray-900 mb-2">Отзывы наших клиентов</h2>
+        <p class="text-center text-gray-700 mb-4 sm:mb-10 text-xs sm:text-base">Что говорят люди, которые уже воспользовались нашими услугами</p>
         <div class="grid grid-cols-1 md:grid-cols-3 gap-4 sm:gap-8">
           <!-- Отзыв 1 -->
-          <div class="bg-white p-4 sm:p-6 rounded-lg shadow-card review-card">
-            <div class="flex items-center mb-3">
-              <div class="w-8 h-8 sm:w-10 sm:h-10 rounded-full bg-gradient-to-br from-primary/20 to-primary/10 flex items-center justify-center text-primary mr-3">
-                <i class="ri-user-line"></i>
+          <div class="bg-white p-3 sm:p-6 rounded-lg shadow-card review-card">
+            <div class="flex items-center mb-2">
+              <div class="w-6 h-6 sm:w-10 sm:h-10 rounded-full bg-gradient-to-br from-primary/20 to-primary/10 flex items-center justify-center text-primary mr-2 sm:mr-3">
+                <i class="ri-user-line text-xs sm:text-base"></i>
               </div>
               <div>
-                <h4 class="font-bold text-sm sm:text-base text-gray-900">Анна С.</h4>
+                <h4 class="font-bold text-xs sm:text-base text-gray-900">Анна С.</h4>
                 <div class="flex stars text-xs">
                   <i class="ri-star-fill"></i>
                   <i class="ri-star-fill"></i>
@@ -1956,19 +1950,19 @@
                 </div>
               </div>
             </div>
-            <p class="text-xs sm:text-base text-gray-700 mb-3">
+            <p class="text-xs text-gray-700 mb-2">
               "Заказывали установку кондиционера в квартиру. Мастера приехали вовремя, все сделали быстро и аккуратно. Уже второй год работает без нареканий. Спасибо за качественную работу!"
             </p>
             <div class="text-xs text-gray-500">15 марта 2024</div>
           </div>
           <!-- Отзыв 2 -->
-          <div class="bg-white p-4 sm:p-6 rounded-lg shadow-card review-card">
-            <div class="flex items-center mb-3">
-              <div class="w-8 h-8 sm:w-10 sm:h-10 rounded-full bg-gradient-to-br from-secondary/20 to-secondary/10 flex items-center justify-center text-secondary mr-3">
-                <i class="ri-user-line"></i>
+          <div class="bg-white p-3 sm:p-6 rounded-lg shadow-card review-card">
+            <div class="flex items-center mb-2">
+              <div class="w-6 h-6 sm:w-10 sm:h-10 rounded-full bg-gradient-to-br from-secondary/20 to-secondary/10 flex items-center justify-center text-secondary mr-2 sm:mr-3">
+                <i class="ri-user-line text-xs sm:text-base"></i>
               </div>
               <div>
-                <h4 class="font-bold text-sm sm:text-base text-gray-900">Игорь П.</h4>
+                <h4 class="font-bold text-xs sm:text-base text-gray-900">Игорь П.</h4>
                 <div class="flex stars text-xs">
                   <i class="ri-star-fill"></i>
                   <i class="ri-star-fill"></i>
@@ -1978,19 +1972,19 @@
                 </div>
               </div>
             </div>
-            <p class="text-xs sm:text-base text-gray-700 mb-3">
+            <p class="text-xs text-gray-700 mb-2">
               "Устанавливали кондиционер в офис. Профессиональная работа, аккуратный монтаж, все коммуникации спрятали в короб. Персонал вежливый, работу выполнили в срок. Рекомендую!"
             </p>
             <div class="text-xs text-gray-500">2 февраля 2025</div>
           </div>
           <!-- Отзыв 3 -->
-          <div class="bg-white p-4 sm:p-6 rounded-lg shadow-card review-card">
-            <div class="flex items-center mb-3">
-              <div class="w-8 h-8 sm:w-10 sm:h-10 rounded-full bg-gradient-to-br from-accent/20 to-accent/10 flex items-center justify-center text-accent mr-3">
-                <i class="ri-user-line"></i>
+          <div class="bg-white p-3 sm:p-6 rounded-lg shadow-card review-card">
+            <div class="flex items-center mb-2">
+              <div class="w-6 h-6 sm:w-10 sm:h-10 rounded-full bg-gradient-to-br from-accent/20 to-accent/10 flex items-center justify-center text-accent mr-2 sm:mr-3">
+                <i class="ri-user-line text-xs sm:text-base"></i>
               </div>
               <div>
-                <h4 class="font-bold text-sm sm:text-base text-gray-900">Елена К.</h4>
+                <h4 class="font-bold text-xs sm:text-base text-gray-900">Елена К.</h4>
                 <div class="flex stars text-xs">
                   <i class="ri-star-fill"></i>
                   <i class="ri-star-fill"></i>
@@ -2000,14 +1994,14 @@
                 </div>
               </div>
             </div>
-            <p class="text-xs sm:text-base text-gray-700 mb-3">
+            <p class="text-xs text-gray-700 mb-2">
               "Очень довольна обслуживанием кондиционера. Приехали, почистили, все объяснили. Цена адекватная. Теперь буду пользоваться услугами регулярно. Спасибо за внимательное отношение!"
             </p>
             <div class="text-xs text-gray-500">10 августа 2025</div>
           </div>
         </div>
-        <div class="mt-6 sm:mt-10 text-center">
-          <button onclick="document.getElementById('contacts').scrollIntoView({behavior: 'smooth'})" class="gradient-bg text-white px-5 sm:px-8 py-2 sm:py-3 rounded-button font-medium hover:shadow-glow transition-all duration-300 btn-animate text-sm sm:text-base">
+        <div class="mt-4 sm:mt-10 text-center">
+          <button onclick="document.getElementById('contacts').scrollIntoView({behavior: 'smooth'})" class="gradient-bg text-white px-4 sm:px-8 py-1.5 sm:py-3 rounded-button font-medium hover:shadow-glow transition-all duration-300 btn-animate text-xs sm:text-base">
             Оставить свой отзыв
           </button>
         </div>
@@ -2015,75 +2009,68 @@
     </section>
 
     <!-- Контакты -->
-    <section id="contacts" class="py-10 sm:py-16 bg-white">
+    <section id="contacts" class="py-8 sm:py-16 bg-white">
       <div class="max-w-7xl mx-auto px-6">
-        <h2 class="text-2xl sm:text-3xl font-bold text-center text-gray-900 mb-3">Контакты</h2>
-        <p class="text-center text-gray-700 mb-6 sm:mb-10">Свяжитесь с нами любым удобным способом</p>
-        <div class="grid grid-cols-1 md:grid-cols-2 gap-6 sm:gap-8 items-start">
+        <h2 class="text-lg sm:text-3xl font-bold text-center text-gray-900 mb-2">Контакты</h2>
+        <p class="text-center text-gray-700 mb-4 sm:mb-10 text-xs sm:text-base">Свяжитесь с нами любым удобным способом</p>
+        <div class="grid grid-cols-1 md:grid-cols-2 gap-4 sm:gap-8 items-start">
           <div>
-            <h3 class="text-lg sm:text-xl font-bold text-gray-900 mb-6">Наши контакты</h3>
-            <div class="grid grid-cols-1 sm:grid-cols-2 gap-4 sm:gap-6">
-              <div class="bg-white p-4 sm:p-6 rounded-lg shadow-card card-hover">
-                <div class="w-8 h-8 sm:w-10 sm:h-10 flex items-center justify-center bg-gradient-to-br from-primary/20 to-primary/10 rounded-full text-primary mb-4 shadow-lg">
-                  <i class="ri-phone-line"></i>
+            <h3 class="text-base sm:text-xl font-bold text-gray-900 mb-3 sm:mb-6">Наши контакты</h3>
+            <div class="grid grid-cols-1 sm:grid-cols-2 gap-3 sm:gap-6">
+              <div class="bg-white p-3 sm:p-6 rounded-lg shadow-card card-hover">
+                <div class="w-6 h-6 sm:w-10 sm:h-10 flex items-center justify-center bg-gradient-to-br from-primary/20 to-primary/10 rounded-full text-primary mb-2 sm:mb-4 shadow-lg">
+                  <i class="ri-phone-line text-xs sm:text-base"></i>
                 </div>
-                <h4 class="text-sm sm:text-lg font-medium text-gray-900 mb-2">Телефон</h4>
-                <a href="tel:+375291050694" class="text-xs sm:text-base text-primary hover:underline">+375 (29) 105-06-94</a>
+                <h4 class="text-xs sm:text-lg font-medium text-gray-900 mb-1">Телефон</h4>
+                <a href="tel:+375291050694" class="text-xs text-primary hover:underline">+375 (29) 105-06-94</a>
               </div>
-              <div class="bg-white p-4 sm:p-6 rounded-lg shadow-card card-hover">
-                <div class="w-8 h-8 sm:w-10 sm:h-10 flex items-center justify-center bg-gradient-to-br from-secondary/20 to-secondary/10 rounded-full text-secondary mb-4 shadow-lg">
-                  <i class="ri-mail-line"></i>
+              <div class="bg-white p-3 sm:p-6 rounded-lg shadow-card card-hover">
+                <div class="w-6 h-6 sm:w-10 sm:h-10 flex items-center justify-center bg-gradient-to-br from-secondary/20 to-secondary/10 rounded-full text-secondary mb-2 sm:mb-4 shadow-lg">
+                  <i class="ri-mail-line text-xs sm:text-base"></i>
                 </div>
-                <h4 class="text-sm sm:text-lg font-medium text-gray-900 mb-2">Электронная почта</h4>
-                <a href="mailto:aircomfortbel@gmail.com" class="text-xs sm:text-base text-primary hover:underline">aircomfortbel@gmail.com</a>
+                <h4 class="text-xs sm:text-lg font-medium text-gray-900 mb-1">Email</h4>
+                <a href="mailto:aircomfortbel@gmail.com" class="text-xs text-primary hover:underline">aircomfortbel@gmail.com</a>
               </div>
-              <div class="bg-white p-4 sm:p-6 rounded-lg shadow-card card-hover">
-                <div class="w-8 h-8 sm:w-10 sm:h-10 flex items-center justify-center bg-gradient-to-br from-accent/20 to-accent/10 rounded-full text-accent mb-4 shadow-lg">
-                  <i class="ri-time-line"></i>
+              <div class="bg-white p-3 sm:p-6 rounded-lg shadow-card card-hover">
+                <div class="w-6 h-6 sm:w-10 sm:h-10 flex items-center justify-center bg-gradient-to-br from-accent/20 to-accent/10 rounded-full text-accent mb-2 sm:mb-4 shadow-lg">
+                  <i class="ri-time-line text-xs sm:text-base"></i>
                 </div>
-                <h4 class="text-sm sm:text-lg font-medium text-gray-900 mb-2">Время работы</h4>
-                <p class="text-xs sm:text-base text-gray-700">Пн-Пт: 9:00 - 20:00</p>
-                <p class="text-xs sm:text-base text-gray-700">Сб-Вс: 10:00 - 18:00</p>
+                <h4 class="text-xs sm:text-lg font-medium text-gray-900 mb-1">Время работы</h4>
+                <p class="text-xs text-gray-700">Пн-Пт: 9:00 - 20:00</p>
+                <p class="text-xs text-gray-700">Сб-Вс: 10:00 - 18:00</p>
               </div>
-              <div class="bg-white p-4 sm:p-6 rounded-lg shadow-card card-hover">
-                <div class="w-8 h-8 sm:w-10 sm:h-10 flex items-center justify-center bg-gradient-to-br from-primary/20 to-primary/10 rounded-full text-primary mb-4 shadow-lg">
-                  <i class="ri-map-pin-line"></i>
+              <div class="bg-white p-3 sm:p-6 rounded-lg shadow-card card-hover">
+                <div class="w-6 h-6 sm:w-10 sm:h-10 flex items-center justify-center bg-gradient-to-br from-primary/20 to-primary/10 rounded-full text-primary mb-2 sm:mb-4 shadow-lg">
+                  <i class="ri-map-pin-line text-xs sm:text-base"></i>
                 </div>
-                <h4 class="text-sm sm:text-lg font-medium text-gray-900 mb-2">Регион работы</h4>
-                <p class="text-xs sm:text-base text-gray-700">Гомель и Гомельская область</p>
+                <h4 class="text-xs sm:text-lg font-medium text-gray-900 mb-1">Регион</h4>
+                <p class="text-xs text-gray-700">Гомель и Гомельская область</p>
               </div>
             </div>
           </div>
-          <div class="bg-white p-5 sm:p-8 rounded-lg shadow-hover border border-gray-100">
-            <h3 class="text-lg sm:text-xl font-bold text-gray-900 mb-6">Оставить заявку</h3>
+          <div class="bg-white p-4 sm:p-8 rounded-lg shadow-hover border border-gray-100">
+            <h3 class="text-base sm:text-xl font-bold text-gray-900 mb-3 sm:mb-6">Оставить заявку</h3>
             <form id="contact-form" action="https://formspree.io/f/mrbkdwwe" method="POST">
               <input type="hidden" id="calculator-data" name="calculator_data">
-              <div class="mb-4">
-                <label for="form-name" class="block text-gray-700 font-medium mb-2 text-sm">Ваше имя *</label>
-                <input type="text" id="form-name" name="name" class="w-full px-4 py-2 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-primary/50 focus:border-primary text-sm" placeholder="Иван Петров" required>
+              <div class="mb-2 sm:mb-4">
+                <label for="form-name" class="block text-gray-700 font-medium mb-1 text-xs">Ваше имя *</label>
+                <input type="text" id="form-name" name="name" class="w-full px-2 sm:px-4 py-1.5 sm:py-3 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-primary/50 focus:border-primary text-xs" placeholder="Иван Петров" required>
               </div>
-              <div class="mb-4">
-                <label for="form-phone" class="block text-gray-700 font-medium mb-2 text-sm">Телефон *</label>
-                <input type="tel" id="form-phone" name="phone" class="w-full px-4 py-2 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-primary/50 focus:border-primary text-sm" placeholder="+375 (XX) XXX-XX-XX" required>
+              <div class="mb-2 sm:mb-4">
+                <label for="form-phone" class="block text-gray-700 font-medium mb-1 text-xs">Телефон *</label>
+                <input type="tel" id="form-phone" name="phone" class="w-full px-2 sm:px-4 py-1.5 sm:py-3 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-primary/50 focus:border-primary text-xs" placeholder="+375 (XX) XXX-XX-XX" required>
               </div>
-              <div class="mb-4">
-                <label for="form-email" class="block text-gray-700 font-medium mb-2 text-sm">Email (необязательно)</label>
-                <input type="email" id="form-email" name="email" class="w-full px-4 py-2 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-primary/50 focus:border-primary text-sm" placeholder="your@email.com">
+              <div class="mb-2 sm:mb-4">
+                <label for="form-email" class="block text-gray-700 font-medium mb-1 text-xs">Email (необязательно)</label>
+                <input type="email" id="form-email" name="email" class="w-full px-2 sm:px-4 py-1.5 sm:py-3 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-primary/50 focus:border-primary text-xs" placeholder="your@email.com">
               </div>
-              <div class="mb-6">
-                <label for="form-message" class="block text-gray-700 font-medium mb-2 text-sm">Сообщение</label>
-                <textarea id="form-message" name="message" rows="4" class="w-full px-4 py-2 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-primary/50 focus:border-primary text-sm" placeholder="Опишите ваш вопрос или потребность"></textarea>
+              <div class="mb-3 sm:mb-6">
+                <label for="form-message" class="block text-gray-700 font-medium mb-1 text-xs">Сообщение</label>
+                <textarea id="form-message" name="message" rows="3" class="w-full px-2 sm:px-4 py-1.5 sm:py-3 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-primary/50 focus:border-primary text-xs" placeholder="Опишите ваш вопрос"></textarea>
               </div>
-              <button type="submit" class="w-full gradient-bg text-white px-6 py-2.5 rounded-button font-medium hover:shadow-glow transition-all duration-300 whitespace-nowrap btn-animate text-sm">
-                <span id="submit-text">Отправить заявку</span>
-                <span id="submit-spinner" class="hidden ml-2"><i class="ri-loader-4-line animate-spin"></i></span>
+              <button type="submit" class="w-full gradient-bg text-white px-4 sm:px-6 py-2 sm:py-3 rounded-button font-medium hover:shadow-glow transition-all duration-300 btn-animate text-xs">
+                Отправить заявку
               </button>
-              <div id="success-message" class="form-message success-message mt-4 hidden">
-                <i class="ri-checkbox-circle-fill mr-2"></i> Спасибо! Ваша заявка отправлена. Мы свяжемся с вами в ближайшее время.
-              </div>
-              <div id="error-message" class="form-message error-message mt-4 hidden">
-                <i class="ri-error-warning-fill mr-2"></i> Произошла ошибка при отправке. Пожалуйста, попробуйте еще раз или свяжитесь с нами по телефону.
-              </div>
             </form>
           </div>
         </div>
@@ -2091,18 +2078,18 @@
     </section>
 
     <!-- Футер -->
-    <footer class="bg-gradient-to-r from-gray-900 to-gray-800 text-white py-6 sm:py-10">
+    <footer class="bg-gradient-to-r from-gray-900 to-gray-800 text-white py-4 sm:py-8">
       <div class="max-w-7xl mx-auto px-6">
         <div class="flex flex-col md:flex-row justify-between items-center">
-          <div class="mb-4 md:mb-0">
+          <div class="mb-3 md:mb-0">
             <div class="flex items-center">
-              <span class="text-lg sm:text-2xl font-['Pacifico'] text-white mr-2">AirComfort</span>
+              <span class="text-base sm:text-xl font-['Pacifico'] text-white mr-2">AirComfort</span>
             </div>
-            <p class="text-xs sm:text-base text-gray-400 mt-2">Профессиональная установка кондиционеров в Гомеле</p>
-            <p class="text-xs text-gray-500 mt-2">Общество с ограниченной ответственностью "ТеплоПрайм" УНП 491393506</p>
+            <p class="text-xs text-gray-400 mt-1">Профессиональная установка кондиционеров в Гомеле</p>
+            <p class="text-xs text-gray-500 mt-1">Общество с ограниченной ответственностью "ТеплоПрайм" УНП 491393506</p>
           </div>
           <div class="flex flex-col items-center md:items-end">
-            <p class="text-xs text-gray-400 mb-2">© 2026 AirComfort. Все права защищены.</p>
+            <p class="text-xs text-gray-400">© 2026 AirComfort. Все права защищены.</p>
           </div>
         </div>
       </div>
@@ -2277,14 +2264,14 @@
     ];
 
     let brands = [
-      { id: 1, name: 'Ballu', count: 5 },
-      { id: 2, name: 'Electrolux', count: 3 },
-      { id: 3, name: 'LG', count: 4 },
-      { id: 4, name: 'Mitsubishi', count: 2 },
-      { id: 5, name: 'Samsung', count: 3 },
-      { id: 6, name: 'Panasonic', count: 2 },
-      { id: 7, name: 'Toshiba', count: 1 },
-      { id: 8, name: 'Daikin', count: 2 },
+      { id: 1, name: 'Ballu' },
+      { id: 2, name: 'Electrolux' },
+      { id: 3, name: 'LG' },
+      { id: 4, name: 'Mitsubishi' },
+      { id: 5, name: 'Samsung' },
+      { id: 6, name: 'Panasonic' },
+      { id: 7, name: 'Toshiba' },
+      { id: 8, name: 'Daikin' },
     ];
 
     let cart = [];
@@ -2292,6 +2279,7 @@
     let adminCredentials = { login: 'admin', password: 'admin123' };
     let selectedProducts = new Set();
     let actionLogs = [];
+    let visitCount = 0;
 
     // Загрузка/сохранение в localStorage
     function loadProducts() {
@@ -2306,11 +2294,30 @@
       const stored = localStorage.getItem('aircom_brands');
       if (stored) brands = JSON.parse(stored);
       renderBrands();
+      updateBrandSelects();
     }
     function saveBrands() {
       localStorage.setItem('aircom_brands', JSON.stringify(brands));
       renderBrands();
+      updateBrandSelects();
       addLog('brand', 'Обновлен список брендов');
+    }
+    function loadVisits() {
+      const today = new Date().toDateString();
+      const stored = localStorage.getItem('aircom_visits');
+      if (stored) {
+        const visits = JSON.parse(stored);
+        if (visits.date === today) {
+          visitCount = visits.count;
+        } else {
+          visitCount = visits.count + 1;
+          localStorage.setItem('aircom_visits', JSON.stringify({ date: today, count: visitCount }));
+        }
+      } else {
+        visitCount = 1;
+        localStorage.setItem('aircom_visits', JSON.stringify({ date: today, count: 1 }));
+      }
+      document.getElementById('today-visits').textContent = visitCount;
     }
     function loadOrders() {
       const stored = localStorage.getItem('aircom_orders');
@@ -2374,7 +2381,6 @@
     }
 
     function updateDashboard() {
-      // Обновление дашборда
       const today = new Date().toDateString();
       const todayOrders = orders.filter(o => new Date(o.date).toDateString() === today);
       const todayRevenue = todayOrders.reduce((sum, o) => sum + o.total, 0);
@@ -2386,13 +2392,11 @@
       const avg = orders.length ? Math.round(orders.reduce((sum, o) => sum + o.total, 0) / orders.length) : 0;
       document.getElementById('dashboard-average-order').textContent = avg + ' BYN';
       
-      // Статистика по статусам
       document.getElementById('stats-new').textContent = orders.filter(o => o.status === 'новый').length;
       document.getElementById('stats-processing').textContent = orders.filter(o => o.status === 'в обработке').length;
       document.getElementById('stats-completed').textContent = orders.filter(o => o.status === 'выполнен').length;
       document.getElementById('stats-cancelled').textContent = orders.filter(o => o.status === 'отменен').length;
       
-      // Топ товаров
       const productSales = {};
       orders.forEach(o => {
         o.items.forEach(i => {
@@ -2409,9 +2413,8 @@
       ).join('');
       document.getElementById('dashboard-top-products').innerHTML = topHtml || '<p class="text-gray-500">Нет данных</p>';
       
-      // Последние действия
       const recentHtml = actionLogs.slice(0, 5).map(log => 
-        `<div class="text-sm border-b pb-1"><span class="text-gray-500">${log.time}</span> - ${log.action}</div>`
+        `<div class="text-xs border-b pb-1"><span class="text-gray-500">${log.time}</span> - ${log.action}</div>`
       ).join('');
       document.getElementById('recent-actions').innerHTML = recentHtml || '<p class="text-gray-500">Нет действий</p>';
     }
@@ -2421,14 +2424,30 @@
       if (!brandsList) return;
       
       brandsList.innerHTML = brands.map(b => 
-        `<button onclick="filterByBrand('${b.name}')" class="brand-chip px-3 py-1 bg-gray-100 hover:bg-primary hover:text-white rounded-full text-sm transition-colors">${b.name} (${b.count})</button>`
+        `<button onclick="filterByBrand('${b.name}')" class="brand-chip px-2 sm:px-3 py-1 bg-gray-100 hover:bg-primary hover:text-white rounded-full text-xs transition-colors">${b.name}</button>`
       ).join('');
-      
-      // Обновляем select в форме редактирования
-      const brandSelect = document.getElementById('edit-brand');
-      if (brandSelect) {
-        brandSelect.innerHTML = '<option value="">Без бренда</option>' + 
-          brands.map(b => `<option value="${b.name}">${b.name}</option>`).join('');
+    }
+
+    function updateBrandSelects() {
+      const selects = ['edit-brand', 'new-brand'];
+      selects.forEach(id => {
+        const select = document.getElementById(id);
+        if (select) {
+          select.innerHTML = '<option value="">Без бренда</option>' + 
+            brands.map(b => `<option value="${b.name}">${b.name}</option>`).join('');
+        }
+      });
+    }
+
+    function toggleBrandsCollapse() {
+      const brandsList = document.getElementById('brands-list');
+      const arrow = document.getElementById('brands-arrow');
+      if (brandsList.style.display === 'none') {
+        brandsList.style.display = 'flex';
+        arrow.style.transform = 'rotate(180deg)';
+      } else {
+        brandsList.style.display = 'none';
+        arrow.style.transform = 'rotate(0deg)';
       }
     }
 
@@ -2442,7 +2461,7 @@
 
     // Переключение вкладок админки
     function switchAdminTab(tab) {
-      const tabs = ['dashboard', 'products', 'orders', 'brands', 'categories', 'customers', 'reports', 'settings', 'logs'];
+      const tabs = ['dashboard', 'products', 'orders', 'brands', 'customers', 'reports', 'settings', 'logs'];
       tabs.forEach(t => {
         const el = document.getElementById(`admin-${t}-tab`);
         const btn = document.getElementById(`tab-${t}-btn`);
@@ -2472,14 +2491,11 @@
       if (!list) return;
       
       list.innerHTML = brands.map(b => `
-        <div class="flex justify-between items-center p-3 border rounded mb-2">
+        <div class="flex justify-between items-center p-2 border rounded mb-2">
+          <span class="text-xs sm:text-sm">${b.name}</span>
           <div>
-            <span class="font-medium">${b.name}</span>
-            <span class="text-sm text-gray-500 ml-2">(${b.count} товаров)</span>
-          </div>
-          <div>
-            <button onclick="editBrand(${b.id})" class="text-blue-600 mr-2">✏️</button>
-            <button onclick="deleteBrand(${b.id})" class="text-red-600">🗑️</button>
+            <button onclick="editBrand(${b.id})" class="text-blue-600 mr-2 text-xs">✏️</button>
+            <button onclick="deleteBrand(${b.id})" class="text-red-600 text-xs">🗑️</button>
           </div>
         </div>
       `).join('');
@@ -2489,7 +2505,7 @@
       const name = prompt('Название бренда:');
       if (!name) return;
       const newId = Math.max(...brands.map(b => b.id), 0) + 1;
-      brands.push({ id: newId, name, count: 0 });
+      brands.push({ id: newId, name });
       saveBrands();
       renderAdminBrands();
       addLog('brand', 'Добавлен бренд ' + name);
@@ -2528,7 +2544,6 @@
       const maxPrice = parseInt(document.getElementById('maxPrice').value) || 20929;
 
       const filtered = products.filter(p => {
-        // Поиск по тексту
         if (searchText) {
           const matchesSearch = 
             p.name.toLowerCase().includes(searchText) ||
@@ -2555,9 +2570,9 @@
       grid.innerHTML = '';
       productArray.forEach(p => {
         const priceHtml = p.oldPrice ? 
-          `<span class="text-gray-400 line-through text-sm mr-2">${p.oldPrice} BYN</span>` : '';
+          `<span class="text-gray-400 line-through text-xs mr-1">${p.oldPrice} BYN</span>` : '';
         const tagsHtml = p.tags?.map(t => 
-          `<span class="inline-block bg-${t === 'хит' ? 'red' : t === 'новинка' ? 'green' : 'orange'}-100 text-${t === 'хит' ? 'red' : t === 'новинка' ? 'green' : 'orange'}-800 text-xs px-2 py-1 rounded-full mr-1">${t}</span>`
+          `<span class="inline-block bg-${t === 'хит' ? 'red' : t === 'новинка' ? 'green' : 'orange'}-100 text-${t === 'хит' ? 'red' : t === 'новинка' ? 'green' : 'orange'}-800 text-xs px-1.5 py-0.5 rounded-full mr-1">${t}</span>`
         ).join('') || '';
         
         const card = document.createElement('div');
@@ -2565,15 +2580,15 @@
         card.onclick = () => openProductPage(p.id);
         card.innerHTML = `
           <div class="relative">
-            <img src="${p.image}" alt="${p.name}" class="w-full h-36 sm:h-40 object-cover">
-            ${p.stock < 3 ? '<span class="absolute top-2 right-2 bg-red-500 text-white text-xs px-2 py-1 rounded-full">Мало</span>' : ''}
+            <img src="${p.image}" alt="${p.name}" class="w-full h-28 sm:h-40 object-cover">
+            ${p.stock < 3 ? '<span class="absolute top-1 right-1 bg-red-500 text-white text-xs px-1.5 py-0.5 rounded-full">Мало</span>' : ''}
           </div>
-          <div class="p-3 sm:p-4 flex-grow">
+          <div class="p-2 sm:p-4 flex-grow">
             <div class="mb-1">${tagsHtml}</div>
-            <h3 class="font-bold text-base sm:text-lg mb-1">${p.name}</h3>
-            <div class="mb-2">${priceHtml}<span class="text-primary font-bold text-lg sm:text-xl">${p.price} BYN</span></div>
-            <p class="text-xs sm:text-sm text-gray-600 mb-2 product-description">${p.description || 'Нет описания'}</p>
-            <button onclick="event.stopPropagation(); addToCart(${p.id})" class="w-full gradient-bg text-white px-3 py-1.5 sm:py-2 rounded-button btn-animate text-sm">В корзину</button>
+            <h3 class="font-bold text-xs sm:text-base mb-1">${p.name}</h3>
+            <div class="mb-1">${priceHtml}<span class="text-primary font-bold text-sm sm:text-lg">${p.price} BYN</span></div>
+            <p class="text-xs text-gray-600 mb-2 product-description">${p.description || 'Нет описания'}</p>
+            <button onclick="event.stopPropagation(); addToCart(${p.id})" class="w-full gradient-bg text-white px-2 py-1 sm:px-3 sm:py-1.5 rounded-button btn-animate text-xs">В корзину</button>
           </div>
         `;
         grid.appendChild(card);
@@ -2587,18 +2602,18 @@
       if (!prod) return;
       const modal = document.getElementById('product-modal');
       const priceHtml = prod.oldPrice ? 
-        `<span class="text-gray-400 line-through text-lg mr-2">${prod.oldPrice} BYN</span>` : '';
+        `<span class="text-gray-400 line-through text-sm mr-2">${prod.oldPrice} BYN</span>` : '';
       const tagsHtml = prod.tags?.map(t => 
-        `<span class="inline-block bg-${t === 'хит' ? 'red' : t === 'новинка' ? 'green' : 'orange'}-100 text-${t === 'хит' ? 'red' : t === 'новинка' ? 'green' : 'orange'}-800 text-sm px-3 py-1 rounded-full mr-2">${t}</span>`
+        `<span class="inline-block bg-${t === 'хит' ? 'red' : t === 'новинка' ? 'green' : 'orange'}-100 text-${t === 'хит' ? 'red' : t === 'новинка' ? 'green' : 'orange'}-800 text-xs px-2 py-1 rounded-full mr-2">${t}</span>`
       ).join('') || '';
       
       document.getElementById('product-modal-detail').innerHTML = `
-        <img src="${prod.image}" alt="${prod.name}" class="w-full h-40 sm:h-48 object-cover rounded mb-4">
+        <img src="${prod.image}" alt="${prod.name}" class="w-full h-32 sm:h-48 object-cover rounded mb-3">
         <div class="mb-2">${tagsHtml}</div>
-        <h3 class="text-xl sm:text-2xl font-bold mb-2">${prod.name}</h3>
-        <div class="mb-2">${priceHtml}<span class="text-primary text-lg sm:text-xl font-bold">${prod.price} BYN</span></div>
-        <p class="text-sm sm:text-base text-gray-700 mb-4">${prod.fullDescription || prod.description || 'Нет описания'}</p>
-        <ul class="text-xs sm:text-sm text-gray-600 space-y-1">
+        <h3 class="text-base sm:text-xl font-bold mb-2">${prod.name}</h3>
+        <div class="mb-2">${priceHtml}<span class="text-primary text-base sm:text-xl font-bold">${prod.price} BYN</span></div>
+        <p class="text-xs sm:text-sm text-gray-700 mb-3">${prod.fullDescription || prod.description || 'Нет описания'}</p>
+        <ul class="text-xs text-gray-600 space-y-1">
           <li><span class="font-medium">Бренд:</span> ${prod.brand || 'Не указан'}</li>
           <li><span class="font-medium">Площадь:</span> ${prod.area} м²</li>
           <li><span class="font-medium">Категория:</span> ${prod.category}</li>
@@ -2607,12 +2622,11 @@
           <li><span class="font-medium">Обогрев зимой:</span> ${prod.heat}°C</li>
           <li><span class="font-medium">Наличие:</span> ${prod.stock > 0 ? 'В наличии (' + prod.stock + ' шт)' : 'Нет в наличии'}</li>
         </ul>
-        <button onclick="addToCart(${prod.id})" class="mt-4 gradient-bg text-white px-4 py-2 rounded-button btn-animate w-full">В корзину</button>
+        <button onclick="addToCart(${prod.id})" class="mt-3 gradient-bg text-white px-3 py-1.5 rounded-button btn-animate w-full text-sm">В корзину</button>
       `;
       modal.style.display = 'flex';
     }
 
-    // Проверка хеша при загрузке
     function checkProductHash() {
       if (window.location.hash.startsWith('#product-')) {
         const id = parseInt(window.location.hash.replace('#product-', ''));
@@ -2661,15 +2675,24 @@
         return;
       }
       const modelText = modelSelect.options[modelSelect.selectedIndex].text;
-      const length = document.getElementById('length').value;
-      const demontage = document.getElementById('demontage').checked ? ' + демонтаж' : '';
-      const service = document.getElementById('service').checked ? ' + обслуживание' : '';
-      const totalPrice = document.getElementById('total-price').textContent;
+      const length = parseInt(document.getElementById('length').value);
+      const demontage = document.getElementById('demontage').checked;
+      const service = document.getElementById('service').checked;
+      
+      let total = parseInt(modelSelect.value);
+      
+      if (modelSelect.value !== '100' || !modelText.includes('Только')) {
+        const additionalLength = Math.max(0, length - 3);
+        total += additionalLength * 50;
+      }
+      
+      if (demontage) total += 100;
+      if (service) total += 100;
       
       const calcItem = {
         id: 'calc-' + Date.now(),
-        name: modelText + demontage + service,
-        price: parseInt(totalPrice) || 100,
+        name: modelText + (demontage ? ' + демонтаж' : '') + (service ? ' + обслуживание' : ''),
+        price: total,
         quantity: 1,
         image: 'https://via.placeholder.com/200x150?text=Service'
       };
@@ -2693,7 +2716,7 @@
       const totalDisplay = document.getElementById('cart-total-display');
       if (!container) return;
       if (cart.length === 0) {
-        container.innerHTML = '<p class="text-gray-500 text-center">Корзина пуста</p>';
+        container.innerHTML = '<p class="text-gray-500 text-center text-sm">Корзина пуста</p>';
         if (totalDisplay) totalDisplay.textContent = 'Общая сумма: 0 BYN';
         return;
       }
@@ -2707,14 +2730,14 @@
         html += `
           <div class="flex flex-col sm:flex-row justify-between items-start sm:items-center border-b py-2 gap-2">
             <div class="flex-1">
-              <span class="font-medium text-sm sm:text-base">${item.name}</span><br>
-              <span class="text-xs sm:text-sm">${item.price} BYN x ${item.quantity}</span>
+              <span class="font-medium text-xs sm:text-sm">${item.name}</span><br>
+              <span class="text-xs">${item.price} BYN x ${item.quantity}</span>
             </div>
-            <div class="flex items-center gap-2">
-              <button onclick="changeQuantity('${item.id}', -1)" class="px-2 bg-gray-200 rounded text-sm">-</button>
-              <span class="mx-2 text-sm">${item.quantity}</span>
-              <button onclick="changeQuantity('${item.id}', 1, ${maxStock})" class="px-2 bg-gray-200 rounded text-sm">+</button>
-              <button onclick="removeFromCart('${item.id}')" class="ml-2 text-red-600"><i class="ri-delete-bin-line"></i></button>
+            <div class="flex items-center gap-1">
+              <button onclick="changeQuantity('${item.id}', -1)" class="px-1.5 py-0.5 bg-gray-200 rounded text-xs">-</button>
+              <span class="mx-1 text-xs">${item.quantity}</span>
+              <button onclick="changeQuantity('${item.id}', 1, ${maxStock})" class="px-1.5 py-0.5 bg-gray-200 rounded text-xs">+</button>
+              <button onclick="removeFromCart('${item.id}')" class="ml-1 text-red-600 text-xs"><i class="ri-delete-bin-line"></i></button>
             </div>
           </div>
         `;
@@ -2783,7 +2806,6 @@
       orders.push(order);
       saveOrders();
       
-      // Уменьшаем количество на складе
       cart.forEach(item => {
         const prod = products.find(p => p.id === item.id);
         if (prod) {
@@ -2792,7 +2814,6 @@
       });
       saveProducts();
       
-      // Отправка email через Formspree
       const formData = new FormData();
       formData.append('name', name);
       formData.append('phone', phone);
@@ -2808,7 +2829,7 @@
         if (response.ok) {
           alert('Заказ оформлен! Мы свяжемся с вами.');
         } else {
-          alert('Заказ оформлен, но не удалось отправить уведомление на email. Проверьте настройки Formspree.');
+          alert('Заказ оформлен, но не удалось отправить уведомление на email.');
         }
       }).catch(() => {
         alert('Заказ оформлен, но не удалось отправить уведомление на email.');
@@ -2818,21 +2839,19 @@
       renderCartItems();
       document.getElementById('cart-modal').style.display = 'none';
       
-      // Очистить поля
       document.getElementById('order-name').value = '';
       document.getElementById('order-phone').value = '';
       document.getElementById('order-address').value = '';
       addLog('order', 'Новый заказ #' + order.id);
     }
 
-    // Админка (доступ по ссылке /#admin)
+    // Админка
     function checkAdminHash() {
       if (window.location.hash === '#admin') {
         document.getElementById('admin-login-modal').style.display = 'flex';
       }
     }
 
-    // Проверяем сразу при загрузке
     (function() {
       if (window.location.hash === '#admin') {
         if (document.readyState === 'loading') {
@@ -2911,36 +2930,34 @@
       
       list.innerHTML = '';
       filteredProducts.forEach(p => {
-        const tags = p.tags?.map(t => `<span class="text-xs bg-gray-100 px-2 py-1 rounded ml-1">${t}</span>`).join('') || '';
+        const tags = p.tags?.map(t => `<span class="text-xs bg-gray-100 px-1 py-0.5 rounded ml-1">${t}</span>`).join('') || '';
         const statusClass = p.status === 'active' ? 'bg-green-100 text-green-800' : 'bg-gray-100 text-gray-800';
         const stockClass = p.stock < 3 ? 'text-red-600 font-bold' : '';
         
         const row = document.createElement('tr');
         row.innerHTML = `
-          <td class="px-4 sm:px-6 py-3 sm:py-4 whitespace-nowrap">
+          <td class="px-2 sm:px-4 py-2 whitespace-nowrap">
             <input type="checkbox" class="product-checkbox" value="${p.id}" ${selectedProducts.has(p.id) ? 'checked' : ''} onchange="toggleProductSelection(${p.id})">
           </td>
-          <td class="px-4 sm:px-6 py-3 sm:py-4 whitespace-nowrap">
-            <img src="${p.image}" alt="${p.name}" class="w-10 h-10 object-cover rounded">
+          <td class="px-2 sm:px-4 py-2 whitespace-nowrap">
+            <img src="${p.image}" alt="${p.name}" class="w-6 h-6 sm:w-8 sm:h-8 object-cover rounded">
           </td>
-          <td class="px-4 sm:px-6 py-3 sm:py-4">
-            <div class="text-xs sm:text-sm font-medium text-gray-900">${p.name}</div>
+          <td class="px-2 sm:px-4 py-2">
+            <div class="text-xs font-medium text-gray-900">${p.name}</div>
             <div class="text-xs text-gray-500">${p.brand || ''} ${tags}</div>
           </td>
-          <td class="px-4 sm:px-6 py-3 sm:py-4 whitespace-nowrap">
-            <div class="text-xs sm:text-sm text-gray-500">${p.category}</div>
+          <td class="px-2 sm:px-4 py-2 whitespace-nowrap text-xs text-gray-500">${p.category}</td>
+          <td class="px-2 sm:px-4 py-2 whitespace-nowrap">
+            <div class="text-xs text-gray-900">${p.price} BYN</div>
+            <div class="text-xs ${stockClass}">Ост: ${p.stock}</div>
           </td>
-          <td class="px-4 sm:px-6 py-3 sm:py-4 whitespace-nowrap">
-            <div class="text-xs sm:text-sm text-gray-900">${p.price} BYN</div>
-            <div class="text-xs ${stockClass}">Остаток: ${p.stock}</div>
+          <td class="px-2 sm:px-4 py-2 whitespace-nowrap">
+            <span class="px-1.5 py-0.5 text-xs rounded-full ${statusClass}">${p.status === 'active' ? 'Акт' : 'Неакт'}</span>
           </td>
-          <td class="px-4 sm:px-6 py-3 sm:py-4 whitespace-nowrap">
-            <span class="px-2 py-1 text-xs rounded-full ${statusClass}">${p.status === 'active' ? 'Активен' : 'Неактивен'}</span>
-          </td>
-          <td class="px-4 sm:px-6 py-3 sm:py-4 whitespace-nowrap text-xs sm:text-sm font-medium">
-            <button onclick="openEditModal(${p.id})" class="text-blue-600 hover:text-blue-900 mr-2" title="Редактировать">✏️</button>
-            <button onclick="cloneProduct(${p.id})" class="text-green-600 hover:text-green-900 mr-2" title="Копировать">📋</button>
-            <button onclick="deleteProduct(${p.id})" class="text-red-600 hover:text-red-900" title="Удалить">🗑️</button>
+          <td class="px-2 sm:px-4 py-2 whitespace-nowrap text-xs">
+            <button onclick="openEditModal(${p.id})" class="text-blue-600 hover:text-blue-900 mr-1" title="Ред.">✏️</button>
+            <button onclick="cloneProduct(${p.id})" class="text-green-600 hover:text-green-900 mr-1" title="Коп.">📋</button>
+            <button onclick="deleteProduct(${p.id})" class="text-red-600 hover:text-red-900" title="Удал.">🗑️</button>
           </td>
         `;
         list.appendChild(row);
@@ -3000,10 +3017,6 @@
         filterProducts();
         addLog('product', `Удалено ${selectedProducts.size} товаров`);
       }
-    }
-
-    function bulkEditProducts() {
-      alert('Функция массового редактирования будет доступна в следующем обновлении');
     }
 
     function exportProducts() {
@@ -3084,6 +3097,74 @@
       reader.readAsText(file, 'UTF-8');
     }
 
+    function openAddProductForm() {
+      document.getElementById('add-product-form').classList.remove('hidden');
+      updateBrandSelects();
+    }
+
+    function closeAddProductForm() {
+      document.getElementById('add-product-form').classList.add('hidden');
+    }
+
+    function saveNewProduct() {
+      const name = document.getElementById('new-name').value;
+      if (!name) {
+        alert('Введите название товара');
+        return;
+      }
+      const price = parseFloat(document.getElementById('new-price').value);
+      if (isNaN(price)) {
+        alert('Введите цену');
+        return;
+      }
+      
+      const tags = [];
+      if (document.getElementById('new-tag-hit').checked) tags.push('хит');
+      if (document.getElementById('new-tag-new').checked) tags.push('новинка');
+      if (document.getElementById('new-tag-sale').checked) tags.push('распродажа');
+      
+      const newId = Math.max(...products.map(p => p.id), 0) + 1;
+      products.push({ 
+        id: newId, 
+        name: name,
+        brand: document.getElementById('new-brand').value,
+        price: price,
+        oldPrice: document.getElementById('new-old-price').value ? parseFloat(document.getElementById('new-old-price').value) : null,
+        stock: parseInt(document.getElementById('new-stock').value) || 10,
+        area: document.getElementById('new-area').value,
+        category: document.getElementById('new-category').value,
+        type: document.getElementById('new-type').value,
+        inverter: document.getElementById('new-inverter').value,
+        heat: document.getElementById('new-heat').value || '-15',
+        description: document.getElementById('new-description').value,
+        fullDescription: document.getElementById('new-fullDescription').value,
+        image: document.getElementById('new-image').value,
+        tags: tags,
+        status: 'active',
+        seoTitle: name,
+        seoDesc: document.getElementById('new-description').value,
+        createdAt: new Date().toISOString()
+      });
+      
+      saveProducts();
+      renderAdminProducts();
+      filterProducts();
+      closeAddProductForm();
+      
+      document.getElementById('new-name').value = '';
+      document.getElementById('new-price').value = '';
+      document.getElementById('new-old-price').value = '';
+      document.getElementById('new-stock').value = '10';
+      document.getElementById('new-description').value = '';
+      document.getElementById('new-fullDescription').value = '';
+      document.getElementById('new-image').value = 'https://via.placeholder.com/200x150?text=New';
+      document.getElementById('new-tag-hit').checked = false;
+      document.getElementById('new-tag-new').checked = false;
+      document.getElementById('new-tag-sale').checked = false;
+      
+      addLog('product', 'Добавлен товар ' + name);
+    }
+
     function cloneProduct(id) {
       const prod = products.find(p => p.id === id);
       if (!prod) return;
@@ -3131,39 +3212,38 @@
       
       list.innerHTML = '';
       if (filteredOrders.length === 0) {
-        list.innerHTML = '<p class="text-gray-500 text-center py-4">Нет заказов</p>';
+        list.innerHTML = '<p class="text-gray-500 text-center py-4 text-xs">Нет заказов</p>';
         return;
       }
       filteredOrders.forEach(o => {
         list.innerHTML += `
-          <div class="border p-4 rounded-lg hover:shadow-md transition-shadow">
-            <div class="flex flex-col sm:flex-row justify-between items-start gap-2 mb-2">
-              <span class="font-bold text-sm sm:text-base">Заказ #${o.id}</span>
+          <div class="border p-3 rounded-lg hover:shadow-md transition-shadow">
+            <div class="flex flex-col sm:flex-row justify-between items-start gap-1 mb-1">
+              <span class="font-bold text-xs">Заказ #${o.id}</span>
               <span class="text-xs text-gray-500">${o.date}</span>
             </div>
-            <div class="grid grid-cols-1 sm:grid-cols-2 gap-2 text-xs sm:text-sm">
+            <div class="grid grid-cols-1 sm:grid-cols-2 gap-1 text-xs">
               <div><span class="font-medium">Клиент:</span> ${o.customer.name}</div>
-              <div><span class="font-medium">Телефон:</span> ${o.customer.phone}</div>
+              <div><span class="font-medium">Тел:</span> ${o.customer.phone}</div>
               <div><span class="font-medium">Адрес:</span> ${o.customer.address}</div>
               <div><span class="font-medium">Оплата:</span> ${o.customer.payment || 'Наличные'}</div>
             </div>
             <div class="mt-2 flex flex-col sm:flex-row justify-between items-start sm:items-center gap-2">
               <div>
-                <span class="font-medium text-sm">Сумма:</span> ${o.total} BYN
-                <span class="ml-2 px-2 py-1 bg-blue-100 text-blue-800 rounded text-xs">${o.status}</span>
+                <span class="font-medium text-xs">Сумма:</span> ${o.total} BYN
+                <span class="ml-2 px-1.5 py-0.5 bg-blue-100 text-blue-800 rounded text-xs">${o.status}</span>
               </div>
-              <div class="flex gap-2">
-                <select onchange="updateOrderStatus(${o.id}, this.value)" class="border rounded px-2 py-1 text-xs">
+              <div class="flex gap-1">
+                <select onchange="updateOrderStatus(${o.id}, this.value)" class="border rounded px-1.5 py-0.5 text-xs">
                   <option value="новый" ${o.status === 'новый' ? 'selected' : ''}>Новый</option>
-                  <option value="в обработке" ${o.status === 'в обработке' ? 'selected' : ''}>В обработке</option>
-                  <option value="выполнен" ${o.status === 'выполнен' ? 'selected' : ''}>Выполнен</option>
-                  <option value="отменен" ${o.status === 'отменен' ? 'selected' : ''}>Отменен</option>
+                  <option value="в обработке" ${o.status === 'в обработке' ? 'selected' : ''}>В обр.</option>
+                  <option value="выполнен" ${o.status === 'выполнен' ? 'selected' : ''}>Выполн.</option>
+                  <option value="отменен" ${o.status === 'отменен' ? 'selected' : ''}>Отмен.</option>
                 </select>
-                <button onclick="printOrder(${o.id})" class="text-blue-600 hover:text-blue-800 px-2 py-1 border border-blue-300 rounded text-xs">🖨️</button>
-                <button onclick="deleteOrder(${o.id})" class="text-red-600 hover:text-red-800 px-2 py-1 border border-red-300 rounded text-xs">🗑️</button>
+                <button onclick="deleteOrder(${o.id})" class="text-red-600 hover:text-red-800 px-1.5 py-0.5 border border-red-300 rounded text-xs">🗑️</button>
               </div>
             </div>
-            <div class="mt-2 text-xs text-gray-600">
+            <div class="mt-1 text-xs text-gray-600">
               <span class="font-medium">Товары:</span> ${o.items.map(i => i.name + ' x' + i.quantity).join(', ')}
             </div>
           </div>
@@ -3226,122 +3306,12 @@
       addLog('order', 'Экспорт заказов в CSV');
     }
 
-    function bulkUpdateOrderStatus() {
-      alert('Функция массового обновления статусов будет доступна в следующем обновлении');
-    }
-
-    function printOrder(id) {
-      const order = orders.find(o => o.id === id);
-      if (!order) return;
-      
-      const printWindow = window.open('', '_blank');
-      printWindow.document.write(`
-        <html>
-          <head>
-            <title>Заказ #${order.id}</title>
-            <style>
-              body { font-family: Arial; padding: 20px; }
-              .header { text-align: center; margin-bottom: 30px; }
-              .order-info { margin-bottom: 20px; }
-              table { width: 100%; border-collapse: collapse; }
-              th, td { border: 1px solid #ddd; padding: 8px; text-align: left; }
-              th { background-color: #f2f2f2; }
-              .total { margin-top: 20px; text-align: right; font-size: 18px; font-weight: bold; }
-            </style>
-          </head>
-          <body>
-            <div class="header">
-              <h1>Заказ #${order.id}</h1>
-              <p>Дата: ${order.date}</p>
-            </div>
-            <div class="order-info">
-              <h3>Информация о клиенте</h3>
-              <p><strong>Имя:</strong> ${order.customer.name}</p>
-              <p><strong>Телефон:</strong> ${order.customer.phone}</p>
-              <p><strong>Адрес:</strong> ${order.customer.address}</p>
-              <p><strong>Способ оплаты:</strong> ${order.customer.payment}</p>
-              <p><strong>Статус:</strong> ${order.status}</p>
-            </div>
-            <h3>Состав заказа</h3>
-            <table>
-              <tr>
-                <th>Товар</th>
-                <th>Цена</th>
-                <th>Количество</th>
-                <th>Сумма</th>
-              </tr>
-              ${order.items.map(i => `
-                <tr>
-                  <td>${i.name}</td>
-                  <td>${i.price} BYN</td>
-                  <td>${i.quantity}</td>
-                  <td>${i.price * i.quantity} BYN</td>
-                </tr>
-              `).join('')}
-            </table>
-            <div class="total">
-              Итого: ${order.total} BYN
-            </div>
-          </body>
-        </html>
-      `);
-      printWindow.document.close();
-      printWindow.print();
-    }
-
-    function addCategory() {
-      const name = prompt('Название категории:');
-      if (!name) return;
-      const categories = JSON.parse(localStorage.getItem('aircom_categories') || '[]');
-      categories.push({ id: Date.now(), name, parent: null });
-      localStorage.setItem('aircom_categories', JSON.stringify(categories));
-      renderCategories();
-      addLog('category', 'Добавлена категория ' + name);
-    }
-
-    function renderCategories() {
-      const list = document.getElementById('categories-list');
-      const categories = JSON.parse(localStorage.getItem('aircom_categories') || '[]');
-      list.innerHTML = categories.map(c => `
-        <div class="flex justify-between items-center p-2 border rounded mb-2">
-          <span>${c.name}</span>
-          <div>
-            <button onclick="editCategory(${c.id})" class="text-blue-600 mr-2">✏️</button>
-            <button onclick="deleteCategory(${c.id})" class="text-red-600">🗑️</button>
-          </div>
-        </div>
-      `).join('') || '<p class="text-gray-500">Нет категорий</p>';
-    }
-
-    function editCategory(id) {
-      const categories = JSON.parse(localStorage.getItem('aircom_categories') || '[]');
-      const cat = categories.find(c => c.id === id);
-      if (!cat) return;
-      const name = prompt('Новое название:', cat.name);
-      if (name) {
-        cat.name = name;
-        localStorage.setItem('aircom_categories', JSON.stringify(categories));
-        renderCategories();
-        addLog('category', 'Изменена категория ' + name);
-      }
-    }
-
-    function deleteCategory(id) {
-      if (confirm('Удалить категорию?')) {
-        let categories = JSON.parse(localStorage.getItem('aircom_categories') || '[]');
-        categories = categories.filter(c => c.id !== id);
-        localStorage.setItem('aircom_categories', JSON.stringify(categories));
-        renderCategories();
-        addLog('category', 'Удалена категория');
-      }
-    }
-
     function filterCustomers() {
-      // Заглушка для фильтрации клиентов
+      // Заглушка
     }
 
     function generateFullReport() {
-      alert('Функция генерации полного отчета будет доступна в следующем обновлении');
+      alert('Функция будет доступна в следующем обновлении');
     }
 
     function saveSettings() {
@@ -3363,59 +3333,15 @@
       const filter = document.getElementById('log-filter')?.value || '';
       const filtered = filter ? actionLogs.filter(l => l.type === filter) : actionLogs;
       list.innerHTML = filtered.map(l => `
-        <div class="text-sm border-b pb-2">
+        <div class="text-xs border-b pb-1">
           <span class="text-gray-500">${l.time}</span> - 
           <span class="font-medium">${l.type}:</span> ${l.action}
         </div>
-      `).join('') || '<p class="text-gray-500">Нет записей</p>';
+      `).join('') || '<p class="text-gray-500 text-xs">Нет записей</p>';
     }
 
     function filterLogs() {
       renderLogs();
-    }
-
-    function addProductForm() {
-      const name = prompt('Название товара:');
-      if (!name) return;
-      const price = parseFloat(prompt('Цена:'));
-      if (isNaN(price)) return;
-      const area = prompt('Площадь (до 20, 21-29, ...):');
-      const category = prompt('Категория (Настенные, Канальные, Мобильные, Кассетные, Мульти-сплит, Напольно-потолочные):');
-      const brand = prompt('Бренд (например, Ballu, LG, Samsung):');
-      const type = prompt('Тип (Настенный, Канальный, Кассетный, Мобильный, Напольно-потолочный):');
-      const inverter = prompt('Инвертор (Да/Нет):');
-      const heat = prompt('Обогрев (напр. -15):');
-      const description = prompt('Краткое описание:');
-      const fullDescription = prompt('Полное описание (для отдельной страницы):');
-      const image = prompt('Ссылка на изображение:') || 'https://via.placeholder.com/200x150?text=New';
-      const stock = parseInt(prompt('Количество на складе:', '10')) || 10;
-      
-      const newId = Math.max(...products.map(p => p.id), 0) + 1;
-      products.push({ 
-        id: newId, 
-        name, 
-        brand,
-        price, 
-        oldPrice: null,
-        stock,
-        area, 
-        category, 
-        type, 
-        inverter, 
-        heat, 
-        description, 
-        fullDescription, 
-        image,
-        tags: [],
-        status: 'active',
-        seoTitle: name,
-        seoDesc: description,
-        createdAt: new Date().toISOString()
-      });
-      saveProducts();
-      renderAdminProducts();
-      filterProducts();
-      addLog('product', 'Добавлен товар ' + name);
     }
 
     function openEditModal(id) {
@@ -3428,26 +3354,12 @@
       document.getElementById('edit-old-price').value = prod.oldPrice || '';
       document.getElementById('edit-stock').value = prod.stock || 10;
       document.getElementById('edit-image').value = prod.image || '';
-      document.getElementById('edit-area').value = prod.area || 'до 20';
-      document.getElementById('edit-category').value = prod.category || 'Настенные';
       if (document.getElementById('edit-brand')) {
         document.getElementById('edit-brand').value = prod.brand || '';
       }
-      document.getElementById('edit-type').value = prod.type || 'Настенный';
-      document.getElementById('edit-inverter').value = prod.inverter || 'Да';
-      document.getElementById('edit-heat').value = prod.heat || '-15';
-      document.getElementById('edit-description').value = prod.description || '';
-      document.getElementById('edit-fullDescription').value = prod.fullDescription || '';
-      document.getElementById('edit-seo-title').value = prod.seoTitle || '';
-      document.getElementById('edit-seo-desc').value = prod.seoDesc || '';
-      document.getElementById('edit-status').value = prod.status || 'active';
-      
-      document.getElementById('edit-tag-hit').checked = prod.tags?.includes('хит') || false;
-      document.getElementById('edit-tag-new').checked = prod.tags?.includes('новинка') || false;
-      document.getElementById('edit-tag-sale').checked = prod.tags?.includes('распродажа') || false;
       
       if (prod.image) {
-        document.getElementById('image-preview').innerHTML = `<img src="${prod.image}" class="w-20 h-20 object-cover rounded">`;
+        document.getElementById('image-preview').innerHTML = `<img src="${prod.image}" class="w-12 h-12 object-cover rounded">`;
       }
       
       document.getElementById('edit-product-modal').style.display = 'flex';
@@ -3457,7 +3369,7 @@
       if (input.files && input.files[0]) {
         const reader = new FileReader();
         reader.onload = (e) => {
-          document.getElementById('image-preview').innerHTML = `<img src="${e.target.result}" class="w-20 h-20 object-cover rounded">`;
+          document.getElementById('image-preview').innerHTML = `<img src="${e.target.result}" class="w-12 h-12 object-cover rounded">`;
           document.getElementById('edit-image').value = e.target.result;
         };
         reader.readAsDataURL(input.files[0]);
@@ -3469,30 +3381,14 @@
       const prod = products.find(p => p.id === id);
       if (!prod) return;
       
-      const tags = [];
-      if (document.getElementById('edit-tag-hit').checked) tags.push('хит');
-      if (document.getElementById('edit-tag-new').checked) tags.push('новинка');
-      if (document.getElementById('edit-tag-sale').checked) tags.push('распродажа');
-      
       prod.name = document.getElementById('edit-name').value;
       prod.price = parseFloat(document.getElementById('edit-price').value);
       prod.oldPrice = document.getElementById('edit-old-price').value ? parseFloat(document.getElementById('edit-old-price').value) : null;
       prod.stock = parseInt(document.getElementById('edit-stock').value) || 10;
-      prod.area = document.getElementById('edit-area').value;
-      prod.category = document.getElementById('edit-category').value;
+      prod.image = document.getElementById('edit-image').value;
       if (document.getElementById('edit-brand')) {
         prod.brand = document.getElementById('edit-brand').value;
       }
-      prod.type = document.getElementById('edit-type').value;
-      prod.inverter = document.getElementById('edit-inverter').value;
-      prod.heat = document.getElementById('edit-heat').value;
-      prod.description = document.getElementById('edit-description').value;
-      prod.fullDescription = document.getElementById('edit-fullDescription').value;
-      prod.image = document.getElementById('edit-image').value;
-      prod.tags = tags;
-      prod.seoTitle = document.getElementById('edit-seo-title').value;
-      prod.seoDesc = document.getElementById('edit-seo-desc').value;
-      prod.status = document.getElementById('edit-status').value;
       
       saveProducts();
       renderAdminProducts();
@@ -3540,7 +3436,8 @@
       const decreaseBtn = document.getElementById('decrease-length');
       const increaseBtn = document.getElementById('increase-length');
       const totalPrice = document.getElementById('total-price');
-      const checkboxes = document.querySelectorAll('input[type="checkbox"]');
+      const demontageCheck = document.getElementById('demontage');
+      const serviceCheck = document.getElementById('service');
       const lengthSection = document.getElementById('length-section');
 
       function calculateTotal() {
@@ -3548,27 +3445,20 @@
           totalPrice.textContent = '0 BYN';
           return 0;
         }
-        const modelPrice = parseInt(modelSelect.value);
-        const length = parseInt(lengthInput.value);
-        const additionalLength = Math.max(0, length - 3);
-        const additionalLengthPrice = additionalLength * 50;
-        let total = modelPrice + additionalLengthPrice;
-        checkboxes.forEach(checkbox => {
-          if (checkbox.checked) total += parseInt(checkbox.value);
-        });
         
-        // Если выбрана услуга без монтажа, скрываем длину трассы
-        if (modelSelect.value === '100' && modelSelect.options[modelSelect.selectedIndex].text.includes('Только')) {
-          lengthSection.style.display = 'none';
-          total = modelPrice;
-          checkboxes.forEach(checkbox => {
-            if (checkbox.checked && checkbox.id !== 'demontage' && checkbox.id !== 'service') {
-              total += parseInt(checkbox.value);
-            }
-          });
-        } else {
+        let total = parseInt(modelSelect.value);
+        const length = parseInt(lengthInput.value);
+        
+        if (modelSelect.value !== '100' || !modelSelect.options[modelSelect.selectedIndex].text.includes('Только')) {
+          const additionalLength = Math.max(0, length - 3);
+          total += additionalLength * 50;
           lengthSection.style.display = 'block';
+        } else {
+          lengthSection.style.display = 'none';
         }
+        
+        if (demontageCheck.checked) total += 100;
+        if (serviceCheck.checked) total += 100;
         
         totalPrice.textContent = total + ' BYN';
         return total;
@@ -3589,7 +3479,9 @@
           calculateTotal();
         });
       }
-      checkboxes.forEach(checkbox => checkbox.addEventListener('change', calculateTotal));
+      if (demontageCheck) demontageCheck.addEventListener('change', calculateTotal);
+      if (serviceCheck) serviceCheck.addEventListener('change', calculateTotal);
+      
       calculateTotal();
     });
 
@@ -3599,9 +3491,9 @@
     loadOrders();
     loadCart();
     loadLogs();
+    loadVisits();
     filterProducts();
 
-    // Слайдер цены
     const priceRange = document.getElementById('priceRange');
     const maxPrice = document.getElementById('maxPrice');
     if (priceRange) {
@@ -3617,14 +3509,12 @@
       });
     }
 
-    // Скрыть модалки при клике вне
     window.addEventListener('click', function(event) {
       if (event.target.classList.contains('modal')) {
         event.target.style.display = 'none';
       }
     });
     
-    // Следим за изменением хеша
     window.addEventListener('hashchange', checkProductHash);
   </script>
 </body>
