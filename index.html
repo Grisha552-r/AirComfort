@@ -439,7 +439,7 @@
       background: white;
       padding: 2rem;
       border-radius: 12px;
-      max-width: 600px;
+      max-width: 800px;
       width: 90%;
       max-height: 80vh;
       overflow-y: auto;
@@ -686,7 +686,7 @@
       -webkit-line-clamp: 2;
       -webkit-box-orient: vertical;
       overflow: hidden;
-      min-height: 3rem;
+      min-height: 2.5rem;
     }
 
     /* Гамбургер меню */
@@ -735,6 +735,30 @@
     }
     .filter-sidebar.mobile-hidden {
       display: none;
+    }
+
+    /* Пагинация */
+    .pagination {
+      display: flex;
+      justify-content: center;
+      gap: 8px;
+      margin-top: 2rem;
+    }
+    .pagination button {
+      padding: 8px 12px;
+      border: 1px solid #e5e7eb;
+      border-radius: 8px;
+      background: white;
+      cursor: pointer;
+      transition: all 0.3s;
+    }
+    .pagination button:hover {
+      background: #f3f4f6;
+    }
+    .pagination button.active {
+      background: #4CAF50;
+      color: white;
+      border-color: #4CAF50;
     }
 
     @media (max-width: 768px) {
@@ -825,9 +849,12 @@
         font-size: 0.75rem;
         padding: 0.25rem 0.5rem;
       }
-      /* Скрываем номер телефона на мобильных */
       .phone-link {
         display: none !important;
+      }
+      .pagination button {
+        padding: 4px 8px;
+        font-size: 12px;
       }
     }
   </style>
@@ -995,7 +1022,6 @@
     <section id="catalog" class="py-8 sm:py-16 bg-white">
       <div class="max-w-7xl mx-auto px-6">
         <h2 class="text-xl sm:text-3xl font-bold text-center text-gray-900 mb-2">Каталог кондиционеров</h2>
-        <p class="text-center text-gray-700 mb-4 sm:mb-10 text-xs sm:text-base">Широкий выбор сплит-систем для вашего комфорта</p>
         
         <!-- Поиск -->
         <div class="mb-4 sm:mb-6 max-w-2xl mx-auto">
@@ -1016,18 +1042,18 @@
           <!-- Фильтры (сайдбар) -->
           <div class="lg:w-1/4 bg-gray-50 p-3 sm:p-6 rounded-lg shadow-card h-fit sticky top-16 sm:top-20 filter-sidebar" id="filterSidebar">
             
-            <!-- Каталог кондиционеров (бренды) - скрывающийся блок -->
+            <h3 class="text-base sm:text-xl font-bold mb-3 sm:mb-4">Фильтры</h3>
+            
+            <!-- Каталог кондиционеров (бренды) -->
             <div class="mb-4 sm:mb-6">
-              <div class="filter-section-title text-base sm:text-lg font-bold mb-2 cursor-pointer" onclick="toggleBrandsCollapse()">
+              <div class="filter-section-title text-sm sm:text-base font-bold mb-2 cursor-pointer" onclick="toggleBrandsCollapse()">
                 <span>Каталог кондиционеров</span>
                 <i class="ri-arrow-down-s-line" id="brands-arrow"></i>
               </div>
               <div id="brands-list" class="flex flex-wrap gap-1 sm:gap-2" style="display: none;">
-                <!-- Бренды будут загружены из админки (без количества) -->
+                <!-- Бренды будут загружены из админки -->
               </div>
             </div>
-            
-            <h3 class="text-base sm:text-xl font-bold mb-3 sm:mb-4 mt-2">Фильтры</h3>
             
             <!-- Площадь помещения -->
             <div class="filter-section">
@@ -1043,22 +1069,6 @@
                 <div class="filter-option"><input type="checkbox" id="area5" value="50-69" onchange="filterProducts()"> <label for="area5">50-69 кв.м.</label></div>
                 <div class="filter-option"><input type="checkbox" id="area6" value="70-99" onchange="filterProducts()"> <label for="area6">70-99 кв.м.</label></div>
                 <div class="filter-option"><input type="checkbox" id="area7" value="100+" onchange="filterProducts()"> <label for="area7">от 100 кв.м.</label></div>
-              </div>
-            </div>
-
-            <!-- Категории -->
-            <div class="filter-section">
-              <div class="filter-section-title text-sm sm:text-base" onclick="toggleFilterCollapse(this)">
-                <span>Категории</span>
-                <i class="ri-arrow-down-s-line"></i>
-              </div>
-              <div class="filter-collapse space-y-1 text-xs sm:text-sm" style="display: none;">
-                <div class="filter-option"><input type="checkbox" id="cat2" value="Настенные" onchange="filterProducts()"> <label for="cat2">Настенные кондиционеры</label></div>
-                <div class="filter-option"><input type="checkbox" id="cat3" value="Мульти-сплит" onchange="filterProducts()"> <label for="cat3">Мульти-сплит системы</label></div>
-                <div class="filter-option"><input type="checkbox" id="cat4" value="Мобильные" onchange="filterProducts()"> <label for="cat4">Мобильные кондиционеры</label></div>
-                <div class="filter-option"><input type="checkbox" id="cat5" value="Кассетные" onchange="filterProducts()"> <label for="cat5">Кассетные кондиционеры</label></div>
-                <div class="filter-option"><input type="checkbox" id="cat6" value="Канальные" onchange="filterProducts()"> <label for="cat6">Канальные кондиционеры</label></div>
-                <div class="filter-option"><input type="checkbox" id="cat7" value="Напольно-потолочные" onchange="filterProducts()"> <label for="cat7">Напольно-потолочные кондиционеры</label></div>
               </div>
             </div>
 
@@ -1138,6 +1148,9 @@
             <div id="product-grid" class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-3 sm:gap-6">
               <!-- Товары будут загружены из localStorage или по умолчанию -->
             </div>
+            
+            <!-- Пагинация -->
+            <div id="pagination" class="pagination"></div>
           </div>
         </div>
       </div>
@@ -1147,7 +1160,7 @@
     <div id="product-modal" class="modal">
       <div class="modal-content">
         <div id="product-modal-detail"></div>
-        <button onclick="document.getElementById('product-modal').style.display='none'" class="mt-4 bg-gray-200 px-4 py-2 rounded-button">Закрыть</button>
+        <button onclick="document.getElementById('product-modal').style.display='none'" class="mt-6 bg-gray-200 px-6 py-3 rounded-button hover:bg-gray-300 transition">Закрыть</button>
       </div>
     </div>
 
@@ -1200,6 +1213,7 @@
           <h2 class="text-xl sm:text-2xl font-bold">Админ-панель AirComfort</h2>
           <div class="flex items-center gap-3">
             <span class="text-xs sm:text-sm text-gray-600">Посещений сегодня: <span id="today-visits">0</span></span>
+            <span class="text-xs sm:text-sm text-gray-600">Всего посещений: <span id="total-visits">0</span></span>
             <a href="#" onclick="closeAdminPanel(); return false;" class="text-gray-600 hover:text-gray-900"><i class="ri-close-line ri-xl sm:ri-2x"></i></a>
           </div>
         </div>
@@ -1207,11 +1221,11 @@
         <!-- Вкладки -->
         <div class="border-b border-gray-200 mb-4 sm:mb-6 overflow-x-auto">
           <nav class="flex gap-2 sm:gap-4 min-w-max">
-            <button onclick="switchAdminTab('dashboard')" class="px-2 sm:px-4 py-1 sm:py-2 font-medium text-xs sm:text-base text-gray-500 hover:text-gray-700" id="tab-dashboard-btn">Дашборд</button>
-            <button onclick="switchAdminTab('products')" class="px-2 sm:px-4 py-1 sm:py-2 font-medium text-xs sm:text-base text-primary border-b-2 border-primary" id="tab-products-btn">Товары</button>
+            <button onclick="switchAdminTab('dashboard')" class="px-2 sm:px-4 py-1 sm:py-2 font-medium text-xs sm:text-base text-primary border-b-2 border-primary" id="tab-dashboard-btn">Дашборд</button>
+            <button onclick="switchAdminTab('products')" class="px-2 sm:px-4 py-1 sm:py-2 font-medium text-xs sm:text-base text-gray-500 hover:text-gray-700" id="tab-products-btn">Товары</button>
             <button onclick="switchAdminTab('orders')" class="px-2 sm:px-4 py-1 sm:py-2 font-medium text-xs sm:text-base text-gray-500 hover:text-gray-700" id="tab-orders-btn">Заказы</button>
-            <button onclick="switchAdminTab('brands')" class="px-2 sm:px-4 py-1 sm:py-2 font-medium text-xs sm:text-base text-gray-500 hover:text-gray-700" id="tab-brands-btn">Бренды</button>
             <button onclick="switchAdminTab('customers')" class="px-2 sm:px-4 py-1 sm:py-2 font-medium text-xs sm:text-base text-gray-500 hover:text-gray-700" id="tab-customers-btn">Клиенты</button>
+            <button onclick="switchAdminTab('brands')" class="px-2 sm:px-4 py-1 sm:py-2 font-medium text-xs sm:text-base text-gray-500 hover:text-gray-700" id="tab-brands-btn">Бренды</button>
             <button onclick="switchAdminTab('reports')" class="px-2 sm:px-4 py-1 sm:py-2 font-medium text-xs sm:text-base text-gray-500 hover:text-gray-700" id="tab-reports-btn">Отчеты</button>
             <button onclick="switchAdminTab('settings')" class="px-2 sm:px-4 py-1 sm:py-2 font-medium text-xs sm:text-base text-gray-500 hover:text-gray-700" id="tab-settings-btn">Настройки</button>
             <button onclick="switchAdminTab('logs')" class="px-2 sm:px-4 py-1 sm:py-2 font-medium text-xs sm:text-base text-gray-500 hover:text-gray-700" id="tab-logs-btn">Логи</button>
@@ -1219,7 +1233,7 @@
         </div>
 
         <!-- Вкладка Дашборд -->
-        <div id="admin-dashboard-tab" class="hidden">
+        <div id="admin-dashboard-tab" class="block">
           <div class="grid grid-cols-2 sm:grid-cols-2 lg:grid-cols-4 gap-2 sm:gap-4 mb-4 sm:mb-6">
             <div class="bg-white p-3 sm:p-6 rounded-lg shadow border-l-4 border-primary">
               <div class="flex justify-between items-center">
@@ -1267,22 +1281,10 @@
             <div class="bg-white p-3 sm:p-6 rounded-lg shadow">
               <h3 class="text-sm sm:text-lg font-bold mb-2 sm:mb-4">Статистика заказов</h3>
               <div class="space-y-2 text-xs sm:text-sm">
-                <div class="flex justify-between items-center">
-                  <span>Новые</span>
-                  <span class="font-bold" id="stats-new">0</span>
-                </div>
-                <div class="flex justify-between items-center">
-                  <span>В обработке</span>
-                  <span class="font-bold" id="stats-processing">0</span>
-                </div>
-                <div class="flex justify-between items-center">
-                  <span>Выполненные</span>
-                  <span class="font-bold" id="stats-completed">0</span>
-                </div>
-                <div class="flex justify-between items-center">
-                  <span>Отмененные</span>
-                  <span class="font-bold" id="stats-cancelled">0</span>
-                </div>
+                <div class="flex justify-between items-center"><span>Новые</span><span class="font-bold" id="stats-new">0</span></div>
+                <div class="flex justify-between items-center"><span>В обработке</span><span class="font-bold" id="stats-processing">0</span></div>
+                <div class="flex justify-between items-center"><span>Выполненные</span><span class="font-bold" id="stats-completed">0</span></div>
+                <div class="flex justify-between items-center"><span>Отмененные</span><span class="font-bold" id="stats-cancelled">0</span></div>
               </div>
             </div>
           </div>
@@ -1294,7 +1296,7 @@
         </div>
 
         <!-- Вкладка Товары -->
-        <div id="admin-products-tab" class="block">
+        <div id="admin-products-tab" class="hidden">
           <div class="mb-4 sm:mb-6 p-3 sm:p-4 bg-yellow-50 border border-yellow-200 rounded">
             <h3 class="font-bold mb-2 text-sm sm:text-base">Изменение логина/пароля</h3>
             <p class="text-xs sm:text-sm text-gray-600 mb-2">Текущие: admin / admin123</p>
@@ -1305,169 +1307,46 @@
             </div>
           </div>
 
-          <!-- Фильтры для товаров -->
           <div class="grid grid-cols-2 sm:grid-cols-4 gap-2 sm:gap-4 mb-4 sm:mb-6">
-            <div>
-              <label class="block text-xs sm:text-sm font-medium text-gray-700 mb-1">Поиск</label>
-              <input type="text" id="admin-search" placeholder="🔍 Поиск..." class="w-full border px-2 sm:px-4 py-1 sm:py-2 rounded-lg text-xs sm:text-sm" onkeyup="filterAdminProducts()">
-            </div>
-            <div>
-              <label class="block text-xs sm:text-sm font-medium text-gray-700 mb-1">Категория</label>
-              <select id="admin-category-filter" onchange="filterAdminProducts()" class="w-full border px-2 sm:px-4 py-1 sm:py-2 rounded-lg text-xs sm:text-sm">
-                <option value="">Все</option>
-                <option value="Настенные">Настенные</option>
-                <option value="Канальные">Канальные</option>
-                <option value="Мобильные">Мобильные</option>
-                <option value="Кассетные">Кассетные</option>
-                <option value="Мульти-сплит">Мульти-сплит</option>
-                <option value="Напольно-потолочные">Напольно-потолочные</option>
-              </select>
-            </div>
-            <div>
-              <label class="block text-xs sm:text-sm font-medium text-gray-700 mb-1">Статус</label>
-              <select id="admin-status-filter" onchange="filterAdminProducts()" class="w-full border px-2 sm:px-4 py-1 sm:py-2 rounded-lg text-xs sm:text-sm">
-                <option value="">Все</option>
-                <option value="active">Активные</option>
-                <option value="inactive">Неактивные</option>
-              </select>
-            </div>
-            <div>
-              <label class="block text-xs sm:text-sm font-medium text-gray-700 mb-1">Сортировка</label>
-              <select id="admin-sort" onchange="filterAdminProducts()" class="w-full border px-2 sm:px-4 py-1 sm:py-2 rounded-lg text-xs sm:text-sm">
-                <option value="name">По названию</option>
-                <option value="price-asc">Цена (возр.)</option>
-                <option value="price-desc">Цена (убыв.)</option>
-                <option value="date">По дате</option>
-              </select>
-            </div>
+            <div><label class="block text-xs sm:text-sm font-medium text-gray-700 mb-1">Поиск</label><input type="text" id="admin-search" placeholder="🔍 Поиск..." class="w-full border px-2 sm:px-4 py-1 sm:py-2 rounded-lg text-xs sm:text-sm" onkeyup="filterAdminProducts()"></div>
+            <div><label class="block text-xs sm:text-sm font-medium text-gray-700 mb-1">Категория</label><select id="admin-category-filter" onchange="filterAdminProducts()" class="w-full border px-2 sm:px-4 py-1 sm:py-2 rounded-lg text-xs sm:text-sm"><option value="">Все</option><option value="Настенные">Настенные</option><option value="Канальные">Канальные</option><option value="Мобильные">Мобильные</option><option value="Кассетные">Кассетные</option><option value="Мульти-сплит">Мульти-сплит</option><option value="Напольно-потолочные">Напольно-потолочные</option></select></div>
+            <div><label class="block text-xs sm:text-sm font-medium text-gray-700 mb-1">Статус</label><select id="admin-status-filter" onchange="filterAdminProducts()" class="w-full border px-2 sm:px-4 py-1 sm:py-2 rounded-lg text-xs sm:text-sm"><option value="">Все</option><option value="active">Активные</option><option value="inactive">Неактивные</option></select></div>
+            <div><label class="block text-xs sm:text-sm font-medium text-gray-700 mb-1">Сортировка</label><select id="admin-sort" onchange="filterAdminProducts()" class="w-full border px-2 sm:px-4 py-1 sm:py-2 rounded-lg text-xs sm:text-sm"><option value="name">По названию</option><option value="price-asc">Цена (возр.)</option><option value="price-desc">Цена (убыв.)</option><option value="date">По дате</option></select></div>
           </div>
 
-          <!-- Массовые операции -->
           <div class="mb-4 flex flex-wrap gap-1 sm:gap-2">
             <button onclick="selectAllProducts()" class="bg-gray-200 text-gray-800 px-2 sm:px-4 py-1 sm:py-2 rounded-button text-xs sm:text-sm">Выбрать все</button>
             <button onclick="deselectAllProducts()" class="bg-gray-200 text-gray-800 px-2 sm:px-4 py-1 sm:py-2 rounded-button text-xs sm:text-sm">Снять</button>
             <button onclick="deleteSelectedProducts()" class="bg-red-500 text-white px-2 sm:px-4 py-1 sm:py-2 rounded-button text-xs sm:text-sm">Удалить</button>
             <button onclick="exportProducts()" class="bg-green-500 text-white px-2 sm:px-4 py-1 sm:py-2 rounded-button text-xs sm:text-sm">Экспорт</button>
-            <label class="bg-purple-500 text-white px-2 sm:px-4 py-1 sm:py-2 rounded-button cursor-pointer text-xs sm:text-sm">
-              Импорт
-              <input type="file" accept=".xlsx,.xls,.csv" class="hidden" onchange="importProducts(this)">
-            </label>
+            <label class="bg-purple-500 text-white px-2 sm:px-4 py-1 sm:py-2 rounded-button cursor-pointer text-xs sm:text-sm">Импорт<input type="file" accept=".xlsx,.xls,.csv" class="hidden" onchange="importProducts(this)"></label>
             <button onclick="openAddProductForm()" class="bg-primary text-white px-2 sm:px-4 py-1 sm:py-2 rounded-button btn-animate text-xs sm:text-sm">+ Добавить</button>
           </div>
 
-          <!-- Форма добавления товара -->
           <div id="add-product-form" class="hidden bg-gray-50 p-3 sm:p-4 rounded-lg mb-4 border">
             <h3 class="font-bold mb-3 text-sm sm:text-base">Добавление нового товара</h3>
             <div class="grid grid-cols-1 sm:grid-cols-2 gap-3">
-              <div>
-                <label class="block text-xs sm:text-sm font-medium text-gray-700 mb-1">Название *</label>
-                <input type="text" id="new-name" class="w-full border px-2 sm:px-3 py-1 sm:py-2 rounded text-xs sm:text-sm">
-              </div>
-              <div>
-                <label class="block text-xs sm:text-sm font-medium text-gray-700 mb-1">Цена *</label>
-                <input type="number" id="new-price" class="w-full border px-2 sm:px-3 py-1 sm:py-2 rounded text-xs sm:text-sm">
-              </div>
-              <div>
-                <label class="block text-xs sm:text-sm font-medium text-gray-700 mb-1">Старая цена</label>
-                <input type="number" id="new-old-price" class="w-full border px-2 sm:px-3 py-1 sm:py-2 rounded text-xs sm:text-sm">
-              </div>
-              <div>
-                <label class="block text-xs sm:text-sm font-medium text-gray-700 mb-1">Количество</label>
-                <input type="number" id="new-stock" value="10" class="w-full border px-2 sm:px-3 py-1 sm:py-2 rounded text-xs sm:text-sm">
-              </div>
-              <div>
-                <label class="block text-xs sm:text-sm font-medium text-gray-700 mb-1">Бренд</label>
-                <select id="new-brand" class="w-full border px-2 sm:px-3 py-1 sm:py-2 rounded text-xs sm:text-sm">
-                  <option value="">Без бренда</option>
-                </select>
-              </div>
-              <div>
-                <label class="block text-xs sm:text-sm font-medium text-gray-700 mb-1">Категория</label>
-                <select id="new-category" class="w-full border px-2 sm:px-3 py-1 sm:py-2 rounded text-xs sm:text-sm">
-                  <option value="Настенные">Настенные</option>
-                  <option value="Канальные">Канальные</option>
-                  <option value="Мобильные">Мобильные</option>
-                  <option value="Кассетные">Кассетные</option>
-                  <option value="Мульти-сплит">Мульти-сплит</option>
-                  <option value="Напольно-потолочные">Напольно-потолочные</option>
-                </select>
-              </div>
-              <div>
-                <label class="block text-xs sm:text-sm font-medium text-gray-700 mb-1">Тип</label>
-                <select id="new-type" class="w-full border px-2 sm:px-3 py-1 sm:py-2 rounded text-xs sm:text-sm">
-                  <option value="Настенный">Настенный</option>
-                  <option value="Канальный">Канальный</option>
-                  <option value="Кассетный">Кассетный</option>
-                  <option value="Мобильный">Мобильный</option>
-                  <option value="Напольно-потолочный">Напольно-потолочный</option>
-                </select>
-              </div>
-              <div>
-                <label class="block text-xs sm:text-sm font-medium text-gray-700 mb-1">Инвертор</label>
-                <select id="new-inverter" class="w-full border px-2 sm:px-3 py-1 sm:py-2 rounded text-xs sm:text-sm">
-                  <option value="Да">Да</option>
-                  <option value="Нет">Нет</option>
-                </select>
-              </div>
-              <div>
-                <label class="block text-xs sm:text-sm font-medium text-gray-700 mb-1">Площадь</label>
-                <select id="new-area" class="w-full border px-2 sm:px-3 py-1 sm:py-2 rounded text-xs sm:text-sm">
-                  <option value="до 20">до 20 кв.м.</option>
-                  <option value="21-29">21-29 кв.м.</option>
-                  <option value="30-39">30-39 кв.м.</option>
-                  <option value="40-49">40-49 кв.м.</option>
-                  <option value="50-69">50-69 кв.м.</option>
-                  <option value="70-99">70-99 кв.м.</option>
-                  <option value="100+">от 100 кв.м.</option>
-                </select>
-              </div>
-              <div>
-                <label class="block text-xs sm:text-sm font-medium text-gray-700 mb-1">Обогрев</label>
-                <input type="text" id="new-heat" placeholder="-15" class="w-full border px-2 sm:px-3 py-1 sm:py-2 rounded text-xs sm:text-sm">
-              </div>
-              <div class="sm:col-span-2">
-                <label class="block text-xs sm:text-sm font-medium text-gray-700 mb-1">Краткое описание</label>
-                <textarea id="new-description" rows="2" class="w-full border px-2 sm:px-3 py-1 sm:py-2 rounded text-xs sm:text-sm"></textarea>
-              </div>
-              <div class="sm:col-span-2">
-                <label class="block text-xs sm:text-sm font-medium text-gray-700 mb-1">Полное описание</label>
-                <textarea id="new-fullDescription" rows="3" class="w-full border px-2 sm:px-3 py-1 sm:py-2 rounded text-xs sm:text-sm"></textarea>
-              </div>
-              <div class="sm:col-span-2">
-                <label class="block text-xs sm:text-sm font-medium text-gray-700 mb-1">Ссылка на изображение</label>
-                <input type="text" id="new-image" value="https://via.placeholder.com/200x150?text=New" class="w-full border px-2 sm:px-3 py-1 sm:py-2 rounded text-xs sm:text-sm">
-              </div>
-              <div class="sm:col-span-2">
-                <label class="block text-xs sm:text-sm font-medium text-gray-700 mb-1">Теги</label>
-                <div class="flex gap-3">
-                  <label class="flex items-center text-xs sm:text-sm"><input type="checkbox" id="new-tag-hit" class="mr-1"> Хит</label>
-                  <label class="flex items-center text-xs sm:text-sm"><input type="checkbox" id="new-tag-new" class="mr-1"> Новинка</label>
-                  <label class="flex items-center text-xs sm:text-sm"><input type="checkbox" id="new-tag-sale" class="mr-1"> Распродажа</label>
-                </div>
-              </div>
+              <div><label class="block text-xs sm:text-sm font-medium text-gray-700 mb-1">Название *</label><input type="text" id="new-name" class="w-full border px-2 sm:px-3 py-1 sm:py-2 rounded text-xs sm:text-sm"></div>
+              <div><label class="block text-xs sm:text-sm font-medium text-gray-700 mb-1">Цена *</label><input type="number" id="new-price" class="w-full border px-2 sm:px-3 py-1 sm:py-2 rounded text-xs sm:text-sm"></div>
+              <div><label class="block text-xs sm:text-sm font-medium text-gray-700 mb-1">Старая цена</label><input type="number" id="new-old-price" class="w-full border px-2 sm:px-3 py-1 sm:py-2 rounded text-xs sm:text-sm"></div>
+              <div><label class="block text-xs sm:text-sm font-medium text-gray-700 mb-1">Количество</label><input type="number" id="new-stock" value="10" class="w-full border px-2 sm:px-3 py-1 sm:py-2 rounded text-xs sm:text-sm"></div>
+              <div><label class="block text-xs sm:text-sm font-medium text-gray-700 mb-1">Бренд</label><select id="new-brand" class="w-full border px-2 sm:px-3 py-1 sm:py-2 rounded text-xs sm:text-sm"><option value="">Без бренда</option></select></div>
+              <div><label class="block text-xs sm:text-sm font-medium text-gray-700 mb-1">Категория</label><select id="new-category" class="w-full border px-2 sm:px-3 py-1 sm:py-2 rounded text-xs sm:text-sm"><option value="Настенные">Настенные</option><option value="Канальные">Канальные</option><option value="Мобильные">Мобильные</option><option value="Кассетные">Кассетные</option><option value="Мульти-сплит">Мульти-сплит</option><option value="Напольно-потолочные">Напольно-потолочные</option></select></div>
+              <div><label class="block text-xs sm:text-sm font-medium text-gray-700 mb-1">Тип</label><select id="new-type" class="w-full border px-2 sm:px-3 py-1 sm:py-2 rounded text-xs sm:text-sm"><option value="Настенный">Настенный</option><option value="Канальный">Канальный</option><option value="Кассетный">Кассетный</option><option value="Мобильный">Мобильный</option><option value="Напольно-потолочный">Напольно-потолочный</option></select></div>
+              <div><label class="block text-xs sm:text-sm font-medium text-gray-700 mb-1">Инвертор</label><select id="new-inverter" class="w-full border px-2 sm:px-3 py-1 sm:py-2 rounded text-xs sm:text-sm"><option value="Да">Да</option><option value="Нет">Нет</option></select></div>
+              <div><label class="block text-xs sm:text-sm font-medium text-gray-700 mb-1">Площадь</label><select id="new-area" class="w-full border px-2 sm:px-3 py-1 sm:py-2 rounded text-xs sm:text-sm"><option value="до 20">до 20 кв.м.</option><option value="21-29">21-29 кв.м.</option><option value="30-39">30-39 кв.м.</option><option value="40-49">40-49 кв.м.</option><option value="50-69">50-69 кв.м.</option><option value="70-99">70-99 кв.м.</option><option value="100+">от 100 кв.м.</option></select></div>
+              <div><label class="block text-xs sm:text-sm font-medium text-gray-700 mb-1">Обогрев</label><input type="text" id="new-heat" placeholder="-15" class="w-full border px-2 sm:px-3 py-1 sm:py-2 rounded text-xs sm:text-sm"></div>
+              <div class="sm:col-span-2"><label class="block text-xs sm:text-sm font-medium text-gray-700 mb-1">Краткое описание</label><textarea id="new-description" rows="2" class="w-full border px-2 sm:px-3 py-1 sm:py-2 rounded text-xs sm:text-sm"></textarea></div>
+              <div class="sm:col-span-2"><label class="block text-xs sm:text-sm font-medium text-gray-700 mb-1">Полное описание</label><textarea id="new-fullDescription" rows="3" class="w-full border px-2 sm:px-3 py-1 sm:py-2 rounded text-xs sm:text-sm"></textarea></div>
+              <div class="sm:col-span-2"><label class="block text-xs sm:text-sm font-medium text-gray-700 mb-1">Ссылка на изображение</label><input type="text" id="new-image" value="https://via.placeholder.com/200x150?text=New" class="w-full border px-2 sm:px-3 py-1 sm:py-2 rounded text-xs sm:text-sm"></div>
+              <div class="sm:col-span-2"><label class="block text-xs sm:text-sm font-medium text-gray-700 mb-1">Теги</label><div class="flex gap-3"><label class="flex items-center text-xs sm:text-sm"><input type="checkbox" id="new-tag-hit" class="mr-1"> Хит</label><label class="flex items-center text-xs sm:text-sm"><input type="checkbox" id="new-tag-new" class="mr-1"> Новинка</label><label class="flex items-center text-xs sm:text-sm"><input type="checkbox" id="new-tag-sale" class="mr-1"> Распродажа</label></div></div>
             </div>
-            <div class="flex gap-2 mt-3">
-              <button onclick="saveNewProduct()" class="bg-primary text-white px-4 py-2 rounded-button text-xs sm:text-sm">Сохранить</button>
-              <button onclick="closeAddProductForm()" class="bg-gray-200 text-gray-800 px-4 py-2 rounded-button text-xs sm:text-sm">Отмена</button>
-            </div>
+            <div class="flex gap-2 mt-3"><button onclick="saveNewProduct()" class="bg-primary text-white px-4 py-2 rounded-button text-xs sm:text-sm">Сохранить</button><button onclick="closeAddProductForm()" class="bg-gray-200 text-gray-800 px-4 py-2 rounded-button text-xs sm:text-sm">Отмена</button></div>
           </div>
 
-          <!-- Список товаров -->
           <div class="bg-white rounded-lg shadow overflow-hidden">
             <table class="min-w-full divide-y divide-gray-200">
-              <thead class="bg-gray-50">
-                <tr>
-                  <th class="px-2 sm:px-6 py-2 sm:py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">
-                    <input type="checkbox" id="select-all-products" onclick="toggleSelectAll()">
-                  </th>
-                  <th class="px-2 sm:px-6 py-2 sm:py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">Фото</th>
-                  <th class="px-2 sm:px-6 py-2 sm:py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">Товар</th>
-                  <th class="px-2 sm:px-6 py-2 sm:py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">Категория</th>
-                  <th class="px-2 sm:px-6 py-2 sm:py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">Цена</th>
-                  <th class="px-2 sm:px-6 py-2 sm:py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">Статус</th>
-                  <th class="px-2 sm:px-6 py-2 sm:py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">Действия</th>
-                </tr>
-              </thead>
+              <thead class="bg-gray-50"><tr><th class="px-2 sm:px-6 py-2 sm:py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider"><input type="checkbox" id="select-all-products" onclick="toggleSelectAll()"></th><th class="px-2 sm:px-6 py-2 sm:py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">Фото</th><th class="px-2 sm:px-6 py-2 sm:py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">Товар</th><th class="px-2 sm:px-6 py-2 sm:py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">Категория</th><th class="px-2 sm:px-6 py-2 sm:py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">Цена</th><th class="px-2 sm:px-6 py-2 sm:py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">Статус</th><th class="px-2 sm:px-6 py-2 sm:py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">Действия</th></tr></thead>
               <tbody id="admin-product-list" class="bg-white divide-y divide-gray-200"></tbody>
             </table>
           </div>
@@ -1476,72 +1355,32 @@
         <!-- Вкладка Заказы -->
         <div id="admin-orders-tab" class="hidden">
           <div class="grid grid-cols-2 sm:grid-cols-3 gap-2 sm:gap-4 mb-4 sm:mb-6">
-            <div>
-              <label class="block text-xs sm:text-sm font-medium text-gray-700 mb-1">Статус</label>
-              <select id="order-status-filter" onchange="filterAdminOrders()" class="w-full border px-2 sm:px-4 py-1 sm:py-2 rounded-lg text-xs sm:text-sm">
-                <option value="">Все</option>
-                <option value="новый">Новые</option>
-                <option value="в обработке">В обработке</option>
-                <option value="выполнен">Выполненные</option>
-                <option value="отменен">Отмененные</option>
-              </select>
-            </div>
-            <div>
-              <label class="block text-xs sm:text-sm font-medium text-gray-700 mb-1">Поиск</label>
-              <input type="text" id="order-search" placeholder="Имя или телефон..." class="w-full border px-2 sm:px-4 py-1 sm:py-2 rounded-lg text-xs sm:text-sm" onkeyup="filterAdminOrders()">
-            </div>
-            <div>
-              <label class="block text-xs sm:text-sm font-medium text-gray-700 mb-1">Дата</label>
-              <input type="date" id="order-date-filter" class="w-full border px-2 sm:px-4 py-1 sm:py-2 rounded-lg text-xs sm:text-sm" onchange="filterAdminOrders()">
-            </div>
+            <div><label class="block text-xs sm:text-sm font-medium text-gray-700 mb-1">Статус</label><select id="order-status-filter" onchange="filterAdminOrders()" class="w-full border px-2 sm:px-4 py-1 sm:py-2 rounded-lg text-xs sm:text-sm"><option value="">Все</option><option value="новый">Новые</option><option value="в обработке">В обработке</option><option value="выполнен">Выполненные</option><option value="отменен">Отмененные</option></select></div>
+            <div><label class="block text-xs sm:text-sm font-medium text-gray-700 mb-1">Поиск</label><input type="text" id="order-search" placeholder="Имя или телефон..." class="w-full border px-2 sm:px-4 py-1 sm:py-2 rounded-lg text-xs sm:text-sm" onkeyup="filterAdminOrders()"></div>
+            <div><label class="block text-xs sm:text-sm font-medium text-gray-700 mb-1">Дата</label><input type="date" id="order-date-filter" class="w-full border px-2 sm:px-4 py-1 sm:py-2 rounded-lg text-xs sm:text-sm" onchange="filterAdminOrders()"></div>
           </div>
-          <div class="mb-4 flex flex-wrap gap-1 sm:gap-2">
-            <button onclick="deleteAllOrders()" class="bg-red-500 text-white px-2 sm:px-4 py-1 sm:py-2 rounded-button text-xs sm:text-sm">Удалить все</button>
-            <button onclick="exportOrders()" class="bg-green-500 text-white px-2 sm:px-4 py-1 sm:py-2 rounded-button text-xs sm:text-sm">Экспорт</button>
-          </div>
+          <div class="mb-4 flex flex-wrap gap-1 sm:gap-2"><button onclick="deleteAllOrders()" class="bg-red-500 text-white px-2 sm:px-4 py-1 sm:py-2 rounded-button text-xs sm:text-sm">Удалить все</button><button onclick="exportOrders()" class="bg-green-500 text-white px-2 sm:px-4 py-1 sm:py-2 rounded-button text-xs sm:text-sm">Экспорт</button></div>
           <div id="admin-orders-list" class="space-y-3 sm:space-y-4"></div>
-          <div class="mt-4 p-3 sm:p-4 bg-blue-50 rounded">
-            <h4 class="font-bold text-xs sm:text-sm">Статистика заказов:</h4>
-            <p class="text-xs sm:text-sm">Всего заказов: <span id="total-orders">0</span></p>
-            <p class="text-xs sm:text-sm">Общая сумма: <span id="total-amount">0</span> BYN</p>
-          </div>
-        </div>
-
-        <!-- Вкладка Бренды -->
-        <div id="admin-brands-tab" class="hidden">
-          <div class="mb-4">
-            <button onclick="addBrand()" class="bg-primary text-white px-3 sm:px-4 py-1 sm:py-2 rounded-button text-xs sm:text-sm">+ Добавить бренд</button>
-          </div>
-          <div id="brands-admin-list" class="bg-white rounded-lg shadow p-3 sm:p-4 space-y-2"></div>
+          <div class="mt-4 p-3 sm:p-4 bg-blue-50 rounded"><h4 class="font-bold text-xs sm:text-sm">Статистика заказов:</h4><p class="text-xs sm:text-sm">Всего заказов: <span id="total-orders">0</span></p><p class="text-xs sm:text-sm">Общая сумма: <span id="total-amount">0</span> BYN</p></div>
         </div>
 
         <!-- Вкладка Клиенты -->
         <div id="admin-customers-tab" class="hidden">
-          <div class="grid grid-cols-1 md:grid-cols-2 gap-2 sm:gap-4 mb-4 sm:mb-6">
-            <div>
-              <input type="text" id="customer-search" placeholder="🔍 Поиск клиентов..." class="w-full border px-2 sm:px-4 py-1 sm:py-2 rounded-lg text-xs sm:text-sm" onkeyup="filterCustomers()">
-            </div>
-          </div>
+          <div class="grid grid-cols-1 md:grid-cols-2 gap-2 sm:gap-4 mb-4 sm:mb-6"><div><input type="text" id="customer-search" placeholder="🔍 Поиск клиентов..." class="w-full border px-2 sm:px-4 py-1 sm:py-2 rounded-lg text-xs sm:text-sm" onkeyup="filterCustomers()"></div></div>
           <div id="customers-list" class="bg-white rounded-lg shadow p-3 sm:p-4"></div>
+        </div>
+
+        <!-- Вкладка Бренды -->
+        <div id="admin-brands-tab" class="hidden">
+          <div class="mb-4"><button onclick="addBrand()" class="bg-primary text-white px-3 sm:px-4 py-1 sm:py-2 rounded-button text-xs sm:text-sm">+ Добавить бренд</button></div>
+          <div id="brands-admin-list" class="bg-white rounded-lg shadow p-3 sm:p-4 space-y-2"></div>
         </div>
 
         <!-- Вкладка Отчеты -->
         <div id="admin-reports-tab" class="hidden">
           <div class="grid grid-cols-1 sm:grid-cols-2 gap-4 sm:gap-6">
-            <div class="bg-white p-3 sm:p-6 rounded-lg shadow">
-              <h3 class="text-sm sm:text-lg font-bold mb-2 sm:mb-4">Отчет по продажам</h3>
-              <div class="space-y-2 text-xs sm:text-sm">
-                <div class="flex justify-between"><span>За сегодня:</span><span class="font-bold" id="report-today">0 BYN</span></div>
-                <div class="flex justify-between"><span>За неделю:</span><span class="font-bold" id="report-week">0 BYN</span></div>
-                <div class="flex justify-between"><span>За месяц:</span><span class="font-bold" id="report-month">0 BYN</span></div>
-                <div class="flex justify-between"><span>За год:</span><span class="font-bold" id="report-year">0 BYN</span></div>
-              </div>
-              <button onclick="generateFullReport()" class="mt-3 sm:mt-4 w-full bg-primary text-white px-3 sm:px-4 py-1 sm:py-2 rounded-button text-xs sm:text-sm">Полный отчет</button>
-            </div>
-            <div class="bg-white p-3 sm:p-6 rounded-lg shadow">
-              <h3 class="text-sm sm:text-lg font-bold mb-2 sm:mb-4">Топ-10 товаров</h3>
-              <div id="top-products-report" class="space-y-1 sm:space-y-2 text-xs sm:text-sm"></div>
-            </div>
+            <div class="bg-white p-3 sm:p-6 rounded-lg shadow"><h3 class="text-sm sm:text-lg font-bold mb-2 sm:mb-4">Отчет по продажам</h3><div class="space-y-2 text-xs sm:text-sm"><div class="flex justify-between"><span>За сегодня:</span><span class="font-bold" id="report-today">0 BYN</span></div><div class="flex justify-between"><span>За неделю:</span><span class="font-bold" id="report-week">0 BYN</span></div><div class="flex justify-between"><span>За месяц:</span><span class="font-bold" id="report-month">0 BYN</span></div><div class="flex justify-between"><span>За год:</span><span class="font-bold" id="report-year">0 BYN</span></div></div><button onclick="generateFullReport()" class="mt-3 sm:mt-4 w-full bg-primary text-white px-3 sm:px-4 py-1 sm:py-2 rounded-button text-xs sm:text-sm">Полный отчет</button></div>
+            <div class="bg-white p-3 sm:p-6 rounded-lg shadow"><h3 class="text-sm sm:text-lg font-bold mb-2 sm:mb-4">Топ-10 товаров</h3><div id="top-products-report" class="space-y-1 sm:space-y-2 text-xs sm:text-sm"></div></div>
           </div>
         </div>
 
@@ -1555,9 +1394,9 @@
               <div><label class="block text-xs sm:text-sm font-medium text-gray-700 mb-1">Телефон</label><input type="text" id="site-phone" value="+375 (29) 105-06-94" class="w-full border px-2 sm:px-4 py-1 sm:py-2 rounded-lg text-xs sm:text-sm"></div>
               <div><label class="block text-xs sm:text-sm font-medium text-gray-700 mb-1">Адрес</label><input type="text" id="site-address" value="г. Гомель" class="w-full border px-2 sm:px-4 py-1 sm:py-2 rounded-lg text-xs sm:text-sm"></div>
               <div><label class="block text-xs sm:text-sm font-medium text-gray-700 mb-1">Валюта</label><select id="site-currency" class="w-full border px-2 sm:px-4 py-1 sm:py-2 rounded-lg text-xs sm:text-sm"><option value="BYN">BYN</option><option value="USD">USD</option><option value="EUR">EUR</option><option value="RUB">RUB</option></select></div>
+              <div><label class="block text-xs sm:text-sm font-medium text-gray-700 mb-1">SEO настройки</label><textarea id="site-seo" rows="3" class="w-full border px-2 sm:px-4 py-1 sm:py-2 rounded-lg text-xs sm:text-sm" placeholder="Мета-теги по умолчанию"></textarea></div>
               <div><label class="block text-xs sm:text-sm font-medium text-gray-700 mb-1">Способы доставки</label><div class="space-y-1 text-xs sm:text-sm"><label class="flex items-center"><input type="checkbox" checked class="mr-2"> Самовывоз</label><label class="flex items-center"><input type="checkbox" checked class="mr-2"> Курьером по городу</label><label class="flex items-center"><input type="checkbox" class="mr-2"> Почтой по РБ</label></div></div>
               <div><label class="block text-xs sm:text-sm font-medium text-gray-700 mb-1">Способы оплаты</label><div class="space-y-1 text-xs sm:text-sm"><label class="flex items-center"><input type="checkbox" checked class="mr-2"> Наличные</label><label class="flex items-center"><input type="checkbox" checked class="mr-2"> Картой онлайн</label><label class="flex items-center"><input type="checkbox" checked class="mr-2"> Безналичный расчет</label></div></div>
-              <div><label class="block text-xs sm:text-sm font-medium text-gray-700 mb-1">SEO настройки</label><textarea id="site-seo" rows="3" class="w-full border px-2 sm:px-4 py-1 sm:py-2 rounded-lg text-xs sm:text-sm"></textarea></div>
               <button onclick="saveSettings()" class="bg-primary text-white px-4 sm:px-6 py-1 sm:py-2 rounded-button text-xs sm:text-sm">Сохранить</button>
             </div>
           </div>
@@ -1580,10 +1419,7 @@
         <h3 class="text-lg sm:text-xl font-bold mb-3 sm:mb-4">Вход в админ-панель</h3>
         <input type="text" id="admin-login-input" placeholder="Логин" class="w-full border px-3 sm:px-4 py-2 sm:py-3 rounded mb-2 sm:mb-3 text-sm sm:text-base">
         <input type="password" id="admin-pass-input" placeholder="Пароль" class="w-full border px-3 sm:px-4 py-2 sm:py-3 rounded mb-3 sm:mb-4 text-sm sm:text-base">
-        <div class="flex gap-2">
-          <button onclick="loginAdmin()" class="flex-1 gradient-bg text-white px-3 sm:px-4 py-2 sm:py-3 rounded-button text-sm sm:text-base">Войти</button>
-          <button onclick="document.getElementById('admin-login-modal').style.display='none'" class="flex-1 bg-gray-200 text-gray-800 px-3 sm:px-4 py-2 sm:py-3 rounded-button text-sm sm:text-base">Отмена</button>
-        </div>
+        <div class="flex gap-2"><button onclick="loginAdmin()" class="flex-1 gradient-bg text-white px-3 sm:px-4 py-2 sm:py-3 rounded-button text-sm sm:text-base">Войти</button><button onclick="document.getElementById('admin-login-modal').style.display='none'" class="flex-1 bg-gray-200 text-gray-800 px-3 sm:px-4 py-2 sm:py-3 rounded-button text-sm sm:text-base">Отмена</button></div>
       </div>
     </div>
 
@@ -1593,61 +1429,11 @@
         <h2 class="text-lg sm:text-3xl font-bold text-center text-gray-900 mb-4 sm:mb-12">Расчет стоимости монтажа</h2>
         <div class="bg-white rounded-lg shadow-hover overflow-hidden max-w-3xl mx-auto border border-gray-100">
           <div class="p-4 sm:p-8">
-            <div class="mb-4 sm:mb-6">
-              <label for="model" class="block text-gray-700 font-medium mb-1 sm:mb-2 text-xs sm:text-sm">Выберите услугу *</label>
-              <div class="relative">
-                <select id="model" class="w-full px-3 sm:px-4 py-2 sm:py-3 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-primary/50 focus:border-primary appearance-none pr-8 text-xs sm:text-sm" required>
-                  <option value="">-- Выберите услугу --</option>
-                  <option value="400">Монтаж кондиционера (до 30м²) 400 BYN</option>
-                  <option value="430">Монтаж кондиционера (35м²) 430 BYN</option>
-                  <option value="500">Монтаж кондиционера (50м²) 500 BYN</option>
-                  <option value="550">Монтаж кондиционера (70м²) 550 BYN</option>
-                  <option value="100">Только демонтаж 100 BYN</option>
-                  <option value="100">Только обслуживание 100 BYN</option>
-                  <option value="0">Модель 42 и выше (индивидуально)</option>
-                </select>
-                <div class="absolute inset-y-0 right-0 flex items-center px-2 pointer-events-none">
-                  <div class="w-4 h-4 sm:w-5 sm:h-5 flex items-center justify-center text-gray-500">
-                    <i class="ri-arrow-down-s-line"></i>
-                  </div>
-                </div>
-              </div>
-            </div>
-            <div class="mb-4 sm:mb-6" id="length-section">
-              <label for="length" class="block text-gray-700 font-medium mb-1 sm:mb-2 text-xs sm:text-sm">Длина трассы (метры)</label>
-              <div class="flex items-center">
-                <button id="decrease-length" class="px-3 sm:px-4 py-1 sm:py-2 bg-gray-200 rounded-l-lg hover:bg-gray-300 focus:outline-none btn-animate text-sm">-</button>
-                <input type="number" id="length" value="3" min="3" class="w-full px-3 sm:px-4 py-1 sm:py-2 border-y border-gray-300 text-center focus:outline-none border-none text-xs sm:text-sm" readonly>
-                <button id="increase-length" class="px-3 sm:px-4 py-1 sm:py-2 bg-gray-200 rounded-r-lg hover:bg-gray-300 focus:outline-none btn-animate text-sm">+</button>
-              </div>
-              <p class="text-xs text-gray-600 mt-1 sm:mt-2">Стандартная длина - 3 метра. Каждый дополнительный метр: +50 BYN</p>
-            </div>
-            <div class="mb-4 sm:mb-8">
-              <p class="block text-gray-700 font-medium mb-2 sm:mb-3 text-xs sm:text-sm">Дополнительные услуги</p>
-              <div class="space-y-2">
-                <label class="checkbox-container text-xs sm:text-sm">
-                  <input type="checkbox" id="demontage" name="demontage" value="100">
-                  <span class="checkbox-custom w-5 h-5 sm:w-6 sm:h-6"></span>
-                  <span class="flex-1"><span class="text-gray-700">Демонтаж старого оборудования</span><span class="ml-1 text-primary font-medium">+100 BYN</span></span>
-                </label>
-                <label class="checkbox-container text-xs sm:text-sm">
-                  <input type="checkbox" id="service" name="service" value="100">
-                  <span class="checkbox-custom w-5 h-5 sm:w-6 sm:h-6"></span>
-                  <span class="flex-1"><span class="text-gray-700">Обслуживание кондиционера</span><span class="ml-1 text-primary font-medium">+100 BYN</span></span>
-                </label>
-              </div>
-            </div>
-            <div class="bg-gradient-to-r from-gray-50 to-primary/5 p-4 sm:p-6 rounded-lg border border-primary/10">
-              <div class="flex justify-between items-center">
-                <span class="text-sm sm:text-lg font-medium text-gray-700">Итоговая стоимость:</span>
-                <span id="total-price" class="text-lg sm:text-2xl font-bold text-primary">0 BYN</span>
-              </div>
-            </div>
-            <div class="mt-4 sm:mt-6">
-              <button onclick="addCalculatorToCart()" class="w-full gradient-bg text-white px-4 sm:px-6 py-2 sm:py-3 rounded-button font-medium hover:shadow-glow transition-all duration-300 flex items-center justify-center btn-animate text-xs sm:text-base">
-                <div class="w-3 h-3 sm:w-5 sm:h-5 flex items-center justify-center mr-1 sm:mr-2"><i class="ri-shopping-cart-line"></i></div>Добавить в корзину
-              </button>
-            </div>
+            <div class="mb-4 sm:mb-6"><label for="model" class="block text-gray-700 font-medium mb-1 sm:mb-2 text-xs sm:text-sm">Выберите услугу *</label><div class="relative"><select id="model" class="w-full px-3 sm:px-4 py-2 sm:py-3 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-primary/50 focus:border-primary appearance-none pr-8 text-xs sm:text-sm" required><option value="">-- Выберите услугу --</option><option value="400">Монтаж кондиционера (до 30м²) 400 BYN</option><option value="430">Монтаж кондиционера (35м²) 430 BYN</option><option value="500">Монтаж кондиционера (50м²) 500 BYN</option><option value="550">Монтаж кондиционера (70м²) 550 BYN</option><option value="100">Только демонтаж 100 BYN</option><option value="100">Только обслуживание 100 BYN</option><option value="0">Модель 42 и выше (индивидуально)</option></select><div class="absolute inset-y-0 right-0 flex items-center px-2 pointer-events-none"><div class="w-4 h-4 sm:w-5 sm:h-5 flex items-center justify-center text-gray-500"><i class="ri-arrow-down-s-line"></i></div></div></div></div>
+            <div class="mb-4 sm:mb-6" id="length-section"><label for="length" class="block text-gray-700 font-medium mb-1 sm:mb-2 text-xs sm:text-sm">Длина трассы (метры)</label><div class="flex items-center"><button id="decrease-length" class="px-3 sm:px-4 py-1 sm:py-2 bg-gray-200 rounded-l-lg hover:bg-gray-300 focus:outline-none btn-animate text-sm">-</button><input type="number" id="length" value="3" min="3" class="w-full px-3 sm:px-4 py-1 sm:py-2 border-y border-gray-300 text-center focus:outline-none border-none text-xs sm:text-sm" readonly><button id="increase-length" class="px-3 sm:px-4 py-1 sm:py-2 bg-gray-200 rounded-r-lg hover:bg-gray-300 focus:outline-none btn-animate text-sm">+</button></div><p class="text-xs text-gray-600 mt-1 sm:mt-2">Стандартная длина - 3 метра. Каждый дополнительный метр: +50 BYN</p></div>
+            <div class="mb-4 sm:mb-8"><p class="block text-gray-700 font-medium mb-2 sm:mb-3 text-xs sm:text-sm">Дополнительные услуги</p><div class="space-y-2"><label class="checkbox-container text-xs sm:text-sm"><input type="checkbox" id="demontage" name="demontage" value="100"><span class="checkbox-custom w-5 h-5 sm:w-6 sm:h-6"></span><span class="flex-1"><span class="text-gray-700">Демонтаж старого оборудования</span><span class="ml-1 text-primary font-medium">+100 BYN</span></span></label><label class="checkbox-container text-xs sm:text-sm"><input type="checkbox" id="service" name="service" value="100"><span class="checkbox-custom w-5 h-5 sm:w-6 sm:h-6"></span><span class="flex-1"><span class="text-gray-700">Обслуживание кондиционера</span><span class="ml-1 text-primary font-medium">+100 BYN</span></span></label></div></div>
+            <div class="bg-gradient-to-r from-gray-50 to-primary/5 p-4 sm:p-6 rounded-lg border border-primary/10"><div class="flex justify-between items-center"><span class="text-sm sm:text-lg font-medium text-gray-700">Итоговая стоимость:</span><span id="total-price" class="text-lg sm:text-2xl font-bold text-primary">0 BYN</span></div></div>
+            <div class="mt-4 sm:mt-6"><button onclick="addCalculatorToCart()" class="w-full gradient-bg text-white px-4 sm:px-6 py-2 sm:py-3 rounded-button font-medium hover:shadow-glow transition-all duration-300 flex items-center justify-center btn-animate text-xs sm:text-base"><div class="w-3 h-3 sm:w-5 sm:h-5 flex items-center justify-center mr-1 sm:mr-2"><i class="ri-shopping-cart-line"></i></div>Добавить в корзину</button></div>
           </div>
         </div>
       </div>
@@ -1717,7 +1503,7 @@
         <p class="text-center text-gray-700 mb-4 sm:mb-10 text-xs sm:text-base">Свяжитесь с нами любым удобным способом</p>
         <div class="grid grid-cols-1 md:grid-cols-2 gap-4 sm:gap-8 items-start">
           <div><h3 class="text-base sm:text-xl font-bold text-gray-900 mb-3 sm:mb-6">Наши контакты</h3><div class="grid grid-cols-1 sm:grid-cols-2 gap-3 sm:gap-6"><div class="bg-white p-3 sm:p-6 rounded-lg shadow-card card-hover"><div class="w-6 h-6 sm:w-10 sm:h-10 flex items-center justify-center bg-gradient-to-br from-primary/20 to-primary/10 rounded-full text-primary mb-2 sm:mb-4 shadow-lg"><i class="ri-phone-line text-xs sm:text-base"></i></div><h4 class="text-xs sm:text-lg font-medium text-gray-900 mb-1">Телефон</h4><a href="tel:+375291050694" class="text-xs text-primary hover:underline">+375 (29) 105-06-94</a></div><div class="bg-white p-3 sm:p-6 rounded-lg shadow-card card-hover"><div class="w-6 h-6 sm:w-10 sm:h-10 flex items-center justify-center bg-gradient-to-br from-secondary/20 to-secondary/10 rounded-full text-secondary mb-2 sm:mb-4 shadow-lg"><i class="ri-mail-line text-xs sm:text-base"></i></div><h4 class="text-xs sm:text-lg font-medium text-gray-900 mb-1">Email</h4><a href="mailto:aircomfortbel@gmail.com" class="text-xs text-primary hover:underline">aircomfortbel@gmail.com</a></div><div class="bg-white p-3 sm:p-6 rounded-lg shadow-card card-hover"><div class="w-6 h-6 sm:w-10 sm:h-10 flex items-center justify-center bg-gradient-to-br from-accent/20 to-accent/10 rounded-full text-accent mb-2 sm:mb-4 shadow-lg"><i class="ri-time-line text-xs sm:text-base"></i></div><h4 class="text-xs sm:text-lg font-medium text-gray-900 mb-1">Время работы</h4><p class="text-xs text-gray-700">Пн-Пт: 9:00 - 20:00</p><p class="text-xs text-gray-700">Сб-Вс: 10:00 - 18:00</p></div><div class="bg-white p-3 sm:p-6 rounded-lg shadow-card card-hover"><div class="w-6 h-6 sm:w-10 sm:h-10 flex items-center justify-center bg-gradient-to-br from-primary/20 to-primary/10 rounded-full text-primary mb-2 sm:mb-4 shadow-lg"><i class="ri-map-pin-line text-xs sm:text-base"></i></div><h4 class="text-xs sm:text-lg font-medium text-gray-900 mb-1">Регион</h4><p class="text-xs text-gray-700">Гомель и Гомельская область</p></div></div></div>
-          <div class="bg-white p-4 sm:p-8 rounded-lg shadow-hover border border-gray-100"><h3 class="text-base sm:text-xl font-bold text-gray-900 mb-3 sm:mb-6">Оставить заявку</h3><form id="contact-form" action="https://formspree.io/f/mrbkdwwe" method="POST"><input type="hidden" id="calculator-data" name="calculator_data"><div class="mb-2 sm:mb-4"><label for="form-name" class="block text-gray-700 font-medium mb-1 text-xs">Ваше имя *</label><input type="text" id="form-name" name="name" class="w-full px-2 sm:px-4 py-1.5 sm:py-3 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-primary/50 focus:border-primary text-xs" placeholder="Иван Петров" required></div><div class="mb-2 sm:mb-4"><label for="form-phone" class="block text-gray-700 font-medium mb-1 text-xs">Телефон *</label><input type="tel" id="form-phone" name="phone" class="w-full px-2 sm:px-4 py-1.5 sm:py-3 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-primary/50 focus:border-primary text-xs" placeholder="+375 (XX) XXX-XX-XX" required></div><div class="mb-2 sm:mb-4"><label for="form-email" class="block text-gray-700 font-medium mb-1 text-xs">Email (необязательно)</label><input type="email" id="form-email" name="email" class="w-full px-2 sm:px-4 py-1.5 sm:py-3 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-primary/50 focus:border-primary text-xs" placeholder="your@email.com"></div><div class="mb-3 sm:mb-6"><label for="form-message" class="block text-gray-700 font-medium mb-1 text-xs">Сообщение</label><textarea id="form-message" name="message" rows="3" class="w-full px-2 sm:px-4 py-1.5 sm:py-3 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-primary/50 focus:border-primary text-xs" placeholder="Опишите ваш вопрос"></textarea></div><button type="submit" class="w-full gradient-bg text-white px-4 sm:px-6 py-2 sm:py-3 rounded-button font-medium hover:shadow-glow transition-all duration-300 btn-animate text-xs">Отправить заявку</button></form></div>
+          <div class="bg-white p-4 sm:p-8 rounded-lg shadow-hover border border-gray-100"><h3 class="text-base sm:text-xl font-bold text-gray-900 mb-3 sm:mb-6">Оставить заявку</h3><form id="contact-form" action="https://formspree.io/f/mrbkdwwe" method="POST"><input type="hidden" id="calculator-data" name="calculator_data"><div class="mb-2 sm:mb-4"><label for="form-name" class="block text-gray-700 font-medium mb-1 text-xs">Ваше имя *</label><input type="text" id="form-name" name="name" class="w-full px-2 sm:px-4 py-1.5 sm:py-3 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-primary/50 focus:border-primary text-xs" placeholder="Иван Петров" required></div><div class="mb-2 sm:mb-4"><label for="form-phone" class="block text-gray-700 font-medium mb-1 text-xs">Телефон *</label><input type="tel" id="form-phone" name="phone" class="w-full px-2 sm:px-4 py-1.5 sm:py-3 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-primary/50 focus:border-primary text-xs" placeholder="+375 (XX) XXX-XX-XX" required></div><div class="mb-2 sm:mb-4"><label for="form-email" class="block text-gray-700 font-medium mb-1 text-xs">Email (необязательно)</label><input type="email" id="form-email" name="email" class="w-full px-2 sm:px-4 py-1.5 sm:py-3 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-primary/50 focus:border-primary text-xs" placeholder="your@email.com"></div><div class="mb-3 sm:mb-6"><label for="form-message" class="block text-gray-700 font-medium mb-1 text-xs">Сообщение</label><textarea id="form-message" name="message" rows="3" class="w-full px-2 sm:px-4 py-1.5 sm:py-3 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-primary/50 focus:border-primary text-xs" placeholder="Опишите ваш вопрос"></textarea></div><button type="submit" class="w-full gradient-bg text-white px-4 sm:px-6 py-2 sm:py-3 rounded-button font-medium hover:shadow-glow transition-all duration-300 btn-animate text-xs">Отправить заявку</button></form><div id="contact-success" class="hidden mt-4 p-3 bg-green-100 text-green-700 rounded text-xs">Спасибо! Ваша заявка отправлена.</div><div id="contact-error" class="hidden mt-4 p-3 bg-red-100 text-red-700 rounded text-xs">Ошибка при отправке. Попробуйте позже.</div></div>
         </div>
       </div>
     </section>
@@ -1726,837 +1512,440 @@
     <footer class="bg-gradient-to-r from-gray-900 to-gray-800 text-white py-4 sm:py-8">
       <div class="max-w-7xl mx-auto px-6">
         <div class="flex flex-col md:flex-row justify-between items-center">
-          <div class="mb-3 md:mb-0">
-            <div class="flex items-center"><span class="text-base sm:text-xl font-['Pacifico'] text-white mr-2">AirComfort</span></div>
-            <p class="text-xs text-gray-400 mt-1">Профессиональная установка кондиционеров в Гомеле</p>
-            <p class="text-xs text-gray-500 mt-1">Общество с ограниченной ответственностью "ТеплоПрайм" УНП 491393506</p>
-          </div>
+          <div class="mb-3 md:mb-0"><div class="flex items-center"><span class="text-base sm:text-xl font-['Pacifico'] text-white mr-2">AirComfort</span></div><p class="text-xs text-gray-400 mt-1">Профессиональная установка кондиционеров в Гомеле</p><p class="text-xs text-gray-500 mt-1">Общество с ограниченной ответственностью "ТеплоПрайм" УНП 491393506</p></div>
           <div class="flex flex-col items-center md:items-end"><p class="text-xs text-gray-400">© 2026 AirComfort. Все права защищены.</p></div>
         </div>
       </div>
     </footer>
   </div>
 
-  <!-- Скрипты -->
   <script>
     // Мобильное меню
-    function toggleMobileMenu() {
-      const menu = document.getElementById('mobileMenu');
-      menu.classList.toggle('active');
-    }
+    function toggleMobileMenu() { document.getElementById('mobileMenu').classList.toggle('active'); }
+    function toggleMobileFilters() { document.getElementById('filterSidebar').classList.toggle('mobile-visible'); }
+    function applyFilters() { filterProducts(); if (window.innerWidth <= 768) document.getElementById('filterSidebar').classList.remove('mobile-visible'); }
 
-    // Мобильные фильтры
-    function toggleMobileFilters() {
-      const sidebar = document.getElementById('filterSidebar');
-      sidebar.classList.toggle('mobile-visible');
-    }
-
-    // Применить фильтры
-    function applyFilters() {
-      filterProducts();
-      if (window.innerWidth <= 768) {
-        document.getElementById('filterSidebar').classList.remove('mobile-visible');
-      }
-    }
-
-    // Управление FAQ
+    // FAQ
     function toggleFaq(id) {
-      const answer = document.querySelectorAll('.faq-answer')[id - 1];
-      const icon = document.querySelectorAll('.faq-icon')[id - 1];
+      const answer = document.querySelectorAll('.faq-answer')[id-1];
+      const icon = document.querySelectorAll('.faq-icon')[id-1];
       const isOpen = answer.classList.contains('open');
-      
       document.querySelectorAll('.faq-answer').forEach(el => el.classList.remove('open'));
       document.querySelectorAll('.faq-icon').forEach(el => el.classList.remove('open'));
-      
-      if (!isOpen) {
-        answer.classList.add('open');
-        icon.classList.add('open');
-      }
+      if (!isOpen) { answer.classList.add('open'); icon.classList.add('open'); }
     }
 
-    // ========== КАТАЛОГ, КОРЗИНА, АДМИНКА ==========
-    let products = [
-      { 
-        id: 1, 
-        name: 'Ballu BSO-07HN1', 
-        brand: 'Ballu',
-        price: 850, 
-        oldPrice: 950,
-        stock: 5,
-        area: 'до 20', 
-        category: 'Настенные', 
-        type: 'Настенный', 
-        inverter: 'Нет', 
-        heat: '-7', 
-        description: 'Надежный кондиционер для небольших помещений. Энергосберегающий режим.',
-        fullDescription: 'Ballu BSO-07HN1 - это надежная сплит-система для небольших помещений до 20 м². Оснащена энергосберегающим режимом, низким уровнем шума и простым управлением. Идеально подходит для спальни или небольшого офиса. Гарантия 5 лет.',
-        image: 'https://via.placeholder.com/200x150?text=Ballu+BSO-07HN1',
-        tags: ['хит'],
-        status: 'active',
-        seoTitle: 'Ballu BSO-07HN1 купить в Гомеле',
-        seoDesc: 'Ballu BSO-07HN1 - надежный кондиционер для дома и офиса',
-        createdAt: new Date().toISOString()
-      },
-      { 
-        id: 2, 
-        name: 'Electrolux EACS-07HAT/N3', 
-        brand: 'Electrolux',
-        price: 1100, 
-        oldPrice: null,
-        stock: 3,
-        area: '21-29', 
-        category: 'Настенные', 
-        type: 'Настенный', 
-        inverter: 'Да', 
-        heat: '-15', 
-        description: 'Инверторная модель с низким уровнем шума. Идеально для спальни.',
-        fullDescription: 'Electrolux EACS-07HAT/N3 - инверторный кондиционер с низким уровнем шума (22 дБ) и высокой энергоэффективностью. Обеспечивает быстрое охлаждение и обогрев, поддерживает заданную температуру с точностью до 0.5°C. Имеет функцию самодиагностики и автоматического перезапуска.',
-        image: 'https://via.placeholder.com/200x150?text=Electrolux',
-        tags: ['новинка'],
-        status: 'active',
-        seoTitle: 'Electrolux EACS-07HAT/N3 купить в Гомеле',
-        seoDesc: 'Инверторный кондиционер Electrolux с низким уровнем шума',
-        createdAt: new Date().toISOString()
-      },
-      { 
-        id: 3, 
-        name: 'LG P09EP', 
-        brand: 'LG',
-        price: 1450, 
-        oldPrice: 1650,
-        stock: 2,
-        area: '30-39', 
-        category: 'Настенные', 
-        type: 'Настенный', 
-        inverter: 'Да', 
-        heat: '-10', 
-        description: 'Современный дизайн, Wi-Fi управление, мощный обогрев.',
-        fullDescription: 'LG P09EP - современный кондиционер с Wi-Fi управлением через приложение. Имеет стильный дизайн, мощный обогрев до -10°C, низкое энергопотребление. Оснащен плазменным фильтром для очистки воздуха от аллергенов и бактерий.',
-        image: 'https://via.placeholder.com/200x150?text=LG+P09EP',
-        tags: ['распродажа'],
-        status: 'active',
-        seoTitle: 'LG P09EP купить в Гомеле',
-        seoDesc: 'Кондиционер LG с Wi-Fi управлением',
-        createdAt: new Date().toISOString()
-      },
-      { 
-        id: 4, 
-        name: 'Mitsubishi MSZ-LN25VG', 
-        brand: 'Mitsubishi',
-        price: 2450, 
-        oldPrice: null,
-        stock: 1,
-        area: '40-49', 
-        category: 'Настенные', 
-        type: 'Настенный', 
-        inverter: 'Да', 
-        heat: '-20', 
-        description: 'Премиум-класс, максимальная энергоэффективность, тихая работа.',
-        fullDescription: 'Mitsubishi MSZ-LN25VG - премиальная сплит-система с максимальной энергоэффективностью класса A+++. Оснащена 3D-датчиком движения для направления потока воздуха, имеет уровень шоса всего 19 дБ. Работает на обогрев до -20°C. Управление со смартфона.',
-        image: 'https://via.placeholder.com/200x150?text=Mitsubishi',
-        tags: [],
-        status: 'active',
-        seoTitle: 'Mitsubishi MSZ-LN25VG купить в Гомеле',
-        seoDesc: 'Премиальный кондиционер Mitsubishi',
-        createdAt: new Date().toISOString()
-      },
-      { 
-        id: 5, 
-        name: 'Канальный кондиционер', 
-        brand: 'General',
-        price: 3200, 
-        oldPrice: null,
-        stock: 4,
-        area: '70-99', 
-        category: 'Канальные', 
-        type: 'Канальный', 
-        inverter: 'Да', 
-        heat: '-25', 
-        description: 'Для скрытого монтажа, равномерное распределение воздуха.',
-        fullDescription: 'Канальный кондиционер предназначен для скрытого монтажа за подвесным потолком. Обеспечивает равномерное распределение воздуха по помещению. Идеально подходит для офисов, магазинов, ресторанов. Мощность достаточна для помещений до 100 м².',
-        image: 'https://via.placeholder.com/200x150?text=Duct',
-        tags: [],
-        status: 'active',
-        seoTitle: 'Канальный кондиционер купить в Гомеле',
-        seoDesc: 'Канальный кондиционер для скрытого монтажа',
-        createdAt: new Date().toISOString()
-      },
-      { 
-        id: 6, 
-        name: 'Мобильный кондиционер', 
-        brand: 'Zanussi',
-        price: 620, 
-        oldPrice: 720,
-        stock: 8,
-        area: 'до 20', 
-        category: 'Мобильные', 
-        type: 'Мобильный', 
-        inverter: 'Нет', 
-        heat: '-7', 
-        description: 'Мобильный моноблок, не требует установки. Подходит для аренды.',
-        fullDescription: 'Мобильный кондиционер - идеальное решение для арендованных помещений или там, где невозможна установка стационарной сплит-системы. Не требует монтажа, достаточно вывести гибкий воздуховод в окно. Прост в перемещении и обслуживании.',
-        image: 'https://via.placeholder.com/200x150?text=Mobile',
-        tags: ['хит', 'распродажа'],
-        status: 'active',
-        seoTitle: 'Мобильный кондиционер купить в Гомеле',
-        seoDesc: 'Мобильный кондиционер не требующий установки',
-        createdAt: new Date().toISOString()
-      },
-    ];
+    // Данные
+    let products = [{ id:1, name:'Ballu BSO-07HN1', brand:'Ballu', price:850, oldPrice:950, stock:5, area:'до 20', category:'Настенные', type:'Настенный', inverter:'Нет', heat:'-7', description:'Надежный кондиционер для небольших помещений.', fullDescription:'Ballu BSO-07HN1 - надежная сплит-система для помещений до 20 м². Энергосберегающий режим, низкий шум.', image:'https://via.placeholder.com/200x150?text=Ballu+BSO-07HN1', tags:['хит'], status:'active', createdAt:new Date().toISOString() },
+                    { id:2, name:'Electrolux EACS-07HAT/N3', brand:'Electrolux', price:1100, oldPrice:null, stock:3, area:'21-29', category:'Настенные', type:'Настенный', inverter:'Да', heat:'-15', description:'Инверторная модель с низким уровнем шума.', fullDescription:'Electrolux EACS-07HAT/N3 - инверторный кондиционер, 22 дБ, высокая энергоэффективность.', image:'https://via.placeholder.com/200x150?text=Electrolux', tags:['новинка'], status:'active', createdAt:new Date().toISOString() },
+                    { id:3, name:'LG P09EP', brand:'LG', price:1450, oldPrice:1650, stock:2, area:'30-39', category:'Настенные', type:'Настенный', inverter:'Да', heat:'-10', description:'Wi-Fi управление, мощный обогрев.', fullDescription:'LG P09EP - современный кондиционер с Wi-Fi, плазменный фильтр.', image:'https://via.placeholder.com/200x150?text=LG+P09EP', tags:['распродажа'], status:'active', createdAt:new Date().toISOString() },
+                    { id:4, name:'Mitsubishi MSZ-LN25VG', brand:'Mitsubishi', price:2450, oldPrice:null, stock:1, area:'40-49', category:'Настенные', type:'Настенный', inverter:'Да', heat:'-20', description:'Премиум-класс, тихая работа.', fullDescription:'Mitsubishi MSZ-LN25VG - премиум, A+++, 19 дБ, обогрев до -20°C.', image:'https://via.placeholder.com/200x150?text=Mitsubishi', tags:[], status:'active', createdAt:new Date().toISOString() },
+                    { id:5, name:'Канальный кондиционер', brand:'General', price:3200, oldPrice:null, stock:4, area:'70-99', category:'Канальные', type:'Канальный', inverter:'Да', heat:'-25', description:'Для скрытого монтажа.', fullDescription:'Канальный кондиционер для скрытого монтажа, до 100 м².', image:'https://via.placeholder.com/200x150?text=Duct', tags:[], status:'active', createdAt:new Date().toISOString() },
+                    { id:6, name:'Мобильный кондиционер', brand:'Zanussi', price:620, oldPrice:720, stock:8, area:'до 20', category:'Мобильные', type:'Мобильный', inverter:'Нет', heat:'-7', description:'Мобильный моноблок, не требует установки.', fullDescription:'Мобильный кондиционер - идеальное решение для аренды.', image:'https://via.placeholder.com/200x150?text=Mobile', tags:['хит','распродажа'], status:'active', createdAt:new Date().toISOString() }];
+    let brands = [{ id:1, name:'Ballu' }, { id:2, name:'Electrolux' }, { id:3, name:'LG' }, { id:4, name:'Mitsubishi' }, { id:5, name:'Samsung' }, { id:6, name:'Panasonic' }];
+    let cart = [], orders = [], adminCredentials = { login:'admin', password:'admin123' }, selectedProducts = new Set(), actionLogs = [], currentPage = 1, itemsPerPage = 6;
+    let visitCount = 0, totalVisits = 0;
 
-    let brands = [
-      { id: 1, name: 'Ballu' },
-      { id: 2, name: 'Electrolux' },
-      { id: 3, name: 'LG' },
-      { id: 4, name: 'Mitsubishi' },
-      { id: 5, name: 'Samsung' },
-      { id: 6, name: 'Panasonic' },
-      { id: 7, name: 'Toshiba' },
-      { id: 8, name: 'Daikin' },
-    ];
-
-    let cart = [];
-    let orders = [];
-    let adminCredentials = { login: 'admin', password: 'admin123' };
-    let selectedProducts = new Set();
-    let actionLogs = [];
-    let visitCount = 0;
-
-    // Загрузка/сохранение в localStorage
-    function loadProducts() {
-      const stored = localStorage.getItem('aircom_products');
-      if (stored) products = JSON.parse(stored);
-    }
-    function saveProducts() {
-      localStorage.setItem('aircom_products', JSON.stringify(products));
-      addLog('product', 'Обновлен список товаров');
-    }
-    function loadBrands() {
-      const stored = localStorage.getItem('aircom_brands');
-      if (stored) brands = JSON.parse(stored);
-      renderBrands();
-      updateBrandSelects();
-    }
-    function saveBrands() {
-      localStorage.setItem('aircom_brands', JSON.stringify(brands));
-      renderBrands();
-      updateBrandSelects();
-      addLog('brand', 'Обновлен список брендов');
-    }
+    // Загрузка/сохранение
+    function loadProducts() { const s=localStorage.getItem('aircom_products'); if(s) products=JSON.parse(s); }
+    function saveProducts() { localStorage.setItem('aircom_products', JSON.stringify(products)); addLog('product','Обновлен список товаров'); }
+    function loadBrands() { const s=localStorage.getItem('aircom_brands'); if(s) brands=JSON.parse(s); renderBrands(); updateBrandSelects(); }
+    function saveBrands() { localStorage.setItem('aircom_brands', JSON.stringify(brands)); renderBrands(); updateBrandSelects(); addLog('brand','Обновлен список брендов'); }
     function loadVisits() {
       const today = new Date().toDateString();
-      const stored = localStorage.getItem('aircom_visits');
-      if (stored) {
-        const visits = JSON.parse(stored);
-        if (visits.date === today) {
-          visitCount = visits.count;
-        } else {
-          visitCount = visits.count + 1;
-          localStorage.setItem('aircom_visits', JSON.stringify({ date: today, count: visitCount }));
-        }
-      } else {
-        visitCount = 1;
-        localStorage.setItem('aircom_visits', JSON.stringify({ date: today, count: 1 }));
-      }
+      let visits = JSON.parse(localStorage.getItem('aircom_visits') || '{"date":"","today":0,"total":0}');
+      if (visits.date !== today) { visitCount = 1; totalVisits = visits.total + 1; } 
+      else { visitCount = visits.today + 1; totalVisits = visits.total + 1; }
+      localStorage.setItem('aircom_visits', JSON.stringify({ date: today, today: visitCount, total: totalVisits }));
       document.getElementById('today-visits').textContent = visitCount;
+      document.getElementById('total-visits').textContent = totalVisits;
     }
-    function loadOrders() {
-      const stored = localStorage.getItem('aircom_orders');
-      if (stored) orders = JSON.parse(stored);
-      updateOrderStats();
-      updateDashboard();
+    function loadOrders() { const s=localStorage.getItem('aircom_orders'); if(s) orders=JSON.parse(s); updateOrderStats(); updateDashboard(); }
+    function saveOrders() { localStorage.setItem('aircom_orders', JSON.stringify(orders)); updateOrderStats(); updateDashboard(); addLog('order','Обновлен список заказов'); }
+    function loadCart() { const s=localStorage.getItem('aircom_cart'); if(s) cart=JSON.parse(s); updateCartBadge(); }
+    function saveCart() { localStorage.setItem('aircom_cart', JSON.stringify(cart)); updateCartBadge(); }
+    function loadLogs() { const s=localStorage.getItem('aircom_logs'); if(s) actionLogs=JSON.parse(s); }
+    function saveLogs() { localStorage.setItem('aircom_logs', JSON.stringify(actionLogs)); }
+    function addLog(t,a) { actionLogs.unshift({type:t, action:a, time:new Date().toLocaleString(), user:'admin'}); if(actionLogs.length>100) actionLogs.pop(); saveLogs(); }
+    function updateCartBadge() { const c=cart.reduce((a,i)=>a+i.quantity,0), b=document.getElementById('cart-count'); if(b) { if(c>0) { b.classList.remove('hidden'); b.textContent=c; } else b.classList.add('hidden'); } }
+    function updateOrderStats() { 
+      const to=document.getElementById('total-orders'), ta=document.getElementById('total-amount'); 
+      if(to&&ta) { to.textContent=orders.length; ta.textContent=orders.reduce((a,o)=>a+o.total,0); } 
     }
-    function saveOrders() {
-      localStorage.setItem('aircom_orders', JSON.stringify(orders));
-      updateOrderStats();
-      updateDashboard();
-      addLog('order', 'Обновлен список заказов');
-    }
-    function loadCart() {
-      const stored = localStorage.getItem('aircom_cart');
-      if (stored) cart = JSON.parse(stored);
-      updateCartBadge();
-    }
-    function saveCart() {
-      localStorage.setItem('aircom_cart', JSON.stringify(cart));
-      updateCartBadge();
-    }
-    function loadLogs() {
-      const stored = localStorage.getItem('aircom_logs');
-      if (stored) actionLogs = JSON.parse(stored);
-    }
-    function saveLogs() {
-      localStorage.setItem('aircom_logs', JSON.stringify(actionLogs));
-    }
-    function addLog(type, action) {
-      actionLogs.unshift({ type, action, time: new Date().toLocaleString(), user: 'admin' });
-      if (actionLogs.length > 100) actionLogs.pop();
-      saveLogs();
-    }
-    function updateCartBadge() {
-      const count = cart.reduce((acc, item) => acc + item.quantity, 0);
-      const badge = document.getElementById('cart-count');
-      if (badge) {
-        if (count > 0) {
-          badge.classList.remove('hidden');
-          badge.textContent = count;
-        } else {
-          badge.classList.add('hidden');
-        }
-      }
-    }
-    
-    function updateOrderStats() {
-      const totalOrders = document.getElementById('total-orders');
-      const totalAmount = document.getElementById('total-amount');
-      if (totalOrders && totalAmount) {
-        totalOrders.textContent = orders.length;
-        const sum = orders.reduce((acc, order) => acc + order.total, 0);
-        totalAmount.textContent = sum;
-      }
-    }
-
     function updateDashboard() {
-      const today = new Date().toDateString();
-      const todayOrders = orders.filter(o => new Date(o.date).toDateString() === today);
-      const todayRevenue = todayOrders.reduce((sum, o) => sum + o.total, 0);
-      
-      document.getElementById('dashboard-today-revenue').textContent = todayRevenue + ' BYN';
-      document.getElementById('dashboard-today-orders').textContent = todayOrders.length;
+      const today=new Date().toDateString(), to=orders.filter(o=>new Date(o.date).toDateString()===today);
+      document.getElementById('dashboard-today-revenue').textContent = to.reduce((s,o)=>s+o.total,0) + ' BYN';
+      document.getElementById('dashboard-today-orders').textContent = to.length;
       document.getElementById('dashboard-total-products').textContent = products.length;
-      
-      const avg = orders.length ? Math.round(orders.reduce((sum, o) => sum + o.total, 0) / orders.length) : 0;
+      const avg = orders.length ? Math.round(orders.reduce((s,o)=>s+o.total,0)/orders.length) : 0;
       document.getElementById('dashboard-average-order').textContent = avg + ' BYN';
-      
-      document.getElementById('stats-new').textContent = orders.filter(o => o.status === 'новый').length;
-      document.getElementById('stats-processing').textContent = orders.filter(o => o.status === 'в обработке').length;
-      document.getElementById('stats-completed').textContent = orders.filter(o => o.status === 'выполнен').length;
-      document.getElementById('stats-cancelled').textContent = orders.filter(o => o.status === 'отменен').length;
-      
-      const productSales = {};
-      orders.forEach(o => o.items.forEach(i => productSales[i.name] = (productSales[i.name] || 0) + i.quantity));
-      const topProducts = Object.entries(productSales).sort((a, b) => b[1] - a[1]).slice(0, 5);
-      const topHtml = topProducts.map(([name, count]) => `<div class="flex justify-between"><span>${name}</span><span class="font-bold">${count} шт</span></div>`).join('');
-      document.getElementById('dashboard-top-products').innerHTML = topHtml || '<p class="text-gray-500">Нет данных</p>';
-      
-      const recentHtml = actionLogs.slice(0, 5).map(log => `<div class="text-xs border-b pb-1"><span class="text-gray-500">${log.time}</span> - ${log.action}</div>`).join('');
-      document.getElementById('recent-actions').innerHTML = recentHtml || '<p class="text-gray-500">Нет действий</p>';
+      document.getElementById('stats-new').textContent = orders.filter(o=>o.status==='новый').length;
+      document.getElementById('stats-processing').textContent = orders.filter(o=>o.status==='в обработке').length;
+      document.getElementById('stats-completed').textContent = orders.filter(o=>o.status==='выполнен').length;
+      document.getElementById('stats-cancelled').textContent = orders.filter(o=>o.status==='отменен').length;
+      const sales={}; orders.forEach(o=>o.items.forEach(i=>sales[i.name]=(sales[i.name]||0)+i.quantity));
+      const top=Object.entries(sales).sort((a,b)=>b[1]-a[1]).slice(0,5);
+      document.getElementById('dashboard-top-products').innerHTML = top.map(([n,c])=>`<div class="flex justify-between"><span>${n}</span><span class="font-bold">${c} шт</span></div>`).join('') || '<p class="text-gray-500">Нет данных</p>';
+      document.getElementById('recent-actions').innerHTML = actionLogs.slice(0,5).map(l=>`<div class="text-xs border-b pb-1"><span class="text-gray-500">${l.time}</span> - ${l.action}</div>`).join('') || '<p class="text-gray-500">Нет действий</p>';
     }
+    function renderBrands() { const bl=document.getElementById('brands-list'); if(bl) bl.innerHTML = brands.map(b=>`<button onclick="filterByBrand('${b.name}')" class="brand-chip px-2 sm:px-3 py-1 bg-gray-100 hover:bg-primary hover:text-white rounded-full text-xs transition-colors">${b.name}</button>`).join(''); }
+    function updateBrandSelects() { ['edit-brand','new-brand'].forEach(id=>{ const s=document.getElementById(id); if(s) s.innerHTML='<option value="">Без бренда</option>'+brands.map(b=>`<option value="${b.name}">${b.name}</option>`).join(''); }); }
+    function toggleBrandsCollapse() { const bl=document.getElementById('brands-list'), a=document.getElementById('brands-arrow'); if(bl.style.display==='none') { bl.style.display='flex'; a.style.transform='rotate(180deg)'; } else { bl.style.display='none'; a.style.transform='rotate(0deg)'; } }
+    function filterByBrand(b) { const si=document.getElementById('search-input'); if(si) { si.value=b; filterProducts(); } }
 
-    function renderBrands() {
-      const brandsList = document.getElementById('brands-list');
-      if (!brandsList) return;
-      brandsList.innerHTML = brands.map(b => `<button onclick="filterByBrand('${b.name}')" class="brand-chip px-2 sm:px-3 py-1 bg-gray-100 hover:bg-primary hover:text-white rounded-full text-xs transition-colors">${b.name}</button>`).join('');
-    }
-
-    function updateBrandSelects() {
-      const selects = ['edit-brand', 'new-brand'];
-      selects.forEach(id => {
-        const select = document.getElementById(id);
-        if (select) {
-          select.innerHTML = '<option value="">Без бренда</option>' + brands.map(b => `<option value="${b.name}">${b.name}</option>`).join('');
-        }
-      });
-    }
-
-    function toggleBrandsCollapse() {
-      const brandsList = document.getElementById('brands-list');
-      const arrow = document.getElementById('brands-arrow');
-      if (brandsList.style.display === 'none') {
-        brandsList.style.display = 'flex';
-        arrow.style.transform = 'rotate(180deg)';
-      } else {
-        brandsList.style.display = 'none';
-        arrow.style.transform = 'rotate(0deg)';
-      }
-    }
-
-    function filterByBrand(brand) {
-      const searchInput = document.getElementById('search-input');
-      if (searchInput) {
-        searchInput.value = brand;
-        filterProducts();
-      }
-    }
-
-    function switchAdminTab(tab) {
-      const tabs = ['dashboard', 'products', 'orders', 'brands', 'customers', 'reports', 'settings', 'logs'];
-      tabs.forEach(t => {
-        const el = document.getElementById(`admin-${t}-tab`);
-        const btn = document.getElementById(`tab-${t}-btn`);
-        if (el) el.classList.add('hidden');
-        if (btn) {
-          btn.classList.remove('text-primary', 'border-b-2', 'border-primary');
-          btn.classList.add('text-gray-500');
-        }
-      });
-      
-      const currentEl = document.getElementById(`admin-${tab}-tab`);
-      const currentBtn = document.getElementById(`tab-${tab}-btn`);
-      if (currentEl) currentEl.classList.remove('hidden');
-      if (currentBtn) {
-        currentBtn.classList.remove('text-gray-500');
-        currentBtn.classList.add('text-primary', 'border-b-2', 'border-primary');
-      }
-      
-      if (tab === 'products') renderAdminProducts();
-      if (tab === 'orders') renderAdminOrders();
-      if (tab === 'brands') renderAdminBrands();
-      if (tab === 'logs') renderLogs();
-    }
-
-    function renderAdminBrands() {
-      const list = document.getElementById('brands-admin-list');
-      if (!list) return;
-      list.innerHTML = brands.map(b => `<div class="flex justify-between items-center p-2 border rounded mb-2"><span class="text-xs sm:text-sm">${b.name}</span><div><button onclick="editBrand(${b.id})" class="text-blue-600 mr-2 text-xs">✏️</button><button onclick="deleteBrand(${b.id})" class="text-red-600 text-xs">🗑️</button></div></div>`).join('');
-    }
-
-    function addBrand() {
-      const name = prompt('Название бренда:');
-      if (!name) return;
-      const newId = Math.max(...brands.map(b => b.id), 0) + 1;
-      brands.push({ id: newId, name });
-      saveBrands();
-      renderAdminBrands();
-      addLog('brand', 'Добавлен бренд ' + name);
-    }
-
-    function editBrand(id) {
-      const brand = brands.find(b => b.id === id);
-      if (!brand) return;
-      const name = prompt('Новое название:', brand.name);
-      if (name) {
-        brand.name = name;
-        saveBrands();
-        renderAdminBrands();
-        addLog('brand', 'Изменен бренд ' + name);
-      }
-    }
-
-    function deleteBrand(id) {
-      if (confirm('Удалить бренд?')) {
-        brands = brands.filter(b => b.id !== id);
-        saveBrands();
-        renderAdminBrands();
-        addLog('brand', 'Удален бренд');
-      }
-    }
-
+    // Фильтрация и пагинация
     function filterProducts() {
-      const searchText = document.getElementById('search-input')?.value.toLowerCase() || '';
-      const areas = Array.from(document.querySelectorAll('#catalog input[type="checkbox"][id^="area"]:checked')).map(cb => cb.value);
-      const cats = Array.from(document.querySelectorAll('#catalog input[type="checkbox"][id^="cat"]:checked')).map(cb => cb.value);
-      const types = Array.from(document.querySelectorAll('#catalog input[type="checkbox"][id^="type"]:checked')).map(cb => cb.value);
-      const heats = Array.from(document.querySelectorAll('#catalog input[type="checkbox"][id^="heat"]:checked')).map(cb => cb.value);
+      const search = document.getElementById('search-input')?.value.toLowerCase() || '';
+      const areas = Array.from(document.querySelectorAll('#catalog input[type="checkbox"][id^="area"]:checked')).map(cb=>cb.value);
+      const types = Array.from(document.querySelectorAll('#catalog input[type="checkbox"][id^="type"]:checked')).map(cb=>cb.value);
+      const heats = Array.from(document.querySelectorAll('#catalog input[type="checkbox"][id^="heat"]:checked')).map(cb=>cb.value);
       const inverter = document.querySelector('input[name="inverter"]:checked')?.value;
-      const minPrice = parseInt(document.getElementById('minPrice').value) || 0;
-      const maxPrice = parseInt(document.getElementById('maxPrice').value) || 20929;
-
-      const filtered = products.filter(p => {
-        if (searchText) {
-          const matchesSearch = p.name.toLowerCase().includes(searchText) || (p.description && p.description.toLowerCase().includes(searchText)) || (p.brand && p.brand.toLowerCase().includes(searchText)) || (p.category && p.category.toLowerCase().includes(searchText));
-          if (!matchesSearch) return false;
-        }
+      const min = parseInt(document.getElementById('minPrice').value)||0, max = parseInt(document.getElementById('maxPrice').value)||20929;
+      
+      let filtered = products.filter(p => {
+        if (search && !p.name.toLowerCase().includes(search) && !(p.description?.toLowerCase().includes(search)) && !(p.brand?.toLowerCase().includes(search))) return false;
         if (areas.length && !areas.includes(p.area)) return false;
-        if (cats.length && !cats.includes(p.category)) return false;
         if (types.length && !types.includes(p.type)) return false;
         if (heats.length && !heats.includes(p.heat)) return false;
-        if (inverter && inverter !== '' && p.inverter !== inverter) return false;
-        if (p.price < minPrice || p.price > maxPrice) return false;
+        if (inverter && inverter!=='' && p.inverter!==inverter) return false;
+        if (p.price < min || p.price > max) return false;
         return true;
       });
+      
+      currentPage = 1;
       renderProducts(filtered);
     }
-
     function renderProducts(productArray) {
       const grid = document.getElementById('product-grid');
       if (!grid) return;
+      const start = (currentPage - 1) * itemsPerPage;
+      const end = start + itemsPerPage;
+      const paginated = productArray.slice(start, end);
+      
       grid.innerHTML = '';
-      productArray.forEach(p => {
+      paginated.forEach(p => {
         const priceHtml = p.oldPrice ? `<span class="text-gray-400 line-through text-xs mr-1">${p.oldPrice} BYN</span>` : '';
-        const tagsHtml = p.tags?.map(t => `<span class="inline-block bg-${t === 'хит' ? 'red' : t === 'новинка' ? 'green' : 'orange'}-100 text-${t === 'хит' ? 'red' : t === 'новинка' ? 'green' : 'orange'}-800 text-xs px-1.5 py-0.5 rounded-full mr-1">${t}</span>`).join('') || '';
+        const tagsHtml = p.tags?.map(t => `<span class="inline-block bg-${t==='хит'?'red':t==='новинка'?'green':'orange'}-100 text-${t==='хит'?'red':t==='новинка'?'green':'orange'}-800 text-xs px-1.5 py-0.5 rounded-full mr-1">${t}</span>`).join('') || '';
         const card = document.createElement('div');
         card.className = 'bg-white rounded-lg shadow-card overflow-hidden product-card';
         card.onclick = () => openProductPage(p.id);
-        card.innerHTML = `<div class="relative"><img src="${p.image}" alt="${p.name}" class="w-full h-28 sm:h-40 object-cover">${p.stock < 3 ? '<span class="absolute top-1 right-1 bg-red-500 text-white text-xs px-1.5 py-0.5 rounded-full">Мало</span>' : ''}</div><div class="p-2 sm:p-4 flex-grow"><div class="mb-1">${tagsHtml}</div><h3 class="font-bold text-xs sm:text-base mb-1">${p.name}</h3><div class="mb-1">${priceHtml}<span class="text-primary font-bold text-sm sm:text-lg">${p.price} BYN</span></div><p class="text-xs text-gray-600 mb-2 product-description">${p.description || 'Нет описания'}</p><button onclick="event.stopPropagation(); addToCart(${p.id})" class="w-full gradient-bg text-white px-2 py-1 sm:px-3 sm:py-1.5 rounded-button btn-animate text-xs">В корзину</button></div>`;
+        card.innerHTML = `<div class="relative"><img src="${p.image}" alt="${p.name}" class="w-full h-28 sm:h-40 object-cover"></div><div class="p-2 sm:p-4 flex-grow"><div class="mb-1">${tagsHtml}</div><h3 class="font-bold text-xs sm:text-base mb-1">${p.name}</h3><div class="mb-1">${priceHtml}<span class="text-primary font-bold text-sm sm:text-lg">${p.price} BYN</span></div><p class="text-xs text-gray-600 mb-2 product-description">${p.description||''}</p><button onclick="event.stopPropagation(); addToCart(${p.id})" class="w-full gradient-bg text-white px-2 py-1 sm:px-3 sm:py-1.5 rounded-button btn-animate text-xs">В корзину</button></div>`;
         grid.appendChild(card);
       });
+      
+      const totalPages = Math.ceil(productArray.length / itemsPerPage);
+      let paginationHtml = '';
+      for (let i=1; i<=totalPages; i++) {
+        paginationHtml += `<button onclick="changePage(${i})" class="${i===currentPage ? 'active' : ''}">${i}</button>`;
+      }
+      document.getElementById('pagination').innerHTML = paginationHtml;
     }
+    function changePage(page) { currentPage = page; filterProducts(); }
 
     function openProductPage(id) {
       window.location.hash = `product-${id}`;
-      const prod = products.find(p => p.id === id);
-      if (!prod) return;
+      const p = products.find(p=>p.id===id);
+      if (!p) return;
       const modal = document.getElementById('product-modal');
-      const priceHtml = prod.oldPrice ? `<span class="text-gray-400 line-through text-sm mr-2">${prod.oldPrice} BYN</span>` : '';
-      const tagsHtml = prod.tags?.map(t => `<span class="inline-block bg-${t === 'хит' ? 'red' : t === 'новинка' ? 'green' : 'orange'}-100 text-${t === 'хит' ? 'red' : t === 'новинка' ? 'green' : 'orange'}-800 text-xs px-2 py-1 rounded-full mr-2">${t}</span>`).join('') || '';
-      document.getElementById('product-modal-detail').innerHTML = `<img src="${prod.image}" alt="${prod.name}" class="w-full h-32 sm:h-48 object-cover rounded mb-3"><div class="mb-2">${tagsHtml}</div><h3 class="text-base sm:text-xl font-bold mb-2">${prod.name}</h3><div class="mb-2">${priceHtml}<span class="text-primary text-base sm:text-xl font-bold">${prod.price} BYN</span></div><p class="text-xs sm:text-sm text-gray-700 mb-3">${prod.fullDescription || prod.description || 'Нет описания'}</p><ul class="text-xs text-gray-600 space-y-1"><li><span class="font-medium">Бренд:</span> ${prod.brand || 'Не указан'}</li><li><span class="font-medium">Площадь:</span> ${prod.area} м²</li><li><span class="font-medium">Категория:</span> ${prod.category}</li><li><span class="font-medium">Тип:</span> ${prod.type}</li><li><span class="font-medium">Инвертор:</span> ${prod.inverter}</li><li><span class="font-medium">Обогрев зимой:</span> ${prod.heat}°C</li><li><span class="font-medium">Наличие:</span> ${prod.stock > 0 ? 'В наличии (' + prod.stock + ' шт)' : 'Нет в наличии'}</li></ul><button onclick="addToCart(${prod.id})" class="mt-3 gradient-bg text-white px-3 py-1.5 rounded-button btn-animate w-full text-sm">В корзину</button>`;
+      const priceHtml = p.oldPrice ? `<span class="text-gray-400 line-through text-sm mr-2">${p.oldPrice} BYN</span>` : '';
+      const tagsHtml = p.tags?.map(t=>`<span class="inline-block bg-${t==='хит'?'red':t==='новинка'?'green':'orange'}-100 text-${t==='хит'?'red':t==='новинка'?'green':'orange'}-800 text-xs px-2 py-1 rounded-full mr-2">${t}</span>`).join('')||'';
+      document.getElementById('product-modal-detail').innerHTML = `
+        <div class="grid md:grid-cols-2 gap-6">
+          <div><img src="${p.image}" alt="${p.name}" class="w-full rounded-lg shadow-lg"></div>
+          <div><div class="mb-3">${tagsHtml}</div><h2 class="text-2xl font-bold mb-3">${p.name}</h2><div class="mb-4">${priceHtml}<span class="text-primary text-3xl font-bold">${p.price} BYN</span></div>
+          <div class="prose max-w-none mb-4"><p class="text-gray-700">${p.fullDescription||p.description}</p></div>
+          <div class="bg-gray-50 p-4 rounded-lg mb-4"><h3 class="font-bold mb-2">Характеристики:</h3><ul class="space-y-1 text-sm"><li><span class="font-medium">Бренд:</span> ${p.brand||'Не указан'}</li><li><span class="font-medium">Площадь:</span> ${p.area} м²</li><li><span class="font-medium">Категория:</span> ${p.category}</li><li><span class="font-medium">Тип:</span> ${p.type}</li><li><span class="font-medium">Инвертор:</span> ${p.inverter}</li><li><span class="font-medium">Обогрев зимой:</span> ${p.heat}°C</li></ul></div>
+          <button onclick="addToCart(${p.id})" class="w-full gradient-bg text-white px-6 py-3 rounded-button btn-animate text-lg font-medium">В корзину</button></div>
+        </div>`;
       modal.style.display = 'flex';
     }
-
-    function checkProductHash() {
-      if (window.location.hash.startsWith('#product-')) {
-        const id = parseInt(window.location.hash.replace('#product-', ''));
-        openProductPage(id);
-      }
-    }
-
+    function checkProductHash() { if (window.location.hash.startsWith('#product-')) openProductPage(parseInt(window.location.hash.replace('#product-',''))); }
     function resetFilters() {
-      document.querySelectorAll('#catalog input[type="checkbox"]').forEach(cb => cb.checked = false);
-      document.querySelectorAll('#catalog input[type="radio"]').forEach(r => { if (r.value === '') r.checked = true; });
-      document.getElementById('minPrice').value = 0;
-      document.getElementById('maxPrice').value = 20929;
-      document.getElementById('priceRange').value = 20929;
-      document.getElementById('search-input').value = '';
-      filterProducts();
+      document.querySelectorAll('#catalog input[type="checkbox"]').forEach(cb=>cb.checked=false);
+      document.querySelectorAll('#catalog input[type="radio"]').forEach(r=>{if(r.value==='') r.checked=true;});
+      document.getElementById('minPrice').value=0; document.getElementById('maxPrice').value=20929; document.getElementById('priceRange').value=20929;
+      document.getElementById('search-input').value=''; filterProducts();
     }
 
-    function addToCart(productId) {
-      const prod = products.find(p => p.id === productId);
-      if (!prod) return;
-      if (prod.stock < 1) { alert('Товара нет в наличии'); return; }
-      const existing = cart.find(item => item.id === productId);
-      if (existing) {
-        if (existing.quantity < prod.stock) existing.quantity++;
-        else { alert('Достигнуто максимальное количество на складе'); return; }
-      } else cart.push({ ...prod, quantity: 1 });
-      saveCart();
-      alert(`${prod.name} добавлен в корзину`);
+    // Корзина
+    function addToCart(id) {
+      const p=products.find(p=>p.id===id);
+      if(!p) return;
+      if(p.stock<1) { alert('Товара нет в наличии'); return; }
+      const ex=cart.find(i=>i.id===id);
+      if(ex) { if(ex.quantity<p.stock) ex.quantity++; else { alert('Максимальное количество'); return; } }
+      else cart.push({...p, quantity:1});
+      saveCart(); alert(`${p.name} добавлен в корзину`);
     }
-
     function addCalculatorToCart() {
-      const modelSelect = document.getElementById('model');
-      if (!modelSelect || !modelSelect.value) { alert('Пожалуйста, выберите услугу'); return; }
-      const modelText = modelSelect.options[modelSelect.selectedIndex].text;
-      const length = parseInt(document.getElementById('length').value);
-      const demontage = document.getElementById('demontage').checked;
-      const service = document.getElementById('service').checked;
-      let total = parseInt(modelSelect.value);
-      if (modelSelect.value !== '100' || !modelText.includes('Только')) total += Math.max(0, length - 3) * 50;
-      if (demontage) total += 100;
-      if (service) total += 100;
-      const calcItem = { id: 'calc-' + Date.now(), name: modelText + (demontage ? ' + демонтаж' : '') + (service ? ' + обслуживание' : ''), price: total, quantity: 1, image: 'https://via.placeholder.com/200x150?text=Service' };
-      const existing = cart.find(item => item.id === calcItem.id);
-      if (existing) existing.quantity++; else cart.push(calcItem);
-      saveCart();
-      alert('Услуга добавлена в корзину');
+      const ms=document.getElementById('model');
+      if(!ms||!ms.value) { alert('Выберите услугу'); return; }
+      const mt=ms.options[ms.selectedIndex].text, l=parseInt(document.getElementById('length').value), d=document.getElementById('demontage').checked, s=document.getElementById('service').checked;
+      let total=parseInt(ms.value);
+      if(ms.value!=='100'||!mt.includes('Только')) total+=Math.max(0,l-3)*50;
+      if(d) total+=100; if(s) total+=100;
+      const ci={ id:'calc-'+Date.now(), name:mt+(d?' + демонтаж':'')+(s?' + обслуживание':''), price:total, quantity:1, image:'https://via.placeholder.com/200x150?text=Service' };
+      const ex=cart.find(i=>i.id===ci.id);
+      if(ex) ex.quantity++; else cart.push(ci);
+      saveCart(); alert('Услуга добавлена в корзину');
     }
-
-    function toggleCartModal() {
-      const modal = document.getElementById('cart-modal');
-      if (modal) { renderCartItems(); modal.style.display = 'flex'; }
-    }
-
+    function toggleCartModal() { const m=document.getElementById('cart-modal'); if(m) { renderCartItems(); m.style.display='flex'; } }
     function renderCartItems() {
-      const container = document.getElementById('cart-items');
-      const totalDisplay = document.getElementById('cart-total-display');
-      if (!container) return;
-      if (cart.length === 0) {
-        container.innerHTML = '<p class="text-gray-500 text-center text-sm">Корзина пуста</p>';
-        if (totalDisplay) totalDisplay.textContent = 'Общая сумма: 0 BYN';
-        return;
-      }
-      let html = ''; let total = 0;
-      cart.forEach(item => {
-        total += item.price * item.quantity;
-        const prod = products.find(p => p.id === item.id);
-        const maxStock = prod ? prod.stock : Infinity;
-        html += `<div class="flex flex-col sm:flex-row justify-between items-start sm:items-center border-b py-2 gap-2"><div class="flex-1"><span class="font-medium text-xs sm:text-sm">${item.name}</span><br><span class="text-xs">${item.price} BYN x ${item.quantity}</span></div><div class="flex items-center gap-1"><button onclick="changeQuantity('${item.id}', -1)" class="px-1.5 py-0.5 bg-gray-200 rounded text-xs">-</button><span class="mx-1 text-xs">${item.quantity}</span><button onclick="changeQuantity('${item.id}', 1, ${maxStock})" class="px-1.5 py-0.5 bg-gray-200 rounded text-xs">+</button><button onclick="removeFromCart('${item.id}')" class="ml-1 text-red-600 text-xs"><i class="ri-delete-bin-line"></i></button></div></div>`;
+      const c=document.getElementById('cart-items'), td=document.getElementById('cart-total-display');
+      if(!c) return;
+      if(cart.length===0) { c.innerHTML='<p class="text-gray-500 text-center text-sm">Корзина пуста</p>'; if(td) td.textContent='Общая сумма: 0 BYN'; return; }
+      let html='', total=0;
+      cart.forEach(i=>{
+        total+=i.price*i.quantity;
+        const prod=products.find(p=>p.id===i.id), ms=prod?prod.stock:Infinity;
+        html+=`<div class="flex flex-col sm:flex-row justify-between items-start sm:items-center border-b py-2 gap-2"><div class="flex-1"><span class="font-medium text-xs sm:text-sm">${i.name}</span><br><span class="text-xs">${i.price} BYN x ${i.quantity}</span></div><div class="flex items-center gap-1"><button onclick="changeQuantity('${i.id}',-1)" class="px-1.5 py-0.5 bg-gray-200 rounded text-xs">-</button><span class="mx-1 text-xs">${i.quantity}</span><button onclick="changeQuantity('${i.id}',1,${ms})" class="px-1.5 py-0.5 bg-gray-200 rounded text-xs">+</button><button onclick="removeFromCart('${i.id}')" class="ml-1 text-red-600 text-xs"><i class="ri-delete-bin-line"></i></button></div></div>`;
       });
-      container.innerHTML = html;
-      if (totalDisplay) totalDisplay.textContent = 'Общая сумма: ' + total + ' BYN';
+      c.innerHTML=html; if(td) td.textContent='Общая сумма: '+total+' BYN';
     }
-
-    function changeQuantity(id, delta, maxStock = Infinity) {
-      const item = cart.find(i => i.id == id);
-      if (item) {
-        const newQty = item.quantity + delta;
-        if (newQty <= 0) cart = cart.filter(i => i.id != id);
-        else if (newQty <= maxStock) item.quantity = newQty;
-        else { alert('Достигнуто максимальное количество на складе'); return; }
-        saveCart();
-        renderCartItems();
+    function changeQuantity(id,d,ms=Infinity) {
+      const i=cart.find(i=>i.id==id);
+      if(i) {
+        const n=i.quantity+d;
+        if(n<=0) cart=cart.filter(i=>i.id!=id);
+        else if(n<=ms) i.quantity=n;
+        else { alert('Максимальное количество'); return; }
+        saveCart(); renderCartItems();
       }
     }
-
-    function removeFromCart(id) { cart = cart.filter(i => i.id != id); saveCart(); renderCartItems(); }
-    function clearCart() { if (confirm('Очистить корзину?')) { cart = []; saveCart(); renderCartItems(); } }
-
+    function removeFromCart(id) { cart=cart.filter(i=>i.id!=id); saveCart(); renderCartItems(); }
+    function clearCart() { if(confirm('Очистить корзину?')) { cart=[]; saveCart(); renderCartItems(); } }
     function checkoutCart() {
-      if (cart.length === 0) { alert('Корзина пуста'); return; }
-      const name = document.getElementById('order-name').value;
-      const phone = document.getElementById('order-phone').value;
-      const address = document.getElementById('order-address').value;
-      const payment = document.querySelector('input[name="payment"]:checked')?.value || 'Наличные';
-      if (!name || !phone || !address) { alert('Пожалуйста, заполните все поля'); return; }
-      const total = cart.reduce((acc, i) => acc + i.price * i.quantity, 0);
-      const order = { id: Date.now(), customer: { name, phone, address, payment }, items: [...cart], total: total, date: new Date().toLocaleString(), status: 'новый' };
-      orders.push(order);
-      saveOrders();
-      cart.forEach(item => { const prod = products.find(p => p.id === item.id); if (prod) prod.stock -= item.quantity; });
-      saveProducts();
-      const formData = new FormData();
-      formData.append('name', name); formData.append('phone', phone); formData.append('address', address); formData.append('payment', payment); formData.append('order', JSON.stringify(order));
-      fetch('https://formspree.io/f/mrbkdwwe', { method: 'POST', body: formData, headers: { 'Accept': 'application/json' } }).then(response => { if (response.ok) alert('Заказ оформлен! Мы свяжемся с вами.'); else alert('Заказ оформлен, но не удалось отправить уведомление на email.'); }).catch(() => alert('Заказ оформлен, но не удалось отправить уведомление на email.'));
-      clearCart(); renderCartItems(); document.getElementById('cart-modal').style.display = 'none';
-      document.getElementById('order-name').value = ''; document.getElementById('order-phone').value = ''; document.getElementById('order-address').value = '';
-      addLog('order', 'Новый заказ #' + order.id);
+      if(cart.length===0) { alert('Корзина пуста'); return; }
+      const n=document.getElementById('order-name').value, p=document.getElementById('order-phone').value, a=document.getElementById('order-address').value, pm=document.querySelector('input[name="payment"]:checked')?.value||'Наличные';
+      if(!n||!p||!a) { alert('Заполните все поля'); return; }
+      const total=cart.reduce((s,i)=>s+i.price*i.quantity,0);
+      const order={ id:Date.now(), customer:{name:n, phone:p, address:a, payment:pm}, items:[...cart], total:total, date:new Date().toLocaleString(), status:'новый' };
+      orders.push(order); saveOrders();
+      cart.forEach(i=>{ const prod=products.find(p=>p.id===i.id); if(prod) prod.stock-=i.quantity; }); saveProducts();
+      const fd=new FormData();
+      fd.append('name',n); fd.append('phone',p); fd.append('address',a); fd.append('payment',pm); fd.append('order',JSON.stringify(order));
+      fetch('https://formspree.io/f/mrbkdwwe',{ method:'POST', body:fd, headers:{'Accept':'application/json'} }).then(r=>{ if(r.ok) alert('Заказ успешно оформлен! Мы свяжемся с вами.'); else alert('Заказ оформлен, но уведомление не отправлено.'); }).catch(()=>alert('Заказ оформлен, но уведомление не отправлено.'));
+      clearCart(); renderCartItems(); document.getElementById('cart-modal').style.display='none';
+      document.getElementById('order-name').value=''; document.getElementById('order-phone').value=''; document.getElementById('order-address').value='';
+      addLog('order','Новый заказ #'+order.id);
     }
 
-    function checkAdminHash() {
-      if (window.location.hash === '#admin') document.getElementById('admin-login-modal').style.display = 'flex';
-    }
-    (function() { if (window.location.hash === '#admin') { if (document.readyState === 'loading') document.addEventListener('DOMContentLoaded', () => document.getElementById('admin-login-modal').style.display = 'flex'); else document.getElementById('admin-login-modal').style.display = 'flex'; } })();
-    window.addEventListener('hashchange', function() { if (window.location.hash === '#admin') document.getElementById('admin-login-modal').style.display = 'flex'; });
+    // Админка
+    function checkAdminHash() { if(window.location.hash==='#admin') document.getElementById('admin-login-modal').style.display='flex'; }
+    (function(){ if(window.location.hash==='#admin') { if(document.readyState==='loading') document.addEventListener('DOMContentLoaded',()=>document.getElementById('admin-login-modal').style.display='flex'); else document.getElementById('admin-login-modal').style.display='flex'; } })();
+    window.addEventListener('hashchange',()=>{ if(window.location.hash==='#admin') document.getElementById('admin-login-modal').style.display='flex'; });
 
     function loginAdmin() {
-      const login = document.getElementById('admin-login-input').value;
-      const pass = document.getElementById('admin-pass-input').value;
-      if (login === adminCredentials.login && pass === adminCredentials.password) {
-        document.getElementById('admin-login-modal').style.display = 'none';
-        document.getElementById('admin-panel').style.display = 'block';
-        renderAdminProducts();
-        switchAdminTab('dashboard');
-        updateDashboard();
+      const l=document.getElementById('admin-login-input').value, p=document.getElementById('admin-pass-input').value;
+      if(l===adminCredentials.login && p===adminCredentials.password) {
+        document.getElementById('admin-login-modal').style.display='none';
+        document.getElementById('admin-panel').style.display='block';
+        renderAdminProducts(); switchAdminTab('dashboard'); updateDashboard();
         history.pushState('', document.title, window.location.pathname);
-        addLog('user', 'Вход в админ-панель');
+        addLog('user','Вход в админ-панель');
       } else alert('Неверный логин или пароль');
     }
+    function closeAdminPanel() { document.getElementById('admin-panel').style.display='none'; }
 
-    function closeAdminPanel() { document.getElementById('admin-panel').style.display = 'none'; window.location.hash = ''; }
+    function switchAdminTab(tab) {
+      const tabs=['dashboard','products','orders','customers','brands','reports','settings','logs'];
+      tabs.forEach(t=>{
+        const el=document.getElementById(`admin-${t}-tab`), btn=document.getElementById(`tab-${t}-btn`);
+        if(el) el.classList.add('hidden');
+        if(btn) { btn.classList.remove('text-primary','border-b-2','border-primary'); btn.classList.add('text-gray-500'); }
+      });
+      const cel=document.getElementById(`admin-${tab}-tab`), cbtn=document.getElementById(`tab-${tab}-btn`);
+      if(cel) cel.classList.remove('hidden');
+      if(cbtn) { cbtn.classList.remove('text-gray-500'); cbtn.classList.add('text-primary','border-b-2','border-primary'); }
+      if(tab==='products') renderAdminProducts();
+      if(tab==='orders') renderAdminOrders();
+      if(tab==='customers') renderCustomers();
+      if(tab==='brands') renderAdminBrands();
+      if(tab==='logs') renderLogs();
+    }
 
     function renderAdminProducts() {
-      const list = document.getElementById('admin-product-list');
-      if (!list) return;
-      const categoryFilter = document.getElementById('admin-category-filter')?.value || '';
-      const statusFilter = document.getElementById('admin-status-filter')?.value || '';
-      const searchText = document.getElementById('admin-search')?.value.toLowerCase() || '';
-      const sortBy = document.getElementById('admin-sort')?.value || 'name';
-      let filteredProducts = [...products];
-      if (categoryFilter) filteredProducts = filteredProducts.filter(p => p.category === categoryFilter);
-      if (statusFilter) filteredProducts = filteredProducts.filter(p => p.status === statusFilter);
-      if (searchText) filteredProducts = filteredProducts.filter(p => p.name.toLowerCase().includes(searchText) || (p.description && p.description.toLowerCase().includes(searchText)) || (p.brand && p.brand.toLowerCase().includes(searchText)));
-      if (sortBy === 'price-asc') filteredProducts.sort((a, b) => a.price - b.price);
-      else if (sortBy === 'price-desc') filteredProducts.sort((a, b) => b.price - a.price);
-      else if (sortBy === 'date') filteredProducts.sort((a, b) => new Date(b.createdAt) - new Date(a.createdAt));
-      else filteredProducts.sort((a, b) => a.name.localeCompare(b.name));
-      list.innerHTML = '';
-      filteredProducts.forEach(p => {
-        const tags = p.tags?.map(t => `<span class="text-xs bg-gray-100 px-1 py-0.5 rounded ml-1">${t}</span>`).join('') || '';
-        const statusClass = p.status === 'active' ? 'bg-green-100 text-green-800' : 'bg-gray-100 text-gray-800';
-        const stockClass = p.stock < 3 ? 'text-red-600 font-bold' : '';
-        const row = document.createElement('tr');
-        row.innerHTML = `<td class="px-2 sm:px-4 py-2 whitespace-nowrap"><input type="checkbox" class="product-checkbox" value="${p.id}" ${selectedProducts.has(p.id) ? 'checked' : ''} onchange="toggleProductSelection(${p.id})"></td><td class="px-2 sm:px-4 py-2 whitespace-nowrap"><img src="${p.image}" alt="${p.name}" class="w-6 h-6 sm:w-8 sm:h-8 object-cover rounded"></td><td class="px-2 sm:px-4 py-2"><div class="text-xs font-medium text-gray-900">${p.name}</div><div class="text-xs text-gray-500">${p.brand || ''} ${tags}</div></td><td class="px-2 sm:px-4 py-2 whitespace-nowrap text-xs text-gray-500">${p.category}</td><td class="px-2 sm:px-4 py-2 whitespace-nowrap"><div class="text-xs text-gray-900">${p.price} BYN</div><div class="text-xs ${stockClass}">Ост: ${p.stock}</div></td><td class="px-2 sm:px-4 py-2 whitespace-nowrap"><span class="px-1.5 py-0.5 text-xs rounded-full ${statusClass}">${p.status === 'active' ? 'Акт' : 'Неакт'}</span></td><td class="px-2 sm:px-4 py-2 whitespace-nowrap text-xs"><button onclick="openEditModal(${p.id})" class="text-blue-600 hover:text-blue-900 mr-1" title="Ред.">✏️</button><button onclick="cloneProduct(${p.id})" class="text-green-600 hover:text-green-900 mr-1" title="Коп.">📋</button><button onclick="deleteProduct(${p.id})" class="text-red-600 hover:text-red-900" title="Удал.">🗑️</button></td>`;
-        list.appendChild(row);
+      const list=document.getElementById('admin-product-list');
+      if(!list) return;
+      const cf=document.getElementById('admin-category-filter')?.value||'', sf=document.getElementById('admin-status-filter')?.value||'', st=document.getElementById('admin-search')?.value.toLowerCase()||'', sort=document.getElementById('admin-sort')?.value||'name';
+      let fp=[...products];
+      if(cf) fp=fp.filter(p=>p.category===cf);
+      if(sf) fp=fp.filter(p=>p.status===sf);
+      if(st) fp=fp.filter(p=>p.name.toLowerCase().includes(st)||(p.description&&p.description.toLowerCase().includes(st))||(p.brand&&p.brand.toLowerCase().includes(st)));
+      if(sort==='price-asc') fp.sort((a,b)=>a.price-b.price);
+      else if(sort==='price-desc') fp.sort((a,b)=>b.price-a.price);
+      else if(sort==='date') fp.sort((a,b)=>new Date(b.createdAt)-new Date(a.createdAt));
+      else fp.sort((a,b)=>a.name.localeCompare(b.name));
+      list.innerHTML='';
+      fp.forEach(p=>{
+        const tags=p.tags?.map(t=>`<span class="text-xs bg-gray-100 px-1 py-0.5 rounded ml-1">${t}</span>`).join('')||'', sc=p.status==='active'?'bg-green-100 text-green-800':'bg-gray-100 text-gray-800', stc=p.stock<3?'text-red-600 font-bold':'';
+        list.innerHTML+=`<tr><td class="px-2 sm:px-4 py-2 whitespace-nowrap"><input type="checkbox" class="product-checkbox" value="${p.id}" ${selectedProducts.has(p.id)?'checked':''} onchange="toggleProductSelection(${p.id})"></td><td class="px-2 sm:px-4 py-2 whitespace-nowrap"><img src="${p.image}" class="w-6 h-6 sm:w-8 sm:h-8 object-cover rounded"></td><td class="px-2 sm:px-4 py-2"><div class="text-xs font-medium text-gray-900">${p.name}</div><div class="text-xs text-gray-500">${p.brand||''} ${tags}</div></td><td class="px-2 sm:px-4 py-2 whitespace-nowrap text-xs text-gray-500">${p.category}</td><td class="px-2 sm:px-4 py-2 whitespace-nowrap"><div class="text-xs text-gray-900">${p.price} BYN</div><div class="text-xs ${stc}">Ост: ${p.stock}</div></td><td class="px-2 sm:px-4 py-2 whitespace-nowrap"><span class="px-1.5 py-0.5 text-xs rounded-full ${sc}">${p.status==='active'?'Акт':'Неакт'}</span></td><td class="px-2 sm:px-4 py-2 whitespace-nowrap text-xs"><button onclick="openEditModal(${p.id})" class="text-blue-600 hover:text-blue-900 mr-1">✏️</button><button onclick="cloneProduct(${p.id})" class="text-green-600 hover:text-green-900 mr-1">📋</button><button onclick="deleteProduct(${p.id})" class="text-red-600 hover:text-red-900">🗑️</button></td></tr>`;
       });
     }
-
     function filterAdminProducts() { renderAdminProducts(); }
     function filterAdminOrders() { renderAdminOrders(); }
-    function toggleProductSelection(id) { if (selectedProducts.has(id)) selectedProducts.delete(id); else selectedProducts.add(id); }
+    function toggleProductSelection(id) { if(selectedProducts.has(id)) selectedProducts.delete(id); else selectedProducts.add(id); }
     function toggleSelectAll() {
-      const checkboxes = document.querySelectorAll('.product-checkbox');
-      const allChecked = document.getElementById('select-all-products').checked;
-      checkboxes.forEach(cb => { cb.checked = allChecked; const id = parseInt(cb.value); if (allChecked) selectedProducts.add(id); else selectedProducts.delete(id); });
+      const cbs=document.querySelectorAll('.product-checkbox'), ac=document.getElementById('select-all-products').checked;
+      cbs.forEach(cb=>{ cb.checked=ac; const id=parseInt(cb.value); if(ac) selectedProducts.add(id); else selectedProducts.delete(id); });
     }
-    function selectAllProducts() { document.getElementById('select-all-products').checked = true; toggleSelectAll(); }
-    function deselectAllProducts() { document.getElementById('select-all-products').checked = false; toggleSelectAll(); }
+    function selectAllProducts() { document.getElementById('select-all-products').checked=true; toggleSelectAll(); }
+    function deselectAllProducts() { document.getElementById('select-all-products').checked=false; toggleSelectAll(); }
     function deleteSelectedProducts() {
-      if (selectedProducts.size === 0) { alert('Выберите товары для удаления'); return; }
-      if (confirm(`Удалить ${selectedProducts.size} товар(ов)?`)) {
-        products = products.filter(p => !selectedProducts.has(p.id));
-        selectedProducts.clear();
-        saveProducts();
-        renderAdminProducts();
-        filterProducts();
-        addLog('product', `Удалено ${selectedProducts.size} товаров`);
+      if(selectedProducts.size===0) { alert('Выберите товары'); return; }
+      if(confirm(`Удалить ${selectedProducts.size} товар(ов)?`)) {
+        products=products.filter(p=>!selectedProducts.has(p.id)); selectedProducts.clear();
+        saveProducts(); renderAdminProducts(); filterProducts(); addLog('product',`Удалено товаров`);
       }
     }
     function exportProducts() {
-      const data = products.map(p => ({ Название: p.name, Бренд: p.brand, Цена: p.price, Категория: p.category, Тип: p.type, Площадь: p.area, Инвертор: p.inverter, Обогрев: p.heat, Описание: p.description, 'Полное описание': p.fullDescription, Изображение: p.image, Теги: p.tags?.join(', '), Статус: p.status, Остаток: p.stock }));
-      const csv = [Object.keys(data[0]).join(','), ...data.map(row => Object.values(row).map(v => `"${v}"`).join(','))].join('\n');
-      const blob = new Blob(['\uFEFF' + csv], { type: 'text/csv;charset=utf-8;' });
-      const link = document.createElement('a'); link.href = URL.createObjectURL(blob); link.download = 'products_export.csv'; link.click();
-      addLog('product', 'Экспорт товаров в CSV');
+      const data=products.map(p=>({ Название:p.name, Бренд:p.brand, Цена:p.price, Категория:p.category, Тип:p.type, Площадь:p.area, Инвертор:p.inverter, Обогрев:p.heat, Описание:p.description, 'Полное описание':p.fullDescription, Изображение:p.image, Теги:p.tags?.join(', '), Статус:p.status, Остаток:p.stock }));
+      const csv=[Object.keys(data[0]).join(','),...data.map(r=>Object.values(r).map(v=>`"${v}"`).join(','))].join('\n');
+      const blob=new Blob(['\uFEFF'+csv],{type:'text/csv;charset=utf-8;'}), link=document.createElement('a'); link.href=URL.createObjectURL(blob); link.download='products_export.csv'; link.click();
+      addLog('product','Экспорт товаров');
     }
     function importProducts(input) {
-      const file = input.files[0];
-      if (!file) return;
-      const reader = new FileReader();
-      reader.onload = (e) => {
-        const text = e.target.result;
-        const lines = text.split('\n');
-        const headers = lines[0].split(',').map(h => h.trim());
-        for (let i = 1; i < lines.length; i++) {
-          if (!lines[i].trim()) continue;
-          const values = lines[i].split(',').map(v => v.replace(/^"|"$/g, '').trim());
-          const product = {};
-          headers.forEach((h, idx) => { product[h] = values[idx]; });
-          const newProduct = { id: Math.max(...products.map(p => p.id), 0) + i, name: product['Название'], brand: product['Бренд'], price: parseFloat(product['Цена']), area: product['Площадь'] || 'до 20', category: product['Категория'] || 'Настенные', type: product['Тип'] || 'Настенный', inverter: product['Инвертор'] || 'Да', heat: product['Обогрев'] || '-15', description: product['Описание'] || '', fullDescription: product['Полное описание'] || '', image: product['Изображение'] || 'https://via.placeholder.com/200x150?text=New', tags: product['Теги'] ? product['Теги'].split(',').map(t => t.trim()) : [], status: product['Статус'] || 'active', stock: parseInt(product['Остаток']) || 10, createdAt: new Date().toISOString() };
-          products.push(newProduct);
+      const file=input.files[0]; if(!file) return;
+      const reader=new FileReader();
+      reader.onload=(e)=>{
+        const lines=e.target.result.split('\n'), headers=lines[0].split(',').map(h=>h.trim());
+        for(let i=1;i<lines.length;i++) {
+          if(!lines[i].trim()) continue;
+          const values=lines[i].split(',').map(v=>v.replace(/^"|"$/g,'').trim()), prod={};
+          headers.forEach((h,idx)=>prod[h]=values[idx]);
+          products.push({ id:Math.max(...products.map(p=>p.id),0)+i, name:prod['Название'], brand:prod['Бренд'], price:parseFloat(prod['Цена']), area:prod['Площадь']||'до 20', category:prod['Категория']||'Настенные', type:prod['Тип']||'Настенный', inverter:prod['Инвертор']||'Да', heat:prod['Обогрев']||'-15', description:prod['Описание']||'', fullDescription:prod['Полное описание']||'', image:prod['Изображение']||'https://via.placeholder.com/200x150?text=New', tags:prod['Теги']?prod['Теги'].split(',').map(t=>t.trim()):[], status:prod['Статус']||'active', stock:parseInt(prod['Остаток'])||10, createdAt:new Date().toISOString() });
         }
-        saveProducts(); renderAdminProducts(); filterProducts(); addLog('product', 'Импорт товаров из CSV'); alert('Товары импортированы');
+        saveProducts(); renderAdminProducts(); filterProducts(); addLog('product','Импорт товаров'); alert('Товары импортированы');
       };
-      reader.readAsText(file, 'UTF-8');
+      reader.readAsText(file,'UTF-8');
     }
     function openAddProductForm() { document.getElementById('add-product-form').classList.remove('hidden'); updateBrandSelects(); }
     function closeAddProductForm() { document.getElementById('add-product-form').classList.add('hidden'); }
     function saveNewProduct() {
-      const name = document.getElementById('new-name').value;
-      if (!name) { alert('Введите название товара'); return; }
-      const price = parseFloat(document.getElementById('new-price').value);
-      if (isNaN(price)) { alert('Введите цену'); return; }
-      const tags = [];
-      if (document.getElementById('new-tag-hit').checked) tags.push('хит');
-      if (document.getElementById('new-tag-new').checked) tags.push('новинка');
-      if (document.getElementById('new-tag-sale').checked) tags.push('распродажа');
-      const newId = Math.max(...products.map(p => p.id), 0) + 1;
-      products.push({ id: newId, name: name, brand: document.getElementById('new-brand').value, price: price, oldPrice: document.getElementById('new-old-price').value ? parseFloat(document.getElementById('new-old-price').value) : null, stock: parseInt(document.getElementById('new-stock').value) || 10, area: document.getElementById('new-area').value, category: document.getElementById('new-category').value, type: document.getElementById('new-type').value, inverter: document.getElementById('new-inverter').value, heat: document.getElementById('new-heat').value || '-15', description: document.getElementById('new-description').value, fullDescription: document.getElementById('new-fullDescription').value, image: document.getElementById('new-image').value, tags: tags, status: 'active', seoTitle: name, seoDesc: document.getElementById('new-description').value, createdAt: new Date().toISOString() });
+      const name=document.getElementById('new-name').value; if(!name) { alert('Введите название'); return; }
+      const price=parseFloat(document.getElementById('new-price').value); if(isNaN(price)) { alert('Введите цену'); return; }
+      const tags=[];
+      if(document.getElementById('new-tag-hit').checked) tags.push('хит');
+      if(document.getElementById('new-tag-new').checked) tags.push('новинка');
+      if(document.getElementById('new-tag-sale').checked) tags.push('распродажа');
+      const newId=Math.max(...products.map(p=>p.id),0)+1;
+      products.push({ id:newId, name, brand:document.getElementById('new-brand').value, price, oldPrice:document.getElementById('new-old-price').value?parseFloat(document.getElementById('new-old-price').value):null, stock:parseInt(document.getElementById('new-stock').value)||10, area:document.getElementById('new-area').value, category:document.getElementById('new-category').value, type:document.getElementById('new-type').value, inverter:document.getElementById('new-inverter').value, heat:document.getElementById('new-heat').value||'-15', description:document.getElementById('new-description').value, fullDescription:document.getElementById('new-fullDescription').value, image:document.getElementById('new-image').value, tags, status:'active', seoTitle:name, seoDesc:document.getElementById('new-description').value, createdAt:new Date().toISOString() });
       saveProducts(); renderAdminProducts(); filterProducts(); closeAddProductForm();
-      document.getElementById('new-name').value = ''; document.getElementById('new-price').value = ''; document.getElementById('new-old-price').value = ''; document.getElementById('new-stock').value = '10'; document.getElementById('new-description').value = ''; document.getElementById('new-fullDescription').value = ''; document.getElementById('new-image').value = 'https://via.placeholder.com/200x150?text=New'; document.getElementById('new-tag-hit').checked = false; document.getElementById('new-tag-new').checked = false; document.getElementById('new-tag-sale').checked = false;
-      addLog('product', 'Добавлен товар ' + name);
+      document.getElementById('new-name').value=''; document.getElementById('new-price').value=''; document.getElementById('new-old-price').value=''; document.getElementById('new-stock').value='10'; document.getElementById('new-description').value=''; document.getElementById('new-fullDescription').value=''; document.getElementById('new-image').value='https://via.placeholder.com/200x150?text=New'; document.getElementById('new-tag-hit').checked=false; document.getElementById('new-tag-new').checked=false; document.getElementById('new-tag-sale').checked=false;
+      addLog('product','Добавлен товар '+name);
     }
     function cloneProduct(id) {
-      const prod = products.find(p => p.id === id);
-      if (!prod) return;
-      const newProd = { ...prod, id: Math.max(...products.map(p => p.id), 0) + 1, name: prod.name + ' (копия)', createdAt: new Date().toISOString() };
-      products.push(newProd); saveProducts(); renderAdminProducts(); filterProducts(); addLog('product', 'Копирование товара ' + prod.name);
+      const p=products.find(p=>p.id===id); if(!p) return;
+      const np={...p, id:Math.max(...products.map(p=>p.id),0)+1, name:p.name+' (копия)', createdAt:new Date().toISOString()};
+      products.push(np); saveProducts(); renderAdminProducts(); filterProducts(); addLog('product','Копирование '+p.name);
     }
+    function openEditModal(id) {
+      const p=products.find(p=>p.id===id); if(!p) return;
+      document.getElementById('edit-product-id').value=p.id; document.getElementById('edit-name').value=p.name; document.getElementById('edit-price').value=p.price; document.getElementById('edit-old-price').value=p.oldPrice||''; document.getElementById('edit-stock').value=p.stock||10; document.getElementById('edit-image').value=p.image||''; if(document.getElementById('edit-brand')) document.getElementById('edit-brand').value=p.brand||''; if(p.image) document.getElementById('image-preview').innerHTML=`<img src="${p.image}" class="w-12 h-12 object-cover rounded">`; document.getElementById('edit-product-modal').style.display='flex';
+    }
+    function previewImage(i) { if(i.files&&i.files[0]) { const r=new FileReader(); r.onload=(e)=>{ document.getElementById('image-preview').innerHTML=`<img src="${e.target.result}" class="w-12 h-12 object-cover rounded">`; document.getElementById('edit-image').value=e.target.result; }; r.readAsDataURL(i.files[0]); } }
+    function saveEditedProduct() {
+      const id=parseInt(document.getElementById('edit-product-id').value), p=products.find(p=>p.id===id); if(!p) return;
+      p.name=document.getElementById('edit-name').value; p.price=parseFloat(document.getElementById('edit-price').value); p.oldPrice=document.getElementById('edit-old-price').value?parseFloat(document.getElementById('edit-old-price').value):null; p.stock=parseInt(document.getElementById('edit-stock').value)||10; p.image=document.getElementById('edit-image').value; if(document.getElementById('edit-brand')) p.brand=document.getElementById('edit-brand').value;
+      saveProducts(); renderAdminProducts(); filterProducts(); document.getElementById('edit-product-modal').style.display='none'; addLog('product','Изменен товар '+p.name); alert('Товар сохранен');
+    }
+    function deleteProduct(id) { if(confirm('Удалить товар?')) { const p=products.find(p=>p.id===id); products=products.filter(p=>p.id!==id); saveProducts(); renderAdminProducts(); filterProducts(); addLog('product','Удален товар '+(p?p.name:'')); } }
+
     function renderAdminOrders() {
-      const list = document.getElementById('admin-orders-list');
-      if (!list) return;
-      const statusFilter = document.getElementById('order-status-filter')?.value || '';
-      const searchText = document.getElementById('order-search')?.value.toLowerCase() || '';
-      const dateFilter = document.getElementById('order-date-filter')?.value || '';
-      let filteredOrders = [...orders];
-      if (statusFilter) filteredOrders = filteredOrders.filter(o => o.status === statusFilter);
-      if (searchText) filteredOrders = filteredOrders.filter(o => o.customer.name.toLowerCase().includes(searchText) || o.customer.phone.includes(searchText));
-      if (dateFilter) filteredOrders = filteredOrders.filter(o => { const orderDate = new Date(o.date).toISOString().split('T')[0]; return orderDate === dateFilter; });
-      list.innerHTML = '';
-      if (filteredOrders.length === 0) { list.innerHTML = '<p class="text-gray-500 text-center py-4 text-xs">Нет заказов</p>'; return; }
-      filteredOrders.forEach(o => {
-        list.innerHTML += `<div class="border p-3 rounded-lg hover:shadow-md transition-shadow"><div class="flex flex-col sm:flex-row justify-between items-start gap-1 mb-1"><span class="font-bold text-xs">Заказ #${o.id}</span><span class="text-xs text-gray-500">${o.date}</span></div><div class="grid grid-cols-1 sm:grid-cols-2 gap-1 text-xs"><div><span class="font-medium">Клиент:</span> ${o.customer.name}</div><div><span class="font-medium">Тел:</span> ${o.customer.phone}</div><div><span class="font-medium">Адрес:</span> ${o.customer.address}</div><div><span class="font-medium">Оплата:</span> ${o.customer.payment || 'Наличные'}</div></div><div class="mt-2 flex flex-col sm:flex-row justify-between items-start sm:items-center gap-2"><div><span class="font-medium text-xs">Сумма:</span> ${o.total} BYN <span class="ml-2 px-1.5 py-0.5 bg-blue-100 text-blue-800 rounded text-xs">${o.status}</span></div><div class="flex gap-1"><select onchange="updateOrderStatus(${o.id}, this.value)" class="border rounded px-1.5 py-0.5 text-xs"><option value="новый" ${o.status === 'новый' ? 'selected' : ''}>Новый</option><option value="в обработке" ${o.status === 'в обработке' ? 'selected' : ''}>В обр.</option><option value="выполнен" ${o.status === 'выполнен' ? 'selected' : ''}>Выполн.</option><option value="отменен" ${o.status === 'отменен' ? 'selected' : ''}>Отмен.</option></select><button onclick="deleteOrder(${o.id})" class="text-red-600 hover:text-red-800 px-1.5 py-0.5 border border-red-300 rounded text-xs">🗑️</button></div></div><div class="mt-1 text-xs text-gray-600"><span class="font-medium">Товары:</span> ${o.items.map(i => i.name + ' x' + i.quantity).join(', ')}</div></div>`;
-      });
+      const list=document.getElementById('admin-orders-list'); if(!list) return;
+      const sf=document.getElementById('order-status-filter')?.value||'', st=document.getElementById('order-search')?.value.toLowerCase()||'', df=document.getElementById('order-date-filter')?.value||'';
+      let fo=[...orders];
+      if(sf) fo=fo.filter(o=>o.status===sf);
+      if(st) fo=fo.filter(o=>o.customer.name.toLowerCase().includes(st)||o.customer.phone.includes(st));
+      if(df) fo=fo.filter(o=>new Date(o.date).toISOString().split('T')[0]===df);
+      list.innerHTML='';
+      if(fo.length===0) { list.innerHTML='<p class="text-gray-500 text-center py-4 text-xs">Нет заказов</p>'; return; }
+      fo.forEach(o=>{ list.innerHTML+=`<div class="border p-3 rounded-lg hover:shadow-md"><div class="flex justify-between items-start mb-1"><span class="font-bold text-xs">Заказ #${o.id}</span><span class="text-xs text-gray-500">${o.date}</span></div><div class="grid grid-cols-2 gap-1 text-xs"><div><span class="font-medium">Клиент:</span> ${o.customer.name}</div><div><span class="font-medium">Тел:</span> ${o.customer.phone}</div><div class="col-span-2"><span class="font-medium">Адрес:</span> ${o.customer.address}</div><div><span class="font-medium">Оплата:</span> ${o.customer.payment||'Наличные'}</div><div><span class="font-medium">Сумма:</span> ${o.total} BYN</div></div><div class="mt-2 flex gap-2"><span class="px-2 py-1 bg-blue-100 text-blue-800 rounded text-xs">${o.status}</span><select onchange="updateOrderStatus(${o.id},this.value)" class="border rounded px-1 py-0.5 text-xs"><option value="новый" ${o.status==='новый'?'selected':''}>Новый</option><option value="в обработке" ${o.status==='в обработке'?'selected':''}>В обр.</option><option value="выполнен" ${o.status==='выполнен'?'selected':''}>Выполн.</option><option value="отменен" ${o.status==='отменен'?'selected':''}>Отмен.</option></select><button onclick="deleteOrder(${o.id})" class="text-red-600 hover:text-red-800 px-2 py-1 border border-red-300 rounded text-xs">🗑️</button></div><div class="mt-1 text-xs text-gray-600">Товары: ${o.items.map(i=>i.name+' x'+i.quantity).join(', ')}</div></div>`; });
       updateOrderStats();
     }
-    function updateOrderStatus(id, newStatus) { const order = orders.find(o => o.id === id); if (order) { order.status = newStatus; saveOrders(); renderAdminOrders(); addLog('order', `Изменен статус заказа #${id} на ${newStatus}`); } }
-    function deleteOrder(id) { if (confirm('Удалить этот заказ?')) { orders = orders.filter(o => o.id !== id); saveOrders(); renderAdminOrders(); addLog('order', `Удален заказ #${id}`); } }
-    function deleteAllOrders() { if (confirm('Удалить все заказы?')) { orders = []; saveOrders(); renderAdminOrders(); addLog('order', 'Удалены все заказы'); } }
+    function updateOrderStatus(id,ns) { const o=orders.find(o=>o.id===id); if(o) { o.status=ns; saveOrders(); renderAdminOrders(); addLog('order',`Статус заказа #${id} изменен на ${ns}`); } }
+    function deleteOrder(id) { if(confirm('Удалить заказ?')) { orders=orders.filter(o=>o.id!==id); saveOrders(); renderAdminOrders(); addLog('order',`Удален заказ #${id}`); } }
+    function deleteAllOrders() { if(confirm('Удалить все заказы?')) { orders=[]; saveOrders(); renderAdminOrders(); addLog('order','Удалены все заказы'); } }
     function exportOrders() {
-      const data = orders.map(o => ({ 'Номер заказа': o.id, Дата: o.date, Клиент: o.customer.name, Телефон: o.customer.phone, Адрес: o.customer.address, Оплата: o.customer.payment, Сумма: o.total, Статус: o.status, Товары: o.items.map(i => `${i.name} (${i.quantity})`).join('; ') }));
-      const csv = [Object.keys(data[0]).join(','), ...data.map(row => Object.values(row).map(v => `"${v}"`).join(','))].join('\n');
-      const blob = new Blob(['\uFEFF' + csv], { type: 'text/csv;charset=utf-8;' });
-      const link = document.createElement('a'); link.href = URL.createObjectURL(blob); link.download = 'orders_export.csv'; link.click();
-      addLog('order', 'Экспорт заказов в CSV');
+      const data=orders.map(o=>({ 'Номер':o.id, Дата:o.date, Клиент:o.customer.name, Телефон:o.customer.phone, Адрес:o.customer.address, Оплата:o.customer.payment, Сумма:o.total, Статус:o.status, Товары:o.items.map(i=>`${i.name}(${i.quantity})`).join('; ') }));
+      const csv=[Object.keys(data[0]).join(','),...data.map(r=>Object.values(r).map(v=>`"${v}"`).join(','))].join('\n');
+      const blob=new Blob(['\uFEFF'+csv],{type:'text/csv;charset=utf-8;'}), link=document.createElement('a'); link.href=URL.createObjectURL(blob); link.download='orders_export.csv'; link.click();
+      addLog('order','Экспорт заказов');
     }
-    function filterCustomers() {}
+
+    function renderCustomers() {
+      const list=document.getElementById('customers-list');
+      const customers = {};
+      orders.forEach(o => {
+        const phone = o.customer.phone;
+        if (!customers[phone]) {
+          customers[phone] = { name: o.customer.name, phone, address: o.customer.address, orders: 1, total: o.total, lastOrder: o.date };
+        } else {
+          customers[phone].orders++;
+          customers[phone].total += o.total;
+        }
+      });
+      list.innerHTML = Object.values(customers).map(c => 
+        `<div class="border p-2 rounded mb-2 text-xs"><div class="font-medium">${c.name}</div><div>Тел: ${c.phone}</div><div>Адрес: ${c.address}</div><div>Заказов: ${c.orders}, на сумму: ${c.total} BYN</div><div>Последний: ${c.lastOrder}</div></div>`
+      ).join('') || '<p class="text-gray-500">Нет клиентов</p>';
+    }
+
+    function renderAdminBrands() {
+      const list=document.getElementById('brands-admin-list'); if(!list) return;
+      list.innerHTML=brands.map(b=>`<div class="flex justify-between items-center p-2 border rounded mb-2"><span class="text-xs sm:text-sm">${b.name}</span><div><button onclick="editBrand(${b.id})" class="text-blue-600 mr-2 text-xs">✏️</button><button onclick="deleteBrand(${b.id})" class="text-red-600 text-xs">🗑️</button></div></div>`).join('');
+    }
+    function addBrand() { const n=prompt('Название бренда:'); if(!n) return; brands.push({ id:Math.max(...brands.map(b=>b.id),0)+1, name:n }); saveBrands(); renderAdminBrands(); addLog('brand','Добавлен бренд '+n); }
+    function editBrand(id) { const b=brands.find(b=>b.id===id); if(!b) return; const n=prompt('Новое название:',b.name); if(n) { b.name=n; saveBrands(); renderAdminBrands(); addLog('brand','Изменен бренд '+n); } }
+    function deleteBrand(id) { if(confirm('Удалить бренд?')) { brands=brands.filter(b=>b.id!==id); saveBrands(); renderAdminBrands(); addLog('brand','Удален бренд'); } }
+
     function generateFullReport() { alert('Функция будет доступна в следующем обновлении'); }
     function saveSettings() {
-      const settings = { siteName: document.getElementById('site-name').value, siteEmail: document.getElementById('site-email').value, sitePhone: document.getElementById('site-phone').value, siteAddress: document.getElementById('site-address').value, siteCurrency: document.getElementById('site-currency').value, siteSeo: document.getElementById('site-seo').value };
-      localStorage.setItem('aircom_settings', JSON.stringify(settings));
-      addLog('settings', 'Изменены настройки сайта');
-      alert('Настройки сохранены');
+      const s={ siteName:document.getElementById('site-name').value, siteEmail:document.getElementById('site-email').value, sitePhone:document.getElementById('site-phone').value, siteAddress:document.getElementById('site-address').value, siteCurrency:document.getElementById('site-currency').value, siteSeo:document.getElementById('site-seo').value };
+      localStorage.setItem('aircom_settings',JSON.stringify(s)); addLog('settings','Изменены настройки'); alert('Настройки сохранены');
     }
     function renderLogs() {
-      const list = document.getElementById('logs-list');
-      const filter = document.getElementById('log-filter')?.value || '';
-      const filtered = filter ? actionLogs.filter(l => l.type === filter) : actionLogs;
-      list.innerHTML = filtered.map(l => `<div class="text-xs border-b pb-1"><span class="text-gray-500">${l.time}</span> - <span class="font-medium">${l.type}:</span> ${l.action}</div>`).join('') || '<p class="text-gray-500 text-xs">Нет записей</p>';
+      const list=document.getElementById('logs-list'), f=document.getElementById('log-filter')?.value||'', filtered=f?actionLogs.filter(l=>l.type===f):actionLogs;
+      list.innerHTML=filtered.map(l=>`<div class="text-xs border-b pb-1"><span class="text-gray-500">${l.time}</span> - <span class="font-medium">${l.type}:</span> ${l.action}</div>`).join('')||'<p class="text-gray-500 text-xs">Нет записей</p>';
     }
     function filterLogs() { renderLogs(); }
-    function openEditModal(id) {
-      const prod = products.find(p => p.id === id);
-      if (!prod) return;
-      document.getElementById('edit-product-id').value = prod.id;
-      document.getElementById('edit-name').value = prod.name;
-      document.getElementById('edit-price').value = prod.price;
-      document.getElementById('edit-old-price').value = prod.oldPrice || '';
-      document.getElementById('edit-stock').value = prod.stock || 10;
-      document.getElementById('edit-image').value = prod.image || '';
-      if (document.getElementById('edit-brand')) document.getElementById('edit-brand').value = prod.brand || '';
-      if (prod.image) document.getElementById('image-preview').innerHTML = `<img src="${prod.image}" class="w-12 h-12 object-cover rounded">`;
-      document.getElementById('edit-product-modal').style.display = 'flex';
-    }
-    function previewImage(input) {
-      if (input.files && input.files[0]) {
-        const reader = new FileReader();
-        reader.onload = (e) => { document.getElementById('image-preview').innerHTML = `<img src="${e.target.result}" class="w-12 h-12 object-cover rounded">`; document.getElementById('edit-image').value = e.target.result; };
-        reader.readAsDataURL(input.files[0]);
-      }
-    }
-    function saveEditedProduct() {
-      const id = parseInt(document.getElementById('edit-product-id').value);
-      const prod = products.find(p => p.id === id);
-      if (!prod) return;
-      prod.name = document.getElementById('edit-name').value;
-      prod.price = parseFloat(document.getElementById('edit-price').value);
-      prod.oldPrice = document.getElementById('edit-old-price').value ? parseFloat(document.getElementById('edit-old-price').value) : null;
-      prod.stock = parseInt(document.getElementById('edit-stock').value) || 10;
-      prod.image = document.getElementById('edit-image').value;
-      if (document.getElementById('edit-brand')) prod.brand = document.getElementById('edit-brand').value;
-      saveProducts(); renderAdminProducts(); filterProducts(); document.getElementById('edit-product-modal').style.display = 'none';
-      addLog('product', 'Изменен товар ' + prod.name);
-      alert('Товар сохранен');
-    }
-    function deleteProduct(id) {
-      if (confirm('Удалить товар?')) {
-        const prod = products.find(p => p.id === id);
-        products = products.filter(p => p.id !== id);
-        saveProducts(); renderAdminProducts(); filterProducts();
-        addLog('product', 'Удален товар ' + (prod ? prod.name : ''));
-      }
-    }
+
     function changeAdminCredentials() {
-      const newLogin = document.getElementById('admin-login').value;
-      const newPass = document.getElementById('admin-pass').value;
-      if (newLogin) adminCredentials.login = newLogin;
-      if (newPass) adminCredentials.password = newPass;
-      addLog('user', 'Изменены учетные данные');
-      alert('Данные изменены');
+      const nl=document.getElementById('admin-login').value, np=document.getElementById('admin-pass').value;
+      if(nl) adminCredentials.login=nl; if(np) adminCredentials.password=np;
+      addLog('user','Изменены учетные данные'); alert('Данные изменены');
     }
-    function toggleFilterCollapse(el) {
-      const content = el.nextElementSibling;
-      if (content) {
-        if (content.style.display === 'none' || content.style.display === '') content.style.display = 'block';
-        else content.style.display = 'none';
-      }
-    }
-    document.addEventListener('DOMContentLoaded', function() {
-      const modelSelect = document.getElementById('model');
-      const lengthInput = document.getElementById('length');
-      const decreaseBtn = document.getElementById('decrease-length');
-      const increaseBtn = document.getElementById('increase-length');
-      const totalPrice = document.getElementById('total-price');
-      const demontageCheck = document.getElementById('demontage');
-      const serviceCheck = document.getElementById('service');
-      const lengthSection = document.getElementById('length-section');
-      function calculateTotal() {
-        if (!modelSelect.value) { totalPrice.textContent = '0 BYN'; return 0; }
-        let total = parseInt(modelSelect.value);
-        const length = parseInt(lengthInput.value);
-        if (modelSelect.value !== '100' || !modelSelect.options[modelSelect.selectedIndex].text.includes('Только')) {
-          total += Math.max(0, length - 3) * 50;
-          lengthSection.style.display = 'block';
-        } else lengthSection.style.display = 'none';
-        if (demontageCheck.checked) total += 100;
-        if (serviceCheck.checked) total += 100;
-        totalPrice.textContent = total + ' BYN';
-        return total;
-      }
-      if (modelSelect) modelSelect.addEventListener('change', calculateTotal);
-      if (decreaseBtn) decreaseBtn.addEventListener('click', () => { if (parseInt(lengthInput.value) > 3) { lengthInput.value = parseInt(lengthInput.value) - 1; calculateTotal(); } });
-      if (increaseBtn) increaseBtn.addEventListener('click', () => { lengthInput.value = parseInt(lengthInput.value) + 1; calculateTotal(); });
-      if (demontageCheck) demontageCheck.addEventListener('change', calculateTotal);
-      if (serviceCheck) serviceCheck.addEventListener('change', calculateTotal);
-      calculateTotal();
+    function toggleFilterCollapse(el) { const c=el.nextElementSibling; if(c) { if(c.style.display==='none'||c.style.display==='') c.style.display='block'; else c.style.display='none'; } }
+
+    // Обратная связь
+    document.getElementById('contact-form').addEventListener('submit', function(e) {
+      e.preventDefault();
+      const fd=new FormData(this);
+      fetch(this.action,{ method:'POST', body:fd, headers:{'Accept':'application/json'} }).then(r=>{ if(r.ok) { document.getElementById('contact-success').classList.remove('hidden'); this.reset(); } else document.getElementById('contact-error').classList.remove('hidden'); }).catch(()=>document.getElementById('contact-error').classList.remove('hidden'));
     });
+
+    // Калькулятор
+    document.addEventListener('DOMContentLoaded',function(){
+      const ms=document.getElementById('model'), li=document.getElementById('length'), db=document.getElementById('decrease-length'), ib=document.getElementById('increase-length'), tp=document.getElementById('total-price'), dc=document.getElementById('demontage'), sc=document.getElementById('service'), ls=document.getElementById('length-section');
+      function calc() {
+        if(!ms.value) { tp.textContent='0 BYN'; return 0; }
+        let total=parseInt(ms.value), l=parseInt(li.value);
+        if(ms.value!=='100'||!ms.options[ms.selectedIndex].text.includes('Только')) { total+=Math.max(0,l-3)*50; ls.style.display='block'; } else ls.style.display='none';
+        if(dc.checked) total+=100; if(sc.checked) total+=100;
+        tp.textContent=total+' BYN'; return total;
+      }
+      if(ms) ms.addEventListener('change',calc);
+      if(db) db.addEventListener('click',()=>{ if(parseInt(li.value)>3) { li.value=parseInt(li.value)-1; calc(); } });
+      if(ib) ib.addEventListener('click',()=>{ li.value=parseInt(li.value)+1; calc(); });
+      if(dc) dc.addEventListener('change',calc); if(sc) sc.addEventListener('change',calc); calc();
+    });
+
+    // Инициализация
     loadProducts(); loadBrands(); loadOrders(); loadCart(); loadLogs(); loadVisits(); filterProducts();
-    const priceRange = document.getElementById('priceRange');
-    const maxPrice = document.getElementById('maxPrice');
-    if (priceRange) priceRange.addEventListener('input', function(e) { if (maxPrice) maxPrice.value = e.target.value; filterProducts(); });
-    if (maxPrice) maxPrice.addEventListener('change', function(e) { if (priceRange) priceRange.value = e.target.value; filterProducts(); });
-    window.addEventListener('click', function(event) { if (event.target.classList.contains('modal')) event.target.style.display = 'none'; });
-    window.addEventListener('hashchange', checkProductHash);
+    const pr=document.getElementById('priceRange'), mp=document.getElementById('maxPrice');
+    if(pr) pr.addEventListener('input',(e)=>{ if(mp) mp.value=e.target.value; filterProducts(); });
+    if(mp) mp.addEventListener('change',(e)=>{ if(pr) pr.value=e.target.value; filterProducts(); });
+    window.addEventListener('click',(e)=>{ if(e.target.classList.contains('modal')) e.target.style.display='none'; });
+    window.addEventListener('hashchange',checkProductHash);
   </script>
 </body>
 </html>
