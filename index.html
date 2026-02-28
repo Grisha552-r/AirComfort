@@ -1554,8 +1554,13 @@
     function loadVisits() {
       const today = new Date().toDateString();
       let visits = JSON.parse(localStorage.getItem('aircom_visits') || '{"date":"","today":0,"total":0}');
-      if (visits.date !== today) { visitCount = 1; totalVisits = visits.total + 1; } 
-      else { visitCount = visits.today + 1; totalVisits = visits.total + 1; }
+      if (visits.date !== today) { 
+        visitCount = 1; 
+        totalVisits = visits.total + 1; 
+      } else { 
+        visitCount = visits.today + 1; 
+        totalVisits = visits.total + 1; 
+      }
       localStorage.setItem('aircom_visits', JSON.stringify({ date: today, today: visitCount, total: totalVisits }));
       document.getElementById('today-visits').textContent = visitCount;
       document.getElementById('total-visits').textContent = totalVisits;
@@ -1583,10 +1588,28 @@
       document.getElementById('stats-processing').textContent = orders.filter(o=>o.status==='в обработке').length;
       document.getElementById('stats-completed').textContent = orders.filter(o=>o.status==='выполнен').length;
       document.getElementById('stats-cancelled').textContent = orders.filter(o=>o.status==='отменен').length;
+      
+      // Топ товаров
       const sales={}; orders.forEach(o=>o.items.forEach(i=>sales[i.name]=(sales[i.name]||0)+i.quantity));
       const top=Object.entries(sales).sort((a,b)=>b[1]-a[1]).slice(0,5);
       document.getElementById('dashboard-top-products').innerHTML = top.map(([n,c])=>`<div class="flex justify-between"><span>${n}</span><span class="font-bold">${c} шт</span></div>`).join('') || '<p class="text-gray-500">Нет данных</p>';
+      
+      // Последние действия
       document.getElementById('recent-actions').innerHTML = actionLogs.slice(0,5).map(l=>`<div class="text-xs border-b pb-1"><span class="text-gray-500">${l.time}</span> - ${l.action}</div>`).join('') || '<p class="text-gray-500">Нет действий</p>';
+      
+      // Отчеты
+      const weekAgo = new Date(); weekAgo.setDate(weekAgo.getDate() - 7);
+      const monthAgo = new Date(); monthAgo.setMonth(monthAgo.getMonth() - 1);
+      const yearAgo = new Date(); yearAgo.setFullYear(yearAgo.getFullYear() - 1);
+      
+      document.getElementById('report-today').textContent = to.reduce((s,o)=>s+o.total,0) + ' BYN';
+      document.getElementById('report-week').textContent = orders.filter(o=>new Date(o.date) >= weekAgo).reduce((s,o)=>s+o.total,0) + ' BYN';
+      document.getElementById('report-month').textContent = orders.filter(o=>new Date(o.date) >= monthAgo).reduce((s,o)=>s+o.total,0) + ' BYN';
+      document.getElementById('report-year').textContent = orders.filter(o=>new Date(o.date) >= yearAgo).reduce((s,o)=>s+o.total,0) + ' BYN';
+      
+      // Топ-10 для отчета
+      const top10 = Object.entries(sales).sort((a,b)=>b[1]-a[1]).slice(0,10);
+      document.getElementById('top-products-report').innerHTML = top10.map(([n,c])=>`<div class="flex justify-between"><span>${n}</span><span class="font-bold">${c} шт</span></div>`).join('') || '<p class="text-gray-500">Нет данных</p>';
     }
     function renderBrands() { const bl=document.getElementById('brands-list'); if(bl) bl.innerHTML = brands.map(b=>`<button onclick="filterByBrand('${b.name}')" class="brand-chip px-2 sm:px-3 py-1 bg-gray-100 hover:bg-primary hover:text-white rounded-full text-xs transition-colors">${b.name}</button>`).join(''); }
     function updateBrandSelects() { ['edit-brand','new-brand'].forEach(id=>{ const s=document.getElementById(id); if(s) s.innerHTML='<option value="">Без бренда</option>'+brands.map(b=>`<option value="${b.name}">${b.name}</option>`).join(''); }); }
@@ -1714,6 +1737,7 @@
     }
     function removeFromCart(id) { cart=cart.filter(i=>i.id!=id); saveCart(); renderCartItems(); }
     function clearCart() { if(confirm('Очистить корзину?')) { cart=[]; saveCart(); renderCartItems(); } }
+    
     function checkoutCart() {
       if(cart.length===0) { alert('Корзина пуста'); return; }
       const n=document.getElementById('order-name').value, p=document.getElementById('order-phone').value, a=document.getElementById('order-address').value, pm=document.querySelector('input[name="payment"]:checked')?.value||'Наличные';
@@ -1722,13 +1746,27 @@
       const order={ id:Date.now(), customer:{name:n, phone:p, address:a, payment:pm}, items:[...cart], total:total, date:new Date().toLocaleString(), status:'новый' };
       orders.push(order); saveOrders();
       cart.forEach(i=>{ const prod=products.find(p=>p.id===i.id); if(prod) prod.stock-=i.quantity; }); saveProducts();
+      
+      // Отправка email
       const fd=new FormData();
       fd.append('name',n); fd.append('phone',p); fd.append('address',a); fd.append('payment',pm); fd.append('order',JSON.stringify(order));
-      fetch('https://formspree.io/f/mrbkdwwe',{ method:'POST', body:fd, headers:{'Accept':'application/json'} }).then(r=>{ if(r.ok) alert('Заказ успешно оформлен! Мы свяжемся с вами.'); else alert('Заказ оформлен, но уведомление не отправлено.'); }).catch(()=>alert('Заказ оформлен, но уведомление не отправлено.'));
+      fetch('https://formspree.io/f/mrbkdwwe',{ method:'POST', body:fd, headers:{'Accept':'application/json'} })
+        .then(r=>{ if(r.ok) alert('Заказ успешно оформлен! Мы свяжемся с вами.'); else alert('Заказ оформлен, но уведомление не отправлено.'); })
+        .catch(()=>alert('Заказ оформлен, но уведомление не отправлено.'));
+      
       clearCart(); renderCartItems(); document.getElementById('cart-modal').style.display='none';
       document.getElementById('order-name').value=''; document.getElementById('order-phone').value=''; document.getElementById('order-address').value='';
       addLog('order','Новый заказ #'+order.id);
     }
+
+    // Обратная связь
+    document.getElementById('contact-form').addEventListener('submit', function(e) {
+      e.preventDefault();
+      const fd=new FormData(this);
+      fetch(this.action,{ method:'POST', body:fd, headers:{'Accept':'application/json'} })
+        .then(r=>{ if(r.ok) { document.getElementById('contact-success').classList.remove('hidden'); this.reset(); } else document.getElementById('contact-error').classList.remove('hidden'); })
+        .catch(()=>document.getElementById('contact-error').classList.remove('hidden'));
+    });
 
     // Админка
     function checkAdminHash() { if(window.location.hash==='#admin') document.getElementById('admin-login-modal').style.display='flex'; }
@@ -1740,12 +1778,27 @@
       if(l===adminCredentials.login && p===adminCredentials.password) {
         document.getElementById('admin-login-modal').style.display='none';
         document.getElementById('admin-panel').style.display='block';
-        renderAdminProducts(); switchAdminTab('dashboard'); updateDashboard();
-        history.pushState('', document.title, window.location.pathname);
+        renderAdminProducts(); 
+        switchAdminTab('dashboard'); 
+        updateDashboard();
+        // Сохраняем состояние в localStorage
+        localStorage.setItem('admin_logged_in', 'true');
         addLog('user','Вход в админ-панель');
       } else alert('Неверный логин или пароль');
     }
-    function closeAdminPanel() { document.getElementById('admin-panel').style.display='none'; }
+    
+    // Проверяем сохраненный вход
+    if(localStorage.getItem('admin_logged_in') === 'true') {
+      document.getElementById('admin-panel').style.display = 'block';
+      renderAdminProducts();
+      switchAdminTab('dashboard');
+      updateDashboard();
+    }
+    
+    function closeAdminPanel() { 
+      document.getElementById('admin-panel').style.display = 'none'; 
+      localStorage.removeItem('admin_logged_in');
+    }
 
     function switchAdminTab(tab) {
       const tabs=['dashboard','products','orders','customers','brands','reports','settings','logs'];
@@ -1839,16 +1892,106 @@
       const np={...p, id:Math.max(...products.map(p=>p.id),0)+1, name:p.name+' (копия)', createdAt:new Date().toISOString()};
       products.push(np); saveProducts(); renderAdminProducts(); filterProducts(); addLog('product','Копирование '+p.name);
     }
+    
+    // Полная форма редактирования
     function openEditModal(id) {
-      const p=products.find(p=>p.id===id); if(!p) return;
-      document.getElementById('edit-product-id').value=p.id; document.getElementById('edit-name').value=p.name; document.getElementById('edit-price').value=p.price; document.getElementById('edit-old-price').value=p.oldPrice||''; document.getElementById('edit-stock').value=p.stock||10; document.getElementById('edit-image').value=p.image||''; if(document.getElementById('edit-brand')) document.getElementById('edit-brand').value=p.brand||''; if(p.image) document.getElementById('image-preview').innerHTML=`<img src="${p.image}" class="w-12 h-12 object-cover rounded">`; document.getElementById('edit-product-modal').style.display='flex';
+      const p=products.find(p=>p.id===id); 
+      if(!p) return;
+      
+      // Создаем полную форму редактирования
+      const modal = document.getElementById('edit-product-modal');
+      if (!modal) {
+        // Создаем модальное окно если его нет
+        const newModal = document.createElement('div');
+        newModal.id = 'edit-product-modal';
+        newModal.className = 'modal';
+        newModal.innerHTML = `
+          <div class="modal-content max-w-2xl">
+            <h3 class="text-xl font-bold mb-4">Редактирование товара</h3>
+            <form id="edit-product-form" class="space-y-4">
+              <input type="hidden" id="edit-product-id">
+              <div><label class="block text-sm font-medium text-gray-700 mb-1">Название *</label><input type="text" id="edit-name" class="w-full border px-3 py-2 rounded"></div>
+              <div><label class="block text-sm font-medium text-gray-700 mb-1">Цена *</label><input type="number" id="edit-price" class="w-full border px-3 py-2 rounded"></div>
+              <div><label class="block text-sm font-medium text-gray-700 mb-1">Старая цена</label><input type="number" id="edit-old-price" class="w-full border px-3 py-2 rounded"></div>
+              <div><label class="block text-sm font-medium text-gray-700 mb-1">Количество</label><input type="number" id="edit-stock" class="w-full border px-3 py-2 rounded"></div>
+              <div><label class="block text-sm font-medium text-gray-700 mb-1">Изображение (URL)</label><input type="text" id="edit-image" class="w-full border px-3 py-2 rounded"></div>
+              <div><label class="block text-sm font-medium text-gray-700 mb-1">Бренд</label><select id="edit-brand" class="w-full border px-3 py-2 rounded"></select></div>
+              <div><label class="block text-sm font-medium text-gray-700 mb-1">Категория</label><select id="edit-category" class="w-full border px-3 py-2 rounded"><option value="Настенные">Настенные</option><option value="Канальные">Канальные</option><option value="Мобильные">Мобильные</option><option value="Кассетные">Кассетные</option><option value="Мульти-сплит">Мульти-сплит</option><option value="Напольно-потолочные">Напольно-потолочные</option></select></div>
+              <div><label class="block text-sm font-medium text-gray-700 mb-1">Тип</label><select id="edit-type" class="w-full border px-3 py-2 rounded"><option value="Настенный">Настенный</option><option value="Канальный">Канальный</option><option value="Кассетный">Кассетный</option><option value="Мобильный">Мобильный</option><option value="Напольно-потолочный">Напольно-потолочный</option></select></div>
+              <div><label class="block text-sm font-medium text-gray-700 mb-1">Инвертор</label><select id="edit-inverter" class="w-full border px-3 py-2 rounded"><option value="Да">Да</option><option value="Нет">Нет</option></select></div>
+              <div><label class="block text-sm font-medium text-gray-700 mb-1">Площадь</label><select id="edit-area" class="w-full border px-3 py-2 rounded"><option value="до 20">до 20 кв.м.</option><option value="21-29">21-29 кв.м.</option><option value="30-39">30-39 кв.м.</option><option value="40-49">40-49 кв.м.</option><option value="50-69">50-69 кв.м.</option><option value="70-99">70-99 кв.м.</option><option value="100+">от 100 кв.м.</option></select></div>
+              <div><label class="block text-sm font-medium text-gray-700 mb-1">Обогрев</label><input type="text" id="edit-heat" class="w-full border px-3 py-2 rounded"></div>
+              <div><label class="block text-sm font-medium text-gray-700 mb-1">Краткое описание</label><textarea id="edit-description" rows="2" class="w-full border px-3 py-2 rounded"></textarea></div>
+              <div><label class="block text-sm font-medium text-gray-700 mb-1">Полное описание</label><textarea id="edit-fullDescription" rows="4" class="w-full border px-3 py-2 rounded"></textarea></div>
+              <div><label class="block text-sm font-medium text-gray-700 mb-1">Теги</label><div class="flex gap-3"><label><input type="checkbox" id="edit-tag-hit"> Хит</label><label><input type="checkbox" id="edit-tag-new"> Новинка</label><label><input type="checkbox" id="edit-tag-sale"> Распродажа</label></div></div>
+              <div><label class="block text-sm font-medium text-gray-700 mb-1">Статус</label><select id="edit-status" class="w-full border px-3 py-2 rounded"><option value="active">Активен</option><option value="inactive">Неактивен</option></select></div>
+              <div class="flex gap-2"><button type="button" onclick="saveEditedProduct()" class="flex-1 gradient-bg text-white px-4 py-2 rounded-button">Сохранить</button><button type="button" onclick="document.getElementById('edit-product-modal').style.display='none'" class="flex-1 bg-gray-200 text-gray-800 px-4 py-2 rounded-button">Отмена</button></div>
+            </form>
+          </div>
+        `;
+        document.body.appendChild(newModal);
+      }
+      
+      document.getElementById('edit-product-id').value = p.id;
+      document.getElementById('edit-name').value = p.name;
+      document.getElementById('edit-price').value = p.price;
+      document.getElementById('edit-old-price').value = p.oldPrice || '';
+      document.getElementById('edit-stock').value = p.stock || 10;
+      document.getElementById('edit-image').value = p.image || '';
+      document.getElementById('edit-heat').value = p.heat || '-15';
+      document.getElementById('edit-description').value = p.description || '';
+      document.getElementById('edit-fullDescription').value = p.fullDescription || '';
+      
+      if (document.getElementById('edit-brand')) {
+        document.getElementById('edit-brand').innerHTML = '<option value="">Без бренда</option>' + brands.map(b=>`<option value="${b.name}" ${b.name===p.brand?'selected':''}>${b.name}</option>`).join('');
+      }
+      if (document.getElementById('edit-category')) document.getElementById('edit-category').value = p.category || 'Настенные';
+      if (document.getElementById('edit-type')) document.getElementById('edit-type').value = p.type || 'Настенный';
+      if (document.getElementById('edit-inverter')) document.getElementById('edit-inverter').value = p.inverter || 'Да';
+      if (document.getElementById('edit-area')) document.getElementById('edit-area').value = p.area || 'до 20';
+      if (document.getElementById('edit-status')) document.getElementById('edit-status').value = p.status || 'active';
+      
+      if (document.getElementById('edit-tag-hit')) document.getElementById('edit-tag-hit').checked = p.tags?.includes('хит') || false;
+      if (document.getElementById('edit-tag-new')) document.getElementById('edit-tag-new').checked = p.tags?.includes('новинка') || false;
+      if (document.getElementById('edit-tag-sale')) document.getElementById('edit-tag-sale').checked = p.tags?.includes('распродажа') || false;
+      
+      document.getElementById('edit-product-modal').style.display = 'flex';
     }
-    function previewImage(i) { if(i.files&&i.files[0]) { const r=new FileReader(); r.onload=(e)=>{ document.getElementById('image-preview').innerHTML=`<img src="${e.target.result}" class="w-12 h-12 object-cover rounded">`; document.getElementById('edit-image').value=e.target.result; }; r.readAsDataURL(i.files[0]); } }
+    
     function saveEditedProduct() {
-      const id=parseInt(document.getElementById('edit-product-id').value), p=products.find(p=>p.id===id); if(!p) return;
-      p.name=document.getElementById('edit-name').value; p.price=parseFloat(document.getElementById('edit-price').value); p.oldPrice=document.getElementById('edit-old-price').value?parseFloat(document.getElementById('edit-old-price').value):null; p.stock=parseInt(document.getElementById('edit-stock').value)||10; p.image=document.getElementById('edit-image').value; if(document.getElementById('edit-brand')) p.brand=document.getElementById('edit-brand').value;
-      saveProducts(); renderAdminProducts(); filterProducts(); document.getElementById('edit-product-modal').style.display='none'; addLog('product','Изменен товар '+p.name); alert('Товар сохранен');
+      const id = parseInt(document.getElementById('edit-product-id').value);
+      const p = products.find(p=>p.id===id);
+      if (!p) return;
+      
+      p.name = document.getElementById('edit-name').value;
+      p.price = parseFloat(document.getElementById('edit-price').value);
+      p.oldPrice = document.getElementById('edit-old-price').value ? parseFloat(document.getElementById('edit-old-price').value) : null;
+      p.stock = parseInt(document.getElementById('edit-stock').value) || 10;
+      p.image = document.getElementById('edit-image').value;
+      p.heat = document.getElementById('edit-heat').value || '-15';
+      p.description = document.getElementById('edit-description').value;
+      p.fullDescription = document.getElementById('edit-fullDescription').value;
+      
+      if (document.getElementById('edit-brand')) p.brand = document.getElementById('edit-brand').value;
+      if (document.getElementById('edit-category')) p.category = document.getElementById('edit-category').value;
+      if (document.getElementById('edit-type')) p.type = document.getElementById('edit-type').value;
+      if (document.getElementById('edit-inverter')) p.inverter = document.getElementById('edit-inverter').value;
+      if (document.getElementById('edit-area')) p.area = document.getElementById('edit-area').value;
+      if (document.getElementById('edit-status')) p.status = document.getElementById('edit-status').value;
+      
+      p.tags = [];
+      if (document.getElementById('edit-tag-hit')?.checked) p.tags.push('хит');
+      if (document.getElementById('edit-tag-new')?.checked) p.tags.push('новинка');
+      if (document.getElementById('edit-tag-sale')?.checked) p.tags.push('распродажа');
+      
+      saveProducts(); 
+      renderAdminProducts(); 
+      filterProducts(); 
+      document.getElementById('edit-product-modal').style.display = 'none';
+      addLog('product','Изменен товар '+p.name);
+      alert('Товар сохранен');
     }
+    
     function deleteProduct(id) { if(confirm('Удалить товар?')) { const p=products.find(p=>p.id===id); products=products.filter(p=>p.id!==id); saveProducts(); renderAdminProducts(); filterProducts(); addLog('product','Удален товар '+(p?p.name:'')); } }
 
     function renderAdminOrders() {
@@ -1889,6 +2032,7 @@
         `<div class="border p-2 rounded mb-2 text-xs"><div class="font-medium">${c.name}</div><div>Тел: ${c.phone}</div><div>Адрес: ${c.address}</div><div>Заказов: ${c.orders}, на сумму: ${c.total} BYN</div><div>Последний: ${c.lastOrder}</div></div>`
       ).join('') || '<p class="text-gray-500">Нет клиентов</p>';
     }
+    function filterCustomers() { renderCustomers(); }
 
     function renderAdminBrands() {
       const list=document.getElementById('brands-admin-list'); if(!list) return;
@@ -1915,13 +2059,6 @@
       addLog('user','Изменены учетные данные'); alert('Данные изменены');
     }
     function toggleFilterCollapse(el) { const c=el.nextElementSibling; if(c) { if(c.style.display==='none'||c.style.display==='') c.style.display='block'; else c.style.display='none'; } }
-
-    // Обратная связь
-    document.getElementById('contact-form').addEventListener('submit', function(e) {
-      e.preventDefault();
-      const fd=new FormData(this);
-      fetch(this.action,{ method:'POST', body:fd, headers:{'Accept':'application/json'} }).then(r=>{ if(r.ok) { document.getElementById('contact-success').classList.remove('hidden'); this.reset(); } else document.getElementById('contact-error').classList.remove('hidden'); }).catch(()=>document.getElementById('contact-error').classList.remove('hidden'));
-    });
 
     // Калькулятор
     document.addEventListener('DOMContentLoaded',function(){
