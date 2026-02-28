@@ -992,8 +992,7 @@
         
         <div class="border-b border-gray-200 mb-4 sm:mb-6 overflow-x-auto">
           <nav class="flex gap-2 sm:gap-4 min-w-max">
-            <button onclick="switchAdminTab('dashboard')" class="px-2 sm:px-4 py-1 sm:py-2 font-medium text-xs sm:text-base text-primary border-b-2 border-primary" id="tab-dashboard-btn">Дашборд</button>
-            <button onclick="switchAdminTab('products')" class="px-2 sm:px-4 py-1 sm:py-2 font-medium text-xs sm:text-base text-gray-500 hover:text-gray-700" id="tab-products-btn">Товары</button>
+            <button onclick="switchAdminTab('products')" class="px-2 sm:px-4 py-1 sm:py-2 font-medium text-xs sm:text-base text-primary border-b-2 border-primary" id="tab-products-btn">Товары</button>
             <button onclick="switchAdminTab('orders')" class="px-2 sm:px-4 py-1 sm:py-2 font-medium text-xs sm:text-base text-gray-500 hover:text-gray-700" id="tab-orders-btn">Заказы</button>
             <button onclick="switchAdminTab('brands')" class="px-2 sm:px-4 py-1 sm:py-2 font-medium text-xs sm:text-base text-gray-500 hover:text-gray-700" id="tab-brands-btn">Бренды</button>
             <button onclick="switchAdminTab('reports')" class="px-2 sm:px-4 py-1 sm:py-2 font-medium text-xs sm:text-base text-gray-500 hover:text-gray-700" id="tab-reports-btn">Отчеты</button>
@@ -1002,57 +1001,7 @@
           </nav>
         </div>
 
-        <div id="admin-dashboard-tab" class="block">
-          <div class="grid grid-cols-2 sm:grid-cols-2 lg:grid-cols-4 gap-2 sm:gap-4 mb-4 sm:mb-6">
-            <div class="bg-white p-3 sm:p-6 rounded-lg shadow border-l-4 border-primary">
-              <div class="flex justify-between items-center">
-                <div><p class="text-xs sm:text-sm text-gray-600">Выручка сегодня</p><p class="text-sm sm:text-2xl font-bold" id="dashboard-today-revenue">0 BYN</p></div>
-                <i class="ri-money-dollar-circle-line text-xl sm:text-3xl text-primary"></i>
-              </div>
-            </div>
-            <div class="bg-white p-3 sm:p-6 rounded-lg shadow border-l-4 border-secondary">
-              <div class="flex justify-between items-center">
-                <div><p class="text-xs sm:text-sm text-gray-600">Заказов сегодня</p><p class="text-sm sm:text-2xl font-bold" id="dashboard-today-orders">0</p></div>
-                <i class="ri-shopping-cart-line text-xl sm:text-3xl text-secondary"></i>
-              </div>
-            </div>
-            <div class="bg-white p-3 sm:p-6 rounded-lg shadow border-l-4 border-accent">
-              <div class="flex justify-between items-center">
-                <div><p class="text-xs sm:text-sm text-gray-600">Всего товаров</p><p class="text-sm sm:text-2xl font-bold" id="dashboard-total-products">0</p></div>
-                <i class="ri-stack-line text-xl sm:text-3xl text-accent"></i>
-              </div>
-            </div>
-            <div class="bg-white p-3 sm:p-6 rounded-lg shadow border-l-4 border-green-500">
-              <div class="flex justify-between items-center">
-                <div><p class="text-xs sm:text-sm text-gray-600">Ср. чек</p><p class="text-sm sm:text-2xl font-bold" id="dashboard-average-order">0 BYN</p></div>
-                <i class="ri-bar-chart-line text-xl sm:text-3xl text-green-500"></i>
-              </div>
-            </div>
-          </div>
-
-          <div class="grid grid-cols-1 lg:grid-cols-2 gap-4 sm:gap-6 mb-4 sm:mb-6">
-            <div class="bg-white p-3 sm:p-6 rounded-lg shadow">
-              <h3 class="text-sm sm:text-lg font-bold mb-2 sm:mb-4">Популярные товары</h3>
-              <div id="dashboard-top-products" class="space-y-2 text-xs sm:text-sm"></div>
-            </div>
-            <div class="bg-white p-3 sm:p-6 rounded-lg shadow">
-              <h3 class="text-sm sm:text-lg font-bold mb-2 sm:mb-4">Статистика заказов</h3>
-              <div class="space-y-2 text-xs sm:text-sm">
-                <div class="flex justify-between items-center"><span>Новые</span><span class="font-bold" id="stats-new">0</span></div>
-                <div class="flex justify-between items-center"><span>В обработке</span><span class="font-bold" id="stats-processing">0</span></div>
-                <div class="flex justify-between items-center"><span>Выполненные</span><span class="font-bold" id="stats-completed">0</span></div>
-                <div class="flex justify-between items-center"><span>Отмененные</span><span class="font-bold" id="stats-cancelled">0</span></div>
-              </div>
-            </div>
-          </div>
-
-          <div class="bg-white p-3 sm:p-6 rounded-lg shadow">
-            <h3 class="text-sm sm:text-lg font-bold mb-2 sm:mb-4">Последние действия</h3>
-            <div id="recent-actions" class="space-y-1 sm:space-y-2 text-xs sm:text-sm"></div>
-          </div>
-        </div>
-
-        <div id="admin-products-tab" class="hidden">
+        <div id="admin-products-tab" class="block">
           <div class="mb-4 sm:mb-6 p-3 sm:p-4 bg-yellow-50 border border-yellow-200 rounded">
             <h3 class="font-bold mb-2 text-sm sm:text-base">Изменение логина/пароля</h3>
             <p class="text-xs sm:text-sm text-gray-600 mb-2">Текущие: admin / admin123</p>
@@ -1109,15 +1058,33 @@
         </div>
 
         <div id="admin-orders-tab" class="hidden">
-          <div class="mb-4 flex gap-2">
-            <input type="date" id="order-filter-start" class="border px-3 py-2 rounded text-sm" onchange="filterAdminOrders()">
-            <input type="date" id="order-filter-end" class="border px-3 py-2 rounded text-sm" onchange="filterAdminOrders()">
-            <button onclick="clearDateFilter()" class="bg-gray-200 px-4 py-2 rounded text-sm">Сбросить</button>
+          <div class="mb-4 flex flex-col sm:flex-row gap-2 items-start sm:items-center">
+            <div class="flex gap-2">
+              <select id="order-period-select" class="border px-3 py-2 rounded text-sm" onchange="applyOrderPeriod()">
+                <option value="today">Сегодня</option>
+                <option value="week">Неделя</option>
+                <option value="month">Месяц</option>
+                <option value="year">Год</option>
+                <option value="custom">Произвольный период</option>
+              </select>
+              <input type="date" id="order-start-date" class="border px-3 py-2 rounded text-sm" style="display: none;">
+              <input type="date" id="order-end-date" class="border px-3 py-2 rounded text-sm" style="display: none;">
+            </div>
+            <button onclick="applyCustomOrderPeriod()" id="apply-order-period" class="bg-primary text-white px-4 py-2 rounded text-sm" style="display: none;">Применить</button>
+            <button onclick="clearOrderPeriod()" class="bg-gray-200 px-4 py-2 rounded text-sm">Сбросить</button>
           </div>
-          <div class="grid grid-cols-2 sm:grid-cols-3 gap-2 sm:gap-4 mb-4 sm:mb-6">
+          
+          <div class="grid grid-cols-2 sm:grid-cols-2 gap-2 sm:gap-4 mb-4 sm:mb-6">
             <div><label class="block text-xs sm:text-sm font-medium text-gray-700 mb-1">Статус</label><select id="order-status-filter" onchange="filterAdminOrders()" class="w-full border px-2 sm:px-4 py-1 sm:py-2 rounded-lg text-xs sm:text-sm"><option value="">Все</option><option value="новый">Новые</option><option value="в обработке">В обработке</option><option value="выполнен">Выполненные</option><option value="отменен">Отмененные</option></select></div>
             <div><label class="block text-xs sm:text-sm font-medium text-gray-700 mb-1">Поиск</label><input type="text" id="order-search" placeholder="Имя или телефон..." class="w-full border px-2 sm:px-4 py-1 sm:py-2 rounded-lg text-xs sm:text-sm" onkeyup="filterAdminOrders()"></div>
           </div>
+          
+          <div class="mb-4 p-4 bg-blue-50 rounded">
+            <h4 class="font-bold text-sm mb-2">Статистика за выбранный период:</h4>
+            <p class="text-sm">Всего заказов: <span id="period-orders-count">0</span></p>
+            <p class="text-sm">Общая сумма: <span id="period-orders-total">0</span> BYN</p>
+          </div>
+          
           <div class="mb-4 flex flex-wrap gap-1 sm:gap-2">
             <button onclick="deleteAllOrders()" class="bg-red-500 text-white px-2 sm:px-4 py-1 sm:py-2 rounded-button text-xs sm:text-sm">Удалить все</button>
             <button onclick="exportOrders()" class="bg-green-500 text-white px-2 sm:px-4 py-1 sm:py-2 rounded-button text-xs sm:text-sm">Экспорт</button>
@@ -1133,9 +1100,37 @@
         </div>
 
         <div id="admin-reports-tab" class="hidden">
-          <div class="grid grid-cols-1 sm:grid-cols-2 gap-4 sm:gap-6">
-            <div class="bg-white p-3 sm:p-6 rounded-lg shadow"><h3 class="text-sm sm:text-lg font-bold mb-2 sm:mb-4">Отчет по продажам</h3><div class="space-y-2 text-xs sm:text-sm"><div class="flex justify-between"><span>За сегодня:</span><span class="font-bold" id="report-today">0 BYN</span></div><div class="flex justify-between"><span>За неделю:</span><span class="font-bold" id="report-week">0 BYN</span></div><div class="flex justify-between"><span>За месяц:</span><span class="font-bold" id="report-month">0 BYN</span></div><div class="flex justify-between"><span>За год:</span><span class="font-bold" id="report-year">0 BYN</span></div></div><button onclick="generateFullReport()" class="mt-3 sm:mt-4 w-full bg-primary text-white px-3 sm:px-4 py-1 sm:py-2 rounded-button text-xs sm:text-sm">Полный отчет</button></div>
-            <div class="bg-white p-3 sm:p-6 rounded-lg shadow"><h3 class="text-sm sm:text-lg font-bold mb-2 sm:mb-4">Топ-10 товаров</h3><div id="top-products-report" class="space-y-1 sm:space-y-2 text-xs sm:text-sm"></div></div>
+          <div class="bg-white p-4 sm:p-6 rounded-lg shadow">
+            <h3 class="text-sm sm:text-lg font-bold mb-4">Отчет по продажам</h3>
+            
+            <div class="mb-6 flex flex-col sm:flex-row gap-2 items-start sm:items-center">
+              <select id="report-period-select" class="border px-3 py-2 rounded text-sm" onchange="applyReportPeriod()">
+                <option value="today">Сегодня</option>
+                <option value="week">Неделя</option>
+                <option value="month">Месяц</option>
+                <option value="year">Год</option>
+                <option value="custom">Произвольный период</option>
+              </select>
+              <input type="date" id="report-start-date" class="border px-3 py-2 rounded text-sm" style="display: none;">
+              <input type="date" id="report-end-date" class="border px-3 py-2 rounded text-sm" style="display: none;">
+              <button onclick="applyCustomReportPeriod()" id="apply-report-period" class="bg-primary text-white px-4 py-2 rounded text-sm" style="display: none;">Применить</button>
+              <button onclick="clearReportPeriod()" class="bg-gray-200 px-4 py-2 rounded text-sm">Сбросить</button>
+            </div>
+            
+            <div class="space-y-3">
+              <div class="flex justify-between text-sm">
+                <span>Заказов за период:</span>
+                <span class="font-bold" id="report-orders-count">0</span>
+              </div>
+              <div class="flex justify-between text-sm">
+                <span>Выручка за период:</span>
+                <span class="font-bold" id="report-revenue">0 BYN</span>
+              </div>
+              <div class="flex justify-between text-sm">
+                <span>Средний чек:</span>
+                <span class="font-bold" id="report-average">0 BYN</span>
+              </div>
+            </div>
           </div>
         </div>
 
@@ -1339,12 +1334,10 @@
       const s=localStorage.getItem('aircom_orders'); 
       if(s) orders=JSON.parse(s); 
       updateOrderStats(); 
-      updateDashboard(); 
     }
     function saveOrders() { 
       localStorage.setItem('aircom_orders', JSON.stringify(orders)); 
       updateOrderStats(); 
-      updateDashboard(); 
       addLog('order','Обновлен список заказов');
       backupDatabase();
     }
@@ -1374,47 +1367,144 @@
     }
     setInterval(backupDatabase, 300000);
 
-    function updateDashboard() {
+    // Функции для работы с периодами
+    function getDateRange(period) {
       const today = new Date();
-      const todayStr = today.toDateString();
+      let start = new Date();
+      let end = new Date();
       
-      const todayOrders = orders.filter(o => {
+      switch(period) {
+        case 'today':
+          start.setHours(0,0,0,0);
+          end.setHours(23,59,59,999);
+          break;
+        case 'week':
+          start.setDate(today.getDate() - 7);
+          break;
+        case 'month':
+          start.setMonth(today.getMonth() - 1);
+          break;
+        case 'year':
+          start.setFullYear(today.getFullYear() - 1);
+          break;
+      }
+      
+      return { start, end };
+    }
+    
+    function filterOrdersByDate(orders, start, end) {
+      return orders.filter(o => {
         const orderDate = new Date(o.date);
-        return orderDate.toDateString() === todayStr;
+        return orderDate >= start && orderDate <= end;
+      });
+    }
+    
+    function applyOrderPeriod() {
+      const period = document.getElementById('order-period-select').value;
+      const startDate = document.getElementById('order-start-date');
+      const endDate = document.getElementById('order-end-date');
+      const applyBtn = document.getElementById('apply-order-period');
+      
+      if (period === 'custom') {
+        startDate.style.display = 'inline-block';
+        endDate.style.display = 'inline-block';
+        applyBtn.style.display = 'inline-block';
+      } else {
+        startDate.style.display = 'none';
+        endDate.style.display = 'none';
+        applyBtn.style.display = 'none';
+        
+        const range = getDateRange(period);
+        filterAdminOrders(range.start, range.end);
+        updatePeriodStats(range.start, range.end);
+      }
+    }
+    
+    function applyCustomOrderPeriod() {
+      const start = new Date(document.getElementById('order-start-date').value);
+      const end = new Date(document.getElementById('order-end-date').value);
+      end.setHours(23,59,59,999);
+      
+      if (start && end) {
+        filterAdminOrders(start, end);
+        updatePeriodStats(start, end);
+      }
+    }
+    
+    function clearOrderPeriod() {
+      document.getElementById('order-period-select').value = 'today';
+      document.getElementById('order-start-date').style.display = 'none';
+      document.getElementById('order-end-date').style.display = 'none';
+      document.getElementById('apply-order-period').style.display = 'none';
+      filterAdminOrders();
+    }
+    
+    function updatePeriodStats(start, end) {
+      const filtered = orders.filter(o => {
+        const orderDate = new Date(o.date);
+        return orderDate >= start && orderDate <= end;
       });
       
-      const todayRevenue = todayOrders.reduce((sum, o) => sum + o.total, 0);
+      const count = filtered.length;
+      const total = filtered.reduce((sum, o) => sum + o.total, 0);
       
-      document.getElementById('dashboard-today-revenue').textContent = todayRevenue + ' BYN';
-      document.getElementById('dashboard-today-orders').textContent = todayOrders.length;
-      document.getElementById('dashboard-total-products').textContent = products.length;
+      document.getElementById('period-orders-count').textContent = count;
+      document.getElementById('period-orders-total').textContent = total;
+    }
+    
+    function applyReportPeriod() {
+      const period = document.getElementById('report-period-select').value;
+      const startDate = document.getElementById('report-start-date');
+      const endDate = document.getElementById('report-end-date');
+      const applyBtn = document.getElementById('apply-report-period');
       
-      const avg = orders.length ? Math.round(orders.reduce((sum, o) => sum + o.total, 0) / orders.length) : 0;
-      document.getElementById('dashboard-average-order').textContent = avg + ' BYN';
+      if (period === 'custom') {
+        startDate.style.display = 'inline-block';
+        endDate.style.display = 'inline-block';
+        applyBtn.style.display = 'inline-block';
+      } else {
+        startDate.style.display = 'none';
+        endDate.style.display = 'none';
+        applyBtn.style.display = 'none';
+        
+        const range = getDateRange(period);
+        updateReport(range.start, range.end);
+      }
+    }
+    
+    function applyCustomReportPeriod() {
+      const start = new Date(document.getElementById('report-start-date').value);
+      const end = new Date(document.getElementById('report-end-date').value);
+      end.setHours(23,59,59,999);
       
-      document.getElementById('stats-new').textContent = orders.filter(o => o.status === 'новый').length;
-      document.getElementById('stats-processing').textContent = orders.filter(o => o.status === 'в обработке').length;
-      document.getElementById('stats-completed').textContent = orders.filter(o => o.status === 'выполнен').length;
-      document.getElementById('stats-cancelled').textContent = orders.filter(o => o.status === 'отменен').length;
+      if (start && end) {
+        updateReport(start, end);
+      }
+    }
+    
+    function clearReportPeriod() {
+      document.getElementById('report-period-select').value = 'today';
+      document.getElementById('report-start-date').style.display = 'none';
+      document.getElementById('report-end-date').style.display = 'none';
+      document.getElementById('apply-report-period').style.display = 'none';
       
-      const sales = {};
-      orders.forEach(o => o.items.forEach(i => sales[i.name] = (sales[i.name] || 0) + i.quantity));
-      const top = Object.entries(sales).sort((a, b) => b[1] - a[1]).slice(0, 5);
-      document.getElementById('dashboard-top-products').innerHTML = top.map(([n, c]) => `<div class="flex justify-between"><span>${n}</span><span class="font-bold">${c} шт</span></div>`).join('') || '<p class="text-gray-500">Нет данных</p>';
+      const range = getDateRange('today');
+      updateReport(range.start, range.end);
+    }
+    
+    function updateReport(start, end) {
+      const filtered = orders.filter(o => {
+        const orderDate = new Date(o.date);
+        return orderDate >= start && orderDate <= end;
+      });
       
-      document.getElementById('recent-actions').innerHTML = actionLogs.slice(0, 5).map(l => `<div class="text-xs border-b pb-1"><span class="text-gray-500">${l.time}</span> - ${l.action}</div>`).join('') || '<p class="text-gray-500">Нет действий</p>';
+      const count = filtered.length;
+      const total = filtered.reduce((sum, o) => sum + o.total, 0);
+      const avg = count > 0 ? Math.round(total / count) : 0;
       
-      const weekAgo = new Date(); weekAgo.setDate(weekAgo.getDate() - 7);
-      const monthAgo = new Date(); monthAgo.setMonth(monthAgo.getMonth() - 1);
-      const yearAgo = new Date(); yearAgo.setFullYear(yearAgo.getFullYear() - 1);
-      
-      document.getElementById('report-today').textContent = todayRevenue + ' BYN';
-      document.getElementById('report-week').textContent = orders.filter(o => new Date(o.date) >= weekAgo).reduce((s, o) => s + o.total, 0) + ' BYN';
-      document.getElementById('report-month').textContent = orders.filter(o => new Date(o.date) >= monthAgo).reduce((s, o) => s + o.total, 0) + ' BYN';
-      document.getElementById('report-year').textContent = orders.filter(o => new Date(o.date) >= yearAgo).reduce((s, o) => s + o.total, 0) + ' BYN';
-      
-      const top10 = Object.entries(sales).sort((a, b) => b[1] - a[1]).slice(0, 10);
-      document.getElementById('top-products-report').innerHTML = top10.map(([n, c]) => `<div class="flex justify-between"><span>${n}</span><span class="font-bold">${c} шт</span></div>`).join('') || '<p class="text-gray-500">Нет данных</p>';
+      document.getElementById('report-orders-count').textContent = count;
+      document.getElementById('report-revenue').textContent = total + ' BYN';
+      document.getElementById('report-average').textContent = avg + ' BYN';
     }
     
     function renderBrands() { const bl=document.getElementById('brands-list'); if(bl) bl.innerHTML = brands.map(b=>`<button onclick="filterByBrand('${b.name}')" class="brand-chip px-2 sm:px-3 py-1 bg-gray-100 hover:bg-primary hover:text-white rounded-full text-xs transition-colors">${b.name}</button>`).join(''); }
@@ -1612,8 +1702,6 @@ Email: ${e || 'не указан'}
       document.getElementById('order-name').value=''; document.getElementById('order-phone').value=''; 
       document.getElementById('order-address').value=''; document.getElementById('order-email').value='';
       addLog('order','Новый заказ #'+order.id);
-      
-      updateDashboard();
     }
 
     // Обратная связь
@@ -1644,8 +1732,7 @@ Email: ${e || 'не указан'}
         document.getElementById('admin-login-modal').style.display='none';
         document.getElementById('admin-panel').style.display='block';
         renderAdminProducts(); 
-        switchAdminTab('dashboard'); 
-        updateDashboard();
+        switchAdminTab('products'); 
         localStorage.setItem('admin_logged_in', 'true');
         addLog('user','Вход в админ-панель');
       } else alert('Неверный логин или пароль');
@@ -1654,8 +1741,7 @@ Email: ${e || 'не указан'}
     if(localStorage.getItem('admin_logged_in') === 'true') {
       document.getElementById('admin-panel').style.display = 'block';
       renderAdminProducts();
-      switchAdminTab('dashboard');
-      updateDashboard();
+      switchAdminTab('products');
     }
     
     function closeAdminPanel() { 
@@ -1664,7 +1750,7 @@ Email: ${e || 'не указан'}
     }
 
     function switchAdminTab(tab) {
-      const tabs=['dashboard','products','orders','brands','reports','settings','logs'];
+      const tabs=['products','orders','brands','reports','settings','logs'];
       tabs.forEach(t=>{
         const el=document.getElementById(`admin-${t}-tab`), btn=document.getElementById(`tab-${t}-btn`);
         if(el) el.classList.add('hidden');
@@ -1676,6 +1762,10 @@ Email: ${e || 'не указан'}
       if(tab==='products') renderAdminProducts();
       if(tab==='orders') renderAdminOrders();
       if(tab==='brands') renderAdminBrands();
+      if(tab==='reports') {
+        const range = getDateRange('today');
+        updateReport(range.start, range.end);
+      }
       if(tab==='logs') renderLogs();
     }
 
@@ -1698,16 +1788,37 @@ Email: ${e || 'не указан'}
       });
     }
     function filterAdminProducts() { renderAdminProducts(); }
-    function filterAdminOrders() { 
-      const start = document.getElementById('order-filter-start')?.value;
-      const end = document.getElementById('order-filter-end')?.value;
-      renderAdminOrders(start, end); 
+    function filterAdminOrders(startDate, endDate) { 
+      const list=document.getElementById('admin-orders-list'); if(!list) return;
+      const sf=document.getElementById('order-status-filter')?.value||'', st=document.getElementById('order-search')?.value.toLowerCase()||'';
+      let fo=[...orders];
+      
+      if(sf) fo=fo.filter(o=>o.status===sf);
+      if(st) fo=fo.filter(o=>o.customer.name.toLowerCase().includes(st)||o.customer.phone.includes(st));
+      if(startDate && endDate) {
+        fo = fo.filter(o => {
+          const orderDate = new Date(o.date);
+          return orderDate >= startDate && orderDate <= endDate;
+        });
+      }
+      
+      list.innerHTML='';
+      if(fo.length===0) { list.innerHTML='<p class="text-gray-500 text-center py-4 text-xs">Нет заказов</p>'; return; }
+      fo.forEach(o=>{ 
+        const statusClass = o.status === 'новый' ? 'status-new' : o.status === 'в обработке' ? 'status-processing' : o.status === 'выполнен' ? 'status-completed' : 'status-cancelled';
+        list.innerHTML+=`<div class="border p-3 rounded-lg hover:shadow-md"><div class="flex justify-between items-start mb-1"><span class="font-bold text-xs">Заказ #${o.id}</span><span class="text-xs text-gray-500">${o.date}</span></div><div class="grid grid-cols-2 gap-1 text-xs"><div><span class="font-medium">Клиент:</span> ${o.customer.name}</div><div><span class="font-medium">Тел:</span> ${o.customer.phone}</div><div class="col-span-2"><span class="font-medium">Адрес:</span> ${o.customer.address}</div><div><span class="font-medium">Оплата:</span> ${o.customer.payment||'Наличные'}</div><div><span class="font-medium">Сумма:</span> ${o.total} BYN</div></div><div class="mt-2 flex gap-2"><span class="px-2 py-1 rounded text-xs ${statusClass}">${o.status}</span><select onchange="updateOrderStatus(${o.id},this.value)" class="border rounded px-1 py-0.5 text-xs"><option value="новый" ${o.status==='новый'?'selected':''}>Новый</option><option value="в обработке" ${o.status==='в обработке'?'selected':''}>В обр.</option><option value="выполнен" ${o.status==='выполнен'?'selected':''}>Выполн.</option><option value="отменен" ${o.status==='отменен'?'selected':''}>Отмен.</option></select><button onclick="deleteOrder(${o.id})" class="text-red-600 hover:text-red-800 px-2 py-1 border border-red-300 rounded text-xs">🗑️</button></div><div class="mt-1 text-xs text-gray-600">Товары: ${o.items.map(i=>i.name+' x'+i.quantity).join(', ')}</div></div>`; });
+      updateOrderStats();
     }
-    function clearDateFilter() {
-      document.getElementById('order-filter-start').value = '';
-      document.getElementById('order-filter-end').value = '';
-      renderAdminOrders();
+    function updateOrderStatus(id,ns) { const o=orders.find(o=>o.id===id); if(o) { o.status=ns; saveOrders(); filterAdminOrders(); addLog('order',`Статус заказа #${id} изменен на ${ns}`); } }
+    function deleteOrder(id) { if(confirm('Удалить заказ?')) { orders=orders.filter(o=>o.id!==id); saveOrders(); filterAdminOrders(); addLog('order',`Удален заказ #${id}`); } }
+    function deleteAllOrders() { if(confirm('Удалить все заказы?')) { orders=[]; saveOrders(); filterAdminOrders(); addLog('order','Удалены все заказы'); } }
+    function exportOrders() {
+      const data=orders.map(o=>({ 'Номер':o.id, Дата:o.date, Клиент:o.customer.name, Телефон:o.customer.phone, Адрес:o.customer.address, Оплата:o.customer.payment, Сумма:o.total, Статус:o.status, Товары:o.items.map(i=>`${i.name}(${i.quantity})`).join('; ') }));
+      const csv=[Object.keys(data[0]).join(','),...data.map(r=>Object.values(r).map(v=>`"${v}"`).join(','))].join('\n');
+      const blob=new Blob(['\uFEFF'+csv],{type:'text/csv;charset=utf-8;'}), link=document.createElement('a'); link.href=URL.createObjectURL(blob); link.download='orders_export.csv'; link.click();
+      addLog('order','Экспорт заказов');
     }
+
     function toggleProductSelection(id) { if(selectedProducts.has(id)) selectedProducts.delete(id); else selectedProducts.add(id); }
     function toggleSelectAll() {
       const cbs=document.querySelectorAll('.product-checkbox'), ac=document.getElementById('select-all-products').checked;
@@ -1861,37 +1972,6 @@ Email: ${e || 'не указан'}
     }
     
     function deleteProduct(id) { if(confirm('Удалить товар?')) { const p=products.find(p=>p.id===id); products=products.filter(p=>p.id!==id); saveProducts(); renderAdminProducts(); filterProducts(); addLog('product','Удален товар '+(p?p.name:'')); } }
-
-    function renderAdminOrders(startDate, endDate) {
-      const list=document.getElementById('admin-orders-list'); if(!list) return;
-      const sf=document.getElementById('order-status-filter')?.value||'', st=document.getElementById('order-search')?.value.toLowerCase()||'';
-      let fo=[...orders];
-      
-      if(sf) fo=fo.filter(o=>o.status===sf);
-      if(st) fo=fo.filter(o=>o.customer.name.toLowerCase().includes(st)||o.customer.phone.includes(st));
-      if(startDate && endDate) {
-        fo = fo.filter(o => {
-          const orderDate = new Date(o.date);
-          return orderDate >= new Date(startDate) && orderDate <= new Date(endDate);
-        });
-      }
-      
-      list.innerHTML='';
-      if(fo.length===0) { list.innerHTML='<p class="text-gray-500 text-center py-4 text-xs">Нет заказов</p>'; return; }
-      fo.forEach(o=>{ 
-        const statusClass = o.status === 'новый' ? 'status-new' : o.status === 'в обработке' ? 'status-processing' : o.status === 'выполнен' ? 'status-completed' : 'status-cancelled';
-        list.innerHTML+=`<div class="border p-3 rounded-lg hover:shadow-md"><div class="flex justify-between items-start mb-1"><span class="font-bold text-xs">Заказ #${o.id}</span><span class="text-xs text-gray-500">${o.date}</span></div><div class="grid grid-cols-2 gap-1 text-xs"><div><span class="font-medium">Клиент:</span> ${o.customer.name}</div><div><span class="font-medium">Тел:</span> ${o.customer.phone}</div><div class="col-span-2"><span class="font-medium">Адрес:</span> ${o.customer.address}</div><div><span class="font-medium">Оплата:</span> ${o.customer.payment||'Наличные'}</div><div><span class="font-medium">Сумма:</span> ${o.total} BYN</div></div><div class="mt-2 flex gap-2"><span class="px-2 py-1 rounded text-xs ${statusClass}">${o.status}</span><select onchange="updateOrderStatus(${o.id},this.value)" class="border rounded px-1 py-0.5 text-xs"><option value="новый" ${o.status==='новый'?'selected':''}>Новый</option><option value="в обработке" ${o.status==='в обработке'?'selected':''}>В обр.</option><option value="выполнен" ${o.status==='выполнен'?'selected':''}>Выполн.</option><option value="отменен" ${o.status==='отменен'?'selected':''}>Отмен.</option></select><button onclick="deleteOrder(${o.id})" class="text-red-600 hover:text-red-800 px-2 py-1 border border-red-300 rounded text-xs">🗑️</button></div><div class="mt-1 text-xs text-gray-600">Товары: ${o.items.map(i=>i.name+' x'+i.quantity).join(', ')}</div></div>`; });
-      updateOrderStats();
-    }
-    function updateOrderStatus(id,ns) { const o=orders.find(o=>o.id===id); if(o) { o.status=ns; saveOrders(); renderAdminOrders(); addLog('order',`Статус заказа #${id} изменен на ${ns}`); } }
-    function deleteOrder(id) { if(confirm('Удалить заказ?')) { orders=orders.filter(o=>o.id!==id); saveOrders(); renderAdminOrders(); addLog('order',`Удален заказ #${id}`); } }
-    function deleteAllOrders() { if(confirm('Удалить все заказы?')) { orders=[]; saveOrders(); renderAdminOrders(); addLog('order','Удалены все заказы'); } }
-    function exportOrders() {
-      const data=orders.map(o=>({ 'Номер':o.id, Дата:o.date, Клиент:o.customer.name, Телефон:o.customer.phone, Адрес:o.customer.address, Оплата:o.customer.payment, Сумма:o.total, Статус:o.status, Товары:o.items.map(i=>`${i.name}(${i.quantity})`).join('; ') }));
-      const csv=[Object.keys(data[0]).join(','),...data.map(r=>Object.values(r).map(v=>`"${v}"`).join(','))].join('\n');
-      const blob=new Blob(['\uFEFF'+csv],{type:'text/csv;charset=utf-8;'}), link=document.createElement('a'); link.href=URL.createObjectURL(blob); link.download='orders_export.csv'; link.click();
-      addLog('order','Экспорт заказов');
-    }
 
     function renderAdminBrands() {
       const list=document.getElementById('brands-admin-list'); if(!list) return;
