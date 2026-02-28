@@ -1145,8 +1145,6 @@
             <div class="space-y-3 sm:space-y-4">
               <div><label class="block text-xs sm:text-sm font-medium text-gray-700 mb-1">Название магазина</label><input type="text" id="site-name" value="AirComfort" class="w-full border px-2 sm:px-4 py-1 sm:py-2 rounded-lg text-xs sm:text-sm"></div>
               <div><label class="block text-xs sm:text-sm font-medium text-gray-700 mb-1">Email для уведомлений</label><input type="email" id="site-email" value="aircomfortbel@gmail.com" class="w-full border px-2 sm:px-4 py-1 sm:py-2 rounded-lg text-xs sm:text-sm"></div>
-              <div><label class="block text-xs sm:text-sm font-medium text-gray-700 mb-1">Telegram Bot Token</label><input type="text" id="telegram-token" value="7906374596:AAHcCv8J8RqS2AlUZqHMcJZxG-d_j1Vg5oQ" class="w-full border px-2 sm:px-4 py-1 sm:py-2 rounded-lg text-xs sm:text-sm"></div>
-              <div><label class="block text-xs sm:text-sm font-medium text-gray-700 mb-1">Telegram Chat ID</label><input type="text" id="telegram-chat" value="7906374596" class="w-full border px-2 sm:px-4 py-1 sm:py-2 rounded-lg text-xs sm:text-sm"></div>
               <div><label class="block text-xs sm:text-sm font-medium text-gray-700 mb-1">Телефон</label><input type="text" id="site-phone" value="+375 (29) 105-06-94" class="w-full border px-2 sm:px-4 py-1 sm:py-2 rounded-lg text-xs sm:text-sm"></div>
               <div><label class="block text-xs sm:text-sm font-medium text-gray-700 mb-1">Адрес</label><input type="text" id="site-address" value="г. Гомель" class="w-full border px-2 sm:px-4 py-1 sm:py-2 rounded-lg text-xs sm:text-sm"></div>
               <div><label class="block text-xs sm:text-sm font-medium text-gray-700 mb-1">Валюта</label><select id="site-currency" class="w-full border px-2 sm:px-4 py-1 sm:py-2 rounded-lg text-xs sm:text-sm"><option value="BYN">BYN</option><option value="USD">USD</option><option value="EUR">EUR</option><option value="RUB">RUB</option></select></div>
@@ -1311,22 +1309,6 @@
       document.querySelectorAll('.faq-answer').forEach(el => el.classList.remove('open'));
       document.querySelectorAll('.faq-icon').forEach(el => el.classList.remove('open'));
       if (!isOpen) { answer.classList.add('open'); icon.classList.add('open'); }
-    }
-
-    // Telegram бот
-    const TELEGRAM_TOKEN = '7906374596:AAHcCv8J8RqS2AlUZqHMcJZxG-d_j1Vg5oQ';
-    const TELEGRAM_CHAT_ID = '7906374596';
-
-    function sendTelegramNotification(message) {
-      fetch(`https://api.telegram.org/bot${TELEGRAM_TOKEN}/sendMessage`, {
-        method: 'POST',
-        headers: { 'Content-Type': 'application/json' },
-        body: JSON.stringify({ 
-          chat_id: TELEGRAM_CHAT_ID, 
-          text: message,
-          parse_mode: 'HTML'
-        })
-      }).catch(error => console.error('Telegram error:', error));
     }
 
     // Данные
@@ -1577,10 +1559,6 @@
       orders.push(order); saveOrders();
       cart.forEach(i=>{ const prod=products.find(p=>p.id===i.id); if(prod) prod.stock-=i.quantity; }); saveProducts();
       
-      // Отправка в Telegram
-      const telegramMessage = `🆕 <b>НОВЫЙ ЗАКАЗ #${order.id}</b>\n\n👤 <b>Клиент:</b> ${n}\n📞 <b>Телефон:</b> ${p}\n📍 <b>Адрес:</b> ${a}\n📧 <b>Email:</b> ${e || 'не указан'}\n💳 <b>Оплата:</b> ${pm}\n💰 <b>Сумма:</b> ${total} BYN\n\n🛒 <b>Товары:</b>\n${cart.map(i => `• ${i.name} - ${i.quantity} шт x ${i.price} BYN`).join('\n')}`;
-      sendTelegramNotification(telegramMessage);
-      
       // Отправка email через Formspree
       const fd=new FormData();
       fd.append('name', n);
@@ -1588,7 +1566,28 @@
       fd.append('address', a);
       fd.append('email', e || 'aircomfortbel@gmail.com');
       fd.append('payment', pm);
-      fd.append('order', JSON.stringify(order));
+      
+      // Добавляем все товары в читаемом виде
+      let itemsList = '';
+      cart.forEach(item => {
+        itemsList += `\n• ${item.name} - ${item.quantity} шт x ${item.price} BYN = ${item.price * item.quantity} BYN`;
+      });
+      
+      const orderText = `Новый заказ #${order.id}
+      
+Клиент: ${n}
+Телефон: ${p}
+Адрес: ${a}
+Email: ${e || 'не указан'}
+Оплата: ${pm}
+
+Состав заказа:${itemsList}
+
+Общая сумма: ${total} BYN
+
+Статус: новый`;
+      
+      fd.append('order', orderText);
       fd.append('_subject', 'Новый заказ #' + order.id);
       fd.append('_replyto', e || 'aircomfortbel@gmail.com');
       
@@ -1621,17 +1620,8 @@
     document.getElementById('contact-form').addEventListener('submit', function(e) {
       e.preventDefault();
       
-      const name = document.getElementById('form-name').value;
-      const phone = document.getElementById('form-phone').value;
-      const email = document.getElementById('form-email').value;
-      const message = document.getElementById('form-message').value;
-      
-      // Отправка в Telegram
-      const telegramMessage = `📝 <b>НОВОЕ СООБЩЕНИЕ С САЙТА</b>\n\n👤 <b>Имя:</b> ${name}\n📞 <b>Телефон:</b> ${phone}\n📧 <b>Email:</b> ${email || 'не указан'}\n💬 <b>Сообщение:</b>\n${message}`;
-      sendTelegramNotification(telegramMessage);
-      
       const fd=new FormData(this);
-      fd.append('_replyto', email || 'aircomfortbel@gmail.com');
+      fd.append('_replyto', document.getElementById('form-email').value || 'aircomfortbel@gmail.com');
       fd.append('_subject', 'Новое сообщение с сайта');
       
       fetch(this.action, {
