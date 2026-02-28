@@ -189,6 +189,9 @@
     }
   </script>
 
+  <!-- Chart.js для графиков -->
+  <script src="https://cdn.jsdelivr.net/npm/chart.js@4.4.0/dist/chart.umd.min.js"></script>
+
   <!-- Шрифты -->
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
@@ -618,6 +621,16 @@
       border-color: #4CAF50;
     }
 
+    /* Статусы заказов */
+    .status-new { background-color: #fef3c7; color: #92400e; }
+    .status-processing { background-color: #dbeafe; color: #1e40af; }
+    .status-completed { background-color: #d1fae5; color: #065f46; }
+    .status-cancelled { background-color: #fee2e2; color: #991b1b; }
+
+    /* Личный кабинет */
+    .cabinet-modal { display: none; }
+    .cabinet-modal.active { display: flex; }
+
     @media (max-width: 768px) {
       .float-buttons { bottom: 15px; right: 15px; }
       .float-button { width: 40px; height: 40px; font-size: 16px; }
@@ -668,6 +681,30 @@
     </a>
   </div>
 
+  <!-- Модальное окно отслеживания заказа -->
+  <div id="track-order-modal" class="modal">
+    <div class="modal-content max-w-md">
+      <h3 class="text-xl font-bold mb-4">Отследить заказ</h3>
+      <input type="tel" id="track-phone" placeholder="Введите ваш телефон" class="w-full border px-4 py-2 rounded mb-4">
+      <button onclick="trackOrder()" class="w-full gradient-bg text-white px-4 py-2 rounded-button">Найти заказы</button>
+      <div id="track-results" class="mt-4 space-y-3"></div>
+      <button onclick="document.getElementById('track-order-modal').style.display='none'" class="mt-4 text-gray-500 hover:text-gray-700">Закрыть</button>
+    </div>
+  </div>
+
+  <!-- Личный кабинет -->
+  <div id="cabinet-modal" class="modal">
+    <div class="modal-content max-w-2xl">
+      <h3 class="text-xl font-bold mb-4">Личный кабинет</h3>
+      <div class="mb-4">
+        <input type="tel" id="cabinet-phone" placeholder="Введите ваш телефон для входа" class="w-full border px-4 py-2 rounded">
+        <button onclick="loginCabinet()" class="mt-2 w-full gradient-bg text-white px-4 py-2 rounded-button">Войти</button>
+      </div>
+      <div id="cabinet-orders" class="hidden space-y-4"></div>
+      <button onclick="document.getElementById('cabinet-modal').style.display='none'" class="mt-4 text-gray-500 hover:text-gray-700">Закрыть</button>
+    </div>
+  </div>
+
   <div id="content">
     <!-- Навигация -->
     <nav class="glass-effect shadow-lg py-1.5 px-4 sm:px-6 fixed w-full z-50 border-b border-white/20">
@@ -689,6 +726,12 @@
           </button>
           <button onclick="document.getElementById('contacts').scrollIntoView({behavior: 'smooth'})" class="nav-link">
             <i class="ri-contacts-line mr-1"></i>Контакты
+          </button>
+          <button onclick="document.getElementById('track-order-modal').style.display='flex'" class="nav-link">
+            <i class="ri-search-line mr-1"></i>Отследить заказ
+          </button>
+          <button onclick="document.getElementById('cabinet-modal').style.display='flex'" class="nav-link">
+            <i class="ri-user-line mr-1"></i>Личный кабинет
           </button>
         </div>
         <div class="flex items-center space-x-1">
@@ -716,6 +759,12 @@
         </button>
         <button onclick="document.getElementById('contacts').scrollIntoView({behavior: 'smooth'}); toggleMobileMenu()" class="nav-link w-full text-left">
           <i class="ri-contacts-line mr-2"></i>Контакты
+        </button>
+        <button onclick="document.getElementById('track-order-modal').style.display='flex'; toggleMobileMenu()" class="nav-link w-full text-left">
+          <i class="ri-search-line mr-2"></i>Отследить заказ
+        </button>
+        <button onclick="document.getElementById('cabinet-modal').style.display='flex'; toggleMobileMenu()" class="nav-link w-full text-left">
+          <i class="ri-user-line mr-2"></i>Личный кабинет
         </button>
         <a href="tel:+375291050694" class="nav-link w-full text-left">
           <i class="ri-phone-line mr-2"></i>+375 (29) 105-06-94
@@ -979,6 +1028,7 @@
           <div class="flex items-center gap-3">
             <span class="text-xs sm:text-sm text-gray-600">Посещений сегодня: <span id="today-visits">0</span></span>
             <span class="text-xs sm:text-sm text-gray-600">Всего посещений: <span id="total-visits">0</span></span>
+            <span class="text-xs sm:text-sm text-gray-600">Резервное копирование: <span id="backup-status">✅</span></span>
             <a href="#" onclick="closeAdminPanel(); return false;" class="text-gray-600 hover:text-gray-900"><i class="ri-close-line ri-xl sm:ri-2x"></i></a>
           </div>
         </div>
@@ -1022,6 +1072,12 @@
                 <i class="ri-bar-chart-line text-xl sm:text-3xl text-green-500"></i>
               </div>
             </div>
+          </div>
+
+          <!-- График продаж -->
+          <div class="bg-white p-3 sm:p-6 rounded-lg shadow mb-4 sm:mb-6">
+            <h3 class="text-sm sm:text-lg font-bold mb-4">График продаж (последние 7 дней)</h3>
+            <canvas id="salesChart" class="w-full h-64"></canvas>
           </div>
 
           <div class="grid grid-cols-1 lg:grid-cols-2 gap-4 sm:gap-6 mb-4 sm:mb-6">
@@ -1103,12 +1159,21 @@
         </div>
 
         <div id="admin-orders-tab" class="hidden">
+          <div class="mb-4 flex gap-2">
+            <input type="date" id="order-filter-start" class="border px-3 py-2 rounded text-sm" onchange="filterAdminOrders()">
+            <input type="date" id="order-filter-end" class="border px-3 py-2 rounded text-sm" onchange="filterAdminOrders()">
+            <button onclick="clearDateFilter()" class="bg-gray-200 px-4 py-2 rounded text-sm">Сбросить</button>
+          </div>
           <div class="grid grid-cols-2 sm:grid-cols-3 gap-2 sm:gap-4 mb-4 sm:mb-6">
             <div><label class="block text-xs sm:text-sm font-medium text-gray-700 mb-1">Статус</label><select id="order-status-filter" onchange="filterAdminOrders()" class="w-full border px-2 sm:px-4 py-1 sm:py-2 rounded-lg text-xs sm:text-sm"><option value="">Все</option><option value="новый">Новые</option><option value="в обработке">В обработке</option><option value="выполнен">Выполненные</option><option value="отменен">Отмененные</option></select></div>
             <div><label class="block text-xs sm:text-sm font-medium text-gray-700 mb-1">Поиск</label><input type="text" id="order-search" placeholder="Имя или телефон..." class="w-full border px-2 sm:px-4 py-1 sm:py-2 rounded-lg text-xs sm:text-sm" onkeyup="filterAdminOrders()"></div>
-            <div><label class="block text-xs sm:text-sm font-medium text-gray-700 mb-1">Дата</label><input type="date" id="order-date-filter" class="w-full border px-2 sm:px-4 py-1 sm:py-2 rounded-lg text-xs sm:text-sm" onchange="filterAdminOrders()"></div>
           </div>
-          <div class="mb-4 flex flex-wrap gap-1 sm:gap-2"><button onclick="deleteAllOrders()" class="bg-red-500 text-white px-2 sm:px-4 py-1 sm:py-2 rounded-button text-xs sm:text-sm">Удалить все</button><button onclick="exportOrders()" class="bg-green-500 text-white px-2 sm:px-4 py-1 sm:py-2 rounded-button text-xs sm:text-sm">Экспорт</button></div>
+          <div class="mb-4 flex flex-wrap gap-1 sm:gap-2">
+            <button onclick="deleteAllOrders()" class="bg-red-500 text-white px-2 sm:px-4 py-1 sm:py-2 rounded-button text-xs sm:text-sm">Удалить все</button>
+            <button onclick="exportOrders()" class="bg-green-500 text-white px-2 sm:px-4 py-1 sm:py-2 rounded-button text-xs sm:text-sm">Экспорт</button>
+            <button onclick="backupDatabase()" class="bg-blue-500 text-white px-2 sm:px-4 py-1 sm:py-2 rounded-button text-xs sm:text-sm">Резервное копирование</button>
+            <button onclick="sendTelegramNotification('manual')" class="bg-sky-500 text-white px-2 sm:px-4 py-1 sm:py-2 rounded-button text-xs sm:text-sm">Тест Telegram</button>
+          </div>
           <div id="admin-orders-list" class="space-y-3 sm:space-y-4"></div>
           <div class="mt-4 p-3 sm:p-4 bg-blue-50 rounded"><h4 class="font-bold text-xs sm:text-sm">Статистика заказов:</h4><p class="text-xs sm:text-sm">Всего заказов: <span id="total-orders">0</span></p><p class="text-xs sm:text-sm">Общая сумма: <span id="total-amount">0</span> BYN</p></div>
         </div>
@@ -1136,6 +1201,8 @@
             <div class="space-y-3 sm:space-y-4">
               <div><label class="block text-xs sm:text-sm font-medium text-gray-700 mb-1">Название магазина</label><input type="text" id="site-name" value="AirComfort" class="w-full border px-2 sm:px-4 py-1 sm:py-2 rounded-lg text-xs sm:text-sm"></div>
               <div><label class="block text-xs sm:text-sm font-medium text-gray-700 mb-1">Email для уведомлений</label><input type="email" id="site-email" value="aircomfortbel@gmail.com" class="w-full border px-2 sm:px-4 py-1 sm:py-2 rounded-lg text-xs sm:text-sm"></div>
+              <div><label class="block text-xs sm:text-sm font-medium text-gray-700 mb-1">Telebot токен</label><input type="text" id="telegram-token" value="YOUR_BOT_TOKEN" class="w-full border px-2 sm:px-4 py-1 sm:py-2 rounded-lg text-xs sm:text-sm"></div>
+              <div><label class="block text-xs sm:text-sm font-medium text-gray-700 mb-1">Telegram Chat ID</label><input type="text" id="telegram-chat" value="YOUR_CHAT_ID" class="w-full border px-2 sm:px-4 py-1 sm:py-2 rounded-lg text-xs sm:text-sm"></div>
               <div><label class="block text-xs sm:text-sm font-medium text-gray-700 mb-1">Телефон</label><input type="text" id="site-phone" value="+375 (29) 105-06-94" class="w-full border px-2 sm:px-4 py-1 sm:py-2 rounded-lg text-xs sm:text-sm"></div>
               <div><label class="block text-xs sm:text-sm font-medium text-gray-700 mb-1">Адрес</label><input type="text" id="site-address" value="г. Гомель" class="w-full border px-2 sm:px-4 py-1 sm:py-2 rounded-lg text-xs sm:text-sm"></div>
               <div><label class="block text-xs sm:text-sm font-medium text-gray-700 mb-1">Валюта</label><select id="site-currency" class="w-full border px-2 sm:px-4 py-1 sm:py-2 rounded-lg text-xs sm:text-sm"><option value="BYN">BYN</option><option value="USD">USD</option><option value="EUR">EUR</option><option value="RUB">RUB</option></select></div>
@@ -1302,6 +1369,50 @@
       if (!isOpen) { answer.classList.add('open'); icon.classList.add('open'); }
     }
 
+    // Отслеживание заказа
+    function trackOrder() {
+      const phone = document.getElementById('track-phone').value;
+      const results = document.getElementById('track-results');
+      const userOrders = orders.filter(o => o.customer.phone === phone);
+      
+      if (userOrders.length === 0) {
+        results.innerHTML = '<p class="text-gray-500 text-center">Заказы не найдены</p>';
+        return;
+      }
+      
+      results.innerHTML = userOrders.map(o => `
+        <div class="border p-3 rounded">
+          <p class="font-bold">Заказ #${o.id}</p>
+          <p>Дата: ${o.date}</p>
+          <p>Сумма: ${o.total} BYN</p>
+          <p>Статус: <span class="status-${o.status} px-2 py-1 rounded">${o.status}</span></p>
+        </div>
+      `).join('');
+    }
+
+    // Личный кабинет
+    function loginCabinet() {
+      const phone = document.getElementById('cabinet-phone').value;
+      const cabinetOrders = document.getElementById('cabinet-orders');
+      const userOrders = orders.filter(o => o.customer.phone === phone);
+      
+      if (userOrders.length === 0) {
+        alert('Заказы не найдены');
+        return;
+      }
+      
+      cabinetOrders.classList.remove('hidden');
+      cabinetOrders.innerHTML = '<h4 class="font-bold mb-3">Ваши заказы:</h4>' + 
+        userOrders.map(o => `
+          <div class="border p-3 rounded mb-2">
+            <p class="font-bold">Заказ #${o.id}</p>
+            <p>Дата: ${o.date}</p>
+            <p>Сумма: ${o.total} BYN</p>
+            <p>Статус: <span class="status-${o.status} px-2 py-1 rounded">${o.status}</span></p>
+          </div>
+        `).join('');
+    }
+
     // Данные
     let products = [{ id:1, name:'Ballu BSO-07HN1', brand:'Ballu', price:850, oldPrice:950, stock:5, area:'до 20', category:'Настенные', type:'Настенный', inverter:'Нет', heat:'-7', description:'Надежный кондиционер для небольших помещений.', fullDescription:'Ballu BSO-07HN1 - надежная сплит-система для помещений до 20 м². Энергосберегающий режим, низкий шум.', image:'https://via.placeholder.com/200x150?text=Ballu+BSO-07HN1', tags:['хит'], status:'active', createdAt:new Date().toISOString() },
                     { id:2, name:'Electrolux EACS-07HAT/N3', brand:'Electrolux', price:1100, oldPrice:null, stock:3, area:'21-29', category:'Настенные', type:'Настенный', inverter:'Да', heat:'-15', description:'Инверторная модель с низким уровнем шума.', fullDescription:'Electrolux EACS-07HAT/N3 - инверторный кондиционер, 22 дБ, высокая энергоэффективность.', image:'https://via.placeholder.com/200x150?text=Electrolux', tags:['новинка'], status:'active', createdAt:new Date().toISOString() },
@@ -1326,8 +1437,16 @@
       document.getElementById('today-visits').textContent = visitCount;
       document.getElementById('total-visits').textContent = totalVisits;
     }
-    function loadOrders() { const s=localStorage.getItem('aircom_orders'); if(s) orders=JSON.parse(s); updateOrderStats(); updateDashboard(); }
-    function saveOrders() { localStorage.setItem('aircom_orders', JSON.stringify(orders)); updateOrderStats(); updateDashboard(); addLog('order','Обновлен список заказов'); }
+    function loadOrders() { const s=localStorage.getItem('aircom_orders'); if(s) orders=JSON.parse(s); updateOrderStats(); updateDashboard(); updateSalesChart(); }
+    function saveOrders() { 
+      localStorage.setItem('aircom_orders', JSON.stringify(orders)); 
+      updateOrderStats(); 
+      updateDashboard(); 
+      updateSalesChart(); 
+      addLog('order','Обновлен список заказов');
+      backupDatabase(); // Автоматическое резервное копирование
+      sendTelegramNotification('new_order'); // Отправка в Telegram
+    }
     function loadCart() { const s=localStorage.getItem('aircom_cart'); if(s) cart=JSON.parse(s); updateCartBadge(); }
     function saveCart() { localStorage.setItem('aircom_cart', JSON.stringify(cart)); updateCartBadge(); }
     function loadLogs() { const s=localStorage.getItem('aircom_logs'); if(s) actionLogs=JSON.parse(s); }
@@ -1338,6 +1457,90 @@
       const to=document.getElementById('total-orders'), ta=document.getElementById('total-amount'); 
       if(to&&ta) { to.textContent=orders.length; ta.textContent=orders.reduce((a,o)=>a+o.total,0); } 
     }
+    
+    // График продаж
+    let salesChart;
+    function updateSalesChart() {
+      const ctx = document.getElementById('salesChart')?.getContext('2d');
+      if (!ctx) return;
+      
+      const last7Days = [];
+      const salesData = [];
+      for (let i = 6; i >= 0; i--) {
+        const date = new Date();
+        date.setDate(date.getDate() - i);
+        const dateStr = date.toLocaleDateString('ru-RU', { day: 'numeric', month: 'short' });
+        last7Days.push(dateStr);
+        
+        const dayOrders = orders.filter(o => new Date(o.date).toDateString() === date.toDateString());
+        const dayTotal = dayOrders.reduce((sum, o) => sum + o.total, 0);
+        salesData.push(dayTotal);
+      }
+      
+      if (salesChart) salesChart.destroy();
+      
+      salesChart = new Chart(ctx, {
+        type: 'line',
+        data: {
+          labels: last7Days,
+          datasets: [{
+            label: 'Выручка, BYN',
+            data: salesData,
+            borderColor: '#4CAF50',
+            backgroundColor: 'rgba(76, 175, 80, 0.1)',
+            tension: 0.4,
+            fill: true
+          }]
+        },
+        options: {
+          responsive: true,
+          maintainAspectRatio: false,
+          plugins: {
+            legend: { display: false }
+          }
+        }
+      });
+    }
+
+    // Резервное копирование
+    function backupDatabase() {
+      const backup = {
+        products: products,
+        brands: brands,
+        orders: orders,
+        logs: actionLogs,
+        date: new Date().toISOString()
+      };
+      localStorage.setItem('aircom_backup_' + Date.now(), JSON.stringify(backup));
+      document.getElementById('backup-status').textContent = '✅ ' + new Date().toLocaleTimeString();
+      addLog('system', 'Резервное копирование выполнено');
+    }
+
+    // Автоматическое резервное копирование каждые 5 минут
+    setInterval(backupDatabase, 300000);
+
+    // Уведомление в Telegram
+    function sendTelegramNotification(type) {
+      const token = document.getElementById('telegram-token')?.value || 'YOUR_BOT_TOKEN';
+      const chatId = document.getElementById('telegram-chat')?.value || 'YOUR_CHAT_ID';
+      
+      if (token === 'YOUR_BOT_TOKEN' || chatId === 'YOUR_CHAT_ID') return;
+      
+      let message = '';
+      if (type === 'new_order') {
+        const lastOrder = orders[orders.length - 1];
+        message = `🆕 Новый заказ #${lastOrder.id}\nКлиент: ${lastOrder.customer.name}\nТелефон: ${lastOrder.customer.phone}\nСумма: ${lastOrder.total} BYN`;
+      } else if (type === 'manual') {
+        message = '✅ Тестовое уведомление из админ-панели';
+      }
+      
+      fetch(`https://api.telegram.org/bot${token}/sendMessage`, {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({ chat_id: chatId, text: message })
+      }).catch(() => {});
+    }
+
     function updateDashboard() {
       const today=new Date().toDateString(), to=orders.filter(o=>new Date(o.date).toDateString()===today);
       document.getElementById('dashboard-today-revenue').textContent = to.reduce((s,o)=>s+o.total,0) + ' BYN';
@@ -1497,10 +1700,16 @@
     
     function checkoutCart() {
       if(cart.length===0) { alert('Корзина пуста'); return; }
+      
+      console.log('Корзина перед отправкой:', cart); // для отладки
+      
       const n=document.getElementById('order-name').value, p=document.getElementById('order-phone').value, a=document.getElementById('order-address').value, e=document.getElementById('order-email').value, pm=document.querySelector('input[name="payment"]:checked')?.value||'Наличные';
       if(!n||!p||!a) { alert('Заполните все поля'); return; }
       const total=cart.reduce((s,i)=>s+i.price*i.quantity,0);
       const order={ id:Date.now(), customer:{name:n, phone:p, address:a, email:e, payment:pm}, items:[...cart], total:total, date:new Date().toLocaleString(), status:'новый' };
+      
+      console.log('Отправляемый заказ:', order); // проверить в консоли
+      
       orders.push(order); saveOrders();
       cart.forEach(i=>{ const prod=products.find(p=>p.id===i.id); if(prod) prod.stock-=i.quantity; }); saveProducts();
       
@@ -1509,11 +1718,11 @@
       fd.append('name', n);
       fd.append('phone', p);
       fd.append('address', a);
-      fd.append('email', e);
+      fd.append('email', e || 'aircomfortbel@gmail.com');
       fd.append('payment', pm);
       fd.append('order', JSON.stringify(order));
-      fd.append('_replyto', e || 'aircomfortbel@gmail.com');
       fd.append('_subject', 'Новый заказ #' + order.id);
+      fd.append('_replyto', e || 'aircomfortbel@gmail.com');
       
       fetch('https://formspree.io/f/mrbkdwwe', {
         method: 'POST',
@@ -1537,6 +1746,8 @@
       document.getElementById('order-name').value=''; document.getElementById('order-phone').value=''; 
       document.getElementById('order-address').value=''; document.getElementById('order-email').value='';
       addLog('order','Новый заказ #'+order.id);
+      
+      updateDashboard(); // Обновление дашборда
     }
 
     // Обратная связь
@@ -1568,6 +1779,7 @@
         renderAdminProducts(); 
         switchAdminTab('dashboard'); 
         updateDashboard();
+        updateSalesChart();
         localStorage.setItem('admin_logged_in', 'true');
         addLog('user','Вход в админ-панель');
       } else alert('Неверный логин или пароль');
@@ -1578,6 +1790,7 @@
       renderAdminProducts();
       switchAdminTab('dashboard');
       updateDashboard();
+      updateSalesChart();
     }
     
     function closeAdminPanel() { 
@@ -1621,7 +1834,16 @@
       });
     }
     function filterAdminProducts() { renderAdminProducts(); }
-    function filterAdminOrders() { renderAdminOrders(); }
+    function filterAdminOrders() { 
+      const start = document.getElementById('order-filter-start')?.value;
+      const end = document.getElementById('order-filter-end')?.value;
+      renderAdminOrders(start, end); 
+    }
+    function clearDateFilter() {
+      document.getElementById('order-filter-start').value = '';
+      document.getElementById('order-filter-end').value = '';
+      renderAdminOrders();
+    }
     function toggleProductSelection(id) { if(selectedProducts.has(id)) selectedProducts.delete(id); else selectedProducts.add(id); }
     function toggleSelectAll() {
       const cbs=document.querySelectorAll('.product-checkbox'), ac=document.getElementById('select-all-products').checked;
@@ -1776,16 +1998,25 @@
     
     function deleteProduct(id) { if(confirm('Удалить товар?')) { const p=products.find(p=>p.id===id); products=products.filter(p=>p.id!==id); saveProducts(); renderAdminProducts(); filterProducts(); addLog('product','Удален товар '+(p?p.name:'')); } }
 
-    function renderAdminOrders() {
+    function renderAdminOrders(startDate, endDate) {
       const list=document.getElementById('admin-orders-list'); if(!list) return;
-      const sf=document.getElementById('order-status-filter')?.value||'', st=document.getElementById('order-search')?.value.toLowerCase()||'', df=document.getElementById('order-date-filter')?.value||'';
+      const sf=document.getElementById('order-status-filter')?.value||'', st=document.getElementById('order-search')?.value.toLowerCase()||'';
       let fo=[...orders];
+      
       if(sf) fo=fo.filter(o=>o.status===sf);
       if(st) fo=fo.filter(o=>o.customer.name.toLowerCase().includes(st)||o.customer.phone.includes(st));
-      if(df) fo=fo.filter(o=>new Date(o.date).toISOString().split('T')[0]===df);
+      if(startDate && endDate) {
+        fo = fo.filter(o => {
+          const orderDate = new Date(o.date);
+          return orderDate >= new Date(startDate) && orderDate <= new Date(endDate);
+        });
+      }
+      
       list.innerHTML='';
       if(fo.length===0) { list.innerHTML='<p class="text-gray-500 text-center py-4 text-xs">Нет заказов</p>'; return; }
-      fo.forEach(o=>{ list.innerHTML+=`<div class="border p-3 rounded-lg hover:shadow-md"><div class="flex justify-between items-start mb-1"><span class="font-bold text-xs">Заказ #${o.id}</span><span class="text-xs text-gray-500">${o.date}</span></div><div class="grid grid-cols-2 gap-1 text-xs"><div><span class="font-medium">Клиент:</span> ${o.customer.name}</div><div><span class="font-medium">Тел:</span> ${o.customer.phone}</div><div class="col-span-2"><span class="font-medium">Адрес:</span> ${o.customer.address}</div><div><span class="font-medium">Оплата:</span> ${o.customer.payment||'Наличные'}</div><div><span class="font-medium">Сумма:</span> ${o.total} BYN</div></div><div class="mt-2 flex gap-2"><span class="px-2 py-1 bg-blue-100 text-blue-800 rounded text-xs">${o.status}</span><select onchange="updateOrderStatus(${o.id},this.value)" class="border rounded px-1 py-0.5 text-xs"><option value="новый" ${o.status==='новый'?'selected':''}>Новый</option><option value="в обработке" ${o.status==='в обработке'?'selected':''}>В обр.</option><option value="выполнен" ${o.status==='выполнен'?'selected':''}>Выполн.</option><option value="отменен" ${o.status==='отменен'?'selected':''}>Отмен.</option></select><button onclick="deleteOrder(${o.id})" class="text-red-600 hover:text-red-800 px-2 py-1 border border-red-300 rounded text-xs">🗑️</button></div><div class="mt-1 text-xs text-gray-600">Товары: ${o.items.map(i=>i.name+' x'+i.quantity).join(', ')}</div></div>`; });
+      fo.forEach(o=>{ 
+        const statusClass = o.status === 'новый' ? 'status-new' : o.status === 'в обработке' ? 'status-processing' : o.status === 'выполнен' ? 'status-completed' : 'status-cancelled';
+        list.innerHTML+=`<div class="border p-3 rounded-lg hover:shadow-md"><div class="flex justify-between items-start mb-1"><span class="font-bold text-xs">Заказ #${o.id}</span><span class="text-xs text-gray-500">${o.date}</span></div><div class="grid grid-cols-2 gap-1 text-xs"><div><span class="font-medium">Клиент:</span> ${o.customer.name}</div><div><span class="font-medium">Тел:</span> ${o.customer.phone}</div><div class="col-span-2"><span class="font-medium">Адрес:</span> ${o.customer.address}</div><div><span class="font-medium">Оплата:</span> ${o.customer.payment||'Наличные'}</div><div><span class="font-medium">Сумма:</span> ${o.total} BYN</div></div><div class="mt-2 flex gap-2"><span class="px-2 py-1 rounded text-xs ${statusClass}">${o.status}</span><select onchange="updateOrderStatus(${o.id},this.value)" class="border rounded px-1 py-0.5 text-xs"><option value="новый" ${o.status==='новый'?'selected':''}>Новый</option><option value="в обработке" ${o.status==='в обработке'?'selected':''}>В обр.</option><option value="выполнен" ${o.status==='выполнен'?'selected':''}>Выполн.</option><option value="отменен" ${o.status==='отменен'?'selected':''}>Отмен.</option></select><button onclick="deleteOrder(${o.id})" class="text-red-600 hover:text-red-800 px-2 py-1 border border-red-300 rounded text-xs">🗑️</button></div><div class="mt-1 text-xs text-gray-600">Товары: ${o.items.map(i=>i.name+' x'+i.quantity).join(', ')}</div></div>`; });
       updateOrderStats();
     }
     function updateOrderStatus(id,ns) { const o=orders.find(o=>o.id===id); if(o) { o.status=ns; saveOrders(); renderAdminOrders(); addLog('order',`Статус заказа #${id} изменен на ${ns}`); } }
