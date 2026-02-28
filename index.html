@@ -189,9 +189,6 @@
     }
   </script>
 
-  <!-- Chart.js для графиков -->
-  <script src="https://cdn.jsdelivr.net/npm/chart.js@4.4.0/dist/chart.umd.min.js"></script>
-
   <!-- Шрифты -->
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
@@ -627,10 +624,6 @@
     .status-completed { background-color: #d1fae5; color: #065f46; }
     .status-cancelled { background-color: #fee2e2; color: #991b1b; }
 
-    /* Личный кабинет */
-    .cabinet-modal { display: none; }
-    .cabinet-modal.active { display: flex; }
-
     @media (max-width: 768px) {
       .float-buttons { bottom: 15px; right: 15px; }
       .float-button { width: 40px; height: 40px; font-size: 16px; }
@@ -681,30 +674,6 @@
     </a>
   </div>
 
-  <!-- Модальное окно отслеживания заказа -->
-  <div id="track-order-modal" class="modal">
-    <div class="modal-content max-w-md">
-      <h3 class="text-xl font-bold mb-4">Отследить заказ</h3>
-      <input type="tel" id="track-phone" placeholder="Введите ваш телефон" class="w-full border px-4 py-2 rounded mb-4">
-      <button onclick="trackOrder()" class="w-full gradient-bg text-white px-4 py-2 rounded-button">Найти заказы</button>
-      <div id="track-results" class="mt-4 space-y-3"></div>
-      <button onclick="document.getElementById('track-order-modal').style.display='none'" class="mt-4 text-gray-500 hover:text-gray-700">Закрыть</button>
-    </div>
-  </div>
-
-  <!-- Личный кабинет -->
-  <div id="cabinet-modal" class="modal">
-    <div class="modal-content max-w-2xl">
-      <h3 class="text-xl font-bold mb-4">Личный кабинет</h3>
-      <div class="mb-4">
-        <input type="tel" id="cabinet-phone" placeholder="Введите ваш телефон для входа" class="w-full border px-4 py-2 rounded">
-        <button onclick="loginCabinet()" class="mt-2 w-full gradient-bg text-white px-4 py-2 rounded-button">Войти</button>
-      </div>
-      <div id="cabinet-orders" class="hidden space-y-4"></div>
-      <button onclick="document.getElementById('cabinet-modal').style.display='none'" class="mt-4 text-gray-500 hover:text-gray-700">Закрыть</button>
-    </div>
-  </div>
-
   <div id="content">
     <!-- Навигация -->
     <nav class="glass-effect shadow-lg py-1.5 px-4 sm:px-6 fixed w-full z-50 border-b border-white/20">
@@ -726,12 +695,6 @@
           </button>
           <button onclick="document.getElementById('contacts').scrollIntoView({behavior: 'smooth'})" class="nav-link">
             <i class="ri-contacts-line mr-1"></i>Контакты
-          </button>
-          <button onclick="document.getElementById('track-order-modal').style.display='flex'" class="nav-link">
-            <i class="ri-search-line mr-1"></i>Отследить заказ
-          </button>
-          <button onclick="document.getElementById('cabinet-modal').style.display='flex'" class="nav-link">
-            <i class="ri-user-line mr-1"></i>Личный кабинет
           </button>
         </div>
         <div class="flex items-center space-x-1">
@@ -759,12 +722,6 @@
         </button>
         <button onclick="document.getElementById('contacts').scrollIntoView({behavior: 'smooth'}); toggleMobileMenu()" class="nav-link w-full text-left">
           <i class="ri-contacts-line mr-2"></i>Контакты
-        </button>
-        <button onclick="document.getElementById('track-order-modal').style.display='flex'; toggleMobileMenu()" class="nav-link w-full text-left">
-          <i class="ri-search-line mr-2"></i>Отследить заказ
-        </button>
-        <button onclick="document.getElementById('cabinet-modal').style.display='flex'; toggleMobileMenu()" class="nav-link w-full text-left">
-          <i class="ri-user-line mr-2"></i>Личный кабинет
         </button>
         <a href="tel:+375291050694" class="nav-link w-full text-left">
           <i class="ri-phone-line mr-2"></i>+375 (29) 105-06-94
@@ -1038,7 +995,6 @@
             <button onclick="switchAdminTab('dashboard')" class="px-2 sm:px-4 py-1 sm:py-2 font-medium text-xs sm:text-base text-primary border-b-2 border-primary" id="tab-dashboard-btn">Дашборд</button>
             <button onclick="switchAdminTab('products')" class="px-2 sm:px-4 py-1 sm:py-2 font-medium text-xs sm:text-base text-gray-500 hover:text-gray-700" id="tab-products-btn">Товары</button>
             <button onclick="switchAdminTab('orders')" class="px-2 sm:px-4 py-1 sm:py-2 font-medium text-xs sm:text-base text-gray-500 hover:text-gray-700" id="tab-orders-btn">Заказы</button>
-            <button onclick="switchAdminTab('customers')" class="px-2 sm:px-4 py-1 sm:py-2 font-medium text-xs sm:text-base text-gray-500 hover:text-gray-700" id="tab-customers-btn">Клиенты</button>
             <button onclick="switchAdminTab('brands')" class="px-2 sm:px-4 py-1 sm:py-2 font-medium text-xs sm:text-base text-gray-500 hover:text-gray-700" id="tab-brands-btn">Бренды</button>
             <button onclick="switchAdminTab('reports')" class="px-2 sm:px-4 py-1 sm:py-2 font-medium text-xs sm:text-base text-gray-500 hover:text-gray-700" id="tab-reports-btn">Отчеты</button>
             <button onclick="switchAdminTab('settings')" class="px-2 sm:px-4 py-1 sm:py-2 font-medium text-xs sm:text-base text-gray-500 hover:text-gray-700" id="tab-settings-btn">Настройки</button>
@@ -1072,12 +1028,6 @@
                 <i class="ri-bar-chart-line text-xl sm:text-3xl text-green-500"></i>
               </div>
             </div>
-          </div>
-
-          <!-- График продаж -->
-          <div class="bg-white p-3 sm:p-6 rounded-lg shadow mb-4 sm:mb-6">
-            <h3 class="text-sm sm:text-lg font-bold mb-4">График продаж (последние 7 дней)</h3>
-            <canvas id="salesChart" class="w-full h-64"></canvas>
           </div>
 
           <div class="grid grid-cols-1 lg:grid-cols-2 gap-4 sm:gap-6 mb-4 sm:mb-6">
@@ -1172,15 +1122,9 @@
             <button onclick="deleteAllOrders()" class="bg-red-500 text-white px-2 sm:px-4 py-1 sm:py-2 rounded-button text-xs sm:text-sm">Удалить все</button>
             <button onclick="exportOrders()" class="bg-green-500 text-white px-2 sm:px-4 py-1 sm:py-2 rounded-button text-xs sm:text-sm">Экспорт</button>
             <button onclick="backupDatabase()" class="bg-blue-500 text-white px-2 sm:px-4 py-1 sm:py-2 rounded-button text-xs sm:text-sm">Резервное копирование</button>
-            <button onclick="sendTelegramNotification('manual')" class="bg-sky-500 text-white px-2 sm:px-4 py-1 sm:py-2 rounded-button text-xs sm:text-sm">Тест Telegram</button>
           </div>
           <div id="admin-orders-list" class="space-y-3 sm:space-y-4"></div>
           <div class="mt-4 p-3 sm:p-4 bg-blue-50 rounded"><h4 class="font-bold text-xs sm:text-sm">Статистика заказов:</h4><p class="text-xs sm:text-sm">Всего заказов: <span id="total-orders">0</span></p><p class="text-xs sm:text-sm">Общая сумма: <span id="total-amount">0</span> BYN</p></div>
-        </div>
-
-        <div id="admin-customers-tab" class="hidden">
-          <div class="grid grid-cols-1 md:grid-cols-2 gap-2 sm:gap-4 mb-4 sm:mb-6"><div><input type="text" id="customer-search" placeholder="🔍 Поиск клиентов..." class="w-full border px-2 sm:px-4 py-1 sm:py-2 rounded-lg text-xs sm:text-sm" onkeyup="filterCustomers()"></div></div>
-          <div id="customers-list" class="bg-white rounded-lg shadow p-3 sm:p-4"></div>
         </div>
 
         <div id="admin-brands-tab" class="hidden">
@@ -1201,7 +1145,7 @@
             <div class="space-y-3 sm:space-y-4">
               <div><label class="block text-xs sm:text-sm font-medium text-gray-700 mb-1">Название магазина</label><input type="text" id="site-name" value="AirComfort" class="w-full border px-2 sm:px-4 py-1 sm:py-2 rounded-lg text-xs sm:text-sm"></div>
               <div><label class="block text-xs sm:text-sm font-medium text-gray-700 mb-1">Email для уведомлений</label><input type="email" id="site-email" value="aircomfortbel@gmail.com" class="w-full border px-2 sm:px-4 py-1 sm:py-2 rounded-lg text-xs sm:text-sm"></div>
-              <div><label class="block text-xs sm:text-sm font-medium text-gray-700 mb-1">Telebot токен</label><input type="text" id="telegram-token" value="YOUR_BOT_TOKEN" class="w-full border px-2 sm:px-4 py-1 sm:py-2 rounded-lg text-xs sm:text-sm"></div>
+              <div><label class="block text-xs sm:text-sm font-medium text-gray-700 mb-1">Telegram Bot Token</label><input type="text" id="telegram-token" value="YOUR_BOT_TOKEN" class="w-full border px-2 sm:px-4 py-1 sm:py-2 rounded-lg text-xs sm:text-sm"></div>
               <div><label class="block text-xs sm:text-sm font-medium text-gray-700 mb-1">Telegram Chat ID</label><input type="text" id="telegram-chat" value="YOUR_CHAT_ID" class="w-full border px-2 sm:px-4 py-1 sm:py-2 rounded-lg text-xs sm:text-sm"></div>
               <div><label class="block text-xs sm:text-sm font-medium text-gray-700 mb-1">Телефон</label><input type="text" id="site-phone" value="+375 (29) 105-06-94" class="w-full border px-2 sm:px-4 py-1 sm:py-2 rounded-lg text-xs sm:text-sm"></div>
               <div><label class="block text-xs sm:text-sm font-medium text-gray-700 mb-1">Адрес</label><input type="text" id="site-address" value="г. Гомель" class="w-full border px-2 sm:px-4 py-1 sm:py-2 rounded-lg text-xs sm:text-sm"></div>
@@ -1369,50 +1313,6 @@
       if (!isOpen) { answer.classList.add('open'); icon.classList.add('open'); }
     }
 
-    // Отслеживание заказа
-    function trackOrder() {
-      const phone = document.getElementById('track-phone').value;
-      const results = document.getElementById('track-results');
-      const userOrders = orders.filter(o => o.customer.phone === phone);
-      
-      if (userOrders.length === 0) {
-        results.innerHTML = '<p class="text-gray-500 text-center">Заказы не найдены</p>';
-        return;
-      }
-      
-      results.innerHTML = userOrders.map(o => `
-        <div class="border p-3 rounded">
-          <p class="font-bold">Заказ #${o.id}</p>
-          <p>Дата: ${o.date}</p>
-          <p>Сумма: ${o.total} BYN</p>
-          <p>Статус: <span class="status-${o.status} px-2 py-1 rounded">${o.status}</span></p>
-        </div>
-      `).join('');
-    }
-
-    // Личный кабинет
-    function loginCabinet() {
-      const phone = document.getElementById('cabinet-phone').value;
-      const cabinetOrders = document.getElementById('cabinet-orders');
-      const userOrders = orders.filter(o => o.customer.phone === phone);
-      
-      if (userOrders.length === 0) {
-        alert('Заказы не найдены');
-        return;
-      }
-      
-      cabinetOrders.classList.remove('hidden');
-      cabinetOrders.innerHTML = '<h4 class="font-bold mb-3">Ваши заказы:</h4>' + 
-        userOrders.map(o => `
-          <div class="border p-3 rounded mb-2">
-            <p class="font-bold">Заказ #${o.id}</p>
-            <p>Дата: ${o.date}</p>
-            <p>Сумма: ${o.total} BYN</p>
-            <p>Статус: <span class="status-${o.status} px-2 py-1 rounded">${o.status}</span></p>
-          </div>
-        `).join('');
-    }
-
     // Данные
     let products = [{ id:1, name:'Ballu BSO-07HN1', brand:'Ballu', price:850, oldPrice:950, stock:5, area:'до 20', category:'Настенные', type:'Настенный', inverter:'Нет', heat:'-7', description:'Надежный кондиционер для небольших помещений.', fullDescription:'Ballu BSO-07HN1 - надежная сплит-система для помещений до 20 м². Энергосберегающий режим, низкий шум.', image:'https://via.placeholder.com/200x150?text=Ballu+BSO-07HN1', tags:['хит'], status:'active', createdAt:new Date().toISOString() },
                     { id:2, name:'Electrolux EACS-07HAT/N3', brand:'Electrolux', price:1100, oldPrice:null, stock:3, area:'21-29', category:'Настенные', type:'Настенный', inverter:'Да', heat:'-15', description:'Инверторная модель с низким уровнем шума.', fullDescription:'Electrolux EACS-07HAT/N3 - инверторный кондиционер, 22 дБ, высокая энергоэффективность.', image:'https://via.placeholder.com/200x150?text=Electrolux', tags:['новинка'], status:'active', createdAt:new Date().toISOString() },
@@ -1437,15 +1337,19 @@
       document.getElementById('today-visits').textContent = visitCount;
       document.getElementById('total-visits').textContent = totalVisits;
     }
-    function loadOrders() { const s=localStorage.getItem('aircom_orders'); if(s) orders=JSON.parse(s); updateOrderStats(); updateDashboard(); updateSalesChart(); }
+    function loadOrders() { 
+      const s=localStorage.getItem('aircom_orders'); 
+      if(s) orders=JSON.parse(s); 
+      updateOrderStats(); 
+      updateDashboard(); 
+    }
     function saveOrders() { 
       localStorage.setItem('aircom_orders', JSON.stringify(orders)); 
       updateOrderStats(); 
       updateDashboard(); 
-      updateSalesChart(); 
       addLog('order','Обновлен список заказов');
-      backupDatabase(); // Автоматическое резервное копирование
-      sendTelegramNotification('new_order'); // Отправка в Telegram
+      backupDatabase();
+      sendTelegramNotification();
     }
     function loadCart() { const s=localStorage.getItem('aircom_cart'); if(s) cart=JSON.parse(s); updateCartBadge(); }
     function saveCart() { localStorage.setItem('aircom_cart', JSON.stringify(cart)); updateCartBadge(); }
@@ -1456,50 +1360,6 @@
     function updateOrderStats() { 
       const to=document.getElementById('total-orders'), ta=document.getElementById('total-amount'); 
       if(to&&ta) { to.textContent=orders.length; ta.textContent=orders.reduce((a,o)=>a+o.total,0); } 
-    }
-    
-    // График продаж
-    let salesChart;
-    function updateSalesChart() {
-      const ctx = document.getElementById('salesChart')?.getContext('2d');
-      if (!ctx) return;
-      
-      const last7Days = [];
-      const salesData = [];
-      for (let i = 6; i >= 0; i--) {
-        const date = new Date();
-        date.setDate(date.getDate() - i);
-        const dateStr = date.toLocaleDateString('ru-RU', { day: 'numeric', month: 'short' });
-        last7Days.push(dateStr);
-        
-        const dayOrders = orders.filter(o => new Date(o.date).toDateString() === date.toDateString());
-        const dayTotal = dayOrders.reduce((sum, o) => sum + o.total, 0);
-        salesData.push(dayTotal);
-      }
-      
-      if (salesChart) salesChart.destroy();
-      
-      salesChart = new Chart(ctx, {
-        type: 'line',
-        data: {
-          labels: last7Days,
-          datasets: [{
-            label: 'Выручка, BYN',
-            data: salesData,
-            borderColor: '#4CAF50',
-            backgroundColor: 'rgba(76, 175, 80, 0.1)',
-            tension: 0.4,
-            fill: true
-          }]
-        },
-        options: {
-          responsive: true,
-          maintainAspectRatio: false,
-          plugins: {
-            legend: { display: false }
-          }
-        }
-      });
     }
 
     // Резервное копирование
@@ -1515,24 +1375,17 @@
       document.getElementById('backup-status').textContent = '✅ ' + new Date().toLocaleTimeString();
       addLog('system', 'Резервное копирование выполнено');
     }
-
-    // Автоматическое резервное копирование каждые 5 минут
     setInterval(backupDatabase, 300000);
 
     // Уведомление в Telegram
-    function sendTelegramNotification(type) {
+    function sendTelegramNotification() {
       const token = document.getElementById('telegram-token')?.value || 'YOUR_BOT_TOKEN';
       const chatId = document.getElementById('telegram-chat')?.value || 'YOUR_CHAT_ID';
       
       if (token === 'YOUR_BOT_TOKEN' || chatId === 'YOUR_CHAT_ID') return;
       
-      let message = '';
-      if (type === 'new_order') {
-        const lastOrder = orders[orders.length - 1];
-        message = `🆕 Новый заказ #${lastOrder.id}\nКлиент: ${lastOrder.customer.name}\nТелефон: ${lastOrder.customer.phone}\nСумма: ${lastOrder.total} BYN`;
-      } else if (type === 'manual') {
-        message = '✅ Тестовое уведомление из админ-панели';
-      }
+      const lastOrder = orders[orders.length - 1];
+      const message = `🆕 Новый заказ #${lastOrder.id}\nКлиент: ${lastOrder.customer.name}\nТелефон: ${lastOrder.customer.phone}\nСумма: ${lastOrder.total} BYN`;
       
       fetch(`https://api.telegram.org/bot${token}/sendMessage`, {
         method: 'POST',
@@ -1542,35 +1395,48 @@
     }
 
     function updateDashboard() {
-      const today=new Date().toDateString(), to=orders.filter(o=>new Date(o.date).toDateString()===today);
-      document.getElementById('dashboard-today-revenue').textContent = to.reduce((s,o)=>s+o.total,0) + ' BYN';
-      document.getElementById('dashboard-today-orders').textContent = to.length;
+      const today = new Date();
+      const todayStr = today.toDateString();
+      
+      const todayOrders = orders.filter(o => {
+        const orderDate = new Date(o.date);
+        return orderDate.toDateString() === todayStr;
+      });
+      
+      const todayRevenue = todayOrders.reduce((sum, o) => sum + o.total, 0);
+      
+      document.getElementById('dashboard-today-revenue').textContent = todayRevenue + ' BYN';
+      document.getElementById('dashboard-today-orders').textContent = todayOrders.length;
       document.getElementById('dashboard-total-products').textContent = products.length;
-      const avg = orders.length ? Math.round(orders.reduce((s,o)=>s+o.total,0)/orders.length) : 0;
+      
+      const avg = orders.length ? Math.round(orders.reduce((sum, o) => sum + o.total, 0) / orders.length) : 0;
       document.getElementById('dashboard-average-order').textContent = avg + ' BYN';
-      document.getElementById('stats-new').textContent = orders.filter(o=>o.status==='новый').length;
-      document.getElementById('stats-processing').textContent = orders.filter(o=>o.status==='в обработке').length;
-      document.getElementById('stats-completed').textContent = orders.filter(o=>o.status==='выполнен').length;
-      document.getElementById('stats-cancelled').textContent = orders.filter(o=>o.status==='отменен').length;
       
-      const sales={}; orders.forEach(o=>o.items.forEach(i=>sales[i.name]=(sales[i.name]||0)+i.quantity));
-      const top=Object.entries(sales).sort((a,b)=>b[1]-a[1]).slice(0,5);
-      document.getElementById('dashboard-top-products').innerHTML = top.map(([n,c])=>`<div class="flex justify-between"><span>${n}</span><span class="font-bold">${c} шт</span></div>`).join('') || '<p class="text-gray-500">Нет данных</p>';
+      document.getElementById('stats-new').textContent = orders.filter(o => o.status === 'новый').length;
+      document.getElementById('stats-processing').textContent = orders.filter(o => o.status === 'в обработке').length;
+      document.getElementById('stats-completed').textContent = orders.filter(o => o.status === 'выполнен').length;
+      document.getElementById('stats-cancelled').textContent = orders.filter(o => o.status === 'отменен').length;
       
-      document.getElementById('recent-actions').innerHTML = actionLogs.slice(0,5).map(l=>`<div class="text-xs border-b pb-1"><span class="text-gray-500">${l.time}</span> - ${l.action}</div>`).join('') || '<p class="text-gray-500">Нет действий</p>';
+      const sales = {};
+      orders.forEach(o => o.items.forEach(i => sales[i.name] = (sales[i.name] || 0) + i.quantity));
+      const top = Object.entries(sales).sort((a, b) => b[1] - a[1]).slice(0, 5);
+      document.getElementById('dashboard-top-products').innerHTML = top.map(([n, c]) => `<div class="flex justify-between"><span>${n}</span><span class="font-bold">${c} шт</span></div>`).join('') || '<p class="text-gray-500">Нет данных</p>';
+      
+      document.getElementById('recent-actions').innerHTML = actionLogs.slice(0, 5).map(l => `<div class="text-xs border-b pb-1"><span class="text-gray-500">${l.time}</span> - ${l.action}</div>`).join('') || '<p class="text-gray-500">Нет действий</p>';
       
       const weekAgo = new Date(); weekAgo.setDate(weekAgo.getDate() - 7);
       const monthAgo = new Date(); monthAgo.setMonth(monthAgo.getMonth() - 1);
       const yearAgo = new Date(); yearAgo.setFullYear(yearAgo.getFullYear() - 1);
       
-      document.getElementById('report-today').textContent = to.reduce((s,o)=>s+o.total,0) + ' BYN';
-      document.getElementById('report-week').textContent = orders.filter(o=>new Date(o.date) >= weekAgo).reduce((s,o)=>s+o.total,0) + ' BYN';
-      document.getElementById('report-month').textContent = orders.filter(o=>new Date(o.date) >= monthAgo).reduce((s,o)=>s+o.total,0) + ' BYN';
-      document.getElementById('report-year').textContent = orders.filter(o=>new Date(o.date) >= yearAgo).reduce((s,o)=>s+o.total,0) + ' BYN';
+      document.getElementById('report-today').textContent = todayRevenue + ' BYN';
+      document.getElementById('report-week').textContent = orders.filter(o => new Date(o.date) >= weekAgo).reduce((s, o) => s + o.total, 0) + ' BYN';
+      document.getElementById('report-month').textContent = orders.filter(o => new Date(o.date) >= monthAgo).reduce((s, o) => s + o.total, 0) + ' BYN';
+      document.getElementById('report-year').textContent = orders.filter(o => new Date(o.date) >= yearAgo).reduce((s, o) => s + o.total, 0) + ' BYN';
       
-      const top10 = Object.entries(sales).sort((a,b)=>b[1]-a[1]).slice(0,10);
-      document.getElementById('top-products-report').innerHTML = top10.map(([n,c])=>`<div class="flex justify-between"><span>${n}</span><span class="font-bold">${c} шт</span></div>`).join('') || '<p class="text-gray-500">Нет данных</p>';
+      const top10 = Object.entries(sales).sort((a, b) => b[1] - a[1]).slice(0, 10);
+      document.getElementById('top-products-report').innerHTML = top10.map(([n, c]) => `<div class="flex justify-between"><span>${n}</span><span class="font-bold">${c} шт</span></div>`).join('') || '<p class="text-gray-500">Нет данных</p>';
     }
+    
     function renderBrands() { const bl=document.getElementById('brands-list'); if(bl) bl.innerHTML = brands.map(b=>`<button onclick="filterByBrand('${b.name}')" class="brand-chip px-2 sm:px-3 py-1 bg-gray-100 hover:bg-primary hover:text-white rounded-full text-xs transition-colors">${b.name}</button>`).join(''); }
     function updateBrandSelects() { ['edit-brand','new-brand'].forEach(id=>{ const s=document.getElementById(id); if(s) s.innerHTML='<option value="">Без бренда</option>'+brands.map(b=>`<option value="${b.name}">${b.name}</option>`).join(''); }); }
     function toggleBrandsCollapse() { const bl=document.getElementById('brands-list'), a=document.getElementById('brands-arrow'); if(bl.style.display==='none') { bl.style.display='flex'; a.style.transform='rotate(180deg)'; } else { bl.style.display='none'; a.style.transform='rotate(0deg)'; } }
@@ -1701,19 +1567,18 @@
     function checkoutCart() {
       if(cart.length===0) { alert('Корзина пуста'); return; }
       
-      console.log('Корзина перед отправкой:', cart); // для отладки
+      console.log('Корзина перед отправкой:', cart);
       
       const n=document.getElementById('order-name').value, p=document.getElementById('order-phone').value, a=document.getElementById('order-address').value, e=document.getElementById('order-email').value, pm=document.querySelector('input[name="payment"]:checked')?.value||'Наличные';
       if(!n||!p||!a) { alert('Заполните все поля'); return; }
       const total=cart.reduce((s,i)=>s+i.price*i.quantity,0);
       const order={ id:Date.now(), customer:{name:n, phone:p, address:a, email:e, payment:pm}, items:[...cart], total:total, date:new Date().toLocaleString(), status:'новый' };
       
-      console.log('Отправляемый заказ:', order); // проверить в консоли
+      console.log('Отправляемый заказ:', order);
       
       orders.push(order); saveOrders();
       cart.forEach(i=>{ const prod=products.find(p=>p.id===i.id); if(prod) prod.stock-=i.quantity; }); saveProducts();
       
-      // Отправка email через Formspree
       const fd=new FormData();
       fd.append('name', n);
       fd.append('phone', p);
@@ -1747,7 +1612,7 @@
       document.getElementById('order-address').value=''; document.getElementById('order-email').value='';
       addLog('order','Новый заказ #'+order.id);
       
-      updateDashboard(); // Обновление дашборда
+      updateDashboard();
     }
 
     // Обратная связь
@@ -1779,7 +1644,6 @@
         renderAdminProducts(); 
         switchAdminTab('dashboard'); 
         updateDashboard();
-        updateSalesChart();
         localStorage.setItem('admin_logged_in', 'true');
         addLog('user','Вход в админ-панель');
       } else alert('Неверный логин или пароль');
@@ -1790,7 +1654,6 @@
       renderAdminProducts();
       switchAdminTab('dashboard');
       updateDashboard();
-      updateSalesChart();
     }
     
     function closeAdminPanel() { 
@@ -1799,7 +1662,7 @@
     }
 
     function switchAdminTab(tab) {
-      const tabs=['dashboard','products','orders','customers','brands','reports','settings','logs'];
+      const tabs=['dashboard','products','orders','brands','reports','settings','logs'];
       tabs.forEach(t=>{
         const el=document.getElementById(`admin-${t}-tab`), btn=document.getElementById(`tab-${t}-btn`);
         if(el) el.classList.add('hidden');
@@ -1810,7 +1673,6 @@
       if(cbtn) { cbtn.classList.remove('text-gray-500'); cbtn.classList.add('text-primary','border-b-2','border-primary'); }
       if(tab==='products') renderAdminProducts();
       if(tab==='orders') renderAdminOrders();
-      if(tab==='customers') renderCustomers();
       if(tab==='brands') renderAdminBrands();
       if(tab==='logs') renderLogs();
     }
@@ -2028,24 +1890,6 @@
       const blob=new Blob(['\uFEFF'+csv],{type:'text/csv;charset=utf-8;'}), link=document.createElement('a'); link.href=URL.createObjectURL(blob); link.download='orders_export.csv'; link.click();
       addLog('order','Экспорт заказов');
     }
-
-    function renderCustomers() {
-      const list=document.getElementById('customers-list');
-      const customers = {};
-      orders.forEach(o => {
-        const phone = o.customer.phone;
-        if (!customers[phone]) {
-          customers[phone] = { name: o.customer.name, phone, address: o.customer.address, orders: 1, total: o.total, lastOrder: o.date };
-        } else {
-          customers[phone].orders++;
-          customers[phone].total += o.total;
-        }
-      });
-      list.innerHTML = Object.values(customers).map(c => 
-        `<div class="border p-2 rounded mb-2 text-xs"><div class="font-medium">${c.name}</div><div>Тел: ${c.phone}</div><div>Адрес: ${c.address}</div><div>Заказов: ${c.orders}, на сумму: ${c.total} BYN</div><div>Последний: ${c.lastOrder}</div></div>`
-      ).join('') || '<p class="text-gray-500">Нет клиентов</p>';
-    }
-    function filterCustomers() { renderCustomers(); }
 
     function renderAdminBrands() {
       const list=document.getElementById('brands-admin-list'); if(!list) return;
