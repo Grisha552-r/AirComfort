@@ -944,6 +944,7 @@
           <input type="text" id="order-name" placeholder="ФИО *" class="w-full border px-3 py-2 rounded mb-2">
           <input type="tel" id="order-phone" placeholder="Телефон *" class="w-full border px-3 py-2 rounded mb-2">
           <input type="text" id="order-address" placeholder="Адрес доставки *" class="w-full border px-3 py-2 rounded mb-3">
+          <input type="email" id="order-email" placeholder="Email для уведомлений" class="w-full border px-3 py-2 rounded mb-3">
           
           <div class="mb-3">
             <label class="block text-gray-700 font-medium mb-2">Способ оплаты:</label>
@@ -958,6 +959,10 @@
             <button onclick="checkoutCart()" class="flex-1 gradient-bg text-white px-4 py-2 rounded-button btn-animate">Оформить заказ</button>
             <button onclick="clearCart()" class="flex-1 bg-gray-200 text-gray-800 px-4 py-2 rounded-button btn-animate">Очистить</button>
           </div>
+        </div>
+        
+        <div id="order-success" class="hidden mt-4 p-4 bg-green-100 text-green-700 rounded-lg text-center">
+          ✓ Заказ успешно оформлен! Мы свяжемся с вами в ближайшее время.
         </div>
         
         <button onclick="document.getElementById('cart-modal').style.display='none'" class="mt-4 text-gray-500 hover:text-gray-700">
@@ -1242,7 +1247,31 @@
         <p class="text-center text-gray-700 mb-4 sm:mb-10 text-xs sm:text-base">Свяжитесь с нами любым удобным способом</p>
         <div class="grid grid-cols-1 md:grid-cols-2 gap-4 sm:gap-8 items-start">
           <div><h3 class="text-base sm:text-xl font-bold text-gray-900 mb-3 sm:mb-6">Наши контакты</h3><div class="grid grid-cols-1 sm:grid-cols-2 gap-3 sm:gap-6"><div class="bg-white p-3 sm:p-6 rounded-lg shadow-card card-hover"><div class="w-6 h-6 sm:w-10 sm:h-10 flex items-center justify-center bg-gradient-to-br from-primary/20 to-primary/10 rounded-full text-primary mb-2 sm:mb-4 shadow-lg"><i class="ri-phone-line text-xs sm:text-base"></i></div><h4 class="text-xs sm:text-lg font-medium text-gray-900 mb-1">Телефон</h4><a href="tel:+375291050694" class="text-xs text-primary hover:underline">+375 (29) 105-06-94</a></div><div class="bg-white p-3 sm:p-6 rounded-lg shadow-card card-hover"><div class="w-6 h-6 sm:w-10 sm:h-10 flex items-center justify-center bg-gradient-to-br from-secondary/20 to-secondary/10 rounded-full text-secondary mb-2 sm:mb-4 shadow-lg"><i class="ri-mail-line text-xs sm:text-base"></i></div><h4 class="text-xs sm:text-lg font-medium text-gray-900 mb-1">Email</h4><a href="mailto:aircomfortbel@gmail.com" class="text-xs text-primary hover:underline">aircomfortbel@gmail.com</a></div><div class="bg-white p-3 sm:p-6 rounded-lg shadow-card card-hover"><div class="w-6 h-6 sm:w-10 sm:h-10 flex items-center justify-center bg-gradient-to-br from-accent/20 to-accent/10 rounded-full text-accent mb-2 sm:mb-4 shadow-lg"><i class="ri-time-line text-xs sm:text-base"></i></div><h4 class="text-xs sm:text-lg font-medium text-gray-900 mb-1">Время работы</h4><p class="text-xs text-gray-700">Пн-Пт: 9:00 - 20:00</p><p class="text-xs text-gray-700">Сб-Вс: 10:00 - 18:00</p></div><div class="bg-white p-3 sm:p-6 rounded-lg shadow-card card-hover"><div class="w-6 h-6 sm:w-10 sm:h-10 flex items-center justify-center bg-gradient-to-br from-primary/20 to-primary/10 rounded-full text-primary mb-2 sm:mb-4 shadow-lg"><i class="ri-map-pin-line text-xs sm:text-base"></i></div><h4 class="text-xs sm:text-lg font-medium text-gray-900 mb-1">Регион</h4><p class="text-xs text-gray-700">Гомель и Гомельская область</p></div></div></div>
-          <div class="bg-white p-4 sm:p-8 rounded-lg shadow-hover border border-gray-100"><h3 class="text-base sm:text-xl font-bold text-gray-900 mb-3 sm:mb-6">Оставить заявку</h3><form id="contact-form" action="https://formspree.io/f/mrbkdwwe" method="POST"><input type="hidden" id="calculator-data" name="calculator_data"><div class="mb-2 sm:mb-4"><label for="form-name" class="block text-gray-700 font-medium mb-1 text-xs">Ваше имя *</label><input type="text" id="form-name" name="name" class="w-full px-2 sm:px-4 py-1.5 sm:py-3 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-primary/50 focus:border-primary text-xs" placeholder="Иван Петров" required></div><div class="mb-2 sm:mb-4"><label for="form-phone" class="block text-gray-700 font-medium mb-1 text-xs">Телефон *</label><input type="tel" id="form-phone" name="phone" class="w-full px-2 sm:px-4 py-1.5 sm:py-3 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-primary/50 focus:border-primary text-xs" placeholder="+375 (XX) XXX-XX-XX" required></div><div class="mb-2 sm:mb-4"><label for="form-email" class="block text-gray-700 font-medium mb-1 text-xs">Email (необязательно)</label><input type="email" id="form-email" name="email" class="w-full px-2 sm:px-4 py-1.5 sm:py-3 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-primary/50 focus:border-primary text-xs" placeholder="your@email.com"></div><div class="mb-3 sm:mb-6"><label for="form-message" class="block text-gray-700 font-medium mb-1 text-xs">Сообщение</label><textarea id="form-message" name="message" rows="3" class="w-full px-2 sm:px-4 py-1.5 sm:py-3 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-primary/50 focus:border-primary text-xs" placeholder="Опишите ваш вопрос"></textarea></div><button type="submit" class="w-full gradient-bg text-white px-4 sm:px-6 py-2 sm:py-3 rounded-button font-medium hover:shadow-glow transition-all duration-300 btn-animate text-xs">Отправить заявку</button></form><div id="contact-success" class="hidden mt-4 p-3 bg-green-100 text-green-700 rounded text-xs">Спасибо! Ваша заявка отправлена.</div><div id="contact-error" class="hidden mt-4 p-3 bg-red-100 text-red-700 rounded text-xs">Ошибка при отправке. Попробуйте позже.</div></div>
+          <div class="bg-white p-4 sm:p-8 rounded-lg shadow-hover border border-gray-100">
+            <h3 class="text-base sm:text-xl font-bold text-gray-900 mb-3 sm:mb-6">Оставить заявку</h3>
+            <form id="contact-form" action="https://formspree.io/f/mrbkdwwe" method="POST">
+              <input type="hidden" id="calculator-data" name="calculator_data">
+              <div class="mb-2 sm:mb-4">
+                <label for="form-name" class="block text-gray-700 font-medium mb-1 text-xs">Ваше имя *</label>
+                <input type="text" id="form-name" name="name" class="w-full px-2 sm:px-4 py-1.5 sm:py-3 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-primary/50 focus:border-primary text-xs" placeholder="Иван Петров" required>
+              </div>
+              <div class="mb-2 sm:mb-4">
+                <label for="form-phone" class="block text-gray-700 font-medium mb-1 text-xs">Телефон *</label>
+                <input type="tel" id="form-phone" name="phone" class="w-full px-2 sm:px-4 py-1.5 sm:py-3 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-primary/50 focus:border-primary text-xs" placeholder="+375 (XX) XXX-XX-XX" required>
+              </div>
+              <div class="mb-2 sm:mb-4">
+                <label for="form-email" class="block text-gray-700 font-medium mb-1 text-xs">Email (необязательно)</label>
+                <input type="email" id="form-email" name="email" class="w-full px-2 sm:px-4 py-1.5 sm:py-3 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-primary/50 focus:border-primary text-xs" placeholder="your@email.com">
+              </div>
+              <div class="mb-3 sm:mb-6">
+                <label for="form-message" class="block text-gray-700 font-medium mb-1 text-xs">Сообщение</label>
+                <textarea id="form-message" name="message" rows="3" class="w-full px-2 sm:px-4 py-1.5 sm:py-3 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-primary/50 focus:border-primary text-xs" placeholder="Опишите ваш вопрос"></textarea>
+              </div>
+              <button type="submit" class="w-full gradient-bg text-white px-4 sm:px-6 py-2 sm:py-3 rounded-button font-medium hover:shadow-glow transition-all duration-300 btn-animate text-xs">Отправить заявку</button>
+            </form>
+            <div id="contact-success" class="hidden mt-4 p-3 bg-green-100 text-green-700 rounded text-xs">Спасибо! Ваша заявка отправлена.</div>
+            <div id="contact-error" class="hidden mt-4 p-3 bg-red-100 text-red-700 rounded text-xs">Ошибка при отправке. Попробуйте позже.</div>
+          </div>
         </div>
       </div>
     </section>
@@ -1468,22 +1497,45 @@
     
     function checkoutCart() {
       if(cart.length===0) { alert('Корзина пуста'); return; }
-      const n=document.getElementById('order-name').value, p=document.getElementById('order-phone').value, a=document.getElementById('order-address').value, pm=document.querySelector('input[name="payment"]:checked')?.value||'Наличные';
+      const n=document.getElementById('order-name').value, p=document.getElementById('order-phone').value, a=document.getElementById('order-address').value, e=document.getElementById('order-email').value, pm=document.querySelector('input[name="payment"]:checked')?.value||'Наличные';
       if(!n||!p||!a) { alert('Заполните все поля'); return; }
       const total=cart.reduce((s,i)=>s+i.price*i.quantity,0);
-      const order={ id:Date.now(), customer:{name:n, phone:p, address:a, payment:pm}, items:[...cart], total:total, date:new Date().toLocaleString(), status:'новый' };
+      const order={ id:Date.now(), customer:{name:n, phone:p, address:a, email:e, payment:pm}, items:[...cart], total:total, date:new Date().toLocaleString(), status:'новый' };
       orders.push(order); saveOrders();
       cart.forEach(i=>{ const prod=products.find(p=>p.id===i.id); if(prod) prod.stock-=i.quantity; }); saveProducts();
       
-      // Отправка email
+      // Отправка email через Formspree
       const fd=new FormData();
-      fd.append('name',n); fd.append('phone',p); fd.append('address',a); fd.append('payment',pm); fd.append('order',JSON.stringify(order));
-      fetch('https://formspree.io/f/mrbkdwwe',{ method:'POST', body:fd, headers:{'Accept':'application/json'} })
-        .then(r=>{ if(r.ok) alert('Заказ успешно оформлен! Мы свяжемся с вами.'); else alert('Заказ оформлен, но уведомление не отправлено.'); })
-        .catch(()=>alert('Заказ оформлен, но уведомление не отправлено.'));
+      fd.append('name', n);
+      fd.append('phone', p);
+      fd.append('address', a);
+      fd.append('email', e);
+      fd.append('payment', pm);
+      fd.append('order', JSON.stringify(order));
+      fd.append('_replyto', e || 'aircomfortbel@gmail.com');
+      fd.append('_subject', 'Новый заказ #' + order.id);
       
-      clearCart(); renderCartItems(); document.getElementById('cart-modal').style.display='none';
-      document.getElementById('order-name').value=''; document.getElementById('order-phone').value=''; document.getElementById('order-address').value='';
+      fetch('https://formspree.io/f/mrbkdwwe', {
+        method: 'POST',
+        body: fd,
+        headers: { 'Accept': 'application/json' }
+      })
+      .then(response => {
+        if (response.ok) {
+          document.getElementById('order-success').classList.remove('hidden');
+          setTimeout(() => {
+            document.getElementById('order-success').classList.add('hidden');
+          }, 5000);
+        }
+      })
+      .catch(error => {
+        console.error('Error:', error);
+        alert('Заказ оформлен, но уведомление не отправлено.');
+      });
+      
+      cart = []; saveCart(); renderCartItems();
+      document.getElementById('order-name').value=''; document.getElementById('order-phone').value=''; 
+      document.getElementById('order-address').value=''; document.getElementById('order-email').value='';
       addLog('order','Новый заказ #'+order.id);
     }
 
@@ -1491,9 +1543,16 @@
     document.getElementById('contact-form').addEventListener('submit', function(e) {
       e.preventDefault();
       const fd=new FormData(this);
-      fetch(this.action,{ method:'POST', body:fd, headers:{'Accept':'application/json'} })
-        .then(r=>{ if(r.ok) { document.getElementById('contact-success').classList.remove('hidden'); this.reset(); } else document.getElementById('contact-error').classList.remove('hidden'); })
-        .catch(()=>document.getElementById('contact-error').classList.remove('hidden'));
+      fd.append('_replyto', document.getElementById('form-email').value || 'aircomfortbel@gmail.com');
+      fd.append('_subject', 'Новое сообщение с сайта');
+      
+      fetch(this.action, {
+        method: 'POST',
+        body: fd,
+        headers: { 'Accept': 'application/json' }
+      })
+      .then(r=>{ if(r.ok) { document.getElementById('contact-success').classList.remove('hidden'); this.reset(); } else document.getElementById('contact-error').classList.remove('hidden'); })
+      .catch(()=>document.getElementById('contact-error').classList.remove('hidden'));
     });
 
     // Админка
