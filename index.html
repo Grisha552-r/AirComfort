@@ -196,10 +196,7 @@
   <link href="https://cdnjs.cloudflare.com/ajax/libs/remixicon/4.6.0/remixicon.min.css" rel="stylesheet">
 
   <style>
-    /* Общие стили */
-    * {
-      box-sizing: border-box;
-    }
+    * { box-sizing: border-box; }
     body {
       font-family: system-ui, sans-serif;
       scroll-behavior: smooth;
@@ -209,7 +206,6 @@
       padding: 0;
     }
 
-    /* Стили для навигации */
     .nav-link {
       position: relative;
       padding: 6px 12px;
@@ -227,10 +223,7 @@
       box-shadow: 0 0 0 3px rgba(76, 175, 80, 0.2);
     }
 
-    .nav-link:active {
-      transform: translateY(0);
-    }
-
+    .nav-link:active { transform: translateY(0); }
     .nav-link::after {
       content: '';
       position: absolute;
@@ -242,19 +235,12 @@
       transition: all 0.3s ease;
       transform: translateX(-50%);
     }
+    .nav-link:hover::after { width: 80%; }
 
-    .nav-link:hover::after {
-      width: 80%;
-    }
-
-    /* Остальные стили остаются без изменений */
-    .card-hover {
-      transition: all 0.3s ease;
-    }
-
+    .card-hover { transition: all 0.3s ease; }
     .card-hover:hover {
       transform: translateY(-8px);
-      box-shadow: 0 20px 40px rgba(0, 0, 0, 0.15);
+      box-shadow: 0 20px 40px rgba(0,0,0,0.15);
     }
 
     .glass-effect {
@@ -270,9 +256,7 @@
       background-clip: text;
     }
 
-    .gradient-bg {
-      background: linear-gradient(135deg, #4CAF50 0%, #45a049 100%);
-    }
+    .gradient-bg { background: linear-gradient(135deg, #4CAF50 0%, #45a049 100%); }
 
     .btn-animate {
       transition: all 0.3s ease;
@@ -284,41 +268,8 @@
       transform: translateY(-3px);
       box-shadow: 0 10px 20px rgba(76, 175, 80, 0.3);
     }
+    .btn-animate:active { transform: translateY(-1px); }
 
-    .btn-animate:active {
-      transform: translateY(-1px);
-    }
-
-    .btn-animate::after {
-      content: '';
-      position: absolute;
-      top: 50%;
-      left: 50%;
-      width: 5px;
-      height: 5px;
-      background: rgba(255, 255, 255, 0.5);
-      opacity: 0;
-      border-radius: 100%;
-      transform: scale(1, 1) translate(-50%);
-      transform-origin: 50% 50%;
-    }
-
-    .btn-animate:focus:not(:active)::after {
-      animation: ripple 1s ease-out;
-    }
-
-    @keyframes ripple {
-      0% {
-        transform: scale(0, 0);
-        opacity: 0.5;
-      }
-      100% {
-        transform: scale(20, 20);
-        opacity: 0;
-      }
-    }
-
-    /* Плавающие кнопки */
     .float-buttons {
       position: fixed;
       bottom: 30px;
@@ -369,19 +320,10 @@
       right: 80px;
     }
 
-    .phone-button {
-      background: linear-gradient(135deg, #4CAF50, #45a049);
-    }
+    .phone-button { background: linear-gradient(135deg, #4CAF50, #45a049); }
+    .viber-button { background: linear-gradient(135deg, #7360F2, #8B5CF6); }
+    .telegram-button { background: linear-gradient(135deg, #2AABEE, #229ED9); }
 
-    .viber-button {
-      background: linear-gradient(135deg, #7360F2, #8B5CF6);
-    }
-
-    .telegram-button {
-      background: linear-gradient(135deg, #2AABEE, #229ED9);
-    }
-
-    /* Кастомные чекбоксы */
     .checkbox-container {
       display: flex;
       align-items: center;
@@ -406,22 +348,17 @@
       transition: all 0.3s;
     }
 
-    .checkbox-container:hover .checkbox-custom {
-      border-color: #4CAF50;
-    }
-
+    .checkbox-container:hover .checkbox-custom { border-color: #4CAF50; }
     .checkbox-container input[type="checkbox"]:checked ~ .checkbox-custom {
       background-color: #4CAF50;
       border-color: #4CAF50;
     }
-
     .checkbox-container input[type="checkbox"]:checked ~ .checkbox-custom::after {
       content: "✓";
       color: white;
       font-size: 14px;
     }
 
-    /* Модальные окна */
     .modal {
       display: none;
       position: fixed;
@@ -445,25 +382,15 @@
       overflow-y: auto;
     }
 
-    /* Сообщения формы */
     .form-message {
       display: none;
       padding: 1rem;
       margin-top: 1rem;
       border-radius: 8px;
     }
+    .success-message { background-color: #d1fae5; color: #065f46; }
+    .error-message { background-color: #fee2e2; color: #b91c1c; }
 
-    .success-message {
-      background-color: #d1fae5;
-      color: #065f46;
-    }
-
-    .error-message {
-      background-color: #fee2e2;
-      color: #b91c1c;
-    }
-
-    /* Опросник */
     .questionnaire-modal {
       display: none;
       position: fixed;
@@ -498,10 +425,7 @@
       cursor: pointer;
       color: #666;
     }
-
-    .close-questionnaire:hover {
-      color: #000;
-    }
+    .close-questionnaire:hover { color: #000; }
 
     .progress-bar {
       height: 6px;
@@ -510,7 +434,6 @@
       margin-bottom: 2rem;
       overflow: hidden;
     }
-
     .progress-fill {
       height: 100%;
       background: #226160;
@@ -525,7 +448,6 @@
       color: #1f2937;
       text-align: center;
     }
-
     .option-grid {
       display: grid;
       grid-template-columns: 1fr 1fr;
@@ -542,12 +464,10 @@
       transition: all 0.3s ease;
       background: white;
     }
-
     .option-button:hover {
       border-color: #226160;
       transform: translateY(-2px);
     }
-
     .option-button.selected {
       border-color: #226160;
       background-color: #f0f9f9;
@@ -559,29 +479,12 @@
       justify-content: space-between;
       gap: 1rem;
     }
+    .questionnaire-form { display: none; }
+    .questionnaire-form.active { display: block; }
+    .question-step { display: none; }
+    .question-step.active { display: block; }
 
-    .questionnaire-form {
-      display: none;
-    }
-
-    .questionnaire-form.active {
-      display: block;
-    }
-
-    .question-step {
-      display: none;
-    }
-
-    .question-step.active {
-      display: block;
-    }
-
-    /* FAQ стили */
-    .faq-item {
-      border-bottom: 1px solid #e5e7eb;
-      overflow: hidden;
-    }
-
+    .faq-item { border-bottom: 1px solid #e5e7eb; overflow: hidden; }
     .faq-question {
       padding: 1.5rem 0;
       cursor: pointer;
@@ -589,43 +492,20 @@
       justify-content: space-between;
       align-items: center;
     }
-
     .faq-answer {
       max-height: 0;
       overflow: hidden;
       transition: max-height 0.3s ease-out;
     }
+    .faq-answer.open { max-height: 500px; }
+    .faq-icon { transition: transform 0.3s ease; }
+    .faq-icon.open { transform: rotate(180deg); }
 
-    .faq-answer.open {
-      max-height: 500px;
-    }
+    .review-card { transition: all 0.3s ease; }
+    .review-card:hover { transform: translateY(-5px); }
+    .stars { color: #FFD700; }
 
-    .faq-icon {
-      transition: transform 0.3s ease;
-    }
-
-    .faq-icon.open {
-      transform: rotate(180deg);
-    }
-
-    /* Стили для отзывов */
-    .review-card {
-      transition: all 0.3s ease;
-    }
-
-    .review-card:hover {
-      transform: translateY(-5px);
-    }
-
-    .stars {
-      color: #FFD700;
-    }
-
-    /* Стили каталога и фильтров */
-    .filter-section {
-      border-bottom: 1px solid #e5e7eb;
-      padding: 1rem 0;
-    }
+    .filter-section { border-bottom: 1px solid #e5e7eb; padding: 1rem 0; }
     .filter-section-title {
       font-weight: 600;
       margin-bottom: 0.75rem;
@@ -639,10 +519,8 @@
       align-items: center;
       margin-bottom: 0.5rem;
     }
-    .filter-option label {
-      margin-left: 0.5rem;
-      color: #4b5563;
-    }
+    .filter-option label { margin-left: 0.5rem; color: #4b5563; }
+
     .product-card {
       transition: all 0.3s ease;
       cursor: pointer;
@@ -655,21 +533,18 @@
       transform: translateY(-4px);
       box-shadow: 0 20px 40px rgba(0,0,0,0.1);
     }
+
     .admin-login-link {
       color: #9ca3af;
       font-size: 0.8rem;
       cursor: pointer;
       text-decoration: underline;
     }
-    .admin-login-link:hover {
-      color: #fff;
-    }
-    #admin-panel {
-      display: none;
-    }
-    #admin-panel:target {
-      display: block;
-    }
+    .admin-login-link:hover { color: #fff; }
+
+    #admin-panel { display: none; }
+    #admin-panel:target { display: block; }
+
     .cart-badge {
       background-color: #ef4444;
       color: white;
@@ -678,9 +553,8 @@
       font-size: 0.75rem;
       margin-left: 0.25rem;
     }
-    .cart-icon {
-      position: relative;
-    }
+    .cart-icon { position: relative; }
+
     .product-description {
       display: -webkit-box;
       -webkit-line-clamp: 2;
@@ -689,7 +563,6 @@
       min-height: 2.5rem;
     }
 
-    /* Гамбургер меню */
     .hamburger-menu {
       display: none;
       flex-direction: column;
@@ -703,6 +576,7 @@
       margin: 2px 0;
       transition: 0.3s;
     }
+
     .mobile-menu {
       display: none;
       position: fixed;
@@ -716,28 +590,13 @@
       flex-direction: column;
       gap: 6px;
     }
-    .mobile-menu.active {
-      display: flex;
-    }
-    .mobile-menu .nav-link {
-      width: 100%;
-      text-align: left;
-    }
+    .mobile-menu.active { display: flex; }
+    .mobile-menu .nav-link { width: 100%; text-align: left; }
 
-    /* Мобильные фильтры */
-    .mobile-filter-toggle {
-      display: none;
-      width: 100%;
-      margin-bottom: 1rem;
-    }
-    .filter-sidebar {
-      transition: all 0.3s ease;
-    }
-    .filter-sidebar.mobile-hidden {
-      display: none;
-    }
+    .mobile-filter-toggle { display: none; width: 100%; margin-bottom: 1rem; }
+    .filter-sidebar { transition: all 0.3s ease; }
+    .filter-sidebar.mobile-hidden { display: none; }
 
-    /* Пагинация */
     .pagination {
       display: flex;
       justify-content: center;
@@ -752,9 +611,7 @@
       cursor: pointer;
       transition: all 0.3s;
     }
-    .pagination button:hover {
-      background: #f3f4f6;
-    }
+    .pagination button:hover { background: #f3f4f6; }
     .pagination button.active {
       background: #4CAF50;
       color: white;
@@ -762,100 +619,35 @@
     }
 
     @media (max-width: 768px) {
-      .float-buttons {
-        bottom: 15px;
-        right: 15px;
-      }
-
-      .float-button {
-        width: 40px;
-        height: 40px;
-        font-size: 16px;
-      }
-
-      .modal-content,
-      .questionnaire-content {
-        padding: 1.5rem;
-      }
-
-      .option-grid {
-        grid-template-columns: 1fr;
-      }
-
-      .question-title {
-        font-size: 1.25rem;
-      }
-
-      .nav-link {
-        padding: 4px 8px;
-        font-size: 13px;
-        white-space: normal;
-      }
-      
-      .desktop-menu {
-        display: none !important;
-      }
-      .hamburger-menu {
-        display: flex;
-      }
-      .cart-icon {
-        margin-right: 4px;
-      }
-      #product-grid {
-        grid-template-columns: 1fr !important;
-        gap: 0.75rem;
-      }
-      .filter-sidebar {
-        width: 100% !important;
-        margin-bottom: 15px;
-      }
+      .float-buttons { bottom: 15px; right: 15px; }
+      .float-button { width: 40px; height: 40px; font-size: 16px; }
+      .modal-content, .questionnaire-content { padding: 1.5rem; }
+      .option-grid { grid-template-columns: 1fr; }
+      .question-title { font-size: 1.25rem; }
+      .nav-link { padding: 4px 8px; font-size: 13px; white-space: normal; }
+      .desktop-menu { display: none !important; }
+      .hamburger-menu { display: flex; }
+      .cart-icon { margin-right: 4px; }
+      #product-grid { grid-template-columns: 1fr !important; gap: 0.75rem; }
+      .filter-sidebar { width: 100% !important; margin-bottom: 15px; }
       .container, .max-w-7xl {
         padding-left: 0.75rem;
         padding-right: 0.75rem;
         width: 100%;
         max-width: 100%;
       }
-      h1 {
-        font-size: 1.5rem !important;
-        line-height: 1.2 !important;
-      }
-      h2 {
-        font-size: 1.3rem !important;
-      }
-      .text-lg {
-        font-size: 0.9rem !important;
-      }
-      section {
-        padding-left: 0.75rem;
-        padding-right: 0.75rem;
-      }
-      .mobile-filter-toggle {
-        display: block;
-      }
-      .filter-sidebar {
-        display: none;
-      }
-      .filter-sidebar.mobile-visible {
-        display: block;
-      }
-      nav {
-        padding-top: 4px !important;
-        padding-bottom: 4px !important;
-      }
-      .pt-20 {
-        padding-top: 3.2rem !important;
-      }
-      .brand-chip {
-        font-size: 0.75rem;
-        padding: 0.25rem 0.5rem;
-      }
-      .phone-link {
-        display: none !important;
-      }
-      .pagination button {
-        padding: 4px 8px;
-        font-size: 12px;
-      }
+      h1 { font-size: 1.5rem !important; line-height: 1.2 !important; }
+      h2 { font-size: 1.3rem !important; }
+      .text-lg { font-size: 0.9rem !important; }
+      section { padding-left: 0.75rem; padding-right: 0.75rem; }
+      .mobile-filter-toggle { display: block; }
+      .filter-sidebar { display: none; }
+      .filter-sidebar.mobile-visible { display: block; }
+      nav { padding-top: 4px !important; padding-bottom: 4px !important; }
+      .pt-20 { padding-top: 3.2rem !important; }
+      .brand-chip { font-size: 0.75rem; padding: 0.25rem 0.5rem; }
+      .phone-link { display: none !important; }
+      .pagination button { padding: 4px 8px; font-size: 12px; }
     }
   </style>
 </head>
@@ -876,9 +668,7 @@
     </a>
   </div>
 
-  <!-- Основное содержимое -->
   <div id="content">
-
     <!-- Навигация -->
     <nav class="glass-effect shadow-lg py-1.5 px-4 sm:px-6 fixed w-full z-50 border-b border-white/20">
       <div class="max-w-7xl mx-auto flex justify-between items-center">
@@ -910,7 +700,6 @@
             <i class="ri-phone-line mr-1"></i>
             <span class="hidden sm:inline">+375 (29) 105-06-94</span>
           </a>
-          <!-- Гамбургер меню -->
           <div class="hamburger-menu md:hidden" onclick="toggleMobileMenu()">
             <span></span>
             <span></span>
@@ -918,7 +707,6 @@
           </div>
         </div>
       </div>
-      <!-- Мобильное меню -->
       <div class="mobile-menu md:hidden" id="mobileMenu">
         <button onclick="document.getElementById('catalog').scrollIntoView({behavior: 'smooth'}); toggleMobileMenu()" class="nav-link w-full text-left">
           <i class="ri-store-2-line mr-2"></i>Каталог
@@ -960,7 +748,6 @@
       <div class="max-w-7xl mx-auto px-6">
         <h2 class="text-xl sm:text-3xl font-bold text-center text-gray-900 mb-4 sm:mb-12">Наши услуги</h2>
         <div class="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 gap-3 sm:gap-6">
-          <!-- Услуга 1 -->
           <div class="bg-white rounded-lg shadow-card overflow-hidden card-hover">
             <div class="h-32 sm:h-48 bg-gradient-to-br from-primary/10 to-primary/5 flex items-center justify-center relative">
               <div class="absolute inset-0 bg-gradient-to-br from-transparent to-primary/5"></div>
@@ -977,7 +764,6 @@
               </div>
             </div>
           </div>
-          <!-- Услуга 2 -->
           <div class="bg-white rounded-lg shadow-card overflow-hidden card-hover">
             <div class="h-32 sm:h-48 bg-gradient-to-br from-secondary/10 to-secondary/5 flex items-center justify-center relative">
               <div class="absolute inset-0 bg-gradient-to-br from-transparent to-secondary/5"></div>
@@ -994,7 +780,6 @@
               </div>
             </div>
           </div>
-          <!-- Услуга 3 -->
           <div class="bg-white rounded-lg shadow-card overflow-hidden card-hover">
             <div class="h-32 sm:h-48 bg-gradient-to-br from-accent/10 to-accent/5 flex items-center justify-center relative">
               <div class="absolute inset-0 bg-gradient-to-br from-transparent to-accent/5"></div>
@@ -1023,7 +808,6 @@
       <div class="max-w-7xl mx-auto px-6">
         <h2 class="text-xl sm:text-3xl font-bold text-center text-gray-900 mb-2">Каталог кондиционеров</h2>
         
-        <!-- Поиск -->
         <div class="mb-4 sm:mb-6 max-w-2xl mx-auto">
           <div class="relative">
             <input type="text" id="search-input" placeholder="🔍 Поиск по названию, описанию или характеристикам..." class="w-full border border-gray-300 rounded-lg px-4 py-2 sm:py-3 pl-8 sm:pl-10 text-xs sm:text-sm focus:outline-none focus:ring-2 focus:ring-primary/50 focus:border-primary" onkeyup="filterProducts()">
@@ -1031,7 +815,6 @@
           </div>
         </div>
         
-        <!-- Кнопка для мобильных фильтров -->
         <div class="mobile-filter-toggle">
           <button onclick="toggleMobileFilters()" class="w-full gradient-bg text-white px-4 py-2 sm:py-3 rounded-button font-medium text-sm">
             <i class="ri-filter-line mr-2"></i>Показать фильтры
@@ -1039,23 +822,18 @@
         </div>
         
         <div class="flex flex-col lg:flex-row gap-4 sm:gap-8">
-          <!-- Фильтры (сайдбар) -->
           <div class="lg:w-1/4 bg-gray-50 p-3 sm:p-6 rounded-lg shadow-card h-fit sticky top-16 sm:top-20 filter-sidebar" id="filterSidebar">
             
             <h3 class="text-base sm:text-xl font-bold mb-3 sm:mb-4">Фильтры</h3>
             
-            <!-- Каталог кондиционеров (бренды) -->
             <div class="mb-4 sm:mb-6">
               <div class="filter-section-title text-sm sm:text-base font-bold mb-2 cursor-pointer" onclick="toggleBrandsCollapse()">
                 <span>Каталог кондиционеров</span>
                 <i class="ri-arrow-down-s-line" id="brands-arrow"></i>
               </div>
-              <div id="brands-list" class="flex flex-wrap gap-1 sm:gap-2" style="display: none;">
-                <!-- Бренды будут загружены из админки -->
-              </div>
+              <div id="brands-list" class="flex flex-wrap gap-1 sm:gap-2" style="display: none;"></div>
             </div>
             
-            <!-- Площадь помещения -->
             <div class="filter-section">
               <div class="filter-section-title text-sm sm:text-base" onclick="toggleFilterCollapse(this)">
                 <span>Площадь помещения</span>
@@ -1072,7 +850,6 @@
               </div>
             </div>
 
-            <!-- Цена -->
             <div class="filter-section">
               <div class="filter-section-title text-sm sm:text-base" onclick="toggleFilterCollapse(this)">
                 <span>Цена, руб</span>
@@ -1088,7 +865,6 @@
               </div>
             </div>
 
-            <!-- Тип -->
             <div class="filter-section">
               <div class="filter-section-title text-sm sm:text-base" onclick="toggleFilterCollapse(this)">
                 <span>Тип</span>
@@ -1104,7 +880,6 @@
               </div>
             </div>
 
-            <!-- Инвертор -->
             <div class="filter-section">
               <div class="filter-section-title text-sm sm:text-base" onclick="toggleFilterCollapse(this)">
                 <span>Инвертор</span>
@@ -1117,7 +892,6 @@
               </div>
             </div>
 
-            <!-- Обогрев зимой -->
             <div class="filter-section">
               <div class="filter-section-title text-sm sm:text-base" onclick="toggleFilterCollapse(this)">
                 <span>Обогрев зимой</span>
@@ -1135,7 +909,6 @@
               </div>
             </div>
             
-            <!-- Кнопка Применить -->
             <button onclick="applyFilters()" class="mt-3 sm:mt-4 w-full gradient-bg text-white px-3 sm:px-4 py-2 sm:py-2.5 rounded-button font-medium hover:shadow-glow transition-all duration-300 btn-animate text-xs sm:text-sm">
               Применить фильтры
             </button>
@@ -1143,20 +916,15 @@
             <button onclick="resetFilters()" class="mt-1 sm:mt-2 w-full bg-gray-200 text-gray-800 px-3 sm:px-4 py-1.5 sm:py-2 rounded-button hover:bg-gray-300 btn-animate text-xs sm:text-sm">Сбросить фильтры</button>
           </div>
 
-          <!-- Сетка товаров -->
           <div class="lg:w-3/4">
-            <div id="product-grid" class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-3 sm:gap-6">
-              <!-- Товары будут загружены из localStorage или по умолчанию -->
-            </div>
-            
-            <!-- Пагинация -->
+            <div id="product-grid" class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-3 sm:gap-6"></div>
             <div id="pagination" class="pagination"></div>
           </div>
         </div>
       </div>
     </section>
 
-    <!-- Модальное окно товара (детали) -->
+    <!-- Модальное окно товара -->
     <div id="product-modal" class="modal">
       <div class="modal-content">
         <div id="product-modal-detail"></div>
@@ -1164,33 +932,25 @@
       </div>
     </div>
 
-    <!-- Корзина (модальное окно) -->
+    <!-- Корзина -->
     <div id="cart-modal" class="modal">
       <div class="modal-content max-w-2xl">
         <h3 class="text-xl font-bold text-gray-900 mb-4">Ваша корзина</h3>
         <div id="cart-items" class="max-h-96 overflow-y-auto mb-4"></div>
         <div class="text-right font-bold text-lg mb-4" id="cart-total-display">Общая сумма: 0 BYN</div>
         
-        <!-- Форма оформления заказа -->
         <div id="checkout-form" class="border-t pt-4 mt-4">
           <h4 class="font-bold mb-3">Оформление заказа</h4>
           <input type="text" id="order-name" placeholder="ФИО *" class="w-full border px-3 py-2 rounded mb-2">
           <input type="tel" id="order-phone" placeholder="Телефон *" class="w-full border px-3 py-2 rounded mb-2">
           <input type="text" id="order-address" placeholder="Адрес доставки *" class="w-full border px-3 py-2 rounded mb-3">
           
-          <!-- Способ оплаты -->
           <div class="mb-3">
             <label class="block text-gray-700 font-medium mb-2">Способ оплаты:</label>
             <div class="flex flex-col sm:flex-row gap-4">
-              <label class="flex items-center">
-                <input type="radio" name="payment" value="Наличные" checked class="mr-2"> Наличные
-              </label>
-              <label class="flex items-center">
-                <input type="radio" name="payment" value="Карта" class="mr-2"> Карта
-              </label>
-              <label class="flex items-center">
-                <input type="radio" name="payment" value="Юр.лицо" class="mr-2"> Юр.лицо
-              </label>
+              <label class="flex items-center"><input type="radio" name="payment" value="Наличные" checked class="mr-2"> Наличные</label>
+              <label class="flex items-center"><input type="radio" name="payment" value="Карта" class="mr-2"> Карта</label>
+              <label class="flex items-center"><input type="radio" name="payment" value="Юр.лицо" class="mr-2"> Юр.лицо</label>
             </div>
           </div>
           
@@ -1218,7 +978,6 @@
           </div>
         </div>
         
-        <!-- Вкладки -->
         <div class="border-b border-gray-200 mb-4 sm:mb-6 overflow-x-auto">
           <nav class="flex gap-2 sm:gap-4 min-w-max">
             <button onclick="switchAdminTab('dashboard')" class="px-2 sm:px-4 py-1 sm:py-2 font-medium text-xs sm:text-base text-primary border-b-2 border-primary" id="tab-dashboard-btn">Дашборд</button>
@@ -1232,42 +991,29 @@
           </nav>
         </div>
 
-        <!-- Вкладка Дашборд -->
         <div id="admin-dashboard-tab" class="block">
           <div class="grid grid-cols-2 sm:grid-cols-2 lg:grid-cols-4 gap-2 sm:gap-4 mb-4 sm:mb-6">
             <div class="bg-white p-3 sm:p-6 rounded-lg shadow border-l-4 border-primary">
               <div class="flex justify-between items-center">
-                <div>
-                  <p class="text-xs sm:text-sm text-gray-600">Выручка сегодня</p>
-                  <p class="text-sm sm:text-2xl font-bold" id="dashboard-today-revenue">0 BYN</p>
-                </div>
+                <div><p class="text-xs sm:text-sm text-gray-600">Выручка сегодня</p><p class="text-sm sm:text-2xl font-bold" id="dashboard-today-revenue">0 BYN</p></div>
                 <i class="ri-money-dollar-circle-line text-xl sm:text-3xl text-primary"></i>
               </div>
             </div>
             <div class="bg-white p-3 sm:p-6 rounded-lg shadow border-l-4 border-secondary">
               <div class="flex justify-between items-center">
-                <div>
-                  <p class="text-xs sm:text-sm text-gray-600">Заказов сегодня</p>
-                  <p class="text-sm sm:text-2xl font-bold" id="dashboard-today-orders">0</p>
-                </div>
+                <div><p class="text-xs sm:text-sm text-gray-600">Заказов сегодня</p><p class="text-sm sm:text-2xl font-bold" id="dashboard-today-orders">0</p></div>
                 <i class="ri-shopping-cart-line text-xl sm:text-3xl text-secondary"></i>
               </div>
             </div>
             <div class="bg-white p-3 sm:p-6 rounded-lg shadow border-l-4 border-accent">
               <div class="flex justify-between items-center">
-                <div>
-                  <p class="text-xs sm:text-sm text-gray-600">Всего товаров</p>
-                  <p class="text-sm sm:text-2xl font-bold" id="dashboard-total-products">0</p>
-                </div>
+                <div><p class="text-xs sm:text-sm text-gray-600">Всего товаров</p><p class="text-sm sm:text-2xl font-bold" id="dashboard-total-products">0</p></div>
                 <i class="ri-stack-line text-xl sm:text-3xl text-accent"></i>
               </div>
             </div>
             <div class="bg-white p-3 sm:p-6 rounded-lg shadow border-l-4 border-green-500">
               <div class="flex justify-between items-center">
-                <div>
-                  <p class="text-xs sm:text-sm text-gray-600">Ср. чек</p>
-                  <p class="text-sm sm:text-2xl font-bold" id="dashboard-average-order">0 BYN</p>
-                </div>
+                <div><p class="text-xs sm:text-sm text-gray-600">Ср. чек</p><p class="text-sm sm:text-2xl font-bold" id="dashboard-average-order">0 BYN</p></div>
                 <i class="ri-bar-chart-line text-xl sm:text-3xl text-green-500"></i>
               </div>
             </div>
@@ -1295,7 +1041,6 @@
           </div>
         </div>
 
-        <!-- Вкладка Товары -->
         <div id="admin-products-tab" class="hidden">
           <div class="mb-4 sm:mb-6 p-3 sm:p-4 bg-yellow-50 border border-yellow-200 rounded">
             <h3 class="font-bold mb-2 text-sm sm:text-base">Изменение логина/пароля</h3>
@@ -1352,7 +1097,6 @@
           </div>
         </div>
 
-        <!-- Вкладка Заказы -->
         <div id="admin-orders-tab" class="hidden">
           <div class="grid grid-cols-2 sm:grid-cols-3 gap-2 sm:gap-4 mb-4 sm:mb-6">
             <div><label class="block text-xs sm:text-sm font-medium text-gray-700 mb-1">Статус</label><select id="order-status-filter" onchange="filterAdminOrders()" class="w-full border px-2 sm:px-4 py-1 sm:py-2 rounded-lg text-xs sm:text-sm"><option value="">Все</option><option value="новый">Новые</option><option value="в обработке">В обработке</option><option value="выполнен">Выполненные</option><option value="отменен">Отмененные</option></select></div>
@@ -1364,19 +1108,16 @@
           <div class="mt-4 p-3 sm:p-4 bg-blue-50 rounded"><h4 class="font-bold text-xs sm:text-sm">Статистика заказов:</h4><p class="text-xs sm:text-sm">Всего заказов: <span id="total-orders">0</span></p><p class="text-xs sm:text-sm">Общая сумма: <span id="total-amount">0</span> BYN</p></div>
         </div>
 
-        <!-- Вкладка Клиенты -->
         <div id="admin-customers-tab" class="hidden">
           <div class="grid grid-cols-1 md:grid-cols-2 gap-2 sm:gap-4 mb-4 sm:mb-6"><div><input type="text" id="customer-search" placeholder="🔍 Поиск клиентов..." class="w-full border px-2 sm:px-4 py-1 sm:py-2 rounded-lg text-xs sm:text-sm" onkeyup="filterCustomers()"></div></div>
           <div id="customers-list" class="bg-white rounded-lg shadow p-3 sm:p-4"></div>
         </div>
 
-        <!-- Вкладка Бренды -->
         <div id="admin-brands-tab" class="hidden">
           <div class="mb-4"><button onclick="addBrand()" class="bg-primary text-white px-3 sm:px-4 py-1 sm:py-2 rounded-button text-xs sm:text-sm">+ Добавить бренд</button></div>
           <div id="brands-admin-list" class="bg-white rounded-lg shadow p-3 sm:p-4 space-y-2"></div>
         </div>
 
-        <!-- Вкладка Отчеты -->
         <div id="admin-reports-tab" class="hidden">
           <div class="grid grid-cols-1 sm:grid-cols-2 gap-4 sm:gap-6">
             <div class="bg-white p-3 sm:p-6 rounded-lg shadow"><h3 class="text-sm sm:text-lg font-bold mb-2 sm:mb-4">Отчет по продажам</h3><div class="space-y-2 text-xs sm:text-sm"><div class="flex justify-between"><span>За сегодня:</span><span class="font-bold" id="report-today">0 BYN</span></div><div class="flex justify-between"><span>За неделю:</span><span class="font-bold" id="report-week">0 BYN</span></div><div class="flex justify-between"><span>За месяц:</span><span class="font-bold" id="report-month">0 BYN</span></div><div class="flex justify-between"><span>За год:</span><span class="font-bold" id="report-year">0 BYN</span></div></div><button onclick="generateFullReport()" class="mt-3 sm:mt-4 w-full bg-primary text-white px-3 sm:px-4 py-1 sm:py-2 rounded-button text-xs sm:text-sm">Полный отчет</button></div>
@@ -1384,7 +1125,6 @@
           </div>
         </div>
 
-        <!-- Вкладка Настройки -->
         <div id="admin-settings-tab" class="hidden">
           <div class="bg-white p-3 sm:p-6 rounded-lg shadow">
             <h3 class="text-sm sm:text-lg font-bold mb-3 sm:mb-4">Настройки сайта</h3>
@@ -1402,7 +1142,6 @@
           </div>
         </div>
 
-        <!-- Вкладка Логи -->
         <div id="admin-logs-tab" class="hidden">
           <div class="bg-white p-3 sm:p-6 rounded-lg shadow">
             <h3 class="text-sm sm:text-lg font-bold mb-2 sm:mb-4">История действий</h3>
@@ -1423,7 +1162,7 @@
       </div>
     </div>
 
-    <!-- Калькулятор расчета стоимости -->
+    <!-- Калькулятор -->
     <section id="calculator" class="py-8 sm:py-16 bg-white">
       <div class="max-w-7xl mx-auto px-6">
         <h2 class="text-lg sm:text-3xl font-bold text-center text-gray-900 mb-4 sm:mb-12">Расчет стоимости монтажа</h2>
@@ -1466,7 +1205,7 @@
       </div>
     </section>
 
-    <!-- Часто задаваемые вопросы -->
+    <!-- FAQ -->
     <section id="faq" class="py-8 sm:py-16 bg-white">
       <div class="max-w-7xl mx-auto px-6">
         <h2 class="text-lg sm:text-3xl font-bold text-center text-gray-900 mb-2">Часто задаваемые вопросы</h2>
@@ -1482,7 +1221,7 @@
       </div>
     </section>
 
-    <!-- Отзывы клиентов -->
+    <!-- Отзывы -->
     <section id="reviews" class="py-8 sm:py-16 bg-gradient-to-b from-gray-50 to-white">
       <div class="max-w-7xl mx-auto px-6">
         <h2 class="text-lg sm:text-3xl font-bold text-center text-gray-900 mb-2">Отзывы наших клиентов</h2>
@@ -1525,7 +1264,6 @@
     function toggleMobileFilters() { document.getElementById('filterSidebar').classList.toggle('mobile-visible'); }
     function applyFilters() { filterProducts(); if (window.innerWidth <= 768) document.getElementById('filterSidebar').classList.remove('mobile-visible'); }
 
-    // FAQ
     function toggleFaq(id) {
       const answer = document.querySelectorAll('.faq-answer')[id-1];
       const icon = document.querySelectorAll('.faq-icon')[id-1];
@@ -1546,7 +1284,6 @@
     let cart = [], orders = [], adminCredentials = { login:'admin', password:'admin123' }, selectedProducts = new Set(), actionLogs = [], currentPage = 1, itemsPerPage = 6;
     let visitCount = 0, totalVisits = 0;
 
-    // Загрузка/сохранение
     function loadProducts() { const s=localStorage.getItem('aircom_products'); if(s) products=JSON.parse(s); }
     function saveProducts() { localStorage.setItem('aircom_products', JSON.stringify(products)); addLog('product','Обновлен список товаров'); }
     function loadBrands() { const s=localStorage.getItem('aircom_brands'); if(s) brands=JSON.parse(s); renderBrands(); updateBrandSelects(); }
@@ -1554,13 +1291,8 @@
     function loadVisits() {
       const today = new Date().toDateString();
       let visits = JSON.parse(localStorage.getItem('aircom_visits') || '{"date":"","today":0,"total":0}');
-      if (visits.date !== today) { 
-        visitCount = 1; 
-        totalVisits = visits.total + 1; 
-      } else { 
-        visitCount = visits.today + 1; 
-        totalVisits = visits.total + 1; 
-      }
+      if (visits.date !== today) { visitCount = 1; totalVisits = visits.total + 1; } 
+      else { visitCount = visits.today + 1; totalVisits = visits.total + 1; }
       localStorage.setItem('aircom_visits', JSON.stringify({ date: today, today: visitCount, total: totalVisits }));
       document.getElementById('today-visits').textContent = visitCount;
       document.getElementById('total-visits').textContent = totalVisits;
@@ -1589,15 +1321,12 @@
       document.getElementById('stats-completed').textContent = orders.filter(o=>o.status==='выполнен').length;
       document.getElementById('stats-cancelled').textContent = orders.filter(o=>o.status==='отменен').length;
       
-      // Топ товаров
       const sales={}; orders.forEach(o=>o.items.forEach(i=>sales[i.name]=(sales[i.name]||0)+i.quantity));
       const top=Object.entries(sales).sort((a,b)=>b[1]-a[1]).slice(0,5);
       document.getElementById('dashboard-top-products').innerHTML = top.map(([n,c])=>`<div class="flex justify-between"><span>${n}</span><span class="font-bold">${c} шт</span></div>`).join('') || '<p class="text-gray-500">Нет данных</p>';
       
-      // Последние действия
       document.getElementById('recent-actions').innerHTML = actionLogs.slice(0,5).map(l=>`<div class="text-xs border-b pb-1"><span class="text-gray-500">${l.time}</span> - ${l.action}</div>`).join('') || '<p class="text-gray-500">Нет действий</p>';
       
-      // Отчеты
       const weekAgo = new Date(); weekAgo.setDate(weekAgo.getDate() - 7);
       const monthAgo = new Date(); monthAgo.setMonth(monthAgo.getMonth() - 1);
       const yearAgo = new Date(); yearAgo.setFullYear(yearAgo.getFullYear() - 1);
@@ -1607,7 +1336,6 @@
       document.getElementById('report-month').textContent = orders.filter(o=>new Date(o.date) >= monthAgo).reduce((s,o)=>s+o.total,0) + ' BYN';
       document.getElementById('report-year').textContent = orders.filter(o=>new Date(o.date) >= yearAgo).reduce((s,o)=>s+o.total,0) + ' BYN';
       
-      // Топ-10 для отчета
       const top10 = Object.entries(sales).sort((a,b)=>b[1]-a[1]).slice(0,10);
       document.getElementById('top-products-report').innerHTML = top10.map(([n,c])=>`<div class="flex justify-between"><span>${n}</span><span class="font-bold">${c} шт</span></div>`).join('') || '<p class="text-gray-500">Нет данных</p>';
     }
@@ -1781,13 +1509,11 @@
         renderAdminProducts(); 
         switchAdminTab('dashboard'); 
         updateDashboard();
-        // Сохраняем состояние в localStorage
         localStorage.setItem('admin_logged_in', 'true');
         addLog('user','Вход в админ-панель');
       } else alert('Неверный логин или пароль');
     }
     
-    // Проверяем сохраненный вход
     if(localStorage.getItem('admin_logged_in') === 'true') {
       document.getElementById('admin-panel').style.display = 'block';
       renderAdminProducts();
@@ -1893,15 +1619,12 @@
       products.push(np); saveProducts(); renderAdminProducts(); filterProducts(); addLog('product','Копирование '+p.name);
     }
     
-    // Полная форма редактирования
     function openEditModal(id) {
       const p=products.find(p=>p.id===id); 
       if(!p) return;
       
-      // Создаем полную форму редактирования
       const modal = document.getElementById('edit-product-modal');
       if (!modal) {
-        // Создаем модальное окно если его нет
         const newModal = document.createElement('div');
         newModal.id = 'edit-product-modal';
         newModal.className = 'modal';
@@ -2060,7 +1783,6 @@
     }
     function toggleFilterCollapse(el) { const c=el.nextElementSibling; if(c) { if(c.style.display==='none'||c.style.display==='') c.style.display='block'; else c.style.display='none'; } }
 
-    // Калькулятор
     document.addEventListener('DOMContentLoaded',function(){
       const ms=document.getElementById('model'), li=document.getElementById('length'), db=document.getElementById('decrease-length'), ib=document.getElementById('increase-length'), tp=document.getElementById('total-price'), dc=document.getElementById('demontage'), sc=document.getElementById('service'), ls=document.getElementById('length-section');
       function calc() {
@@ -2076,7 +1798,6 @@
       if(dc) dc.addEventListener('change',calc); if(sc) sc.addEventListener('change',calc); calc();
     });
 
-    // Инициализация
     loadProducts(); loadBrands(); loadOrders(); loadCart(); loadLogs(); loadVisits(); filterProducts();
     const pr=document.getElementById('priceRange'), mp=document.getElementById('maxPrice');
     if(pr) pr.addEventListener('input',(e)=>{ if(mp) mp.value=e.target.value; filterProducts(); });
