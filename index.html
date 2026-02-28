@@ -1145,8 +1145,8 @@
             <div class="space-y-3 sm:space-y-4">
               <div><label class="block text-xs sm:text-sm font-medium text-gray-700 mb-1">Название магазина</label><input type="text" id="site-name" value="AirComfort" class="w-full border px-2 sm:px-4 py-1 sm:py-2 rounded-lg text-xs sm:text-sm"></div>
               <div><label class="block text-xs sm:text-sm font-medium text-gray-700 mb-1">Email для уведомлений</label><input type="email" id="site-email" value="aircomfortbel@gmail.com" class="w-full border px-2 sm:px-4 py-1 sm:py-2 rounded-lg text-xs sm:text-sm"></div>
-              <div><label class="block text-xs sm:text-sm font-medium text-gray-700 mb-1">Telegram Bot Token</label><input type="text" id="telegram-token" value="YOUR_BOT_TOKEN" class="w-full border px-2 sm:px-4 py-1 sm:py-2 rounded-lg text-xs sm:text-sm"></div>
-              <div><label class="block text-xs sm:text-sm font-medium text-gray-700 mb-1">Telegram Chat ID</label><input type="text" id="telegram-chat" value="YOUR_CHAT_ID" class="w-full border px-2 sm:px-4 py-1 sm:py-2 rounded-lg text-xs sm:text-sm"></div>
+              <div><label class="block text-xs sm:text-sm font-medium text-gray-700 mb-1">Telegram Bot Token</label><input type="text" id="telegram-token" value="7906374596:AAHcCv8J8RqS2AlUZqHMcJZxG-d_j1Vg5oQ" class="w-full border px-2 sm:px-4 py-1 sm:py-2 rounded-lg text-xs sm:text-sm"></div>
+              <div><label class="block text-xs sm:text-sm font-medium text-gray-700 mb-1">Telegram Chat ID</label><input type="text" id="telegram-chat" value="7906374596" class="w-full border px-2 sm:px-4 py-1 sm:py-2 rounded-lg text-xs sm:text-sm"></div>
               <div><label class="block text-xs sm:text-sm font-medium text-gray-700 mb-1">Телефон</label><input type="text" id="site-phone" value="+375 (29) 105-06-94" class="w-full border px-2 sm:px-4 py-1 sm:py-2 rounded-lg text-xs sm:text-sm"></div>
               <div><label class="block text-xs sm:text-sm font-medium text-gray-700 mb-1">Адрес</label><input type="text" id="site-address" value="г. Гомель" class="w-full border px-2 sm:px-4 py-1 sm:py-2 rounded-lg text-xs sm:text-sm"></div>
               <div><label class="block text-xs sm:text-sm font-medium text-gray-700 mb-1">Валюта</label><select id="site-currency" class="w-full border px-2 sm:px-4 py-1 sm:py-2 rounded-lg text-xs sm:text-sm"><option value="BYN">BYN</option><option value="USD">USD</option><option value="EUR">EUR</option><option value="RUB">RUB</option></select></div>
@@ -1313,6 +1313,22 @@
       if (!isOpen) { answer.classList.add('open'); icon.classList.add('open'); }
     }
 
+    // Telegram бот
+    const TELEGRAM_TOKEN = '7906374596:AAHcCv8J8RqS2AlUZqHMcJZxG-d_j1Vg5oQ';
+    const TELEGRAM_CHAT_ID = '7906374596';
+
+    function sendTelegramNotification(message) {
+      fetch(`https://api.telegram.org/bot${TELEGRAM_TOKEN}/sendMessage`, {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({ 
+          chat_id: TELEGRAM_CHAT_ID, 
+          text: message,
+          parse_mode: 'HTML'
+        })
+      }).catch(error => console.error('Telegram error:', error));
+    }
+
     // Данные
     let products = [{ id:1, name:'Ballu BSO-07HN1', brand:'Ballu', price:850, oldPrice:950, stock:5, area:'до 20', category:'Настенные', type:'Настенный', inverter:'Нет', heat:'-7', description:'Надежный кондиционер для небольших помещений.', fullDescription:'Ballu BSO-07HN1 - надежная сплит-система для помещений до 20 м². Энергосберегающий режим, низкий шум.', image:'https://via.placeholder.com/200x150?text=Ballu+BSO-07HN1', tags:['хит'], status:'active', createdAt:new Date().toISOString() },
                     { id:2, name:'Electrolux EACS-07HAT/N3', brand:'Electrolux', price:1100, oldPrice:null, stock:3, area:'21-29', category:'Настенные', type:'Настенный', inverter:'Да', heat:'-15', description:'Инверторная модель с низким уровнем шума.', fullDescription:'Electrolux EACS-07HAT/N3 - инверторный кондиционер, 22 дБ, высокая энергоэффективность.', image:'https://via.placeholder.com/200x150?text=Electrolux', tags:['новинка'], status:'active', createdAt:new Date().toISOString() },
@@ -1349,7 +1365,6 @@
       updateDashboard(); 
       addLog('order','Обновлен список заказов');
       backupDatabase();
-      sendTelegramNotification();
     }
     function loadCart() { const s=localStorage.getItem('aircom_cart'); if(s) cart=JSON.parse(s); updateCartBadge(); }
     function saveCart() { localStorage.setItem('aircom_cart', JSON.stringify(cart)); updateCartBadge(); }
@@ -1376,23 +1391,6 @@
       addLog('system', 'Резервное копирование выполнено');
     }
     setInterval(backupDatabase, 300000);
-
-    // Уведомление в Telegram
-    function sendTelegramNotification() {
-      const token = document.getElementById('telegram-token')?.value || 'YOUR_BOT_TOKEN';
-      const chatId = document.getElementById('telegram-chat')?.value || 'YOUR_CHAT_ID';
-      
-      if (token === 'YOUR_BOT_TOKEN' || chatId === 'YOUR_CHAT_ID') return;
-      
-      const lastOrder = orders[orders.length - 1];
-      const message = `🆕 Новый заказ #${lastOrder.id}\nКлиент: ${lastOrder.customer.name}\nТелефон: ${lastOrder.customer.phone}\nСумма: ${lastOrder.total} BYN`;
-      
-      fetch(`https://api.telegram.org/bot${token}/sendMessage`, {
-        method: 'POST',
-        headers: { 'Content-Type': 'application/json' },
-        body: JSON.stringify({ chat_id: chatId, text: message })
-      }).catch(() => {});
-    }
 
     function updateDashboard() {
       const today = new Date();
@@ -1579,6 +1577,11 @@
       orders.push(order); saveOrders();
       cart.forEach(i=>{ const prod=products.find(p=>p.id===i.id); if(prod) prod.stock-=i.quantity; }); saveProducts();
       
+      // Отправка в Telegram
+      const telegramMessage = `🆕 <b>НОВЫЙ ЗАКАЗ #${order.id}</b>\n\n👤 <b>Клиент:</b> ${n}\n📞 <b>Телефон:</b> ${p}\n📍 <b>Адрес:</b> ${a}\n📧 <b>Email:</b> ${e || 'не указан'}\n💳 <b>Оплата:</b> ${pm}\n💰 <b>Сумма:</b> ${total} BYN\n\n🛒 <b>Товары:</b>\n${cart.map(i => `• ${i.name} - ${i.quantity} шт x ${i.price} BYN`).join('\n')}`;
+      sendTelegramNotification(telegramMessage);
+      
+      // Отправка email через Formspree
       const fd=new FormData();
       fd.append('name', n);
       fd.append('phone', p);
@@ -1604,7 +1607,6 @@
       })
       .catch(error => {
         console.error('Error:', error);
-        alert('Заказ оформлен, но уведомление не отправлено.');
       });
       
       cart = []; saveCart(); renderCartItems();
@@ -1618,8 +1620,18 @@
     // Обратная связь
     document.getElementById('contact-form').addEventListener('submit', function(e) {
       e.preventDefault();
+      
+      const name = document.getElementById('form-name').value;
+      const phone = document.getElementById('form-phone').value;
+      const email = document.getElementById('form-email').value;
+      const message = document.getElementById('form-message').value;
+      
+      // Отправка в Telegram
+      const telegramMessage = `📝 <b>НОВОЕ СООБЩЕНИЕ С САЙТА</b>\n\n👤 <b>Имя:</b> ${name}\n📞 <b>Телефон:</b> ${phone}\n📧 <b>Email:</b> ${email || 'не указан'}\n💬 <b>Сообщение:</b>\n${message}`;
+      sendTelegramNotification(telegramMessage);
+      
       const fd=new FormData(this);
-      fd.append('_replyto', document.getElementById('form-email').value || 'aircomfortbel@gmail.com');
+      fd.append('_replyto', email || 'aircomfortbel@gmail.com');
       fd.append('_subject', 'Новое сообщение с сайта');
       
       fetch(this.action, {
