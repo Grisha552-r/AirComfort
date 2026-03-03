@@ -1768,9 +1768,14 @@ Email: ${e || 'не указан'}
       });
     }
     function filterAdminProducts() { renderAdminProducts(); }
+    
+    // Исправленная функция отображения заказов
     function filterAdminOrders(startDate, endDate) { 
-      const list=document.getElementById('admin-orders-list'); if(!list) return;
-      const sf=document.getElementById('order-status-filter')?.value||'', st=document.getElementById('order-search')?.value.toLowerCase()||'';
+      const list=document.getElementById('admin-orders-list'); 
+      if(!list) return;
+      
+      const sf=document.getElementById('order-status-filter')?.value||''; 
+      const st=document.getElementById('order-search')?.value.toLowerCase()||'';
       let fo=[...orders];
       
       if(sf) fo=fo.filter(o=>o.status===sf);
@@ -1784,11 +1789,45 @@ Email: ${e || 'не указан'}
       
       list.innerHTML='';
       if(fo.length===0) { list.innerHTML='<p class="text-gray-500 text-center py-4 text-xs">Нет заказов</p>'; return; }
+      
       fo.forEach(o=>{ 
-        const statusClass = o.status === 'новый' ? 'status-new' : o.status === 'в обработке' ? 'status-processing' : o.status === 'выполнен' ? 'status-completed' : 'status-cancelled';
-        list.innerHTML+=`<div class="border p-3 rounded-lg hover:shadow-md"><div class="flex justify-between items-start mb-1"><span class="font-bold text-xs">Заказ #${o.id}</span><span class="text-xs text-gray-500">${o.date}</span></div><div class="grid grid-cols-2 gap-1 text-xs"><div><span class="font-medium">Клиент:</span> ${o.customer.name}</div><div><span class="font-medium">Тел:</span> ${o.customer.phone}</div><div class="col-span-2"><span class="font-medium">Адрес:</span> ${o.customer.address}</div><div><span class="font-medium">Email:</span> ${o.customer.email || 'не указан'}</div><div><span class="font-medium">Оплата:</span> ${o.customer.payment||'Наличные'}</div><div><span class="font-medium">Сумма:</span> ${o.total} BYN</div></div><div class="mt-2"><span class="font-medium text-xs">Товары:</span> ${o.items.map(i=>`${i.name} (${i.quantity} шт)`).join(', ')}</div><div class="mt-2 flex gap-2"><span class="px-2 py-1 rounded text-xs ${statusClass}">${o.status}</span><select onchange="updateOrderStatus(${o.id},this.value)" class="border rounded px-1 py-0.5 text-xs"><option value="новый" ${o.status==='новый'?'selected':''}>Новый</option><option value="в обработке" ${o.status==='в обработке'?'selected':''}>В обр.</option><option value="выполнен" ${o.status==='выполнен'?'selected':''}>Выполн.</option><option value="отменен" ${o.status==='отменен'?'selected':''}>Отмен.</option></select><button onclick="deleteOrder(${o.id})" class="text-red-600 hover:text-red-800 px-2 py-1 border border-red-300 rounded text-xs">🗑️</button></div></div>`; });
+        const statusClass = o.status === 'новый' ? 'status-new' : 
+                            o.status === 'в обработке' ? 'status-processing' : 
+                            o.status === 'выполнен' ? 'status-completed' : 'status-cancelled';
+        
+        list.innerHTML+=`<div class="border p-3 rounded-lg hover:shadow-md">
+          <div class="flex justify-between items-start mb-1">
+            <span class="font-bold text-xs">Заказ #${o.id}</span>
+            <span class="text-xs text-gray-500">${o.date}</span>
+          </div>
+          <div class="grid grid-cols-2 gap-1 text-xs">
+            <div><span class="font-medium">Клиент:</span> ${o.customer.name}</div>
+            <div><span class="font-medium">Тел:</span> ${o.customer.phone}</div>
+            <div class="col-span-2"><span class="font-medium">Адрес:</span> ${o.customer.address}</div>
+            <div><span class="font-medium">Email:</span> ${o.customer.email || 'не указан'}</div>
+            <div><span class="font-medium">Оплата:</span> ${o.customer.payment||'Наличные'}</div>
+            <div><span class="font-medium">Сумма:</span> ${o.total} BYN</div>
+          </div>
+          <div class="mt-2">
+            <span class="font-medium text-xs">Товары:</span> 
+            ${o.items.map(i=>`${i.name} (${i.quantity} шт)`).join(', ')}
+          </div>
+          <div class="mt-2 flex gap-2">
+            <span class="px-2 py-1 rounded text-xs ${statusClass}">${o.status}</span>
+            <select onchange="updateOrderStatus(${o.id},this.value)" class="border rounded px-1 py-0.5 text-xs">
+              <option value="новый" ${o.status==='новый'?'selected':''}>Новый</option>
+              <option value="в обработке" ${o.status==='в обработке'?'selected':''}>В обр.</option>
+              <option value="выполнен" ${o.status==='выполнен'?'selected':''}>Выполн.</option>
+              <option value="отменен" ${o.status==='отменен'?'selected':''}>Отмен.</option>
+            </select>
+            <button onclick="deleteOrder(${o.id})" class="text-red-600 hover:text-red-800 px-2 py-1 border border-red-300 rounded text-xs">🗑️</button>
+          </div>
+        </div>`; 
+      });
+      
       updateOrderStats();
     }
+    
     function updateOrderStatus(id,ns) { const o=orders.find(o=>o.id===id); if(o) { o.status=ns; saveOrders(); filterAdminOrders(); addLog('order',`Статус заказа #${id} изменен на ${ns}`); } }
     function deleteOrder(id) { if(confirm('Удалить заказ?')) { orders=orders.filter(o=>o.id!==id); saveOrders(); filterAdminOrders(); addLog('order',`Удален заказ #${id}`); } }
     function deleteAllOrders() { if(confirm('Удалить все заказы?')) { orders=[]; saveOrders(); filterAdminOrders(); addLog('order','Удалены все заказы'); } }
