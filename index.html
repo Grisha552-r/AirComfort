@@ -356,99 +356,6 @@
     .success-message { background-color: #d1fae5; color: #065f46; }
     .error-message { background-color: #fee2e2; color: #b91c1c; }
 
-    .questionnaire-modal {
-      display: none;
-      position: fixed;
-      top: 0;
-      left: 0;
-      width: 100%;
-      height: 100%;
-      background-color: rgba(0,0,0,0.7);
-      z-index: 1001;
-      justify-content: center;
-      align-items: center;
-      padding: 1rem;
-    }
-
-    .questionnaire-content {
-      background: white;
-      padding: 2rem;
-      border-radius: 16px;
-      max-width: 500px;
-      width: 100%;
-      max-height: 90vh;
-      overflow-y: auto;
-    }
-
-    .close-questionnaire {
-      position: absolute;
-      top: 1rem;
-      right: 1rem;
-      background: none;
-      border: none;
-      font-size: 1.5rem;
-      cursor: pointer;
-      color: #666;
-    }
-    .close-questionnaire:hover { color: #000; }
-
-    .progress-bar {
-      height: 6px;
-      background-color: #e5e7eb;
-      border-radius: 3px;
-      margin-bottom: 2rem;
-      overflow: hidden;
-    }
-    .progress-fill {
-      height: 100%;
-      background: #226160;
-      border-radius: 3px;
-      transition: width 0.3s ease;
-    }
-
-    .question-title {
-      font-size: 1.5rem;
-      font-weight: bold;
-      margin-bottom: 2rem;
-      color: #1f2937;
-      text-align: center;
-    }
-    .option-grid {
-      display: grid;
-      grid-template-columns: 1fr 1fr;
-      gap: 1rem;
-      margin-bottom: 2rem;
-    }
-
-    .option-button {
-      padding: 1.5rem 1rem;
-      border: 2px solid #e5e7eb;
-      border-radius: 12px;
-      text-align: center;
-      cursor: pointer;
-      transition: all 0.3s ease;
-      background: white;
-    }
-    .option-button:hover {
-      border-color: #226160;
-      transform: translateY(-2px);
-    }
-    .option-button.selected {
-      border-color: #226160;
-      background-color: #f0f9f9;
-      box-shadow: 0 4px 12px rgba(34, 97, 96, 0.2);
-    }
-
-    .navigation-buttons {
-      display: flex;
-      justify-content: space-between;
-      gap: 1rem;
-    }
-    .questionnaire-form { display: none; }
-    .questionnaire-form.active { display: block; }
-    .question-step { display: none; }
-    .question-step.active { display: block; }
-
     .faq-item { border-bottom: 1px solid #e5e7eb; overflow: hidden; }
     .faq-question {
       padding: 1.5rem 0;
@@ -594,6 +501,9 @@
       cursor: pointer;
       border: 2px solid transparent;
       transition: all 0.2s;
+      width: 80px;
+      height: 80px;
+      object-fit: cover;
     }
     .gallery-thumb:hover {
       border-color: #4CAF50;
@@ -621,6 +531,21 @@
     .color-dot.selected {
       border-color: #4CAF50;
       box-shadow: 0 0 0 2px rgba(76, 175, 80, 0.3);
+    }
+    
+    /* Параметры */
+    .specs-table {
+      display: grid;
+      grid-template-columns: auto 1fr;
+      gap: 12px 20px;
+      align-items: baseline;
+    }
+    .specs-label {
+      font-weight: 600;
+      color: #4b5563;
+    }
+    .specs-value {
+      color: #1f2937;
     }
 
     @media (max-width: 768px) {
@@ -1034,9 +959,7 @@
               <div><label class="block text-xs sm:text-sm font-medium text-gray-700 mb-1">Название *</label><input type="text" id="new-name" class="w-full border px-2 sm:px-3 py-1 sm:py-2 rounded text-xs sm:text-sm"></div>
               <div><label class="block text-xs sm:text-sm font-medium text-gray-700 mb-1">Цена *</label><input type="number" id="new-price" class="w-full border px-2 sm:px-3 py-1 sm:py-2 rounded text-xs sm:text-sm"></div>
               <div><label class="block text-xs sm:text-sm font-medium text-gray-700 mb-1">Старая цена</label><input type="number" id="new-old-price" class="w-full border px-2 sm:px-3 py-1 sm:py-2 rounded text-xs sm:text-sm"></div>
-              <div><label class="block text-xs sm:text-sm font-medium text-gray-700 mb-1">Количество</label><input type="number" id="new-stock" value="10" class="w-full border px-2 sm:px-3 py-1 sm:py-2 rounded text-xs sm:text-sm"></div>
               <div><label class="block text-xs sm:text-sm font-medium text-gray-700 mb-1">Бренд</label><select id="new-brand" class="w-full border px-2 sm:px-3 py-1 sm:py-2 rounded text-xs sm:text-sm"><option value="">Без бренда</option></select></div>
-              <div><label class="block text-xs sm:text-sm font-medium text-gray-700 mb-1">Категория</label><select id="new-category" class="w-full border px-2 sm:px-3 py-1 sm:py-2 rounded text-xs sm:text-sm"><option value="Настенные">Настенные</option><option value="Канальные">Канальные</option><option value="Мобильные">Мобильные</option><option value="Кассетные">Кассетные</option><option value="Мульти-сплит">Мульти-сплит</option><option value="Напольно-потолочные">Напольно-потолочные</option></select></div>
               <div><label class="block text-xs sm:text-sm font-medium text-gray-700 mb-1">Тип</label><select id="new-type" class="w-full border px-2 sm:px-3 py-1 sm:py-2 rounded text-xs sm:text-sm"><option value="Настенный">Настенный</option><option value="Канальный">Канальный</option><option value="Кассетный">Кассетный</option><option value="Мобильный">Мобильный</option><option value="Напольно-потолочный">Напольно-потолочный</option></select></div>
               <div><label class="block text-xs sm:text-sm font-medium text-gray-700 mb-1">Инвертор</label><select id="new-inverter" class="w-full border px-2 sm:px-3 py-1 sm:py-2 rounded text-xs sm:text-sm"><option value="Да">Да</option><option value="Нет">Нет</option></select></div>
               <div><label class="block text-xs sm:text-sm font-medium text-gray-700 mb-1">Площадь</label><select id="new-area" class="w-full border px-2 sm:px-3 py-1 sm:py-2 rounded text-xs sm:text-sm"><option value="до 20">до 20 кв.м.</option><option value="21-29">21-29 кв.м.</option><option value="30-39">30-39 кв.м.</option><option value="40-49">40-49 кв.м.</option><option value="50-69">50-69 кв.м.</option><option value="70-99">70-99 кв.м.</option><option value="100+">от 100 кв.м.</option></select></div>
@@ -1050,9 +973,33 @@
             <div class="flex gap-2 mt-3"><button onclick="saveNewProduct()" class="bg-primary text-white px-4 py-2 rounded-button text-xs sm:text-sm">Сохранить</button><button onclick="closeAddProductForm()" class="bg-gray-200 text-gray-800 px-4 py-2 rounded-button text-xs sm:text-sm">Отмена</button></div>
           </div>
 
+          <!-- Модальное окно редактирования товара -->
+          <div id="edit-product-modal" class="modal" style="display: none;">
+            <div class="modal-content max-w-2xl">
+              <h3 class="text-xl font-bold mb-4">Редактирование товара</h3>
+              <form id="edit-product-form" class="space-y-4">
+                <input type="hidden" id="edit-product-id">
+                <div><label class="block text-sm font-medium text-gray-700 mb-1">Название *</label><input type="text" id="edit-name" class="w-full border px-3 py-2 rounded"></div>
+                <div><label class="block text-sm font-medium text-gray-700 mb-1">Цена *</label><input type="number" id="edit-price" class="w-full border px-3 py-2 rounded"></div>
+                <div><label class="block text-sm font-medium text-gray-700 mb-1">Старая цена</label><input type="number" id="edit-old-price" class="w-full border px-3 py-2 rounded"></div>
+                <div><label class="block text-sm font-medium text-gray-700 mb-1">Бренд</label><select id="edit-brand" class="w-full border px-3 py-2 rounded"></select></div>
+                <div><label class="block text-sm font-medium text-gray-700 mb-1">Тип</label><select id="edit-type" class="w-full border px-3 py-2 rounded"><option value="Настенный">Настенный</option><option value="Канальный">Канальный</option><option value="Кассетный">Кассетный</option><option value="Мобильный">Мобильный</option><option value="Напольно-потолочный">Напольно-потолочный</option></select></div>
+                <div><label class="block text-sm font-medium text-gray-700 mb-1">Инвертор</label><select id="edit-inverter" class="w-full border px-3 py-2 rounded"><option value="Да">Да</option><option value="Нет">Нет</option></select></div>
+                <div><label class="block text-sm font-medium text-gray-700 mb-1">Площадь</label><select id="edit-area" class="w-full border px-3 py-2 rounded"><option value="до 20">до 20 кв.м.</option><option value="21-29">21-29 кв.м.</option><option value="30-39">30-39 кв.м.</option><option value="40-49">40-49 кв.м.</option><option value="50-69">50-69 кв.м.</option><option value="70-99">70-99 кв.м.</option><option value="100+">от 100 кв.м.</option></select></div>
+                <div><label class="block text-sm font-medium text-gray-700 mb-1">Обогрев</label><input type="text" id="edit-heat" class="w-full border px-3 py-2 rounded"></div>
+                <div><label class="block text-sm font-medium text-gray-700 mb-1">Цвет</label><input type="text" id="edit-color" class="w-full border px-3 py-2 rounded"></div>
+                <div><label class="block text-sm font-medium text-gray-700 mb-1">Краткое описание</label><textarea id="edit-description" rows="2" class="w-full border px-3 py-2 rounded"></textarea></div>
+                <div><label class="block text-sm font-medium text-gray-700 mb-1">Полное описание</label><textarea id="edit-fullDescription" rows="4" class="w-full border px-3 py-2 rounded"></textarea></div>
+                <div><label class="block text-sm font-medium text-gray-700 mb-1">Изображения (каждая с новой строки)</label><textarea id="edit-images" rows="3" class="w-full border px-3 py-2 rounded"></textarea></div>
+                <div><label class="block text-sm font-medium text-gray-700 mb-1">Теги</label><div class="flex gap-3"><label><input type="checkbox" id="edit-tag-hit"> Хит</label><label><input type="checkbox" id="edit-tag-new"> Новинка</label><label><input type="checkbox" id="edit-tag-sale"> Распродажа</label></div></div>
+                <div class="flex gap-2"><button type="button" onclick="saveEditedProduct()" class="flex-1 gradient-bg text-white px-4 py-2 rounded-button">Сохранить</button><button type="button" onclick="closeEditModal()" class="flex-1 bg-gray-200 text-gray-800 px-4 py-2 rounded-button">Отмена</button></div>
+              </form>
+            </div>
+          </div>
+
           <div class="bg-white rounded-lg shadow overflow-hidden">
             <table class="min-w-full divide-y divide-gray-200">
-              <thead class="bg-gray-50"><tr><th class="px-2 sm:px-6 py-2 sm:py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider"><input type="checkbox" id="select-all-products" onclick="toggleSelectAll()"></th><th class="px-2 sm:px-6 py-2 sm:py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">Фото</th><th class="px-2 sm:px-6 py-2 sm:py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">Товар</th><th class="px-2 sm:px-6 py-2 sm:py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">Категория</th><th class="px-2 sm:px-6 py-2 sm:py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">Цена</th><th class="px-2 sm:px-6 py-2 sm:py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">Действия</th></tr></thead>
+              <thead class="bg-gray-50"><tr><th class="px-2 sm:px-6 py-2 sm:py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider"><input type="checkbox" id="select-all-products" onclick="toggleSelectAll()"></th><th class="px-2 sm:px-6 py-2 sm:py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">Фото</th><th class="px-2 sm:px-6 py-2 sm:py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">Товар</th><th class="px-2 sm:px-6 py-2 sm:py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">Цена</th><th class="px-2 sm:px-6 py-2 sm:py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">Действия</th></tr></thead>
               <tbody id="admin-product-list" class="bg-white divide-y divide-gray-200"></tbody>
             </table>
           </div>
@@ -1326,9 +1273,7 @@
         brand:'Ballu', 
         price:850, 
         oldPrice:950, 
-        stock:5, 
         area:'до 20', 
-        category:'Настенные', 
         type:'Настенный', 
         inverter:'Нет', 
         heat:'-7', 
@@ -1350,9 +1295,7 @@
         brand:'Electrolux', 
         price:1100, 
         oldPrice:null, 
-        stock:3, 
         area:'21-29', 
-        category:'Настенные', 
         type:'Настенный', 
         inverter:'Да', 
         heat:'-15',
@@ -1373,9 +1316,7 @@
         brand:'LG', 
         price:1450, 
         oldPrice:1650, 
-        stock:2, 
         area:'30-39', 
-        category:'Настенные', 
         type:'Настенный', 
         inverter:'Да', 
         heat:'-10',
@@ -1397,9 +1338,7 @@
         brand:'Mitsubishi', 
         price:2450, 
         oldPrice:null, 
-        stock:1, 
         area:'40-49', 
-        category:'Настенные', 
         type:'Настенный', 
         inverter:'Да', 
         heat:'-20',
@@ -1419,6 +1358,7 @@
     let settings = {};
     let currentProduct = null;
     let currentImageIndex = 0;
+    let lastScrollPosition = 0; // Для возврата к месту в каталоге
 
     function loadProducts() { const s=localStorage.getItem('aircom_products'); if(s) products=JSON.parse(s); }
     function saveProducts() { localStorage.setItem('aircom_products', JSON.stringify(products)); addLog('product','Обновлен список товаров'); }
@@ -1616,7 +1556,13 @@
     }
     
     function renderBrands() { const bl=document.getElementById('brands-list'); if(bl) bl.innerHTML = brands.map(b=>`<button onclick="filterByBrand('${b.name}')" class="brand-chip px-2 sm:px-3 py-1 bg-gray-100 hover:bg-primary hover:text-white rounded-full text-xs transition-colors">${b.name}</button>`).join(''); }
-    function updateBrandSelects() { ['edit-brand','new-brand'].forEach(id=>{ const s=document.getElementById(id); if(s) s.innerHTML='<option value="">Без бренда</option>'+brands.map(b=>`<option value="${b.name}">${b.name}</option>`).join(''); }); }
+    function updateBrandSelects() { 
+      const brandSelects = ['new-brand', 'edit-brand'];
+      brandSelects.forEach(id=>{ 
+        const s=document.getElementById(id); 
+        if(s) s.innerHTML='<option value="">Без бренда</option>'+brands.map(b=>`<option value="${b.name}">${b.name}</option>`).join(''); 
+      }); 
+    }
     function toggleBrandsCollapse() { const bl=document.getElementById('brands-list'), a=document.getElementById('brands-arrow'); if(bl.style.display==='none') { bl.style.display='flex'; a.style.transform='rotate(180deg)'; } else { bl.style.display='none'; a.style.transform='rotate(0deg)'; } }
     function filterByBrand(b) { const si=document.getElementById('search-input'); if(si) { si.value=b; filterProducts(); } }
 
@@ -1642,6 +1588,7 @@
       currentPage = 1;
       renderProducts(filtered);
     }
+    
     function renderProducts(productArray) {
       const grid = document.getElementById('product-grid');
       if (!grid) return;
@@ -1670,8 +1617,11 @@
     }
     function changePage(page) { currentPage = page; filterProducts(); }
 
-    // Отдельная страница товара (для SEO)
+    // Отдельная страница товара (для SEO) с запоминанием позиции
     function openProductPage(id) {
+      // Сохраняем позицию прокрутки
+      lastScrollPosition = window.scrollY;
+      
       window.location.hash = `product-${id}`;
       const p = products.find(p=>p.id===id);
       if (!p) return;
@@ -1690,6 +1640,14 @@
       document.getElementById('catalog').classList.remove('hidden');
       document.getElementById('product-page').classList.add('hidden');
       window.location.hash = '';
+      
+      // Возвращаем на сохраненную позицию
+      setTimeout(() => {
+        window.scrollTo({
+          top: lastScrollPosition,
+          behavior: 'auto'
+        });
+      }, 10);
     }
     
     function renderProductPage() {
@@ -1718,9 +1676,9 @@
       
       // Цвет (только если указан)
       const colorHtml = p.color ? `
-        <div class="mb-4">
-          <span class="font-semibold">Цвет:</span>
-          <span class="ml-2">${p.color}</span>
+        <div class="specs-item">
+          <span class="specs-label">Цвет:</span>
+          <span class="specs-value">${p.color}</span>
         </div>
       ` : '';
       
@@ -1733,17 +1691,25 @@
             <div class="mb-6">${priceHtml}<span class="text-primary text-4xl font-bold">${p.price} BYN</span></div>
             
             <div class="bg-gray-50 p-6 rounded-xl mb-6">
-              <h2 class="font-bold text-lg mb-3">Характеристики:</h2>
-              <ul class="space-y-2">
-                <li><span class="font-medium">Бренд:</span> ${p.brand||'Не указан'}</li>
-                <li><span class="font-medium">Категория:</span> ${p.category}</li>
-                <li><span class="font-medium">Тип:</span> ${p.type}</li>
-                <li><span class="font-medium">Инвертор:</span> ${p.inverter}</li>
-                <li><span class="font-medium">Площадь:</span> ${p.area} м²</li>
-                <li><span class="font-medium">Обогрев зимой:</span> до ${p.heat}°C</li>
-                <li><span class="font-medium">Наличие:</span> ${p.stock > 0 ? 'В наличии' : 'Под заказ'}</li>
+              <h2 class="font-bold text-lg mb-3">Параметры</h2>
+              <div class="specs-table">
+                <span class="specs-label">Бренд:</span>
+                <span class="specs-value">${p.brand||'Не указан'}</span>
+                
+                <span class="specs-label">Тип:</span>
+                <span class="specs-value">${p.type}</span>
+                
+                <span class="specs-label">Инвертор:</span>
+                <span class="specs-value">${p.inverter}</span>
+                
+                <span class="specs-label">Площадь:</span>
+                <span class="specs-value">${p.area} м²</span>
+                
+                <span class="specs-label">Обогрев:</span>
+                <span class="specs-value">до ${p.heat}°C</span>
+                
                 ${colorHtml}
-              </ul>
+              </div>
             </div>
             
             <div class="prose max-w-none mb-6">
@@ -1789,12 +1755,9 @@
     function addToCart(id) {
       const p=products.find(p=>p.id===id);
       if(!p) return;
-      if(p.stock<1) { alert('Товара нет в наличии'); return; }
       const ex=cart.find(i=>i.id===id);
-      if(ex) { if(ex.quantity<p.stock) ex.quantity++; else { alert('Максимальное количество'); return; } }
+      if(ex) { ex.quantity++; }
       else cart.push({...p, quantity:1});
-      p.stock--;
-      saveProducts();
       saveCart(); 
       alert(`${p.name} добавлен в корзину`);
     }
@@ -1984,7 +1947,6 @@ Email: ${e || 'не указан'}
           <td class="px-2 sm:px-4 py-2 whitespace-nowrap"><input type="checkbox" class="product-checkbox" value="${p.id}" ${selectedProducts.has(p.id)?'checked':''} onchange="toggleProductSelection(${p.id})"></td>
           <td class="px-2 sm:px-4 py-2 whitespace-nowrap"><img src="${mainImage}" class="w-6 h-6 sm:w-8 sm:h-8 object-cover rounded"></td>
           <td class="px-2 sm:px-4 py-2"><div class="text-xs font-medium text-gray-900">${p.name}</div><div class="text-xs text-gray-500">${p.brand||''} ${tags}</div></td>
-          <td class="px-2 sm:px-4 py-2 whitespace-nowrap text-xs text-gray-500">${p.category}</td>
           <td class="px-2 sm:px-4 py-2 whitespace-nowrap"><div class="text-xs text-gray-900">${p.price} BYN</div></td>
           <td class="px-2 sm:px-4 py-2 whitespace-nowrap text-xs">
             <button onclick="openEditModal(${p.id})" class="text-blue-600 hover:text-blue-900 mr-1">✏️</button>
@@ -2096,7 +2058,6 @@ Email: ${e || 'не указан'}
         Название:p.name, 
         Бренд:p.brand, 
         Цена:p.price, 
-        Категория:p.category, 
         Тип:p.type, 
         Площадь:p.area, 
         Инвертор:p.inverter, 
@@ -2130,9 +2091,7 @@ Email: ${e || 'не указан'}
             brand:prod['Бренд'], 
             price:parseFloat(prod['Цена']), 
             oldPrice:null,
-            stock:10,
             area:prod['Площадь']||'до 20', 
-            category:prod['Категория']||'Настенные', 
             type:prod['Тип']||'Настенный', 
             inverter:prod['Инвертор']||'Да', 
             heat:prod['Обогрев']||'-15',
@@ -2186,9 +2145,7 @@ Email: ${e || 'не указан'}
         brand:document.getElementById('new-brand').value, 
         price, 
         oldPrice:document.getElementById('new-old-price').value ? parseFloat(document.getElementById('new-old-price').value) : null, 
-        stock:parseInt(document.getElementById('new-stock').value)||10, 
         area:document.getElementById('new-area').value, 
-        category:document.getElementById('new-category').value, 
         type:document.getElementById('new-type').value, 
         inverter:document.getElementById('new-inverter').value, 
         heat:document.getElementById('new-heat').value||'-15', 
@@ -2220,7 +2177,74 @@ Email: ${e || 'не указан'}
     }
     
     function openEditModal(id) {
-      alert('Редактирование доступно в демо-версии');
+      const p = products.find(p => p.id === id);
+      if (!p) return;
+      
+      const modal = document.getElementById('edit-product-modal');
+      
+      // Заполняем поля
+      document.getElementById('edit-product-id').value = p.id;
+      document.getElementById('edit-name').value = p.name;
+      document.getElementById('edit-price').value = p.price;
+      document.getElementById('edit-old-price').value = p.oldPrice || '';
+      document.getElementById('edit-heat').value = p.heat || '-15';
+      document.getElementById('edit-color').value = p.color || '';
+      document.getElementById('edit-description').value = p.description || '';
+      document.getElementById('edit-fullDescription').value = p.fullDescription || '';
+      document.getElementById('edit-images').value = p.images ? p.images.join('\n') : '';
+      
+      // Заполняем selects
+      if (document.getElementById('edit-brand')) {
+        document.getElementById('edit-brand').innerHTML = '<option value="">Без бренда</option>' + brands.map(b=>`<option value="${b.name}" ${b.name===p.brand?'selected':''}>${b.name}</option>`).join('');
+      }
+      if (document.getElementById('edit-type')) document.getElementById('edit-type').value = p.type || 'Настенный';
+      if (document.getElementById('edit-inverter')) document.getElementById('edit-inverter').value = p.inverter || 'Да';
+      if (document.getElementById('edit-area')) document.getElementById('edit-area').value = p.area || 'до 20';
+      
+      // Теги
+      if (document.getElementById('edit-tag-hit')) document.getElementById('edit-tag-hit').checked = p.tags?.includes('хит') || false;
+      if (document.getElementById('edit-tag-new')) document.getElementById('edit-tag-new').checked = p.tags?.includes('новинка') || false;
+      if (document.getElementById('edit-tag-sale')) document.getElementById('edit-tag-sale').checked = p.tags?.includes('распродажа') || false;
+      
+      modal.style.display = 'flex';
+    }
+    
+    function closeEditModal() {
+      document.getElementById('edit-product-modal').style.display = 'none';
+    }
+    
+    function saveEditedProduct() {
+      const id = parseInt(document.getElementById('edit-product-id').value);
+      const p = products.find(p => p.id === id);
+      if (!p) return;
+      
+      p.name = document.getElementById('edit-name').value;
+      p.price = parseFloat(document.getElementById('edit-price').value);
+      p.oldPrice = document.getElementById('edit-old-price').value ? parseFloat(document.getElementById('edit-old-price').value) : null;
+      p.heat = document.getElementById('edit-heat').value || '-15';
+      p.color = document.getElementById('edit-color').value || '';
+      p.description = document.getElementById('edit-description').value;
+      p.fullDescription = document.getElementById('edit-fullDescription').value;
+      
+      const imagesText = document.getElementById('edit-images').value;
+      p.images = imagesText ? imagesText.split('\n').map(s=>s.trim()).filter(s=>s) : ['https://via.placeholder.com/200x150?text=No+Image'];
+      
+      if (document.getElementById('edit-brand')) p.brand = document.getElementById('edit-brand').value;
+      if (document.getElementById('edit-type')) p.type = document.getElementById('edit-type').value;
+      if (document.getElementById('edit-inverter')) p.inverter = document.getElementById('edit-inverter').value;
+      if (document.getElementById('edit-area')) p.area = document.getElementById('edit-area').value;
+      
+      p.tags = [];
+      if (document.getElementById('edit-tag-hit')?.checked) p.tags.push('хит');
+      if (document.getElementById('edit-tag-new')?.checked) p.tags.push('новинка');
+      if (document.getElementById('edit-tag-sale')?.checked) p.tags.push('распродажа');
+      
+      saveProducts();
+      renderAdminProducts();
+      filterProducts();
+      closeEditModal();
+      addLog('product', 'Изменен товар ' + p.name);
+      alert('Товар сохранен');
     }
     
     function deleteProduct(id) { 
@@ -2283,6 +2307,9 @@ Email: ${e || 'не указан'}
       if(db) db.addEventListener('click',()=>{ if(parseInt(li.value)>3) { li.value=parseInt(li.value)-1; calc(); } });
       if(ib) ib.addEventListener('click',()=>{ li.value=parseInt(li.value)+1; calc(); });
       if(dc) dc.addEventListener('change',calc); if(sc) sc.addEventListener('change',calc); calc();
+      
+      // Проверяем все кнопки и функции
+      console.log('Сайт загружен, все функции инициализированы');
     });
 
     loadProducts(); loadBrands(); loadOrders(); loadCart(); loadLogs(); loadVisits(); loadSettings(); filterProducts();
