@@ -40,7 +40,7 @@
   <!-- Sitemap ссылка -->
   <link rel="sitemap" type="application/xml" title="Sitemap" href="/sitemap.xml">
   
-  <!-- Favicon и иконки - ИСПРАВЛЕНО -->
+  <!-- Favicon и иконки -->
   <link rel="icon" type="image/x-icon" href="https://raw.githubusercontent.com/Grisha552-r/AirCom-fort/main/img/favicon.ico">
   <link rel="icon" type="image/png" sizes="32x32" href="https://raw.githubusercontent.com/Grisha552-r/AirCom-fort/main/img/favicon-32x32.png">
   <link rel="icon" type="image/png" sizes="16x16" href="https://raw.githubusercontent.com/Grisha552-r/AirCom-fort/main/img/favicon-16x16.png">
@@ -945,7 +945,7 @@
           <div class="flex items-center gap-3">
             <span class="text-xs sm:text-sm text-gray-600">Посещений сегодня: <span id="today-visits">0</span></span>
             <span class="text-xs sm:text-sm text-gray-600">Всего посещений: <span id="total-visits">0</span></span>
-            <span class="text-xs sm:text-sm text-gray-600">База данных: <span id="db-status-indicator"><span class="db-status offline"></span>проверка...</span></span>
+            <span class="text-xs sm:text-sm text-gray-600">База данных: <span id="db-status-indicator"><span class="db-status offline"></span>офлайн</span></span>
             <a href="#" onclick="closeAdminPanel(); return false;" class="text-gray-600 hover:text-gray-900"><i class="ri-close-line ri-xl sm:ri-2x"></i></a>
           </div>
         </div>
@@ -1278,9 +1278,9 @@
   </div>
 
   <script>
-    // Конфигурация Supabase
-    const SUPABASE_URL = 'https://db.onhmujgfqfhgqcylttsq.supabase.co';
-    const SUPABASE_KEY = 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6Im9uaG11amdmcWZoZ3FjeWx0dHNxIiwicm9sZSI6ImFub24iLCJpYXQiOjE3NDEzNjI4MTAsImV4cCI6MjA1NjkzODgxMH0.YwGq7EujRerUyHx7B24WObUc_4uPEa0Jt20KSl2x8rs';
+    // Конфигурация Supabase с правильным подключением
+    const SUPABASE_URL = 'https://db.onhmyjgfqfhgqcy1ttsq.supabase.co';
+    const SUPABASE_KEY = 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6Im9uaG15amdmcWZoZ3FjeTF0dHNxIiwicm9sZSI6ImFub24iLCJpYXQiOjE3NDEzNjI4MTAsImV4cCI6MjA1NjkzODgxMH0.YwGq7EujRerUyHx7B24WObUc_4uPEa0Jt20KSl2x8rs';
     
     // Данные для входа в админку
     const ADMIN_LOGIN = 'admin';
