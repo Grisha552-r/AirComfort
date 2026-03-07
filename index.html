@@ -144,6 +144,7 @@
   <link href="https://cdnjs.cloudflare.com/ajax/libs/remixicon/4.6.0/remixicon.min.css" rel="stylesheet">
 
   <style>
+    /* Все стили остаются точно такими же */
     * { box-sizing: border-box; }
     body {
       font-family: system-ui, sans-serif;
@@ -1278,9 +1279,9 @@
   </div>
 
   <script>
-    // Конфигурация Supabase с Session Pooler для IPv4
+    // Конфигурация Supabase
     const SUPABASE_URL = 'https://onhmujgfqfhgqcylttsq.supabase.co';
-    const SUPABASE_KEY = 'sb_publishable_pJNteD1y6OiHXYW37D3NRw_Jtq53gT3';
+    const SUPABASE_KEY = 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6Im9uaG11amdmcWZoZ3FjeWx0dHNxIiwicm9sZSI6ImFub24iLCJpYXQiOjE3NDEzNjI4MTAsImV4cCI6MjA1NjkzODgxMH0.YwGq7EujRerUyHx7B24WObUc_4uPEa0Jt20KSl2x8rs';
     
     // Данные для входа в админку
     const ADMIN_LOGIN = 'admin';
@@ -1323,7 +1324,7 @@
         if (dbConnected) {
           dbIndicator.innerHTML = '<span class="db-status online"></span>подключено';
         } else {
-          dbIndicator.innerHTML = '<span class="db-status offline"></span>офлайн';
+          dbIndicator.innerHTML = '<span class="db-status offline"></span>офлайн (работаем локально)';
         }
       }
     }
@@ -1359,8 +1360,13 @@
         });
         
         if (response.ok) {
-          products = await response.json();
-          filterProducts();
+          const data = await response.json();
+          if (data && data.length > 0) {
+            products = data;
+          } else {
+            // Если база пустая, загружаем демо-данные
+            loadDemoProducts();
+          }
         } else {
           console.error('Ошибка загрузки товаров');
           loadDemoProducts();
@@ -1368,6 +1374,8 @@
       } catch (error) {
         console.error('Ошибка соединения с Supabase:', error);
         loadDemoProducts();
+      } finally {
+        filterProducts();
       }
     }
     
@@ -1376,7 +1384,6 @@
         { id:1, name:'Ballu BSO-07HN1', brand:'Ballu', price:850, old_price:950, area:'до 20', type:'Настенный', inverter:'Нет', heat:'-7', color:'белый', specs:['Мощность охлаждения: 2.1 кВт', 'Уровень шума: 23 дБ'], images:['https://via.placeholder.com/600x400?text=Ballu'], description:'Надежный кондиционер', tags:['хит'] },
         { id:2, name:'Electrolux EACS-07HAT/N3', brand:'Electrolux', price:1100, area:'21-29', type:'Настенный', inverter:'Да', heat:'-15', color:'серебристый', specs:['Мощность охлаждения: 2.5 кВт', 'Wi-Fi управление'], images:['https://via.placeholder.com/600x400?text=Electrolux'], description:'Инверторная модель', tags:['новинка'] }
       ];
-      filterProducts();
     }
     
     async function loadBrands() {
@@ -1389,7 +1396,12 @@
         });
         
         if (response.ok) {
-          brands = await response.json();
+          const data = await response.json();
+          if (data && data.length > 0) {
+            brands = data;
+          } else {
+            brands = [{ id:1, name:'Ballu' }, { id:2, name:'Electrolux' }, { id:3, name:'LG' }];
+          }
         } else {
           brands = [{ id:1, name:'Ballu' }, { id:2, name:'Electrolux' }, { id:3, name:'LG' }];
         }
@@ -1622,6 +1634,25 @@
       
       if (confirm(`Удалить ${selectedProducts.size} товар(ов)?`)) {
         const ids = Array.from(selectedProducts);
+        
+        // Удаляем из базы если есть соединение
+        if (dbConnected) {
+          ids.forEach(async (id) => {
+            try {
+              await fetch(`${SUPABASE_URL}/rest/v1/products?id=eq.${id}`, {
+                method: 'DELETE',
+                headers: {
+                  'apikey': SUPABASE_KEY,
+                  'Authorization': `Bearer ${SUPABASE_KEY}`
+                }
+              });
+            } catch (error) {
+              console.error('Ошибка удаления из БД:', error);
+            }
+          });
+        }
+        
+        // Удаляем локально
         products = products.filter(p => !ids.includes(p.id));
         selectedProducts.clear();
         renderAdminProducts();
@@ -1637,33 +1668,115 @@
     function openEditModal(id) {
       const product = products.find(p => p.id === id);
       if (!product) return;
-      alert('Редактирование будет доступно в следующем обновлении');
+      
+      // Заполняем форму редактирования
+      document.getElementById('edit-product-id').value = product.id;
+      document.getElementById('edit-name').value = product.name;
+      document.getElementById('edit-price').value = product.price;
+      document.getElementById('edit-old-price').value = product.old_price || '';
+      document.getElementById('edit-brand').value = product.brand || '';
+      document.getElementById('edit-type').value = product.type || 'Настенный';
+      document.getElementById('edit-inverter').value = product.inverter || 'Да';
+      document.getElementById('edit-area').value = product.area || 'до 20';
+      document.getElementById('edit-heat').value = product.heat || '-15';
+      document.getElementById('edit-color').value = product.color || '';
+      document.getElementById('edit-specs').value = product.specs ? product.specs.join('\n') : '';
+      document.getElementById('edit-description').value = product.description || '';
+      document.getElementById('edit-fullDescription').value = product.full_description || '';
+      document.getElementById('edit-images').value = product.images ? product.images.join('\n') : '';
+      
+      // Теги
+      document.getElementById('edit-tag-hit').checked = product.tags?.includes('хит') || false;
+      document.getElementById('edit-tag-new').checked = product.tags?.includes('новинка') || false;
+      document.getElementById('edit-tag-sale').checked = product.tags?.includes('распродажа') || false;
+      
+      // Обновляем список брендов
+      updateBrandSelectsForEdit();
+      
+      document.getElementById('edit-product-modal').style.display = 'flex';
     }
     
-    async function deleteProduct(id) {
-      if (!confirm('Удалить товар?')) return;
+    function updateBrandSelectsForEdit() {
+      const editBrand = document.getElementById('edit-brand');
+      if (editBrand) {
+        editBrand.innerHTML = '<option value="">Без бренда</option>' + 
+          brands.map(b => `<option value="${b.name}">${b.name}</option>`).join('');
+      }
+    }
+    
+    function closeEditModal() {
+      document.getElementById('edit-product-modal').style.display = 'none';
+    }
+    
+    async function saveEditedProduct() {
+      const id = parseInt(document.getElementById('edit-product-id').value);
+      const productIndex = products.findIndex(p => p.id === id);
+      if (productIndex === -1) return;
+      
+      const imagesText = document.getElementById('edit-images').value;
+      const images = imagesText ? imagesText.split('\n').map(s => s.trim()).filter(s => s) : ['https://via.placeholder.com/200x150?text=No+Image'];
+      
+      const specsText = document.getElementById('edit-specs').value;
+      const specs = specsText ? specsText.split('\n').map(s => s.trim()).filter(s => s) : [];
+      
+      const tags = [];
+      if (document.getElementById('edit-tag-hit').checked) tags.push('хит');
+      if (document.getElementById('edit-tag-new').checked) tags.push('новинка');
+      if (document.getElementById('edit-tag-sale').checked) tags.push('распродажа');
+      
+      const updatedProduct = {
+        ...products[productIndex],
+        name: document.getElementById('edit-name').value,
+        price: parseFloat(document.getElementById('edit-price').value),
+        old_price: document.getElementById('edit-old-price').value ? parseFloat(document.getElementById('edit-old-price').value) : null,
+        brand: document.getElementById('edit-brand').value,
+        type: document.getElementById('edit-type').value,
+        inverter: document.getElementById('edit-inverter').value,
+        area: document.getElementById('edit-area').value,
+        heat: document.getElementById('edit-heat').value || '-15',
+        color: document.getElementById('edit-color').value || '',
+        specs: specs,
+        description: document.getElementById('edit-description').value,
+        full_description: document.getElementById('edit-fullDescription').value,
+        images: images,
+        tags: tags
+      };
       
       try {
         if (dbConnected) {
           const response = await fetch(`${SUPABASE_URL}/rest/v1/products?id=eq.${id}`, {
-            method: 'DELETE',
+            method: 'PATCH',
             headers: {
               'apikey': SUPABASE_KEY,
-              'Authorization': `Bearer ${SUPABASE_KEY}`
-            }
+              'Authorization': `Bearer ${SUPABASE_KEY}`,
+              'Content-Type': 'application/json',
+              'Prefer': 'return=representation'
+            },
+            body: JSON.stringify(updatedProduct)
           });
           
-          if (!response.ok) {
-            throw new Error('Ошибка удаления из БД');
+          if (response.ok) {
+            const savedProduct = await response.json();
+            products[productIndex] = savedProduct;
+          } else {
+            products[productIndex] = updatedProduct;
           }
+        } else {
+          products[productIndex] = updatedProduct;
         }
-      } catch (error) {
-        console.error('Error:', error);
-      } finally {
-        products = products.filter(p => p.id !== id);
+        
+        alert('Товар успешно обновлен!');
+        closeEditModal();
         renderAdminProducts();
         filterProducts();
-        addLog('product', `Удален товар ID: ${id}`);
+        addLog('product', 'Обновлен товар ' + updatedProduct.name);
+      } catch (error) {
+        console.error('Error:', error);
+        products[productIndex] = updatedProduct;
+        alert('Товар обновлен локально (ошибка соединения с БД)');
+        closeEditModal();
+        renderAdminProducts();
+        filterProducts();
       }
     }
     
@@ -1795,6 +1908,33 @@
       } catch (error) {
         console.error('Error:', error);
         alert('Ошибка при сохранении товара');
+      }
+    }
+    
+    async function deleteProduct(id) {
+      if (!confirm('Удалить товар?')) return;
+      
+      try {
+        if (dbConnected) {
+          const response = await fetch(`${SUPABASE_URL}/rest/v1/products?id=eq.${id}`, {
+            method: 'DELETE',
+            headers: {
+              'apikey': SUPABASE_KEY,
+              'Authorization': `Bearer ${SUPABASE_KEY}`
+            }
+          });
+          
+          if (!response.ok) {
+            throw new Error('Ошибка удаления из БД');
+          }
+        }
+      } catch (error) {
+        console.error('Error:', error);
+      } finally {
+        products = products.filter(p => p.id !== id);
+        renderAdminProducts();
+        filterProducts();
+        addLog('product', `Удален товар ID: ${id}`);
       }
     }
     
