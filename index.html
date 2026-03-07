@@ -356,6 +356,99 @@
     .success-message { background-color: #d1fae5; color: #065f46; }
     .error-message { background-color: #fee2e2; color: #b91c1c; }
 
+    .questionnaire-modal {
+      display: none;
+      position: fixed;
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: 100%;
+      background-color: rgba(0,0,0,0.7);
+      z-index: 1001;
+      justify-content: center;
+      align-items: center;
+      padding: 1rem;
+    }
+
+    .questionnaire-content {
+      background: white;
+      padding: 2rem;
+      border-radius: 16px;
+      max-width: 500px;
+      width: 100%;
+      max-height: 90vh;
+      overflow-y: auto;
+    }
+
+    .close-questionnaire {
+      position: absolute;
+      top: 1rem;
+      right: 1rem;
+      background: none;
+      border: none;
+      font-size: 1.5rem;
+      cursor: pointer;
+      color: #666;
+    }
+    .close-questionnaire:hover { color: #000; }
+
+    .progress-bar {
+      height: 6px;
+      background-color: #e5e7eb;
+      border-radius: 3px;
+      margin-bottom: 2rem;
+      overflow: hidden;
+    }
+    .progress-fill {
+      height: 100%;
+      background: #226160;
+      border-radius: 3px;
+      transition: width 0.3s ease;
+    }
+
+    .question-title {
+      font-size: 1.5rem;
+      font-weight: bold;
+      margin-bottom: 2rem;
+      color: #1f2937;
+      text-align: center;
+    }
+    .option-grid {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 1rem;
+      margin-bottom: 2rem;
+    }
+
+    .option-button {
+      padding: 1.5rem 1rem;
+      border: 2px solid #e5e7eb;
+      border-radius: 12px;
+      text-align: center;
+      cursor: pointer;
+      transition: all 0.3s ease;
+      background: white;
+    }
+    .option-button:hover {
+      border-color: #226160;
+      transform: translateY(-2px);
+    }
+    .option-button.selected {
+      border-color: #226160;
+      background-color: #f0f9f9;
+      box-shadow: 0 4px 12px rgba(34, 97, 96, 0.2);
+    }
+
+    .navigation-buttons {
+      display: flex;
+      justify-content: space-between;
+      gap: 1rem;
+    }
+    .questionnaire-form { display: none; }
+    .questionnaire-form.active { display: block; }
+    .question-step { display: none; }
+    .question-step.active { display: block; }
+
     .faq-item { border-bottom: 1px solid #e5e7eb; overflow: hidden; }
     .faq-question {
       padding: 1.5rem 0;
@@ -578,19 +671,13 @@
       display: block;
     }
 
-    /* Загрузчик */
-    .loader {
-      border: 4px solid #f3f3f3;
-      border-top: 4px solid #4CAF50;
-      border-radius: 50%;
-      width: 40px;
-      height: 40px;
-      animation: spin 1s linear infinite;
-      margin: 20px auto;
-    }
-    @keyframes spin {
-      0% { transform: rotate(0deg); }
-      100% { transform: rotate(360deg); }
+    .admin-login-error {
+      color: #ef4444;
+      font-size: 0.875rem;
+      margin-top: 0.5rem;
+      margin-bottom: 0.5rem;
+      text-align: center;
+      display: none;
     }
 
     @media (max-width: 768px) {
@@ -1165,6 +1252,7 @@
         <h3 class="text-lg sm:text-xl font-bold mb-3 sm:mb-4">Вход в админ-панель</h3>
         <input type="text" id="admin-login-input" placeholder="Логин" class="w-full border px-3 sm:px-4 py-2 sm:py-3 rounded mb-2 sm:mb-3 text-sm sm:text-base">
         <input type="password" id="admin-pass-input" placeholder="Пароль" class="w-full border px-3 sm:px-4 py-2 sm:py-3 rounded mb-3 sm:mb-4 text-sm sm:text-base">
+        <div id="admin-login-error" class="admin-login-error">Неверный логин или пароль</div>
         <div class="flex gap-2"><button onclick="loginAdmin()" class="flex-1 gradient-bg text-white px-3 sm:px-4 py-2 sm:py-3 rounded-button text-sm sm:text-base">Войти</button><button onclick="document.getElementById('admin-login-modal').style.display='none'" class="flex-1 bg-gray-200 text-gray-800 px-3 sm:px-4 py-2 sm:py-3 rounded-button text-sm sm:text-base">Отмена</button></div>
       </div>
     </div>
@@ -1293,74 +1381,78 @@
     // Конфигурация Supabase
     const SUPABASE_URL = 'https://db.onhmujgfqfhgqcylttsq.supabase.co';
     const SUPABASE_KEY = 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6Im9uaG11amdmcWZoZ3FjeWx0dHNxIiwicm9sZSI6ImFub24iLCJpYXQiOjE3NDEzNjI4MTAsImV4cCI6MjA1NjkzODgxMH0.YwGq7EujRerUyHx7B24WObUc_4uPEa0Jt20KSl2x8rs';
+    
+    // Данные для входа в админку
+    const ADMIN_LOGIN = 'admin';
+    const ADMIN_PASSWORD = 'admin123';
 
-    // Мобильное меню
-    function toggleMobileMenu() { document.getElementById('mobileMenu').classList.toggle('active'); }
-    function toggleMobileFilters() { document.getElementById('filterSidebar').classList.toggle('mobile-visible'); }
-    function applyFilters() { filterProducts(); if (window.innerWidth <= 768) document.getElementById('filterSidebar').classList.remove('mobile-visible'); }
-
-    function toggleFaq(id) {
-      const answer = document.querySelectorAll('.faq-answer')[id-1];
-      const icon = document.querySelectorAll('.faq-icon')[id-1];
-      const isOpen = answer.classList.contains('open');
-      document.querySelectorAll('.faq-answer').forEach(el => el.classList.remove('open'));
-      document.querySelectorAll('.faq-icon').forEach(el => el.classList.remove('open'));
-      if (!isOpen) { answer.classList.add('open'); icon.classList.add('open'); }
-    }
-
-    // Функция обновления мета-тегов из настроек
-    function updateMetaTags(settings) {
-      if (settings.siteSeo) {
-        document.querySelector('meta[name="description"]').setAttribute('content', settings.siteSeo);
-      }
-      if (settings.siteTitle) {
-        document.title = settings.siteTitle;
-      } else if (settings.siteName) {
-        document.title = settings.siteName + ' - Установка кондиционеров в Гомеле';
-      }
-    }
-
-    // Данные
+    // Глобальные переменные
     let products = [];
     let brands = [];
     let cart = JSON.parse(localStorage.getItem('aircom_cart') || '[]');
     let orders = [];
-    let adminCredentials = { login: 'admin', password: 'admin123' };
     let selectedProducts = new Set();
-    let actionLogs = [];
+    let actionLogs = JSON.parse(localStorage.getItem('aircom_logs') || '[]');
     let currentPage = 1;
     let itemsPerPage = 6;
-    let visitCount = 0, totalVisits = 0;
-    let settings = {};
+    let visitCount = 0;
+    let totalVisits = 0;
+    let settings = JSON.parse(localStorage.getItem('aircom_settings') || '{}');
     let currentProduct = null;
     let currentImageIndex = 0;
     let lastScrollPosition = 0;
     let currentTab = 'specs';
-    let adminToken = localStorage.getItem('admin_token');
 
-    // Загрузка данных из Supabase
+    // Инициализация при загрузке страницы
+    document.addEventListener('DOMContentLoaded', function() {
+      loadProducts();
+      loadBrands();
+      loadVisits();
+      updateCartBadge();
+      updateMetaTags(settings);
+      setupCalculator();
+      
+      // Проверяем, был ли админ уже залогинен
+      if (localStorage.getItem('admin_logged_in') === 'true') {
+        document.getElementById('admin-panel').style.display = 'block';
+        loadOrders();
+      }
+      
+      console.log('Сайт загружен, все функции инициализированы');
+    });
+
+    // ========== РАБОТА С SUPABASE ==========
+    
     async function loadProducts() {
       try {
-        showLoader('product-grid');
         const response = await fetch(`${SUPABASE_URL}/rest/v1/products?select=*&status=eq.active`, {
           headers: {
             'apikey': SUPABASE_KEY,
             'Authorization': `Bearer ${SUPABASE_KEY}`
           }
         });
+        
         if (response.ok) {
           products = await response.json();
           filterProducts();
         } else {
-          console.error('Failed to load products');
+          console.error('Ошибка загрузки товаров');
+          loadDemoProducts();
         }
       } catch (error) {
-        console.error('Error loading products:', error);
-      } finally {
-        hideLoader('product-grid');
+        console.error('Ошибка соединения с Supabase:', error);
+        loadDemoProducts();
       }
     }
-
+    
+    function loadDemoProducts() {
+      products = [
+        { id:1, name:'Ballu BSO-07HN1', brand:'Ballu', price:850, oldPrice:950, area:'до 20', type:'Настенный', inverter:'Нет', heat:'-7', color:'белый', specs:['Мощность охлаждения: 2.1 кВт', 'Уровень шума: 23 дБ'], images:['https://via.placeholder.com/600x400?text=Ballu'], description:'Надежный кондиционер', tags:['хит'], status:'active' },
+        { id:2, name:'Electrolux EACS-07HAT/N3', brand:'Electrolux', price:1100, area:'21-29', type:'Настенный', inverter:'Да', heat:'-15', color:'серебристый', specs:['Мощность охлаждения: 2.5 кВт', 'Wi-Fi управление'], images:['https://via.placeholder.com/600x400?text=Electrolux'], description:'Инверторная модель', tags:['новинка'], status:'active' }
+      ];
+      filterProducts();
+    }
+    
     async function loadBrands() {
       try {
         const response = await fetch(`${SUPABASE_URL}/rest/v1/brands?select=*`, {
@@ -1369,134 +1461,475 @@
             'Authorization': `Bearer ${SUPABASE_KEY}`
           }
         });
+        
         if (response.ok) {
           brands = await response.json();
-          renderBrands();
-          updateBrandSelects();
+        } else {
+          brands = [{ id:1, name:'Ballu' }, { id:2, name:'Electrolux' }, { id:3, name:'LG' }];
         }
+        renderBrands();
+        updateBrandSelects();
       } catch (error) {
-        console.error('Error loading brands:', error);
+        console.error('Ошибка загрузки брендов:', error);
+        brands = [{ id:1, name:'Ballu' }, { id:2, name:'Electrolux' }, { id:3, name:'LG' }];
+        renderBrands();
+        updateBrandSelects();
       }
     }
-
+    
     async function loadOrders() {
-      if (!adminToken) return;
+      if (localStorage.getItem('admin_logged_in') !== 'true') return;
+      
       try {
-        const response = await fetch(`${SUPABASE_URL}/rest/v1/orders?select=*,customer:customers(*),items:order_items(*,product:products(*))`, {
-          headers: {
-            'apikey': SUPABASE_KEY,
-            'Authorization': `Bearer ${adminToken}`
-          }
-        });
-        if (response.ok) {
-          orders = await response.json();
-          updateOrderStats();
-        }
-      } catch (error) {
-        console.error('Error loading orders:', error);
-      }
-    }
-
-    async function loadSettings() {
-      try {
-        const response = await fetch(`${SUPABASE_URL}/rest/v1/settings?select=*`, {
+        const response = await fetch(`${SUPABASE_URL}/rest/v1/orders?select=*&order=date.desc`, {
           headers: {
             'apikey': SUPABASE_KEY,
             'Authorization': `Bearer ${SUPABASE_KEY}`
           }
         });
+        
         if (response.ok) {
-          const settingsArray = await response.json();
-          settings = settingsArray.reduce((acc, item) => {
-            acc[item.key] = item.value;
-            return acc;
-          }, {});
-          updateMetaTags(settings);
+          orders = await response.json();
+          renderAdminOrders();
+          updateOrderStats();
         }
       } catch (error) {
-        console.error('Error loading settings:', error);
+        console.error('Ошибка загрузки заказов:', error);
       }
     }
 
-    function showLoader(elementId) {
-      const element = document.getElementById(elementId);
-      if (element) {
-        element.innerHTML = '<div class="loader"></div>';
-      }
-    }
-
-    function hideLoader(elementId) {
-      // Loader будет заменен при рендеринге
-    }
-
-    function saveCart() {
-      localStorage.setItem('aircom_cart', JSON.stringify(cart));
-      updateCartBadge();
-    }
-
-    function updateCartBadge() {
-      const c = cart.reduce((a, i) => a + i.quantity, 0);
-      const b = document.getElementById('cart-count');
-      if (b) {
-        if (c > 0) {
-          b.classList.remove('hidden');
-          b.textContent = c;
+    // ========== АДМИН-ПАНЕЛЬ ==========
+    
+    function loginAdmin() {
+      const login = document.getElementById('admin-login-input').value;
+      const password = document.getElementById('admin-pass-input').value;
+      const errorElement = document.getElementById('admin-login-error');
+      
+      if (login === ADMIN_LOGIN && password === ADMIN_PASSWORD) {
+        localStorage.setItem('admin_logged_in', 'true');
+        document.getElementById('admin-login-modal').style.display = 'none';
+        document.getElementById('admin-panel').style.display = 'block';
+        if (errorElement) errorElement.style.display = 'none';
+        loadOrders();
+        switchAdminTab('products');
+        addLog('user', 'Вход в админ-панель');
+      } else {
+        if (errorElement) {
+          errorElement.style.display = 'block';
         } else {
-          b.classList.add('hidden');
+          alert('Неверный логин или пароль');
         }
       }
     }
-
-    function updateOrderStats() {
-      const to = document.getElementById('total-orders');
-      const ta = document.getElementById('total-amount');
-      if (to && ta) {
-        to.textContent = orders.length;
-        ta.textContent = orders.reduce((a, o) => a + o.total, 0);
+    
+    function logoutAdmin() {
+      localStorage.removeItem('admin_logged_in');
+      document.getElementById('admin-panel').style.display = 'none';
+      addLog('user', 'Выход из админ-панели');
+    }
+    
+    function closeAdminPanel() {
+      document.getElementById('admin-panel').style.display = 'none';
+    }
+    
+    function switchAdminTab(tab) {
+      const tabs = ['products', 'orders', 'brands', 'reports', 'settings', 'logs'];
+      
+      tabs.forEach(t => {
+        const el = document.getElementById(`admin-${t}-tab`);
+        const btn = document.getElementById(`tab-${t}-btn`);
+        
+        if (el) el.classList.add('hidden');
+        if (btn) {
+          btn.classList.remove('text-primary', 'border-b-2', 'border-primary');
+          btn.classList.add('text-gray-500');
+        }
+      });
+      
+      const currentEl = document.getElementById(`admin-${tab}-tab`);
+      const currentBtn = document.getElementById(`tab-${tab}-btn`);
+      
+      if (currentEl) currentEl.classList.remove('hidden');
+      if (currentBtn) {
+        currentBtn.classList.remove('text-gray-500');
+        currentBtn.classList.add('text-primary', 'border-b-2', 'border-primary');
+      }
+      
+      if (tab === 'products') renderAdminProducts();
+      if (tab === 'orders') renderAdminOrders();
+      if (tab === 'brands') renderAdminBrands();
+      if (tab === 'logs') renderLogs();
+    }
+    
+    function renderAdminProducts() {
+      const list = document.getElementById('admin-product-list');
+      if (!list) return;
+      
+      let html = '';
+      products.forEach(p => {
+        const tags = p.tags?.map(t => `<span class="text-xs bg-gray-100 px-1 py-0.5 rounded ml-1">${t}</span>`).join('') || '';
+        const mainImage = p.images && p.images.length > 0 ? p.images[0] : 'https://via.placeholder.com/200x150?text=No+Image';
+        
+        html += `<tr>
+          <td class="px-2 sm:px-4 py-2 whitespace-nowrap">
+            <input type="checkbox" class="product-checkbox" value="${p.id}" onchange="toggleProductSelection(${p.id})">
+          </td>
+          <td class="px-2 sm:px-4 py-2 whitespace-nowrap">
+            <img src="${mainImage}" class="w-6 h-6 sm:w-8 sm:h-8 object-cover rounded">
+          </td>
+          <td class="px-2 sm:px-4 py-2">
+            <div class="text-xs font-medium text-gray-900">${p.name}</div>
+            <div class="text-xs text-gray-500">${p.brand || ''} ${tags}</div>
+          </td>
+          <td class="px-2 sm:px-4 py-2 whitespace-nowrap">
+            <div class="text-xs text-gray-900">${p.price} BYN</div>
+          </td>
+          <td class="px-2 sm:px-4 py-2 whitespace-nowrap text-xs">
+            <button onclick="openEditModal(${p.id})" class="text-blue-600 hover:text-blue-900 mr-1">✏️</button>
+            <button onclick="deleteProduct(${p.id})" class="text-red-600 hover:text-red-900">🗑️</button>
+          </td>
+        </tr>`;
+      });
+      
+      list.innerHTML = html || '<tr><td colspan="5" class="text-center py-4">Нет товаров</td></tr>';
+    }
+    
+    function renderAdminOrders() {
+      const list = document.getElementById('admin-orders-list');
+      if (!list) return;
+      
+      if (orders.length === 0) {
+        list.innerHTML = '<p class="text-gray-500 text-center py-4">Нет заказов</p>';
+        return;
+      }
+      
+      let html = '';
+      orders.forEach(o => {
+        const statusClass = o.status === 'новый' ? 'status-new' : 
+                            o.status === 'в обработке' ? 'status-processing' : 
+                            o.status === 'выполнен' ? 'status-completed' : 'status-cancelled';
+        
+        html += `<div class="border p-3 rounded-lg hover:shadow-md">
+          <div class="flex justify-between items-start mb-1">
+            <span class="font-bold text-xs">Заказ #${o.id}</span>
+            <span class="text-xs text-gray-500">${new Date(o.date).toLocaleString()}</span>
+          </div>
+          <div class="grid grid-cols-2 gap-1 text-xs">
+            <div><span class="font-medium">Клиент:</span> ${o.customer_name}</div>
+            <div><span class="font-medium">Тел:</span> ${o.customer_phone}</div>
+            <div class="col-span-2"><span class="font-medium">Адрес:</span> ${o.customer_address}</div>
+            <div><span class="font-medium">Сумма:</span> ${o.total} BYN</div>
+            <div><span class="font-medium">Оплата:</span> ${o.payment_method}</div>
+          </div>
+          <div class="mt-2 flex gap-2">
+            <span class="px-2 py-1 rounded text-xs ${statusClass}">${o.status}</span>
+            <select onchange="updateOrderStatus(${o.id}, this.value)" class="border rounded px-1 py-0.5 text-xs">
+              <option value="новый" ${o.status === 'новый' ? 'selected' : ''}>Новый</option>
+              <option value="в обработке" ${o.status === 'в обработке' ? 'selected' : ''}>В обработке</option>
+              <option value="выполнен" ${o.status === 'выполнен' ? 'selected' : ''}>Выполнен</option>
+              <option value="отменен" ${o.status === 'отменен' ? 'selected' : ''}>Отменен</option>
+            </select>
+          </div>
+        </div>`;
+      });
+      
+      list.innerHTML = html;
+    }
+    
+    function updateOrderStatus(id, status) {
+      const order = orders.find(o => o.id === id);
+      if (order) {
+        order.status = status;
+        renderAdminOrders();
+        addLog('order', `Статус заказа #${id} изменен на ${status}`);
       }
     }
-
-    function renderBrands() {
-      const bl = document.getElementById('brands-list');
-      if (bl) {
-        bl.innerHTML = brands.map(b => 
-          `<button onclick="filterByBrand('${b.name}')" class="brand-chip px-2 sm:px-3 py-1 bg-gray-100 hover:bg-primary hover:text-white rounded-full text-xs transition-colors">${b.name}</button>`
-        ).join('');
+    
+    function renderAdminBrands() {
+      const list = document.getElementById('brands-admin-list');
+      if (!list) return;
+      
+      list.innerHTML = brands.map(b => `
+        <div class="flex justify-between items-center p-2 border rounded mb-2">
+          <span class="text-xs sm:text-sm">${b.name}</span>
+          <div>
+            <button onclick="editBrand(${b.id})" class="text-blue-600 mr-2 text-xs">✏️</button>
+            <button onclick="deleteBrand(${b.id})" class="text-red-600 text-xs">🗑️</button>
+          </div>
+        </div>
+      `).join('');
+    }
+    
+    function renderLogs() {
+      const list = document.getElementById('logs-list');
+      if (!list) return;
+      
+      list.innerHTML = actionLogs.map(l => `
+        <div class="text-xs border-b pb-1">
+          <span class="text-gray-500">${l.time}</span> - 
+          <span class="font-medium">${l.type}:</span> ${l.action}
+        </div>
+      `).join('') || '<p class="text-gray-500 text-xs">Нет записей</p>';
+    }
+    
+    function filterLogs() {
+      renderLogs();
+    }
+    
+    function toggleProductSelection(id) {
+      if (selectedProducts.has(id)) {
+        selectedProducts.delete(id);
+      } else {
+        selectedProducts.add(id);
       }
     }
-
-    function updateBrandSelects() {
-      const brandSelects = ['new-brand', 'edit-brand'];
-      brandSelects.forEach(id => {
-        const s = document.getElementById(id);
-        if (s) {
-          s.innerHTML = '<option value="">Без бренда</option>' + 
-            brands.map(b => `<option value="${b.name}">${b.name}</option>`).join('');
+    
+    function toggleSelectAll() {
+      const checkboxes = document.querySelectorAll('.product-checkbox');
+      const selectAll = document.getElementById('select-all-products').checked;
+      
+      checkboxes.forEach(cb => {
+        cb.checked = selectAll;
+        const id = parseInt(cb.value);
+        if (selectAll) {
+          selectedProducts.add(id);
+        } else {
+          selectedProducts.delete(id);
         }
       });
     }
-
-    function toggleBrandsCollapse() {
-      const bl = document.getElementById('brands-list');
-      const a = document.getElementById('brands-arrow');
-      if (bl.style.display === 'none') {
-        bl.style.display = 'flex';
-        a.style.transform = 'rotate(180deg)';
-      } else {
-        bl.style.display = 'none';
-        a.style.transform = 'rotate(0deg)';
-      }
+    
+    function selectAllProducts() {
+      document.getElementById('select-all-products').checked = true;
+      toggleSelectAll();
     }
-
-    function filterByBrand(b) {
-      const si = document.getElementById('search-input');
-      if (si) {
-        si.value = b;
+    
+    function deselectAllProducts() {
+      document.getElementById('select-all-products').checked = false;
+      toggleSelectAll();
+    }
+    
+    function deleteSelectedProducts() {
+      if (selectedProducts.size === 0) {
+        alert('Выберите товары');
+        return;
+      }
+      
+      if (confirm(`Удалить ${selectedProducts.size} товар(ов)?`)) {
+        const ids = Array.from(selectedProducts);
+        products = products.filter(p => !ids.includes(p.id));
+        selectedProducts.clear();
+        renderAdminProducts();
         filterProducts();
+        addLog('product', `Удалено товаров: ${ids.length}`);
       }
     }
+    
+    function filterAdminProducts() {
+      renderAdminProducts();
+    }
+    
+    function openEditModal(id) {
+      const product = products.find(p => p.id === id);
+      if (!product) return;
+      alert('Редактирование будет доступно в следующем обновлении');
+    }
+    
+    async function deleteProduct(id) {
+      if (!confirm('Удалить товар?')) return;
+      
+      try {
+        const response = await fetch(`${SUPABASE_URL}/rest/v1/products?id=eq.${id}`, {
+          method: 'DELETE',
+          headers: {
+            'apikey': SUPABASE_KEY,
+            'Authorization': `Bearer ${SUPABASE_KEY}`
+          }
+        });
+        
+        if (response.ok) {
+          products = products.filter(p => p.id !== id);
+          renderAdminProducts();
+          filterProducts();
+          addLog('product', `Удален товар ID: ${id}`);
+          alert('Товар удален');
+        } else {
+          alert('Ошибка при удалении');
+        }
+      } catch (error) {
+        console.error('Error:', error);
+        alert('Ошибка соединения с базой данных');
+      }
+    }
+    
+    function editBrand(id) {
+      const brand = brands.find(b => b.id === id);
+      if (!brand) return;
+      
+      const newName = prompt('Новое название:', brand.name);
+      if (newName) {
+        brand.name = newName;
+        renderAdminBrands();
+        renderBrands();
+        updateBrandSelects();
+        addLog('brand', 'Изменен бренд ' + newName);
+      }
+    }
+    
+    function deleteBrand(id) {
+      if (confirm('Удалить бренд?')) {
+        brands = brands.filter(b => b.id !== id);
+        renderAdminBrands();
+        renderBrands();
+        updateBrandSelects();
+        addLog('brand', 'Удален бренд');
+      }
+    }
+    
+    function addBrand() {
+      const name = prompt('Название бренда:');
+      if (!name) return;
+      
+      const newId = Math.max(...brands.map(b => b.id), 0) + 1;
+      brands.push({ id: newId, name: name });
+      renderAdminBrands();
+      renderBrands();
+      updateBrandSelects();
+      addLog('brand', 'Добавлен бренд ' + name);
+    }
+    
+    function openAddProductForm() {
+      document.getElementById('add-product-form').classList.remove('hidden');
+      updateBrandSelects();
+    }
+    
+    function closeAddProductForm() {
+      document.getElementById('add-product-form').classList.add('hidden');
+    }
+    
+    async function saveNewProduct() {
+      const name = document.getElementById('new-name').value;
+      if (!name) { alert('Введите название'); return; }
+      
+      const price = parseFloat(document.getElementById('new-price').value);
+      if (isNaN(price)) { alert('Введите цену'); return; }
+      
+      const imagesText = document.getElementById('new-images').value;
+      const images = imagesText ? imagesText.split('\n').map(s => s.trim()).filter(s => s) : ['https://via.placeholder.com/200x150?text=New'];
+      
+      const specsText = document.getElementById('new-specs').value;
+      const specs = specsText ? specsText.split('\n').map(s => s.trim()).filter(s => s) : [];
+      
+      const tags = [];
+      if (document.getElementById('new-tag-hit').checked) tags.push('хит');
+      if (document.getElementById('new-tag-new').checked) tags.push('новинка');
+      if (document.getElementById('new-tag-sale').checked) tags.push('распродажа');
+      
+      const productData = {
+        name: name,
+        brand: document.getElementById('new-brand').value,
+        price: price,
+        oldPrice: document.getElementById('new-old-price').value ? parseFloat(document.getElementById('new-old-price').value) : null,
+        area: document.getElementById('new-area').value,
+        type: document.getElementById('new-type').value,
+        inverter: document.getElementById('new-inverter').value,
+        heat: document.getElementById('new-heat').value || '-15',
+        color: document.getElementById('new-color').value || '',
+        specs: specs,
+        images: images,
+        description: document.getElementById('new-description').value,
+        fullDescription: document.getElementById('new-fullDescription').value,
+        tags: tags,
+        status: 'active'
+      };
+      
+      try {
+        const response = await fetch(`${SUPABASE_URL}/rest/v1/products`, {
+          method: 'POST',
+          headers: {
+            'apikey': SUPABASE_KEY,
+            'Authorization': `Bearer ${SUPABASE_KEY}`,
+            'Content-Type': 'application/json',
+            'Prefer': 'return=representation'
+          },
+          body: JSON.stringify(productData)
+        });
+        
+        if (response.ok) {
+          const newProduct = await response.json();
+          products.push(newProduct);
+          alert('Товар успешно добавлен!');
+          closeAddProductForm();
+          renderAdminProducts();
+          filterProducts();
+          addLog('product', 'Добавлен товар ' + name);
+        } else {
+          alert('Ошибка при сохранении в базу данных');
+        }
+      } catch (error) {
+        console.error('Error:', error);
+        alert('Ошибка соединения с базой данных');
+      }
+    }
+    
+    function exportProducts() {
+      alert('Функция экспорта будет доступна в следующем обновлении');
+    }
+    
+    function importProducts(input) {
+      alert('Функция импорта будет доступна в следующем обновлении');
+    }
+    
+    function changeAdminCredentials() {
+      const login = document.getElementById('admin-login').value;
+      const password = document.getElementById('admin-pass').value;
+      
+      if (login || password) {
+        alert('Функция смены пароля будет доступна в следующем обновлении');
+      }
+    }
+    
+    function saveSettings() {
+      const newSettings = {
+        siteName: document.getElementById('site-name').value,
+        siteEmail: document.getElementById('site-email').value,
+        sitePhone: document.getElementById('site-phone').value,
+        siteAddress: document.getElementById('site-address').value,
+        siteCurrency: document.getElementById('site-currency').value,
+        siteSeo: document.getElementById('site-seo-desc').value,
+        siteTitle: document.getElementById('site-seo-title').value
+      };
+      
+      localStorage.setItem('aircom_settings', JSON.stringify(newSettings));
+      settings = newSettings;
+      updateMetaTags(newSettings);
+      addLog('settings', 'Изменены настройки');
+      alert('Настройки сохранены');
+    }
+    
+    function backupDatabase() {
+      alert('Резервное копирование данных...');
+    }
+    
+    function deleteAllOrders() {
+      if (confirm('Удалить все заказы?')) {
+        alert('Функция будет доступна в следующем обновлении');
+      }
+    }
+    
+    function exportOrders() {
+      alert('Функция будет доступна в следующем обновлении');
+    }
+    
+    function applyOrderPeriod() {}
+    function applyCustomOrderPeriod() {}
+    function clearOrderPeriod() {}
+    function applyReportPeriod() {}
+    function applyCustomReportPeriod() {}
+    function clearReportPeriod() {}
 
-    // Фильтрация и пагинация
+    // ========== ФИЛЬТРАЦИЯ И ОТОБРАЖЕНИЕ ТОВАРОВ ==========
+    
     function filterProducts() {
       const search = document.getElementById('search-input')?.value.toLowerCase() || '';
       const areas = Array.from(document.querySelectorAll('#catalog input[type="checkbox"][id^="area"]:checked')).map(cb => cb.value);
@@ -1519,7 +1952,7 @@
       currentPage = 1;
       renderProducts(filtered);
     }
-
+    
     function renderProducts(productArray) {
       const grid = document.getElementById('product-grid');
       if (!grid) return;
@@ -1565,20 +1998,19 @@
       }
       document.getElementById('pagination').innerHTML = paginationHtml;
     }
-
+    
     function changePage(page) {
       currentPage = page;
       filterProducts();
     }
-
-    // Отдельная страница товара с вкладками
+    
     function openProductPage(id) {
       lastScrollPosition = window.scrollY;
       window.location.hash = `product-${id}`;
-      const p = products.find(p => p.id === id);
-      if (!p) return;
+      const product = products.find(p => p.id === id);
+      if (!product) return;
       
-      currentProduct = p;
+      currentProduct = product;
       currentImageIndex = 0;
       currentTab = 'specs';
       
@@ -1587,7 +2019,7 @@
       
       renderProductPage();
     }
-
+    
     function closeProductPage() {
       document.getElementById('catalog').classList.remove('hidden');
       document.getElementById('product-page').classList.add('hidden');
@@ -1600,12 +2032,12 @@
         });
       }, 10);
     }
-
+    
     function switchTab(tab) {
       currentTab = tab;
       renderProductPage();
     }
-
+    
     function renderProductPage() {
       const p = currentProduct;
       if (!p) return;
@@ -1615,7 +2047,6 @@
         `<span class="inline-block bg-${t === 'хит' ? 'red' : t === 'новинка' ? 'green' : 'orange'}-100 text-${t === 'хит' ? 'red' : t === 'новинка' ? 'green' : 'orange'}-800 text-xs px-2 py-1 rounded-full mr-2">${t}</span>`
       ).join('') || '';
       
-      // Галерея
       let galleryHtml = '';
       if (p.images && p.images.length > 0) {
         galleryHtml = `
@@ -1632,10 +2063,8 @@
         galleryHtml = `<img src="https://via.placeholder.com/600x400?text=No+Image" class="w-full rounded-xl shadow-2xl mb-4">`;
       }
       
-      // Цвет (только если указан)
       const colorHtml = p.color ? `<div class="specs-row"><span class="specs-label">Цвет:</span><span class="specs-value">${p.color}</span></div>` : '';
       
-      // Характеристики
       let specsHtml = '';
       if (p.specs && p.specs.length > 0) {
         specsHtml = p.specs.map(spec => {
@@ -1664,17 +2093,13 @@
             <h1 class="text-3xl font-bold mb-4">${p.name}</h1>
             <div class="mb-6">${priceHtml}<span class="text-primary text-4xl font-bold">${p.price} BYN</span></div>
             
-            <!-- Кнопки вкладок -->
             <div class="flex border-b border-gray-200 mb-6">
               <button class="tab-button ${currentTab === 'specs' ? 'active' : ''}" onclick="switchTab('specs')">Характеристики</button>
               <button class="tab-button ${currentTab === 'description' ? 'active' : ''}" onclick="switchTab('description')">Описание</button>
             </div>
             
-            <!-- Содержимое вкладок -->
             <div class="tab-content ${currentTab === 'specs' ? 'active' : ''}">
-              <div class="specs-table">
-                ${specsHtml}
-              </div>
+              <div class="specs-table">${specsHtml}</div>
             </div>
             
             <div class="tab-content ${currentTab === 'description' ? 'active' : ''}">
@@ -1690,7 +2115,7 @@
         </div>
       `;
     }
-
+    
     function changeImage(index) {
       currentImageIndex = index;
       document.getElementById('main-image').src = currentProduct.images[index];
@@ -1699,17 +2124,14 @@
         else thumb.classList.remove('active');
       });
     }
-
+    
     function checkProductHash() {
       if (window.location.hash.startsWith('#product-')) {
         const id = parseInt(window.location.hash.replace('#product-', ''));
         openProductPage(id);
-      } else {
-        document.getElementById('catalog').classList.remove('hidden');
-        document.getElementById('product-page').classList.add('hidden');
       }
     }
-
+    
     function resetFilters() {
       document.querySelectorAll('#catalog input[type="checkbox"]').forEach(cb => cb.checked = false);
       document.querySelectorAll('#catalog input[type="radio"]').forEach(r => { if (r.value === '') r.checked = true; });
@@ -1719,11 +2141,90 @@
       document.getElementById('search-input').value = '';
       filterProducts();
     }
-
-    // Корзина
-    async function addToCart(id) {
+    
+    function renderBrands() {
+      const list = document.getElementById('brands-list');
+      if (list) {
+        list.innerHTML = brands.map(b => 
+          `<button onclick="filterByBrand('${b.name}')" class="brand-chip px-2 sm:px-3 py-1 bg-gray-100 hover:bg-primary hover:text-white rounded-full text-xs transition-colors">${b.name}</button>`
+        ).join('');
+      }
+    }
+    
+    function updateBrandSelects() {
+      ['new-brand', 'edit-brand'].forEach(id => {
+        const select = document.getElementById(id);
+        if (select) {
+          select.innerHTML = '<option value="">Без бренда</option>' + 
+            brands.map(b => `<option value="${b.name}">${b.name}</option>`).join('');
+        }
+      });
+    }
+    
+    function filterByBrand(brand) {
+      const search = document.getElementById('search-input');
+      if (search) {
+        search.value = brand;
+        filterProducts();
+      }
+    }
+    
+    function toggleBrandsCollapse() {
+      const list = document.getElementById('brands-list');
+      const arrow = document.getElementById('brands-arrow');
+      if (list.style.display === 'none') {
+        list.style.display = 'flex';
+        arrow.style.transform = 'rotate(180deg)';
+      } else {
+        list.style.display = 'none';
+        arrow.style.transform = 'rotate(0deg)';
+      }
+    }
+    
+    function toggleFilterCollapse(element) {
+      const content = element.nextElementSibling;
+      if (content) {
+        if (content.style.display === 'none' || content.style.display === '') {
+          content.style.display = 'block';
+        } else {
+          content.style.display = 'none';
+        }
+      }
+    }
+    
+    function toggleMobileMenu() {
+      document.getElementById('mobileMenu').classList.toggle('active');
+    }
+    
+    function toggleMobileFilters() {
+      document.getElementById('filterSidebar').classList.toggle('mobile-visible');
+    }
+    
+    function applyFilters() {
+      filterProducts();
+      if (window.innerWidth <= 768) {
+        document.getElementById('filterSidebar').classList.remove('mobile-visible');
+      }
+    }
+    
+    function toggleFaq(id) {
+      const answer = document.querySelectorAll('.faq-answer')[id - 1];
+      const icon = document.querySelectorAll('.faq-icon')[id - 1];
+      const isOpen = answer.classList.contains('open');
+      
+      document.querySelectorAll('.faq-answer').forEach(el => el.classList.remove('open'));
+      document.querySelectorAll('.faq-icon').forEach(el => el.classList.remove('open'));
+      
+      if (!isOpen) {
+        answer.classList.add('open');
+        icon.classList.add('open');
+      }
+    }
+    
+    function addToCart(id) {
       const p = products.find(p => p.id === id);
       if (!p) return;
+      
       const ex = cart.find(i => i.id === id);
       if (ex) {
         ex.quantity++;
@@ -1733,99 +2234,90 @@
       saveCart();
       alert(`${p.name} добавлен в корзину`);
     }
-
-    function addCalculatorToCart() {
-      const ms = document.getElementById('model');
-      if (!ms || !ms.value) {
-        alert('Выберите услугу');
-        return;
-      }
-      const mt = ms.options[ms.selectedIndex].text;
-      const l = parseInt(document.getElementById('length').value);
-      const d = document.getElementById('demontage').checked;
-      const s = document.getElementById('service').checked;
-      let total = parseInt(ms.value);
-      if (ms.value !== '100' || !mt.includes('Только')) total += Math.max(0, l - 3) * 50;
-      if (d) total += 100;
-      if (s) total += 100;
-      const ci = {
-        id: 'calc-' + Date.now(),
-        name: mt + (d ? ' + демонтаж' : '') + (s ? ' + обслуживание' : ''),
-        price: total,
-        quantity: 1,
-        image: 'https://via.placeholder.com/200x150?text=Service'
-      };
-      const ex = cart.find(i => i.id === ci.id);
-      if (ex) ex.quantity++;
-      else cart.push(ci);
-      saveCart();
-      alert('Услуга добавлена в корзину');
+    
+    function saveCart() {
+      localStorage.setItem('aircom_cart', JSON.stringify(cart));
+      updateCartBadge();
     }
-
+    
+    function updateCartBadge() {
+      const count = cart.reduce((a, i) => a + i.quantity, 0);
+      const badge = document.getElementById('cart-count');
+      if (badge) {
+        if (count > 0) {
+          badge.classList.remove('hidden');
+          badge.textContent = count;
+        } else {
+          badge.classList.add('hidden');
+        }
+      }
+    }
+    
     function toggleCartModal() {
-      const m = document.getElementById('cart-modal');
-      if (m) {
+      const modal = document.getElementById('cart-modal');
+      if (modal) {
         renderCartItems();
-        m.style.display = 'flex';
+        modal.style.display = 'flex';
       }
     }
-
+    
     function renderCartItems() {
-      const c = document.getElementById('cart-items');
-      const td = document.getElementById('cart-total-display');
-      if (!c) return;
+      const container = document.getElementById('cart-items');
+      const totalDisplay = document.getElementById('cart-total-display');
+      
+      if (!container) return;
       
       if (cart.length === 0) {
-        c.innerHTML = '<p class="text-gray-500 text-center text-sm">Корзина пуста</p>';
-        if (td) td.textContent = 'Общая сумма: 0 BYN';
+        container.innerHTML = '<p class="text-gray-500 text-center text-sm">Корзина пуста</p>';
+        if (totalDisplay) totalDisplay.textContent = 'Общая сумма: 0 BYN';
         return;
       }
       
       let html = '';
       let total = 0;
       
-      cart.forEach(i => {
-        total += i.price * i.quantity;
+      cart.forEach(item => {
+        total += item.price * item.quantity;
         html += `
           <div class="flex flex-col sm:flex-row justify-between items-start sm:items-center border-b py-2 gap-2">
             <div class="flex-1">
-              <span class="font-medium text-xs sm:text-sm">${i.name}</span><br>
-              <span class="text-xs">${i.price} BYN x ${i.quantity}</span>
+              <span class="font-medium text-xs sm:text-sm">${item.name}</span><br>
+              <span class="text-xs">${item.price} BYN x ${item.quantity}</span>
             </div>
             <div class="flex items-center gap-1">
-              <button onclick="changeQuantity('${i.id}', -1)" class="px-1.5 py-0.5 bg-gray-200 rounded text-xs">-</button>
-              <span class="mx-1 text-xs">${i.quantity}</span>
-              <button onclick="changeQuantity('${i.id}', 1)" class="px-1.5 py-0.5 bg-gray-200 rounded text-xs">+</button>
-              <button onclick="removeFromCart('${i.id}')" class="ml-1 text-red-600 text-xs"><i class="ri-delete-bin-line"></i></button>
+              <button onclick="changeQuantity('${item.id}', -1)" class="px-1.5 py-0.5 bg-gray-200 rounded text-xs">-</button>
+              <span class="mx-1 text-xs">${item.quantity}</span>
+              <button onclick="changeQuantity('${item.id}', 1)" class="px-1.5 py-0.5 bg-gray-200 rounded text-xs">+</button>
+              <button onclick="removeFromCart('${item.id}')" class="ml-1 text-red-600 text-xs"><i class="ri-delete-bin-line"></i></button>
             </div>
           </div>
         `;
       });
       
-      c.innerHTML = html;
-      if (td) td.textContent = 'Общая сумма: ' + total + ' BYN';
+      container.innerHTML = html;
+      if (totalDisplay) totalDisplay.textContent = 'Общая сумма: ' + total + ' BYN';
     }
-
-    function changeQuantity(id, d) {
-      const i = cart.find(i => i.id == id);
-      if (i) {
-        const n = i.quantity + d;
-        if (n <= 0) {
+    
+    function changeQuantity(id, delta) {
+      const item = cart.find(i => i.id == id);
+      if (item) {
+        const newQuantity = item.quantity + delta;
+        if (newQuantity <= 0) {
           cart = cart.filter(i => i.id != id);
         } else {
-          i.quantity = n;
+          item.quantity = newQuantity;
         }
         saveCart();
         renderCartItems();
       }
     }
-
+    
     function removeFromCart(id) {
       cart = cart.filter(i => i.id != id);
       saveCart();
       renderCartItems();
     }
-
+    
     function clearCart() {
       if (confirm('Очистить корзину?')) {
         cart = [];
@@ -1833,52 +2325,50 @@
         renderCartItems();
       }
     }
-
+    
     async function checkoutCart() {
       if (cart.length === 0) {
         alert('Корзина пуста');
         return;
       }
       
-      const n = document.getElementById('order-name').value;
-      const p = document.getElementById('order-phone').value;
-      const a = document.getElementById('order-address').value;
-      const e = document.getElementById('order-email').value;
-      const pm = document.querySelector('input[name="payment"]:checked')?.value || 'Наличные';
+      const name = document.getElementById('order-name').value;
+      const phone = document.getElementById('order-phone').value;
+      const address = document.getElementById('order-address').value;
+      const email = document.getElementById('order-email').value;
+      const payment = document.querySelector('input[name="payment"]:checked')?.value || 'Наличные';
       
-      if (!n || !p || !a) {
+      if (!name || !phone || !address) {
         alert('Заполните все поля');
         return;
       }
       
-      const total = cart.reduce((s, i) => s + i.price * i.quantity, 0);
+      const total = cart.reduce((sum, item) => sum + item.price * item.quantity, 0);
+      
+      const orderData = {
+        customer_name: name,
+        customer_phone: phone,
+        customer_address: address,
+        customer_email: email,
+        payment_method: payment,
+        total: total,
+        items: cart.map(item => ({
+          product_id: item.id,
+          product_name: item.name,
+          quantity: item.quantity,
+          price: item.price
+        })),
+        status: 'новый',
+        date: new Date().toISOString()
+      };
       
       try {
-        // Создаем заказ в Supabase
-        const orderData = {
-          customer: {
-            name: n,
-            phone: p,
-            address: a,
-            email: e
-          },
-          items: cart.map(item => ({
-            product_id: item.id,
-            quantity: item.quantity,
-            price: item.price
-          })),
-          total: total,
-          payment: pm,
-          status: 'новый'
-        };
-        
         const response = await fetch(`${SUPABASE_URL}/rest/v1/orders`, {
           method: 'POST',
           headers: {
             'apikey': SUPABASE_KEY,
             'Authorization': `Bearer ${SUPABASE_KEY}`,
-            'Content-Type': 'application/json',
-            'Prefer': 'return=representation'
+            'Content-Type': 'application/json'
           },
           body: JSON.stringify(orderData)
         });
@@ -1888,6 +2378,7 @@
           cart = [];
           saveCart();
           renderCartItems();
+          
           document.getElementById('order-name').value = '';
           document.getElementById('order-phone').value = '';
           document.getElementById('order-address').value = '';
@@ -1901,259 +2392,222 @@
         }
       } catch (error) {
         console.error('Error:', error);
-        alert('Ошибка при оформлении заказа');
+        alert('Ошибка соединения с сервером');
       }
     }
-
-    // Обратная связь
-    document.getElementById('contact-form').addEventListener('submit', function(e) {
-      e.preventDefault();
+    
+    function addCalculatorToCart() {
+      const select = document.getElementById('model');
+      if (!select || !select.value) {
+        alert('Выберите услугу');
+        return;
+      }
       
-      const fd = new FormData(this);
-      fd.append('_replyto', document.getElementById('form-email').value || 'aircomfortbel@gmail.com');
-      fd.append('_subject', 'Новое сообщение с сайта');
+      const text = select.options[select.selectedIndex].text;
+      const length = parseInt(document.getElementById('length').value);
+      const demontage = document.getElementById('demontage').checked;
+      const service = document.getElementById('service').checked;
       
-      fetch(this.action, {
-        method: 'POST',
-        body: fd,
-        headers: { 'Accept': 'application/json' }
-      })
-      .then(r => {
-        if (r.ok) {
-          document.getElementById('contact-success').classList.remove('hidden');
-          this.reset();
-        } else {
-          document.getElementById('contact-error').classList.remove('hidden');
-        }
-      })
-      .catch(() => document.getElementById('contact-error').classList.remove('hidden'));
-    });
-
-    // Админка
-    function checkAdminHash() {
-      if (window.location.hash === '#admin') {
-        document.getElementById('admin-login-modal').style.display = 'flex';
+      let total = parseInt(select.value);
+      if (select.value !== '100' || !text.includes('Только')) {
+        total += Math.max(0, length - 3) * 50;
+      }
+      if (demontage) total += 100;
+      if (service) total += 100;
+      
+      const cartItem = {
+        id: 'calc-' + Date.now(),
+        name: text + (demontage ? ' + демонтаж' : '') + (service ? ' + обслуживание' : ''),
+        price: total,
+        quantity: 1,
+        image: 'https://via.placeholder.com/200x150?text=Service'
+      };
+      
+      const existing = cart.find(i => i.id === cartItem.id);
+      if (existing) {
+        existing.quantity++;
+      } else {
+        cart.push(cartItem);
+      }
+      
+      saveCart();
+      alert('Услуга добавлена в корзину');
+    }
+    
+    function loadVisits() {
+      const today = new Date().toDateString();
+      let visits = JSON.parse(localStorage.getItem('aircom_visits') || '{"date":"","today":0,"total":0}');
+      
+      if (visits.date !== today) {
+        visitCount = 1;
+        totalVisits = visits.total + 1;
+      } else {
+        visitCount = visits.today + 1;
+        totalVisits = visits.total + 1;
+      }
+      
+      localStorage.setItem('aircom_visits', JSON.stringify({
+        date: today,
+        today: visitCount,
+        total: totalVisits
+      }));
+      
+      document.getElementById('today-visits').textContent = visitCount;
+      document.getElementById('total-visits').textContent = totalVisits;
+    }
+    
+    function updateMetaTags(settings) {
+      if (settings.siteSeo) {
+        document.querySelector('meta[name="description"]').setAttribute('content', settings.siteSeo);
+      }
+      if (settings.siteTitle) {
+        document.title = settings.siteTitle;
       }
     }
-
-    (function() {
-      if (window.location.hash === '#admin') {
-        if (document.readyState === 'loading') {
-          document.addEventListener('DOMContentLoaded', () => 
-            document.getElementById('admin-login-modal').style.display = 'flex'
-          );
-        } else {
-          document.getElementById('admin-login-modal').style.display = 'flex';
-        }
-      }
-    })();
-
-    window.addEventListener('hashchange', () => {
-      if (window.location.hash === '#admin') {
-        document.getElementById('admin-login-modal').style.display = 'flex';
-      }
-    });
-
-    async function loginAdmin() {
-      const l = document.getElementById('admin-login-input').value;
-      const p = document.getElementById('admin-pass-input').value;
+    
+    function addLog(type, action) {
+      const log = {
+        type: type,
+        action: action,
+        time: new Date().toLocaleString(),
+        user: 'admin'
+      };
+      actionLogs.unshift(log);
+      if (actionLogs.length > 100) actionLogs.pop();
+      localStorage.setItem('aircom_logs', JSON.stringify(actionLogs));
+    }
+    
+    function updateOrderStats() {
+      const totalOrders = document.getElementById('total-orders');
+      const totalAmount = document.getElementById('total-amount');
+      if (totalOrders) totalOrders.textContent = orders.length;
+      if (totalAmount) totalAmount.textContent = orders.reduce((sum, o) => sum + o.total, 0);
+    }
+    
+    function setupCalculator() {
+      const modelSelect = document.getElementById('model');
+      const lengthInput = document.getElementById('length');
+      const decreaseBtn = document.getElementById('decrease-length');
+      const increaseBtn = document.getElementById('increase-length');
+      const totalPrice = document.getElementById('total-price');
+      const demontage = document.getElementById('demontage');
+      const service = document.getElementById('service');
+      const lengthSection = document.getElementById('length-section');
       
-      try {
-        const response = await fetch(`${SUPABASE_URL}/auth/v1/token?grant_type=password`, {
-          method: 'POST',
-          headers: {
-            'apikey': SUPABASE_KEY,
-            'Content-Type': 'application/json'
-          },
-          body: JSON.stringify({
-            email: l,
-            password: p
-          })
-        });
+      function calculate() {
+        if (!modelSelect.value) {
+          totalPrice.textContent = '0 BYN';
+          return;
+        }
         
-        if (response.ok) {
-          const data = await response.json();
-          adminToken = data.access_token;
-          localStorage.setItem('admin_token', adminToken);
-          
-          document.getElementById('admin-login-modal').style.display = 'none';
-          document.getElementById('admin-panel').style.display = 'block';
-          renderAdminProducts();
-          switchAdminTab('products');
-          addLog('user', 'Вход в админ-панель');
+        let total = parseInt(modelSelect.value);
+        const length = parseInt(lengthInput.value);
+        
+        if (modelSelect.value !== '100' || !modelSelect.options[modelSelect.selectedIndex].text.includes('Только')) {
+          total += Math.max(0, length - 3) * 50;
+          lengthSection.style.display = 'block';
         } else {
-          alert('Неверный логин или пароль');
+          lengthSection.style.display = 'none';
         }
-      } catch (error) {
-        console.error('Error:', error);
-        alert('Ошибка при входе');
-      }
-    }
-
-    if (localStorage.getItem('admin_token')) {
-      adminToken = localStorage.getItem('admin_token');
-      document.getElementById('admin-panel').style.display = 'block';
-      renderAdminProducts();
-      switchAdminTab('products');
-    }
-
-    function closeAdminPanel() {
-      document.getElementById('admin-panel').style.display = 'none';
-      localStorage.removeItem('admin_token');
-      adminToken = null;
-    }
-
-    function switchAdminTab(tab) {
-      const tabs = ['products', 'orders', 'brands', 'reports', 'settings', 'logs'];
-      tabs.forEach(t => {
-        const el = document.getElementById(`admin-${t}-tab`);
-        const btn = document.getElementById(`tab-${t}-btn`);
-        if (el) el.classList.add('hidden');
-        if (btn) {
-          btn.classList.remove('text-primary', 'border-b-2', 'border-primary');
-          btn.classList.add('text-gray-500');
-        }
-      });
-      
-      const cel = document.getElementById(`admin-${tab}-tab`);
-      const cbtn = document.getElementById(`tab-${tab}-btn`);
-      if (cel) cel.classList.remove('hidden');
-      if (cbtn) {
-        cbtn.classList.remove('text-gray-500');
-        cbtn.classList.add('text-primary', 'border-b-2', 'border-primary');
+        
+        if (demontage.checked) total += 100;
+        if (service.checked) total += 100;
+        
+        totalPrice.textContent = total + ' BYN';
       }
       
-      if (tab === 'products') renderAdminProducts();
-      if (tab === 'orders') renderAdminOrders();
-      if (tab === 'brands') renderAdminBrands();
-      if (tab === 'reports') {
-        const range = getDateRange('today');
-        updateReport(range.start, range.end);
-      }
-      if (tab === 'logs') renderLogs();
-    }
-
-    async function renderAdminProducts() {
-      const list = document.getElementById('admin-product-list');
-      if (!list) return;
-      
-      try {
-        const response = await fetch(`${SUPABASE_URL}/rest/v1/products?select=*`, {
-          headers: {
-            'apikey': SUPABASE_KEY,
-            'Authorization': `Bearer ${adminToken}`
+      if (modelSelect) modelSelect.addEventListener('change', calculate);
+      if (decreaseBtn) {
+        decreaseBtn.addEventListener('click', () => {
+          if (parseInt(lengthInput.value) > 3) {
+            lengthInput.value = parseInt(lengthInput.value) - 1;
+            calculate();
           }
         });
-        
-        if (!response.ok) throw new Error('Failed to fetch products');
-        
-        const products = await response.json();
-        
-        list.innerHTML = '';
-        products.forEach(p => {
-          const tags = p.tags?.map(t => `<span class="text-xs bg-gray-100 px-1 py-0.5 rounded ml-1">${t}</span>`).join('') || '';
-          const mainImage = p.images && p.images.length > 0 ? p.images[0] : 'https://via.placeholder.com/200x150?text=No+Image';
-          
-          list.innerHTML += `<tr>
-            <td class="px-2 sm:px-4 py-2 whitespace-nowrap"><input type="checkbox" class="product-checkbox" value="${p.id}" onchange="toggleProductSelection(${p.id})"></td>
-            <td class="px-2 sm:px-4 py-2 whitespace-nowrap"><img src="${mainImage}" class="w-6 h-6 sm:w-8 sm:h-8 object-cover rounded"></td>
-            <td class="px-2 sm:px-4 py-2"><div class="text-xs font-medium text-gray-900">${p.name}</div><div class="text-xs text-gray-500">${p.brand || ''} ${tags}</div></td>
-            <td class="px-2 sm:px-4 py-2 whitespace-nowrap"><div class="text-xs text-gray-900">${p.price} BYN</div></td>
-            <td class="px-2 sm:px-4 py-2 whitespace-nowrap text-xs">
-              <button onclick="openEditModal(${p.id})" class="text-blue-600 hover:text-blue-900 mr-1">✏️</button>
-              <button onclick="cloneProduct(${p.id})" class="text-green-600 hover:text-green-900 mr-1">📋</button>
-              <button onclick="deleteProduct(${p.id})" class="text-red-600 hover:text-red-900">🗑️</button>
-            </td>
-          </tr>`;
+      }
+      if (increaseBtn) {
+        increaseBtn.addEventListener('click', () => {
+          lengthInput.value = parseInt(lengthInput.value) + 1;
+          calculate();
         });
-      } catch (error) {
-        console.error('Error loading admin products:', error);
       }
+      if (demontage) demontage.addEventListener('change', calculate);
+      if (service) service.addEventListener('change', calculate);
+      
+      calculate();
     }
 
-    function filterAdminProducts() {
-      renderAdminProducts();
-    }
-
-    // Остальные функции админки...
-    // (сохраняем их структуру, но они будут адаптированы для Supabase)
-
-    // Инициализация
+    // Обработчик для формы обратной связи
     document.addEventListener('DOMContentLoaded', function() {
-      loadProducts();
-      loadBrands();
-      loadSettings();
-      updateCartBadge();
-      
-      const ms = document.getElementById('model');
-      const li = document.getElementById('length');
-      const db = document.getElementById('decrease-length');
-      const ib = document.getElementById('increase-length');
-      const tp = document.getElementById('total-price');
-      const dc = document.getElementById('demontage');
-      const sc = document.getElementById('service');
-      const ls = document.getElementById('length-section');
-      
-      function calc() {
-        if (!ms.value) {
-          tp.textContent = '0 BYN';
-          return 0;
-        }
-        let total = parseInt(ms.value);
-        let l = parseInt(li.value);
-        if (ms.value !== '100' || !ms.options[ms.selectedIndex].text.includes('Только')) {
-          total += Math.max(0, l - 3) * 50;
-          ls.style.display = 'block';
-        } else {
-          ls.style.display = 'none';
-        }
-        if (dc.checked) total += 100;
-        if (sc.checked) total += 100;
-        tp.textContent = total + ' BYN';
-        return total;
+      const contactForm = document.getElementById('contact-form');
+      if (contactForm) {
+        contactForm.addEventListener('submit', function(e) {
+          e.preventDefault();
+          
+          const formData = new FormData(this);
+          formData.append('_replyto', document.getElementById('form-email').value || 'aircomfortbel@gmail.com');
+          formData.append('_subject', 'Новое сообщение с сайта');
+          
+          fetch(this.action, {
+            method: 'POST',
+            body: formData,
+            headers: { 'Accept': 'application/json' }
+          })
+          .then(response => {
+            if (response.ok) {
+              document.getElementById('contact-success').classList.remove('hidden');
+              this.reset();
+              setTimeout(() => {
+                document.getElementById('contact-success').classList.add('hidden');
+              }, 5000);
+            } else {
+              document.getElementById('contact-error').classList.remove('hidden');
+              setTimeout(() => {
+                document.getElementById('contact-error').classList.add('hidden');
+              }, 5000);
+            }
+          })
+          .catch(() => {
+            document.getElementById('contact-error').classList.remove('hidden');
+            setTimeout(() => {
+              document.getElementById('contact-error').classList.add('hidden');
+            }, 5000);
+          });
+        });
       }
-      
-      if (ms) ms.addEventListener('change', calc);
-      if (db) db.addEventListener('click', () => {
-        if (parseInt(li.value) > 3) {
-          li.value = parseInt(li.value) - 1;
-          calc();
-        }
-      });
-      if (ib) ib.addEventListener('click', () => {
-        li.value = parseInt(li.value) + 1;
-        calc();
-      });
-      if (dc) dc.addEventListener('change', calc);
-      if (sc) sc.addEventListener('change', calc);
-      calc();
-      
-      console.log('Сайт загружен, все функции инициализированы');
     });
 
-    const pr = document.getElementById('priceRange');
-    const mp = document.getElementById('maxPrice');
-    
-    if (pr) {
-      pr.addEventListener('input', (e) => {
-        if (mp) mp.value = e.target.value;
-        filterProducts();
-      });
-    }
-    
-    if (mp) {
-      mp.addEventListener('change', (e) => {
-        if (pr) pr.value = e.target.value;
-        filterProducts();
-      });
-    }
-    
+    // Обработчики для модальных окон
     window.addEventListener('click', (e) => {
-      if (e.target.classList.contains('modal')) e.target.style.display = 'none';
+      if (e.target.classList.contains('modal')) {
+        e.target.style.display = 'none';
+      }
     });
-    
+
+    // Проверка хеша при загрузке
     window.addEventListener('hashchange', checkProductHash);
     checkProductHash();
+
+    // Обработка входа по хешу #admin
+    if (window.location.hash === '#admin') {
+      document.getElementById('admin-login-modal').style.display = 'flex';
+    }
+
+    // Настройка ползунка цены
+    const priceRange = document.getElementById('priceRange');
+    const maxPrice = document.getElementById('maxPrice');
+    
+    if (priceRange && maxPrice) {
+      priceRange.addEventListener('input', (e) => {
+        maxPrice.value = e.target.value;
+        filterProducts();
+      });
+      
+      maxPrice.addEventListener('change', (e) => {
+        priceRange.value = e.target.value;
+        filterProducts();
+      });
+    }
   </script>
 </body>
 </html>
