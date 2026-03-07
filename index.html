@@ -578,63 +578,6 @@
       display: block;
     }
 
-    /* Стили для уведомлений */
-    #cloud-notification {
-      position: fixed;
-      top: 70px;
-      right: 20px;
-      background: linear-gradient(135deg, #4CAF50, #45a049);
-      color: white;
-      padding: 12px 20px;
-      border-radius: 8px;
-      box-shadow: 0 4px 15px rgba(0,0,0,0.2);
-      z-index: 9999;
-      font-size: 14px;
-      display: flex;
-      align-items: center;
-      gap: 10px;
-      transform: translateX(400px);
-      transition: transform 0.3s ease;
-    }
-
-    #cloud-notification.error {
-      background: linear-gradient(135deg, #f44336, #d32f2f);
-    }
-
-    @keyframes slideIn {
-      from {
-        transform: translateX(400px);
-        opacity: 0;
-      }
-      to {
-        transform: translateX(0);
-        opacity: 1;
-      }
-    }
-
-    /* Индикатор синхронизации */
-    .sync-indicator {
-      display: inline-block;
-      width: 8px;
-      height: 8px;
-      border-radius: 50%;
-      background-color: #4CAF50;
-      margin-right: 5px;
-      animation: pulse 2s infinite;
-    }
-
-    @keyframes pulse {
-      0% {
-        box-shadow: 0 0 0 0 rgba(76, 175, 80, 0.7);
-      }
-      70% {
-        box-shadow: 0 0 0 10px rgba(76, 175, 80, 0);
-      }
-      100% {
-        box-shadow: 0 0 0 0 rgba(76, 175, 80, 0);
-      }
-    }
-
     @media (max-width: 768px) {
       .float-buttons { bottom: 15px; right: 15px; }
       .float-button { width: 40px; height: 40px; font-size: 16px; }
@@ -1001,9 +944,6 @@
             <span class="text-xs sm:text-sm text-gray-600">Посещений сегодня: <span id="today-visits">0</span></span>
             <span class="text-xs sm:text-sm text-gray-600">Всего посещений: <span id="total-visits">0</span></span>
             <span class="text-xs sm:text-sm text-gray-600">Резервное копирование: <span id="backup-status">✅</span></span>
-            <button onclick="forceSyncWithCloud()" class="bg-blue-500 text-white px-3 py-1 rounded-button text-xs ml-2">
-              <i class="ri-cloud-line"></i> Синхр.
-            </button>
             <a href="#" onclick="closeAdminPanel(); return false;" class="text-gray-600 hover:text-gray-900"><i class="ri-close-line ri-xl sm:ri-2x"></i></a>
           </div>
         </div>
@@ -1334,15 +1274,7 @@
     </footer>
   </div>
 
-  <div id="cloud-notification"></div>
-
   <script>
-    // JSONBin.io Configuration - ИСПРАВЛЕНО
-    let BIN_ID = localStorage.getItem('aircom_bin_id') || '67e3dcac8a456b79667cf043';
-    const API_KEY = '$2a$10$nHaWqro3xWiiwP.clSBgaeHSwZ6/t3N/Na6lTduZNE8pfmMhCSjwK';
-    const MASTER_KEY = '$2a$10$R2DKTgtP5bCinvceXnbMJeRK9GPaGHt1n0tZUZiZ6IqX38G6EKMqO';
-    const JSONBIN_BASE_URL = 'https://api.jsonbin.io/v3';
-
     // Мобильное меню
     function toggleMobileMenu() { document.getElementById('mobileMenu').classList.toggle('active'); }
     function toggleMobileFilters() { document.getElementById('filterSidebar').classList.toggle('mobile-visible'); }
@@ -1357,13 +1289,14 @@
       if (!isOpen) { answer.classList.add('open'); icon.classList.add('open'); }
     }
 
+    // Функция обновления мета-тегов из настроек
     function updateMetaTags(settings) {
-      if (settings && settings.siteSeo) {
+      if (settings.siteSeo) {
         document.querySelector('meta[name="description"]').setAttribute('content', settings.siteSeo);
       }
-      if (settings && settings.siteTitle) {
+      if (settings.siteTitle) {
         document.title = settings.siteTitle;
-      } else if (settings && settings.siteName) {
+      } else if (settings.siteName) {
         document.title = settings.siteName + ' - Установка кондиционеров в Гомеле';
       }
     }
@@ -1463,224 +1396,13 @@
     let settings = {};
     let currentProduct = null;
     let currentImageIndex = 0;
-    let lastScrollPosition = 0;
-    let currentTab = 'specs';
+    let lastScrollPosition = 0; // Для возврата к месту в каталоге
+    let currentTab = 'specs'; // Текущая вкладка в карточке товара
 
-    // Функция загрузки данных из JSONBin
-    async function loadFromJSONBin() {
-      try {
-        const response = await fetch(`${JSONBIN_BASE_URL}/b/${BIN_ID}/latest`, {
-          headers: {
-            'X-Master-Key': MASTER_KEY,
-            'X-Access-Key': API_KEY
-          }
-        });
-        
-        if (response.ok) {
-          const data = await response.json();
-          const record = data.record;
-          
-          if (record.products) products = record.products;
-          if (record.brands) brands = record.brands;
-          if (record.orders) orders = record.orders;
-          if (record.settings) settings = record.settings;
-          if (record.actionLogs) actionLogs = record.actionLogs;
-          
-          console.log('Данные загружены из облака');
-          showNotification('Данные загружены из облака', 'success');
-          updateMetaTags(settings);
-          renderBrands();
-          updateBrandSelects();
-          filterProducts();
-          updateOrderStats();
-          renderLogs();
-          document.getElementById('backup-status').textContent = '✅ ' + new Date().toLocaleTimeString();
-        } else {
-          console.log('Используются локальные данные');
-          loadLocalData();
-        }
-      } catch (error) {
-        console.error('Ошибка загрузки из облака:', error);
-        loadLocalData();
-      }
-    }
-
-    // Функция сохранения данных в JSONBin
-    async function saveToJSONBin(data, type) {
-      try {
-        const fullData = {
-          products: products,
-          brands: brands,
-          orders: orders,
-          settings: settings,
-          actionLogs: actionLogs
-        };
-        
-        console.log(`Сохраняем в облако: ${type}`);
-        
-        const response = await fetch(`${JSONBIN_BASE_URL}/b/${BIN_ID}`, {
-          method: 'PUT',
-          headers: {
-            'Content-Type': 'application/json',
-            'X-Master-Key': MASTER_KEY,
-            'X-Access-Key': API_KEY
-          },
-          body: JSON.stringify(fullData)
-        });
-        
-        if (response.ok) {
-          console.log(`${type} сохранены в облако`);
-          showNotification(`${type} сохранены в облако`, 'success');
-          document.getElementById('backup-status').textContent = '✅ ' + new Date().toLocaleTimeString();
-          return true;
-        } else {
-          const errorText = await response.text();
-          console.error('Ошибка сохранения в облако:', response.status, errorText);
-          
-          // Если бин не найден, создаем новый
-          if (response.status === 404) {
-            await createNewBin();
-            // Пробуем сохранить еще раз
-            return await saveToJSONBin(data, type);
-          }
-          
-          showNotification(`Ошибка сохранения: ${response.status}`, 'error');
-          return false;
-        }
-      } catch (error) {
-        console.error('Ошибка сохранения в облако:', error);
-        showNotification('Ошибка соединения с облаком', 'error');
-        return false;
-      }
-    }
-
-    // Функция создания нового бина
-    async function createNewBin() {
-      try {
-        const initialData = {
-          products: products,
-          brands: brands,
-          orders: orders,
-          settings: settings,
-          actionLogs: actionLogs
-        };
-        
-        const response = await fetch(`${JSONBIN_BASE_URL}/b`, {
-          method: 'POST',
-          headers: {
-            'Content-Type': 'application/json',
-            'X-Master-Key': MASTER_KEY,
-            'X-Access-Key': API_KEY,
-            'X-Bin-Name': 'AirComfort Data',
-            'X-Bin-Private': 'false'
-          },
-          body: JSON.stringify(initialData)
-        });
-        
-        if (response.ok) {
-          const newBin = await response.json();
-          BIN_ID = newBin.metadata.id;
-          localStorage.setItem('aircom_bin_id', BIN_ID);
-          console.log('Новый бин создан с ID:', BIN_ID);
-          showNotification('Новый бин создан!', 'success');
-          return true;
-        }
-        return false;
-      } catch (error) {
-        console.error('Ошибка создания бина:', error);
-        return false;
-      }
-    }
-
-    function loadLocalData() {
-      const s = localStorage.getItem('aircom_products');
-      if (s) products = JSON.parse(s);
-      
-      const b = localStorage.getItem('aircom_brands');
-      if (b) brands = JSON.parse(b);
-      
-      const o = localStorage.getItem('aircom_orders');
-      if (o) orders = JSON.parse(o);
-      
-      const l = localStorage.getItem('aircom_logs');
-      if (l) actionLogs = JSON.parse(l);
-      
-      const set = localStorage.getItem('aircom_settings');
-      if (set) settings = JSON.parse(set);
-      
-      updateMetaTags(settings);
-      renderBrands();
-      updateBrandSelects();
-      filterProducts();
-      updateOrderStats();
-      renderLogs();
-    }
-
-    function showNotification(message, type = 'success') {
-      const notification = document.getElementById('cloud-notification');
-      notification.className = type === 'success' ? '' : 'error';
-      notification.style.background = type === 'success' ? 'linear-gradient(135deg, #4CAF50, #45a049)' : 'linear-gradient(135deg, #f44336, #d32f2f)';
-      notification.innerHTML = `<i class="ri-${type === 'success' ? 'cloud-line' : 'error-warning-line'}"></i><span>${message}</span>`;
-      notification.style.transform = 'translateX(0)';
-      
-      setTimeout(() => {
-        notification.style.transform = 'translateX(400px)';
-      }, 3000);
-    }
-
-    async function forceSyncWithCloud() {
-      showNotification('Синхронизация с облаком...', 'success');
-      const success = await saveToJSONBin(products, 'все данные');
-      if (success) {
-        showNotification('Синхронизация завершена!', 'success');
-      }
-    }
-
-    function saveProducts() { 
-      localStorage.setItem('aircom_products', JSON.stringify(products)); 
-      saveToJSONBin(products, 'products');
-      addLog('product','Обновлен список товаров'); 
-    }
-
-    function saveBrands() { 
-      localStorage.setItem('aircom_brands', JSON.stringify(brands)); 
-      saveToJSONBin(brands, 'brands');
-      renderBrands(); 
-      updateBrandSelects(); 
-      addLog('brand','Обновлен список брендов'); 
-    }
-
-    function saveOrders() { 
-      localStorage.setItem('aircom_orders', JSON.stringify(orders)); 
-      saveToJSONBin(orders, 'orders');
-      updateOrderStats(); 
-      addLog('order','Обновлен список заказов');
-      backupDatabase();
-    }
-
-    function saveSettings() { 
-      const s={ 
-        siteName:document.getElementById('site-name').value, 
-        siteEmail:document.getElementById('site-email').value, 
-        sitePhone:document.getElementById('site-phone').value, 
-        siteAddress:document.getElementById('site-address').value, 
-        siteCurrency:document.getElementById('site-currency').value,
-        siteSeo:document.getElementById('site-seo-desc').value,
-        siteTitle:document.getElementById('site-seo-title').value
-      };
-      localStorage.setItem('aircom_settings',JSON.stringify(s)); 
-      settings = s;
-      saveToJSONBin(s, 'settings');
-      updateMetaTags(s); 
-      addLog('settings','Изменены настройки'); 
-      alert('Настройки сохранены');
-    }
-
-    function saveLogs() { 
-      localStorage.setItem('aircom_logs', JSON.stringify(actionLogs)); 
-      saveToJSONBin(actionLogs, 'actionLogs');
-    }
-
+    function loadProducts() { const s=localStorage.getItem('aircom_products'); if(s) products=JSON.parse(s); }
+    function saveProducts() { localStorage.setItem('aircom_products', JSON.stringify(products)); addLog('product','Обновлен список товаров'); }
+    function loadBrands() { const s=localStorage.getItem('aircom_brands'); if(s) brands=JSON.parse(s); renderBrands(); updateBrandSelects(); }
+    function saveBrands() { localStorage.setItem('aircom_brands', JSON.stringify(brands)); renderBrands(); updateBrandSelects(); addLog('brand','Обновлен список брендов'); }
     function loadVisits() {
       const today = new Date().toDateString();
       let visits = JSON.parse(localStorage.getItem('aircom_visits') || '{"date":"","today":0,"total":0}');
@@ -1690,16 +1412,34 @@
       document.getElementById('today-visits').textContent = visitCount;
       document.getElementById('total-visits').textContent = totalVisits;
     }
-    
+    function loadOrders() { 
+      const s=localStorage.getItem('aircom_orders'); 
+      if(s) orders=JSON.parse(s); 
+      updateOrderStats(); 
+    }
+    function saveOrders() { 
+      localStorage.setItem('aircom_orders', JSON.stringify(orders)); 
+      updateOrderStats(); 
+      addLog('order','Обновлен список заказов');
+      backupDatabase();
+    }
     function loadCart() { const s=localStorage.getItem('aircom_cart'); if(s) cart=JSON.parse(s); updateCartBadge(); }
     function saveCart() { localStorage.setItem('aircom_cart', JSON.stringify(cart)); updateCartBadge(); }
-    
+    function loadLogs() { const s=localStorage.getItem('aircom_logs'); if(s) actionLogs=JSON.parse(s); }
+    function saveLogs() { localStorage.setItem('aircom_logs', JSON.stringify(actionLogs)); }
+    function loadSettings() { 
+      const s=localStorage.getItem('aircom_settings'); 
+      if(s) settings = JSON.parse(s);
+      updateMetaTags(settings);
+    }
+    function addLog(t,a) { actionLogs.unshift({type:t, action:a, time:new Date().toLocaleString(), user:'admin'}); if(actionLogs.length>100) actionLogs.pop(); saveLogs(); }
     function updateCartBadge() { const c=cart.reduce((a,i)=>a+i.quantity,0), b=document.getElementById('cart-count'); if(b) { if(c>0) { b.classList.remove('hidden'); b.textContent=c; } else b.classList.add('hidden'); } }
     function updateOrderStats() { 
       const to=document.getElementById('total-orders'), ta=document.getElementById('total-amount'); 
       if(to&&ta) { to.textContent=orders.length; ta.textContent=orders.reduce((a,o)=>a+o.total,0); } 
     }
 
+    // Резервное копирование
     function backupDatabase() {
       const backup = {
         products: products,
@@ -1714,6 +1454,7 @@
     }
     setInterval(backupDatabase, 300000);
 
+    // Функции для работы с периодами
     function getDateRange(period) {
       const today = new Date();
       let start = new Date();
@@ -1864,6 +1605,7 @@
     function toggleBrandsCollapse() { const bl=document.getElementById('brands-list'), a=document.getElementById('brands-arrow'); if(bl.style.display==='none') { bl.style.display='flex'; a.style.transform='rotate(180deg)'; } else { bl.style.display='none'; a.style.transform='rotate(0deg)'; } }
     function filterByBrand(b) { const si=document.getElementById('search-input'); if(si) { si.value=b; filterProducts(); } }
 
+    // Фильтрация и пагинация
     function filterProducts() {
       const search = document.getElementById('search-input')?.value.toLowerCase() || '';
       const areas = Array.from(document.querySelectorAll('#catalog input[type="checkbox"][id^="area"]:checked')).map(cb=>cb.value);
@@ -1914,6 +1656,7 @@
     }
     function changePage(page) { currentPage = page; filterProducts(); }
 
+    // Отдельная страница товара с вкладками
     function openProductPage(id) {
       lastScrollPosition = window.scrollY;
       window.location.hash = `product-${id}`;
@@ -1955,6 +1698,7 @@
       const priceHtml = p.oldPrice ? `<span class="text-gray-400 line-through text-2xl mr-3">${p.oldPrice} BYN</span>` : '';
       const tagsHtml = p.tags?.map(t=>`<span class="inline-block bg-${t==='хит'?'red':t==='новинка'?'green':'orange'}-100 text-${t==='хит'?'red':t==='новинка'?'green':'orange'}-800 text-xs px-2 py-1 rounded-full mr-2">${t}</span>`).join('')||'';
       
+      // Галерея
       let galleryHtml = '';
       if (p.images && p.images.length > 0) {
         galleryHtml = `
@@ -1971,8 +1715,10 @@
         galleryHtml = `<img src="https://via.placeholder.com/600x400?text=No+Image" class="w-full rounded-xl shadow-2xl mb-4">`;
       }
       
+      // Цвет (только если указан)
       const colorHtml = p.color ? `<div class="specs-row"><span class="specs-label">Цвет:</span><span class="specs-value">${p.color}</span></div>` : '';
       
+      // Характеристики
       let specsHtml = '';
       if (p.specs && p.specs.length > 0) {
         specsHtml = p.specs.map(spec => {
@@ -2001,11 +1747,13 @@
             <h1 class="text-3xl font-bold mb-4">${p.name}</h1>
             <div class="mb-6">${priceHtml}<span class="text-primary text-4xl font-bold">${p.price} BYN</span></div>
             
+            <!-- Кнопки вкладок -->
             <div class="flex border-b border-gray-200 mb-6">
               <button class="tab-button ${currentTab === 'specs' ? 'active' : ''}" onclick="switchTab('specs')">Характеристики</button>
               <button class="tab-button ${currentTab === 'description' ? 'active' : ''}" onclick="switchTab('description')">Описание</button>
             </div>
             
+            <!-- Содержимое вкладок -->
             <div class="tab-content ${currentTab === 'specs' ? 'active' : ''}">
               <div class="specs-table">
                 ${specsHtml}
@@ -2052,6 +1800,7 @@
       document.getElementById('search-input').value=''; filterProducts();
     }
 
+    // Корзина
     function addToCart(id) {
       const p=products.find(p=>p.id===id);
       if(!p) return;
@@ -2161,6 +1910,7 @@ Email: ${e || 'не указан'}
       addLog('order','Новый заказ #'+order.id);
     }
 
+    // Обратная связь
     document.getElementById('contact-form').addEventListener('submit', function(e) {
       e.preventDefault();
       
@@ -2177,6 +1927,7 @@ Email: ${e || 'не указан'}
       .catch(()=>document.getElementById('contact-error').classList.remove('hidden'));
     });
 
+    // Админка
     function checkAdminHash() { if(window.location.hash==='#admin') document.getElementById('admin-login-modal').style.display='flex'; }
     (function(){ if(window.location.hash==='#admin') { if(document.readyState==='loading') document.addEventListener('DOMContentLoaded',()=>document.getElementById('admin-login-modal').style.display='flex'); else document.getElementById('admin-login-modal').style.display='flex'; } })();
     window.addEventListener('hashchange',()=>{ if(window.location.hash==='#admin') document.getElementById('admin-login-modal').style.display='flex'; });
@@ -2468,7 +2219,6 @@ Email: ${e || 'не указан'}
       filterProducts(); 
       closeAddProductForm();
       addLog('product','Добавлен товар '+name);
-      alert('Товар успешно добавлен и сохранен в облако!');
     }
     
     function cloneProduct(id) {
@@ -2551,7 +2301,7 @@ Email: ${e || 'не указан'}
       filterProducts();
       closeEditModal();
       addLog('product', 'Изменен товар ' + p.name);
-      alert('Товар сохранен и отправлен в облако');
+      alert('Товар сохранен');
     }
     
     function deleteProduct(id) { 
@@ -2573,13 +2323,26 @@ Email: ${e || 'не указан'}
     function editBrand(id) { const b=brands.find(b=>b.id===id); if(!b) return; const n=prompt('Новое название:',b.name); if(n) { b.name=n; saveBrands(); renderAdminBrands(); addLog('brand','Изменен бренд '+n); } }
     function deleteBrand(id) { if(confirm('Удалить бренд?')) { brands=brands.filter(b=>b.id!==id); saveBrands(); renderAdminBrands(); addLog('brand','Удален бренд'); } }
 
+    function saveSettings() {
+      const s={ 
+        siteName:document.getElementById('site-name').value, 
+        siteEmail:document.getElementById('site-email').value, 
+        sitePhone:document.getElementById('site-phone').value, 
+        siteAddress:document.getElementById('site-address').value, 
+        siteCurrency:document.getElementById('site-currency').value,
+        siteSeo:document.getElementById('site-seo-desc').value,
+        siteTitle:document.getElementById('site-seo-title').value
+      };
+      localStorage.setItem('aircom_settings',JSON.stringify(s)); 
+      updateMetaTags(s);
+      addLog('settings','Изменены настройки'); 
+      alert('Настройки сохранены');
+    }
     function renderLogs() {
       const list=document.getElementById('logs-list'), f=document.getElementById('log-filter')?.value||'', filtered=f?actionLogs.filter(l=>l.type===f):actionLogs;
       list.innerHTML=filtered.map(l=>`<div class="text-xs border-b pb-1"><span class="text-gray-500">${l.time}</span> - <span class="font-medium">${l.type}:</span> ${l.action}</div>`).join('')||'<p class="text-gray-500 text-xs">Нет записей</p>';
     }
     function filterLogs() { renderLogs(); }
-
-    function addLog(t,a) { actionLogs.unshift({type:t, action:a, time:new Date().toLocaleString(), user:'admin'}); if(actionLogs.length>100) actionLogs.pop(); saveLogs(); }
 
     function changeAdminCredentials() {
       const nl=document.getElementById('admin-login').value, np=document.getElementById('admin-pass').value;
@@ -2589,8 +2352,6 @@ Email: ${e || 'не указан'}
     function toggleFilterCollapse(el) { const c=el.nextElementSibling; if(c) { if(c.style.display==='none'||c.style.display==='') c.style.display='block'; else c.style.display='none'; } }
 
     document.addEventListener('DOMContentLoaded',function(){
-      loadFromJSONBin();
-      
       const ms=document.getElementById('model'), li=document.getElementById('length'), db=document.getElementById('decrease-length'), ib=document.getElementById('increase-length'), tp=document.getElementById('total-price'), dc=document.getElementById('demontage'), sc=document.getElementById('service'), ls=document.getElementById('length-section');
       function calc() {
         if(!ms.value) { tp.textContent='0 BYN'; return 0; }
@@ -2604,12 +2365,10 @@ Email: ${e || 'не указан'}
       if(ib) ib.addEventListener('click',()=>{ li.value=parseInt(li.value)+1; calc(); });
       if(dc) dc.addEventListener('change',calc); if(sc) sc.addEventListener('change',calc); calc();
       
-      loadVisits();
-      loadCart();
-      
-      console.log('Сайт загружен, данные синхронизированы с облаком');
+      console.log('Сайт загружен, все функции инициализированы');
     });
 
+    loadProducts(); loadBrands(); loadOrders(); loadCart(); loadLogs(); loadVisits(); loadSettings(); filterProducts();
     const pr=document.getElementById('priceRange'), mp=document.getElementById('maxPrice');
     if(pr) pr.addEventListener('input',(e)=>{ if(mp) mp.value=e.target.value; filterProducts(); });
     if(mp) mp.addEventListener('change',(e)=>{ if(pr) pr.value=e.target.value; filterProducts(); });
