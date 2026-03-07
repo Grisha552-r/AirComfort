@@ -1275,6 +1275,161 @@
   </div>
 
   <script>
+    // JSONBin.io Configuration
+    const BIN_ID = '67e3dcac8a456b79667cf043'; // ID вашего бина
+    const API_KEY = '$2a$10$nHaWqro3xWiiwP.clSBgaeHSwZ6/t3N/Na6lTduZNE8pfmMhCSjwK'; // X-Access-Key
+    const MASTER_KEY = '$2a$10$R2DKTgtP5bCinvceXnbMJeRK9GPaGHt1n0tZUZiZ6IqX38G6EKMqO'; // X-Master-Key
+
+    // Функция загрузки данных из JSONBin
+    async function loadFromJSONBin() {
+      try {
+        const response = await fetch(`https://api.jsonbin.io/v3/b/${BIN_ID}/latest`, {
+          headers: {
+            'X-Access-Key': API_KEY
+          }
+        });
+        
+        if (response.ok) {
+          const data = await response.json();
+          const record = data.record;
+          
+          if (record.products) products = record.products;
+          if (record.brands) brands = record.brands;
+          if (record.orders) orders = record.orders;
+          if (record.settings) settings = record.settings;
+          if (record.actionLogs) actionLogs = record.actionLogs;
+          
+          console.log('Данные загружены из облака');
+          updateMetaTags(settings);
+          renderBrands();
+          updateBrandSelects();
+          filterProducts();
+          updateOrderStats();
+          renderLogs();
+        } else {
+          console.log('Используются локальные данные');
+          loadLocalData();
+        }
+      } catch (error) {
+        console.error('Ошибка загрузки из облака:', error);
+        loadLocalData();
+      }
+    }
+
+    // Функция сохранения данных в JSONBin
+    async function saveToJSONBin(data, type) {
+      try {
+        // Сначала получаем текущие данные
+        const response = await fetch(`https://api.jsonbin.io/v3/b/${BIN_ID}`, {
+          headers: {
+            'X-Master-Key': MASTER_KEY,
+            'X-Access-Key': API_KEY
+          }
+        });
+        
+        if (response.ok) {
+          const currentData = await response.json();
+          const record = currentData.record;
+          
+          // Обновляем конкретный тип данных
+          const updatedRecord = {
+            ...record,
+            [type]: data
+          };
+          
+          // Сохраняем обновленные данные
+          const updateResponse = await fetch(`https://api.jsonbin.io/v3/b/${BIN_ID}`, {
+            method: 'PUT',
+            headers: {
+              'Content-Type': 'application/json',
+              'X-Master-Key': MASTER_KEY,
+              'X-Access-Key': API_KEY
+            },
+            body: JSON.stringify(updatedRecord)
+          });
+          
+          if (updateResponse.ok) {
+            console.log(`${type} сохранены в облако`);
+            return true;
+          }
+        }
+        return false;
+      } catch (error) {
+        console.error('Ошибка сохранения в облако:', error);
+        return false;
+      }
+    }
+
+    // Модифицированные функции сохранения
+    function saveProducts() { 
+      localStorage.setItem('aircom_products', JSON.stringify(products)); 
+      saveToJSONBin(products, 'products');
+      addLog('product','Обновлен список товаров'); 
+    }
+    
+    function saveBrands() { 
+      localStorage.setItem('aircom_brands', JSON.stringify(brands)); 
+      saveToJSONBin(brands, 'brands');
+      renderBrands(); 
+      updateBrandSelects(); 
+      addLog('brand','Обновлен список брендов'); 
+    }
+    
+    function saveOrders() { 
+      localStorage.setItem('aircom_orders', JSON.stringify(orders)); 
+      saveToJSONBin(orders, 'orders');
+      updateOrderStats(); 
+      addLog('order','Обновлен список заказов');
+      backupDatabase();
+    }
+    
+    function saveSettings() { 
+      const s={ 
+        siteName:document.getElementById('site-name').value, 
+        siteEmail:document.getElementById('site-email').value, 
+        sitePhone:document.getElementById('site-phone').value, 
+        siteAddress:document.getElementById('site-address').value, 
+        siteCurrency:document.getElementById('site-currency').value,
+        siteSeo:document.getElementById('site-seo-desc').value,
+        siteTitle:document.getElementById('site-seo-title').value
+      };
+      localStorage.setItem('aircom_settings',JSON.stringify(s)); 
+      saveToJSONBin(s, 'settings');
+      updateMetaTags(s); 
+      addLog('settings','Изменены настройки'); 
+      alert('Настройки сохранены');
+    }
+    
+    function saveLogs() { 
+      localStorage.setItem('aircom_logs', JSON.stringify(actionLogs)); 
+      saveToJSONBin(actionLogs, 'actionLogs');
+    }
+
+    // Загрузка локальных данных при отсутствии облачных
+    function loadLocalData() {
+      const s = localStorage.getItem('aircom_products');
+      if (s) products = JSON.parse(s);
+      
+      const b = localStorage.getItem('aircom_brands');
+      if (b) brands = JSON.parse(b);
+      
+      const o = localStorage.getItem('aircom_orders');
+      if (o) orders = JSON.parse(o);
+      
+      const l = localStorage.getItem('aircom_logs');
+      if (l) actionLogs = JSON.parse(l);
+      
+      const set = localStorage.getItem('aircom_settings');
+      if (set) settings = JSON.parse(set);
+      
+      updateMetaTags(settings);
+      renderBrands();
+      updateBrandSelects();
+      filterProducts();
+      updateOrderStats();
+      renderLogs();
+    }
+
     // Мобильное меню
     function toggleMobileMenu() { document.getElementById('mobileMenu').classList.toggle('active'); }
     function toggleMobileFilters() { document.getElementById('filterSidebar').classList.toggle('mobile-visible'); }
@@ -1399,10 +1554,6 @@
     let lastScrollPosition = 0; // Для возврата к месту в каталоге
     let currentTab = 'specs'; // Текущая вкладка в карточке товара
 
-    function loadProducts() { const s=localStorage.getItem('aircom_products'); if(s) products=JSON.parse(s); }
-    function saveProducts() { localStorage.setItem('aircom_products', JSON.stringify(products)); addLog('product','Обновлен список товаров'); }
-    function loadBrands() { const s=localStorage.getItem('aircom_brands'); if(s) brands=JSON.parse(s); renderBrands(); updateBrandSelects(); }
-    function saveBrands() { localStorage.setItem('aircom_brands', JSON.stringify(brands)); renderBrands(); updateBrandSelects(); addLog('brand','Обновлен список брендов'); }
     function loadVisits() {
       const today = new Date().toDateString();
       let visits = JSON.parse(localStorage.getItem('aircom_visits') || '{"date":"","today":0,"total":0}');
@@ -1412,27 +1563,10 @@
       document.getElementById('today-visits').textContent = visitCount;
       document.getElementById('total-visits').textContent = totalVisits;
     }
-    function loadOrders() { 
-      const s=localStorage.getItem('aircom_orders'); 
-      if(s) orders=JSON.parse(s); 
-      updateOrderStats(); 
-    }
-    function saveOrders() { 
-      localStorage.setItem('aircom_orders', JSON.stringify(orders)); 
-      updateOrderStats(); 
-      addLog('order','Обновлен список заказов');
-      backupDatabase();
-    }
+    
     function loadCart() { const s=localStorage.getItem('aircom_cart'); if(s) cart=JSON.parse(s); updateCartBadge(); }
     function saveCart() { localStorage.setItem('aircom_cart', JSON.stringify(cart)); updateCartBadge(); }
-    function loadLogs() { const s=localStorage.getItem('aircom_logs'); if(s) actionLogs=JSON.parse(s); }
-    function saveLogs() { localStorage.setItem('aircom_logs', JSON.stringify(actionLogs)); }
-    function loadSettings() { 
-      const s=localStorage.getItem('aircom_settings'); 
-      if(s) settings = JSON.parse(s);
-      updateMetaTags(settings);
-    }
-    function addLog(t,a) { actionLogs.unshift({type:t, action:a, time:new Date().toLocaleString(), user:'admin'}); if(actionLogs.length>100) actionLogs.pop(); saveLogs(); }
+    
     function updateCartBadge() { const c=cart.reduce((a,i)=>a+i.quantity,0), b=document.getElementById('cart-count'); if(b) { if(c>0) { b.classList.remove('hidden'); b.textContent=c; } else b.classList.add('hidden'); } }
     function updateOrderStats() { 
       const to=document.getElementById('total-orders'), ta=document.getElementById('total-amount'); 
@@ -2323,26 +2457,13 @@ Email: ${e || 'не указан'}
     function editBrand(id) { const b=brands.find(b=>b.id===id); if(!b) return; const n=prompt('Новое название:',b.name); if(n) { b.name=n; saveBrands(); renderAdminBrands(); addLog('brand','Изменен бренд '+n); } }
     function deleteBrand(id) { if(confirm('Удалить бренд?')) { brands=brands.filter(b=>b.id!==id); saveBrands(); renderAdminBrands(); addLog('brand','Удален бренд'); } }
 
-    function saveSettings() {
-      const s={ 
-        siteName:document.getElementById('site-name').value, 
-        siteEmail:document.getElementById('site-email').value, 
-        sitePhone:document.getElementById('site-phone').value, 
-        siteAddress:document.getElementById('site-address').value, 
-        siteCurrency:document.getElementById('site-currency').value,
-        siteSeo:document.getElementById('site-seo-desc').value,
-        siteTitle:document.getElementById('site-seo-title').value
-      };
-      localStorage.setItem('aircom_settings',JSON.stringify(s)); 
-      updateMetaTags(s);
-      addLog('settings','Изменены настройки'); 
-      alert('Настройки сохранены');
-    }
     function renderLogs() {
       const list=document.getElementById('logs-list'), f=document.getElementById('log-filter')?.value||'', filtered=f?actionLogs.filter(l=>l.type===f):actionLogs;
       list.innerHTML=filtered.map(l=>`<div class="text-xs border-b pb-1"><span class="text-gray-500">${l.time}</span> - <span class="font-medium">${l.type}:</span> ${l.action}</div>`).join('')||'<p class="text-gray-500 text-xs">Нет записей</p>';
     }
     function filterLogs() { renderLogs(); }
+
+    function addLog(t,a) { actionLogs.unshift({type:t, action:a, time:new Date().toLocaleString(), user:'admin'}); if(actionLogs.length>100) actionLogs.pop(); saveLogs(); }
 
     function changeAdminCredentials() {
       const nl=document.getElementById('admin-login').value, np=document.getElementById('admin-pass').value;
@@ -2352,6 +2473,9 @@ Email: ${e || 'не указан'}
     function toggleFilterCollapse(el) { const c=el.nextElementSibling; if(c) { if(c.style.display==='none'||c.style.display==='') c.style.display='block'; else c.style.display='none'; } }
 
     document.addEventListener('DOMContentLoaded',function(){
+      // Загружаем данные из облака при запуске
+      loadFromJSONBin();
+      
       const ms=document.getElementById('model'), li=document.getElementById('length'), db=document.getElementById('decrease-length'), ib=document.getElementById('increase-length'), tp=document.getElementById('total-price'), dc=document.getElementById('demontage'), sc=document.getElementById('service'), ls=document.getElementById('length-section');
       function calc() {
         if(!ms.value) { tp.textContent='0 BYN'; return 0; }
@@ -2365,10 +2489,12 @@ Email: ${e || 'не указан'}
       if(ib) ib.addEventListener('click',()=>{ li.value=parseInt(li.value)+1; calc(); });
       if(dc) dc.addEventListener('change',calc); if(sc) sc.addEventListener('change',calc); calc();
       
-      console.log('Сайт загружен, все функции инициализированы');
+      loadVisits();
+      loadCart();
+      
+      console.log('Сайт загружен, данные синхронизированы с облаком');
     });
 
-    loadProducts(); loadBrands(); loadOrders(); loadCart(); loadLogs(); loadVisits(); loadSettings(); filterProducts();
     const pr=document.getElementById('priceRange'), mp=document.getElementById('maxPrice');
     if(pr) pr.addEventListener('input',(e)=>{ if(mp) mp.value=e.target.value; filterProducts(); });
     if(mp) mp.addEventListener('change',(e)=>{ if(pr) pr.value=e.target.value; filterProducts(); });
