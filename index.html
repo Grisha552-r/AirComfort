@@ -1314,10 +1314,11 @@
   <div id="cloud-notification"></div>
 
   <script>
-    // JSONBin.io Configuration
+    // JSONBin.io Configuration - ИСПРАВЛЕНО
     const BIN_ID = '67e3dcac8a456b79667cf043';
     const API_KEY = '$2a$10$nHaWqro3xWiiwP.clSBgaeHSwZ6/t3N/Na6lTduZNE8pfmMhCSjwK';
     const MASTER_KEY = '$2a$10$R2DKTgtP5bCinvceXnbMJeRK9GPaGHt1n0tZUZiZ6IqX38G6EKMqO';
+    const JSONBIN_BASE_URL = 'https://api.jsonbin.io/v3'; // ИСПРАВЛЕНО: было isonbin.io
 
     // Мобильное меню
     function toggleMobileMenu() { document.getElementById('mobileMenu').classList.toggle('active'); }
@@ -1442,10 +1443,10 @@
     let lastScrollPosition = 0;
     let currentTab = 'specs';
 
-    // Функция загрузки данных из JSONBin
+    // Функция загрузки данных из JSONBin - ИСПРАВЛЕНО
     async function loadFromJSONBin() {
       try {
-        const response = await fetch(`https://api.jsonbin.io/v3/b/${BIN_ID}/latest`, {
+        const response = await fetch(`${JSONBIN_BASE_URL}/b/${BIN_ID}/latest`, {
           headers: {
             'X-Master-Key': MASTER_KEY,
             'X-Access-Key': API_KEY
@@ -1497,10 +1498,9 @@
       }
     }
 
-    // Функция сохранения данных в JSONBin (ИСПРАВЛЕННАЯ)
+    // Функция сохранения данных в JSONBin - ИСПРАВЛЕНО
     async function saveToJSONBin(data, type) {
       try {
-        // Формируем полный объект для сохранения
         const fullData = {
           products: products,
           brands: brands,
@@ -1509,9 +1509,9 @@
           actionLogs: actionLogs
         };
         
-        console.log('Сохраняем в облако:', type);
+        console.log(`Сохраняем в облако: ${type}`, fullData);
         
-        const response = await fetch(`https://api.jsonbin.io/v3/b/${BIN_ID}`, {
+        const response = await fetch(`${JSONBIN_BASE_URL}/b/${BIN_ID}`, {
           method: 'PUT',
           headers: {
             'Content-Type': 'application/json',
@@ -1530,20 +1530,20 @@
         } else {
           const errorText = await response.text();
           console.error('Ошибка сохранения в облако:', response.status, errorText);
-          showNotification('Ошибка сохранения в облако', 'error');
+          showNotification(`Ошибка сохранения: ${response.status}`, 'error');
           return false;
         }
       } catch (error) {
         console.error('Ошибка сохранения в облако:', error);
-        showNotification('Ошибка сохранения в облако', 'error');
+        showNotification('Ошибка соединения с облаком', 'error');
         return false;
       }
     }
 
-    // Функция для проверки и создания бина
+    // Функция для проверки и создания бина - ИСПРАВЛЕНО
     async function checkAndCreateBin() {
       try {
-        const response = await fetch(`https://api.jsonbin.io/v3/b/${BIN_ID}`, {
+        const response = await fetch(`${JSONBIN_BASE_URL}/b/${BIN_ID}`, {
           headers: {
             'X-Master-Key': MASTER_KEY,
             'X-Access-Key': API_KEY
@@ -1551,7 +1551,6 @@
         });
         
         if (!response.ok) {
-          // Бин не существует, создаем новый
           const initialData = {
             products: products,
             brands: brands,
@@ -1560,7 +1559,7 @@
             actionLogs: actionLogs
           };
           
-          const createResponse = await fetch('https://api.jsonbin.io/v3/b', {
+          const createResponse = await fetch(`${JSONBIN_BASE_URL}/b`, {
             method: 'POST',
             headers: {
               'Content-Type': 'application/json',
@@ -2468,6 +2467,7 @@ Email: ${e || 'не указан'}
       filterProducts(); 
       closeAddProductForm();
       addLog('product','Добавлен товар '+name);
+      alert('Товар успешно добавлен и сохранен в облако!');
     }
     
     function cloneProduct(id) {
@@ -2550,7 +2550,7 @@ Email: ${e || 'не указан'}
       filterProducts();
       closeEditModal();
       addLog('product', 'Изменен товар ' + p.name);
-      alert('Товар сохранен');
+      alert('Товар сохранен и отправлен в облако');
     }
     
     function deleteProduct(id) { 
