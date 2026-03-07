@@ -612,6 +612,29 @@
       }
     }
 
+    /* Индикатор синхронизации */
+    .sync-indicator {
+      display: inline-block;
+      width: 8px;
+      height: 8px;
+      border-radius: 50%;
+      background-color: #4CAF50;
+      margin-right: 5px;
+      animation: pulse 2s infinite;
+    }
+
+    @keyframes pulse {
+      0% {
+        box-shadow: 0 0 0 0 rgba(76, 175, 80, 0.7);
+      }
+      70% {
+        box-shadow: 0 0 0 10px rgba(76, 175, 80, 0);
+      }
+      100% {
+        box-shadow: 0 0 0 0 rgba(76, 175, 80, 0);
+      }
+    }
+
     @media (max-width: 768px) {
       .float-buttons { bottom: 15px; right: 15px; }
       .float-button { width: 40px; height: 40px; font-size: 16px; }
@@ -1315,10 +1338,10 @@
 
   <script>
     // JSONBin.io Configuration - ИСПРАВЛЕНО
-    const BIN_ID = '67e3dcac8a456b79667cf043';
+    let BIN_ID = localStorage.getItem('aircom_bin_id') || '67e3dcac8a456b79667cf043';
     const API_KEY = '$2a$10$nHaWqro3xWiiwP.clSBgaeHSwZ6/t3N/Na6lTduZNE8pfmMhCSjwK';
     const MASTER_KEY = '$2a$10$R2DKTgtP5bCinvceXnbMJeRK9GPaGHt1n0tZUZiZ6IqX38G6EKMqO';
-    const JSONBIN_BASE_URL = 'https://api.jsonbin.io/v3'; // ИСПРАВЛЕНО: было isonbin.io
+    const JSONBIN_BASE_URL = 'https://api.jsonbin.io/v3';
 
     // Мобильное меню
     function toggleMobileMenu() { document.getElementById('mobileMenu').classList.toggle('active'); }
@@ -1443,7 +1466,7 @@
     let lastScrollPosition = 0;
     let currentTab = 'specs';
 
-    // Функция загрузки данных из JSONBin - ИСПРАВЛЕНО
+    // Функция загрузки данных из JSONBin
     async function loadFromJSONBin() {
       try {
         const response = await fetch(`${JSONBIN_BASE_URL}/b/${BIN_ID}/latest`, {
@@ -1457,26 +1480,11 @@
           const data = await response.json();
           const record = data.record;
           
-          if (record.products) {
-            products = record.products;
-            localStorage.setItem('aircom_products', JSON.stringify(products));
-          }
-          if (record.brands) {
-            brands = record.brands;
-            localStorage.setItem('aircom_brands', JSON.stringify(brands));
-          }
-          if (record.orders) {
-            orders = record.orders;
-            localStorage.setItem('aircom_orders', JSON.stringify(orders));
-          }
-          if (record.settings) {
-            settings = record.settings;
-            localStorage.setItem('aircom_settings', JSON.stringify(settings));
-          }
-          if (record.actionLogs) {
-            actionLogs = record.actionLogs;
-            localStorage.setItem('aircom_logs', JSON.stringify(actionLogs));
-          }
+          if (record.products) products = record.products;
+          if (record.brands) brands = record.brands;
+          if (record.orders) orders = record.orders;
+          if (record.settings) settings = record.settings;
+          if (record.actionLogs) actionLogs = record.actionLogs;
           
           console.log('Данные загружены из облака');
           showNotification('Данные загружены из облака', 'success');
@@ -1486,7 +1494,6 @@
           filterProducts();
           updateOrderStats();
           renderLogs();
-          
           document.getElementById('backup-status').textContent = '✅ ' + new Date().toLocaleTimeString();
         } else {
           console.log('Используются локальные данные');
@@ -1498,7 +1505,7 @@
       }
     }
 
-    // Функция сохранения данных в JSONBin - ИСПРАВЛЕНО
+    // Функция сохранения данных в JSONBin
     async function saveToJSONBin(data, type) {
       try {
         const fullData = {
@@ -1509,15 +1516,14 @@
           actionLogs: actionLogs
         };
         
-        console.log(`Сохраняем в облако: ${type}`, fullData);
+        console.log(`Сохраняем в облако: ${type}`);
         
         const response = await fetch(`${JSONBIN_BASE_URL}/b/${BIN_ID}`, {
           method: 'PUT',
           headers: {
             'Content-Type': 'application/json',
             'X-Master-Key': MASTER_KEY,
-            'X-Access-Key': API_KEY,
-            'X-Bin-Versioning': 'false'
+            'X-Access-Key': API_KEY
           },
           body: JSON.stringify(fullData)
         });
@@ -1530,6 +1536,14 @@
         } else {
           const errorText = await response.text();
           console.error('Ошибка сохранения в облако:', response.status, errorText);
+          
+          // Если бин не найден, создаем новый
+          if (response.status === 404) {
+            await createNewBin();
+            // Пробуем сохранить еще раз
+            return await saveToJSONBin(data, type);
+          }
+          
           showNotification(`Ошибка сохранения: ${response.status}`, 'error');
           return false;
         }
@@ -1540,45 +1554,41 @@
       }
     }
 
-    // Функция для проверки и создания бина - ИСПРАВЛЕНО
-    async function checkAndCreateBin() {
+    // Функция создания нового бина
+    async function createNewBin() {
       try {
-        const response = await fetch(`${JSONBIN_BASE_URL}/b/${BIN_ID}`, {
+        const initialData = {
+          products: products,
+          brands: brands,
+          orders: orders,
+          settings: settings,
+          actionLogs: actionLogs
+        };
+        
+        const response = await fetch(`${JSONBIN_BASE_URL}/b`, {
+          method: 'POST',
           headers: {
+            'Content-Type': 'application/json',
             'X-Master-Key': MASTER_KEY,
-            'X-Access-Key': API_KEY
-          }
+            'X-Access-Key': API_KEY,
+            'X-Bin-Name': 'AirComfort Data',
+            'X-Bin-Private': 'false'
+          },
+          body: JSON.stringify(initialData)
         });
         
-        if (!response.ok) {
-          const initialData = {
-            products: products,
-            brands: brands,
-            orders: orders,
-            settings: settings,
-            actionLogs: actionLogs
-          };
-          
-          const createResponse = await fetch(`${JSONBIN_BASE_URL}/b`, {
-            method: 'POST',
-            headers: {
-              'Content-Type': 'application/json',
-              'X-Master-Key': MASTER_KEY,
-              'X-Access-Key': API_KEY,
-              'X-Bin-Name': 'AirComfort Data',
-              'X-Bin-Private': 'false'
-            },
-            body: JSON.stringify(initialData)
-          });
-          
-          if (createResponse.ok) {
-            const newBin = await createResponse.json();
-            console.log('Новый бин создан с ID:', newBin.metadata.id);
-            showNotification('Бин успешно создан!', 'success');
-          }
+        if (response.ok) {
+          const newBin = await response.json();
+          BIN_ID = newBin.metadata.id;
+          localStorage.setItem('aircom_bin_id', BIN_ID);
+          console.log('Новый бин создан с ID:', BIN_ID);
+          showNotification('Новый бин создан!', 'success');
+          return true;
         }
+        return false;
       } catch (error) {
-        console.error('Ошибка при проверке бина:', error);
+        console.error('Ошибка создания бина:', error);
+        return false;
       }
     }
 
@@ -1612,7 +1622,6 @@
       notification.style.background = type === 'success' ? 'linear-gradient(135deg, #4CAF50, #45a049)' : 'linear-gradient(135deg, #f44336, #d32f2f)';
       notification.innerHTML = `<i class="ri-${type === 'success' ? 'cloud-line' : 'error-warning-line'}"></i><span>${message}</span>`;
       notification.style.transform = 'translateX(0)';
-      notification.style.animation = 'slideIn 0.3s ease';
       
       setTimeout(() => {
         notification.style.transform = 'translateX(400px)';
@@ -1621,15 +1630,7 @@
 
     async function forceSyncWithCloud() {
       showNotification('Синхронизация с облаком...', 'success');
-      const fullData = {
-        products: products,
-        brands: brands,
-        orders: orders,
-        settings: settings,
-        actionLogs: actionLogs
-      };
-      
-      const success = await saveToJSONBin(fullData, 'все данные');
+      const success = await saveToJSONBin(products, 'все данные');
       if (success) {
         showNotification('Синхронизация завершена!', 'success');
       }
@@ -2589,7 +2590,6 @@ Email: ${e || 'не указан'}
 
     document.addEventListener('DOMContentLoaded',function(){
       loadFromJSONBin();
-      setTimeout(checkAndCreateBin, 1000);
       
       const ms=document.getElementById('model'), li=document.getElementById('length'), db=document.getElementById('decrease-length'), ib=document.getElementById('increase-length'), tp=document.getElementById('total-price'), dc=document.getElementById('demontage'), sc=document.getElementById('service'), ls=document.getElementById('length-section');
       function calc() {
