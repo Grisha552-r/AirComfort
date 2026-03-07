@@ -533,19 +533,49 @@
       box-shadow: 0 0 0 2px rgba(76, 175, 80, 0.3);
     }
     
-    /* Параметры */
+    /* Характеристики и описание */
     .specs-table {
-      display: grid;
-      grid-template-columns: auto 1fr;
-      gap: 12px 20px;
-      align-items: baseline;
+      display: flex;
+      flex-direction: column;
+      gap: 12px;
+    }
+    .specs-row {
+      display: flex;
+      border-bottom: 1px dashed #e5e7eb;
+      padding-bottom: 8px;
     }
     .specs-label {
       font-weight: 600;
       color: #4b5563;
+      width: 140px;
+      flex-shrink: 0;
     }
     .specs-value {
       color: #1f2937;
+      flex: 1;
+    }
+    
+    .tab-button {
+      padding: 10px 24px;
+      font-weight: 600;
+      border-radius: 8px 8px 0 0;
+      transition: all 0.2s;
+      background: #f3f4f6;
+      color: #6b7280;
+      cursor: pointer;
+    }
+    .tab-button.active {
+      background: #4CAF50;
+      color: white;
+    }
+    .tab-content {
+      display: none;
+      padding: 24px;
+      background: #f9fafb;
+      border-radius: 0 8px 8px 8px;
+    }
+    .tab-content.active {
+      display: block;
     }
 
     @media (max-width: 768px) {
@@ -578,6 +608,8 @@
       .brand-chip { font-size: 0.75rem; padding: 0.25rem 0.5rem; }
       .phone-link { display: none !important; }
       .pagination button { padding: 4px 8px; font-size: 12px; }
+      .specs-row { flex-direction: column; gap: 4px; }
+      .specs-label { width: 100%; }
     }
   </style>
 </head>
@@ -965,6 +997,7 @@
               <div><label class="block text-xs sm:text-sm font-medium text-gray-700 mb-1">Площадь</label><select id="new-area" class="w-full border px-2 sm:px-3 py-1 sm:py-2 rounded text-xs sm:text-sm"><option value="до 20">до 20 кв.м.</option><option value="21-29">21-29 кв.м.</option><option value="30-39">30-39 кв.м.</option><option value="40-49">40-49 кв.м.</option><option value="50-69">50-69 кв.м.</option><option value="70-99">70-99 кв.м.</option><option value="100+">от 100 кв.м.</option></select></div>
               <div><label class="block text-xs sm:text-sm font-medium text-gray-700 mb-1">Обогрев</label><input type="text" id="new-heat" placeholder="-15" class="w-full border px-2 sm:px-3 py-1 sm:py-2 rounded text-xs sm:text-sm"></div>
               <div><label class="block text-xs sm:text-sm font-medium text-gray-700 mb-1">Цвет (необязательно)</label><input type="text" id="new-color" placeholder="белый, серый и т.д." class="w-full border px-2 sm:px-3 py-1 sm:py-2 rounded text-xs sm:text-sm"></div>
+              <div class="sm:col-span-2"><label class="block text-xs sm:text-sm font-medium text-gray-700 mb-1">Характеристики (каждая с новой строки)</label><textarea id="new-specs" rows="3" class="w-full border px-2 sm:px-3 py-1 sm:py-2 rounded text-xs sm:text-sm" placeholder="Мощность охлаждения: 2.5 кВт&#10;Энергопотребление: 0.8 кВт&#10;Уровень шума: 22 дБ"></textarea></div>
               <div class="sm:col-span-2"><label class="block text-xs sm:text-sm font-medium text-gray-700 mb-1">Краткое описание</label><textarea id="new-description" rows="2" class="w-full border px-2 sm:px-3 py-1 sm:py-2 rounded text-xs sm:text-sm"></textarea></div>
               <div class="sm:col-span-2"><label class="block text-xs sm:text-sm font-medium text-gray-700 mb-1">Полное описание</label><textarea id="new-fullDescription" rows="3" class="w-full border px-2 sm:px-3 py-1 sm:py-2 rounded text-xs sm:text-sm"></textarea></div>
               <div class="sm:col-span-2"><label class="block text-xs sm:text-sm font-medium text-gray-700 mb-1">Изображения (каждая с новой строки)</label><textarea id="new-images" rows="3" class="w-full border px-2 sm:px-3 py-1 sm:py-2 rounded text-xs sm:text-sm" placeholder="https://.../img1.jpg&#10;https://.../img2.jpg"></textarea></div>
@@ -988,6 +1021,7 @@
                 <div><label class="block text-sm font-medium text-gray-700 mb-1">Площадь</label><select id="edit-area" class="w-full border px-3 py-2 rounded"><option value="до 20">до 20 кв.м.</option><option value="21-29">21-29 кв.м.</option><option value="30-39">30-39 кв.м.</option><option value="40-49">40-49 кв.м.</option><option value="50-69">50-69 кв.м.</option><option value="70-99">70-99 кв.м.</option><option value="100+">от 100 кв.м.</option></select></div>
                 <div><label class="block text-sm font-medium text-gray-700 mb-1">Обогрев</label><input type="text" id="edit-heat" class="w-full border px-3 py-2 rounded"></div>
                 <div><label class="block text-sm font-medium text-gray-700 mb-1">Цвет</label><input type="text" id="edit-color" class="w-full border px-3 py-2 rounded"></div>
+                <div><label class="block text-sm font-medium text-gray-700 mb-1">Характеристики (каждая с новой строки)</label><textarea id="edit-specs" rows="3" class="w-full border px-3 py-2 rounded"></textarea></div>
                 <div><label class="block text-sm font-medium text-gray-700 mb-1">Краткое описание</label><textarea id="edit-description" rows="2" class="w-full border px-3 py-2 rounded"></textarea></div>
                 <div><label class="block text-sm font-medium text-gray-700 mb-1">Полное описание</label><textarea id="edit-fullDescription" rows="4" class="w-full border px-3 py-2 rounded"></textarea></div>
                 <div><label class="block text-sm font-medium text-gray-700 mb-1">Изображения (каждая с новой строки)</label><textarea id="edit-images" rows="3" class="w-full border px-3 py-2 rounded"></textarea></div>
@@ -1260,7 +1294,9 @@
       if (settings.siteSeo) {
         document.querySelector('meta[name="description"]').setAttribute('content', settings.siteSeo);
       }
-      if (settings.siteName) {
+      if (settings.siteTitle) {
+        document.title = settings.siteTitle;
+      } else if (settings.siteName) {
         document.title = settings.siteName + ' - Установка кондиционеров в Гомеле';
       }
     }
@@ -1278,13 +1314,20 @@
         inverter:'Нет', 
         heat:'-7', 
         color:'белый',
+        specs:[
+          'Мощность охлаждения: 2.1 кВт',
+          'Мощность обогрева: 2.3 кВт',
+          'Энергопотребление: 0.75 кВт',
+          'Уровень шума: 23 дБ',
+          'Хладагент: R410A'
+        ],
         images:[
           'https://via.placeholder.com/600x400?text=Ballu+BSO-07HN1+1',
           'https://via.placeholder.com/600x400?text=Ballu+BSO-07HN1+2',
           'https://via.placeholder.com/600x400?text=Ballu+BSO-07HN1+3'
         ],
         description:'Надежный кондиционер для небольших помещений.', 
-        fullDescription:'Ballu BSO-07HN1 - надежная сплит-система для помещений до 20 м². Энергосберегающий режим, низкий шум.', 
+        fullDescription:'Ballu BSO-07HN1 - надежная сплит-система для помещений до 20 м². Энергосберегающий режим, низкий шум. Идеальное решение для спальни или небольшой гостиной.', 
         tags:['хит'], 
         status:'active', 
         createdAt:new Date().toISOString() 
@@ -1299,13 +1342,20 @@
         type:'Настенный', 
         inverter:'Да', 
         heat:'-15',
-        color:'серебристый', 
+        color:'серебристый',
+        specs:[
+          'Мощность охлаждения: 2.5 кВт',
+          'Мощность обогрева: 2.7 кВт',
+          'Энергопотребление: 0.8 кВт',
+          'Уровень шума: 22 дБ',
+          'Wi-Fi управление'
+        ],
         images:[
           'https://via.placeholder.com/600x400?text=Electrolux+1',
           'https://via.placeholder.com/600x400?text=Electrolux+2'
         ],
         description:'Инверторная модель с низким уровнем шума.', 
-        fullDescription:'Electrolux EACS-07HAT/N3 - инверторный кондиционер, 22 дБ, высокая энергоэффективность.', 
+        fullDescription:'Electrolux EACS-07HAT/N3 - инверторный кондиционер, 22 дБ, высокая энергоэффективность. Современный дизайн и удобное управление.', 
         tags:['новинка'], 
         status:'active', 
         createdAt:new Date().toISOString() 
@@ -1320,34 +1370,22 @@
         type:'Настенный', 
         inverter:'Да', 
         heat:'-10',
-        color:'белый', 
+        color:'белый',
+        specs:[
+          'Мощность охлаждения: 2.8 кВт',
+          'Мощность обогрева: 3.0 кВт',
+          'Энергопотребление: 0.9 кВт',
+          'Уровень шума: 25 дБ',
+          'Плазменный фильтр'
+        ],
         images:[
           'https://via.placeholder.com/600x400?text=LG+P09EP+1',
           'https://via.placeholder.com/600x400?text=LG+P09EP+2',
           'https://via.placeholder.com/600x400?text=LG+P09EP+3'
         ],
         description:'Wi-Fi управление, мощный обогрев.', 
-        fullDescription:'LG P09EP - современный кондиционер с Wi-Fi, плазменный фильтр.', 
+        fullDescription:'LG P09EP - современный кондиционер с Wi-Fi, плазменный фильтр. Высокая производительность и стильный внешний вид.', 
         tags:['распродажа'], 
-        status:'active', 
-        createdAt:new Date().toISOString() 
-      },
-      { 
-        id:4, 
-        name:'Mitsubishi MSZ-LN25VG', 
-        brand:'Mitsubishi', 
-        price:2450, 
-        oldPrice:null, 
-        area:'40-49', 
-        type:'Настенный', 
-        inverter:'Да', 
-        heat:'-20',
-        images:[
-          'https://via.placeholder.com/600x400?text=Mitsubishi+1'
-        ],
-        description:'Премиум-класс, тихая работа.', 
-        fullDescription:'Mitsubishi MSZ-LN25VG - премиум, A+++, 19 дБ, обогрев до -20°C.', 
-        tags:[], 
         status:'active', 
         createdAt:new Date().toISOString() 
       }
@@ -1359,6 +1397,7 @@
     let currentProduct = null;
     let currentImageIndex = 0;
     let lastScrollPosition = 0; // Для возврата к месту в каталоге
+    let currentTab = 'specs'; // Текущая вкладка в карточке товара
 
     function loadProducts() { const s=localStorage.getItem('aircom_products'); if(s) products=JSON.parse(s); }
     function saveProducts() { localStorage.setItem('aircom_products', JSON.stringify(products)); addLog('product','Обновлен список товаров'); }
@@ -1617,19 +1656,17 @@
     }
     function changePage(page) { currentPage = page; filterProducts(); }
 
-    // Отдельная страница товара (для SEO) с запоминанием позиции
+    // Отдельная страница товара с вкладками
     function openProductPage(id) {
-      // Сохраняем позицию прокрутки
       lastScrollPosition = window.scrollY;
-      
       window.location.hash = `product-${id}`;
       const p = products.find(p=>p.id===id);
       if (!p) return;
       
       currentProduct = p;
       currentImageIndex = 0;
+      currentTab = 'specs';
       
-      // Скрываем каталог, показываем страницу товара
       document.getElementById('catalog').classList.add('hidden');
       document.getElementById('product-page').classList.remove('hidden');
       
@@ -1641,13 +1678,17 @@
       document.getElementById('product-page').classList.add('hidden');
       window.location.hash = '';
       
-      // Возвращаем на сохраненную позицию
       setTimeout(() => {
         window.scrollTo({
           top: lastScrollPosition,
           behavior: 'auto'
         });
       }, 10);
+    }
+    
+    function switchTab(tab) {
+      currentTab = tab;
+      renderProductPage();
     }
     
     function renderProductPage() {
@@ -1675,12 +1716,28 @@
       }
       
       // Цвет (только если указан)
-      const colorHtml = p.color ? `
-        <div class="specs-item">
-          <span class="specs-label">Цвет:</span>
-          <span class="specs-value">${p.color}</span>
-        </div>
-      ` : '';
+      const colorHtml = p.color ? `<div class="specs-row"><span class="specs-label">Цвет:</span><span class="specs-value">${p.color}</span></div>` : '';
+      
+      // Характеристики
+      let specsHtml = '';
+      if (p.specs && p.specs.length > 0) {
+        specsHtml = p.specs.map(spec => {
+          const parts = spec.split(':');
+          if (parts.length > 1) {
+            return `<div class="specs-row"><span class="specs-label">${parts[0]}:</span><span class="specs-value">${parts.slice(1).join(':')}</span></div>`;
+          }
+          return `<div class="specs-row"><span class="specs-value">${spec}</span></div>`;
+        }).join('');
+      } else {
+        specsHtml = `
+          <div class="specs-row"><span class="specs-label">Бренд:</span><span class="specs-value">${p.brand||'Не указан'}</span></div>
+          <div class="specs-row"><span class="specs-label">Тип:</span><span class="specs-value">${p.type}</span></div>
+          <div class="specs-row"><span class="specs-label">Инвертор:</span><span class="specs-value">${p.inverter}</span></div>
+          <div class="specs-row"><span class="specs-label">Площадь:</span><span class="specs-value">${p.area} м²</span></div>
+          <div class="specs-row"><span class="specs-label">Обогрев:</span><span class="specs-value">до ${p.heat}°C</span></div>
+          ${colorHtml}
+        `;
+      }
       
       document.getElementById('product-page-content').innerHTML = `
         <div class="grid md:grid-cols-2 gap-8">
@@ -1690,34 +1747,26 @@
             <h1 class="text-3xl font-bold mb-4">${p.name}</h1>
             <div class="mb-6">${priceHtml}<span class="text-primary text-4xl font-bold">${p.price} BYN</span></div>
             
-            <div class="bg-gray-50 p-6 rounded-xl mb-6">
-              <h2 class="font-bold text-lg mb-3">Параметры</h2>
+            <!-- Кнопки вкладок -->
+            <div class="flex border-b border-gray-200 mb-6">
+              <button class="tab-button ${currentTab === 'specs' ? 'active' : ''}" onclick="switchTab('specs')">Характеристики</button>
+              <button class="tab-button ${currentTab === 'description' ? 'active' : ''}" onclick="switchTab('description')">Описание</button>
+            </div>
+            
+            <!-- Содержимое вкладок -->
+            <div class="tab-content ${currentTab === 'specs' ? 'active' : ''}">
               <div class="specs-table">
-                <span class="specs-label">Бренд:</span>
-                <span class="specs-value">${p.brand||'Не указан'}</span>
-                
-                <span class="specs-label">Тип:</span>
-                <span class="specs-value">${p.type}</span>
-                
-                <span class="specs-label">Инвертор:</span>
-                <span class="specs-value">${p.inverter}</span>
-                
-                <span class="specs-label">Площадь:</span>
-                <span class="specs-value">${p.area} м²</span>
-                
-                <span class="specs-label">Обогрев:</span>
-                <span class="specs-value">до ${p.heat}°C</span>
-                
-                ${colorHtml}
+                ${specsHtml}
               </div>
             </div>
             
-            <div class="prose max-w-none mb-6">
-              <h2 class="font-bold text-lg mb-2">Описание</h2>
-              <p class="text-gray-700">${p.fullDescription||p.description}</p>
+            <div class="tab-content ${currentTab === 'description' ? 'active' : ''}">
+              <div class="prose max-w-none">
+                <p class="text-gray-700">${p.fullDescription || p.description || 'Описание отсутствует'}</p>
+              </div>
             </div>
             
-            <button onclick="addToCart(${p.id})" class="w-full gradient-bg text-white px-8 py-4 rounded-button btn-animate text-xl font-medium">
+            <button onclick="addToCart(${p.id})" class="w-full gradient-bg text-white px-8 py-4 rounded-button btn-animate text-xl font-medium mt-6">
               В корзину
             </button>
           </div>
@@ -2063,6 +2112,7 @@ Email: ${e || 'не указан'}
         Инвертор:p.inverter, 
         Обогрев:p.heat, 
         Цвет:p.color || '',
+        Характеристики:p.specs?.join('\n') || '',
         Описание:p.description, 
         'Полное описание':p.fullDescription, 
         Изображения:p.images?.join('; '),
@@ -2084,6 +2134,7 @@ Email: ${e || 'не указан'}
           headers.forEach((h,idx)=>prod[h]=values[idx]);
           
           const images = prod['Изображения'] ? prod['Изображения'].split(';').map(s=>s.trim()) : ['https://via.placeholder.com/200x150?text=New'];
+          const specs = prod['Характеристики'] ? prod['Характеристики'].split('\n').map(s=>s.trim()).filter(s=>s) : [];
           
           products.push({ 
             id:Math.max(...products.map(p=>p.id),0)+i, 
@@ -2096,6 +2147,7 @@ Email: ${e || 'не указан'}
             inverter:prod['Инвертор']||'Да', 
             heat:prod['Обогрев']||'-15',
             color:prod['Цвет'] || '',
+            specs: specs,
             images: images,
             description:prod['Описание']||'', 
             fullDescription:prod['Полное описание']||'', 
@@ -2131,6 +2183,9 @@ Email: ${e || 'не указан'}
       const imagesText = document.getElementById('new-images').value;
       const images = imagesText ? imagesText.split('\n').map(s=>s.trim()).filter(s=>s) : ['https://via.placeholder.com/200x150?text=New'];
       
+      const specsText = document.getElementById('new-specs').value;
+      const specs = specsText ? specsText.split('\n').map(s=>s.trim()).filter(s=>s) : [];
+      
       const tags=[];
       if(document.getElementById('new-tag-hit').checked) tags.push('хит');
       if(document.getElementById('new-tag-new').checked) tags.push('новинка');
@@ -2150,6 +2205,7 @@ Email: ${e || 'не указан'}
         inverter:document.getElementById('new-inverter').value, 
         heat:document.getElementById('new-heat').value||'-15', 
         color: color,
+        specs: specs,
         images: images,
         description:document.getElementById('new-description').value, 
         fullDescription:document.getElementById('new-fullDescription').value, 
@@ -2182,7 +2238,6 @@ Email: ${e || 'не указан'}
       
       const modal = document.getElementById('edit-product-modal');
       
-      // Заполняем поля
       document.getElementById('edit-product-id').value = p.id;
       document.getElementById('edit-name').value = p.name;
       document.getElementById('edit-price').value = p.price;
@@ -2192,8 +2247,8 @@ Email: ${e || 'не указан'}
       document.getElementById('edit-description').value = p.description || '';
       document.getElementById('edit-fullDescription').value = p.fullDescription || '';
       document.getElementById('edit-images').value = p.images ? p.images.join('\n') : '';
+      document.getElementById('edit-specs').value = p.specs ? p.specs.join('\n') : '';
       
-      // Заполняем selects
       if (document.getElementById('edit-brand')) {
         document.getElementById('edit-brand').innerHTML = '<option value="">Без бренда</option>' + brands.map(b=>`<option value="${b.name}" ${b.name===p.brand?'selected':''}>${b.name}</option>`).join('');
       }
@@ -2201,7 +2256,6 @@ Email: ${e || 'не указан'}
       if (document.getElementById('edit-inverter')) document.getElementById('edit-inverter').value = p.inverter || 'Да';
       if (document.getElementById('edit-area')) document.getElementById('edit-area').value = p.area || 'до 20';
       
-      // Теги
       if (document.getElementById('edit-tag-hit')) document.getElementById('edit-tag-hit').checked = p.tags?.includes('хит') || false;
       if (document.getElementById('edit-tag-new')) document.getElementById('edit-tag-new').checked = p.tags?.includes('новинка') || false;
       if (document.getElementById('edit-tag-sale')) document.getElementById('edit-tag-sale').checked = p.tags?.includes('распродажа') || false;
@@ -2228,6 +2282,9 @@ Email: ${e || 'не указан'}
       
       const imagesText = document.getElementById('edit-images').value;
       p.images = imagesText ? imagesText.split('\n').map(s=>s.trim()).filter(s=>s) : ['https://via.placeholder.com/200x150?text=No+Image'];
+      
+      const specsText = document.getElementById('edit-specs').value;
+      p.specs = specsText ? specsText.split('\n').map(s=>s.trim()).filter(s=>s) : [];
       
       if (document.getElementById('edit-brand')) p.brand = document.getElementById('edit-brand').value;
       if (document.getElementById('edit-type')) p.type = document.getElementById('edit-type').value;
@@ -2308,7 +2365,6 @@ Email: ${e || 'не указан'}
       if(ib) ib.addEventListener('click',()=>{ li.value=parseInt(li.value)+1; calc(); });
       if(dc) dc.addEventListener('change',calc); if(sc) sc.addEventListener('change',calc); calc();
       
-      // Проверяем все кнопки и функции
       console.log('Сайт загружен, все функции инициализированы');
     });
 
@@ -2318,7 +2374,7 @@ Email: ${e || 'не указан'}
     if(mp) mp.addEventListener('change',(e)=>{ if(pr) pr.value=e.target.value; filterProducts(); });
     window.addEventListener('click',(e)=>{ if(e.target.classList.contains('modal')) e.target.style.display='none'; });
     window.addEventListener('hashchange',checkProductHash);
-    checkProductHash(); // Проверяем хеш при загрузке
+    checkProductHash();
   </script>
 </body>
 </html>
