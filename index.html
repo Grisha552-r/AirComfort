@@ -1000,7 +1000,11 @@
               <div class="sm:col-span-2"><label class="block text-xs sm:text-sm font-medium text-gray-700 mb-1">Характеристики (каждая с новой строки)</label><textarea id="new-specs" rows="3" class="w-full border px-2 sm:px-3 py-1 sm:py-2 rounded text-xs sm:text-sm" placeholder="Мощность охлаждения: 2.5 кВт&#10;Энергопотребление: 0.8 кВт&#10;Уровень шума: 22 дБ"></textarea></div>
               <div class="sm:col-span-2"><label class="block text-xs sm:text-sm font-medium text-gray-700 mb-1">Краткое описание</label><textarea id="new-description" rows="2" class="w-full border px-2 sm:px-3 py-1 sm:py-2 rounded text-xs sm:text-sm"></textarea></div>
               <div class="sm:col-span-2"><label class="block text-xs sm:text-sm font-medium text-gray-700 mb-1">Полное описание</label><textarea id="new-fullDescription" rows="3" class="w-full border px-2 sm:px-3 py-1 sm:py-2 rounded text-xs sm:text-sm"></textarea></div>
-              <div class="sm:col-span-2"><label class="block text-xs sm:text-sm font-medium text-gray-700 mb-1">Изображения (каждая с новой строки)</label><textarea id="new-images" rows="3" class="w-full border px-2 sm:px-3 py-1 sm:py-2 rounded text-xs sm:text-sm" placeholder="https://.../img1.jpg&#10;https://.../img2.jpg"></textarea></div>
+              <div class="sm:col-span-2"><label class="block text-xs sm:text-sm font-medium text-gray-700 mb-1">Изображения (каждая с новой строки)</label><textarea id="new-images" rows="3" class="w-full border px-2 sm:px-3 py-1 sm:py-2 rounded text-xs sm:text-sm" placeholder="https://.../img1.jpg&#10;https://.../img2.jpg"></textarea>
+                <button type="button" onclick="openImageUploader('new-images')" class="bg-blue-500 text-white px-3 py-1 rounded mt-2 text-xs">
+                  <i class="ri-upload-line"></i> Загрузить изображение
+                </button>
+              </div>
               <div class="sm:col-span-2"><label class="block text-xs sm:text-sm font-medium text-gray-700 mb-1">Теги</label><div class="flex gap-3"><label class="flex items-center text-xs sm:text-sm"><input type="checkbox" id="new-tag-hit" class="mr-1"> Хит</label><label class="flex items-center text-xs sm:text-sm"><input type="checkbox" id="new-tag-new" class="mr-1"> Новинка</label><label class="flex items-center text-xs sm:text-sm"><input type="checkbox" id="new-tag-sale" class="mr-1"> Распродажа</label></div></div>
             </div>
             <div class="flex gap-2 mt-3"><button onclick="saveNewProduct()" class="bg-primary text-white px-4 py-2 rounded-button text-xs sm:text-sm">Сохранить</button><button onclick="closeAddProductForm()" class="bg-gray-200 text-gray-800 px-4 py-2 rounded-button text-xs sm:text-sm">Отмена</button></div>
@@ -1024,7 +1028,11 @@
                 <div><label class="block text-sm font-medium text-gray-700 mb-1">Характеристики (каждая с новой строки)</label><textarea id="edit-specs" rows="3" class="w-full border px-3 py-2 rounded"></textarea></div>
                 <div><label class="block text-sm font-medium text-gray-700 mb-1">Краткое описание</label><textarea id="edit-description" rows="2" class="w-full border px-3 py-2 rounded"></textarea></div>
                 <div><label class="block text-sm font-medium text-gray-700 mb-1">Полное описание</label><textarea id="edit-fullDescription" rows="4" class="w-full border px-3 py-2 rounded"></textarea></div>
-                <div><label class="block text-sm font-medium text-gray-700 mb-1">Изображения (каждая с новой строки)</label><textarea id="edit-images" rows="3" class="w-full border px-3 py-2 rounded"></textarea></div>
+                <div><label class="block text-sm font-medium text-gray-700 mb-1">Изображения (каждая с новой строки)</label><textarea id="edit-images" rows="3" class="w-full border px-3 py-2 rounded"></textarea>
+                  <button type="button" onclick="openImageUploader('edit-images')" class="bg-blue-500 text-white px-3 py-1 rounded mt-2 text-xs">
+                    <i class="ri-upload-line"></i> Загрузить изображение
+                  </button>
+                </div>
                 <div><label class="block text-sm font-medium text-gray-700 mb-1">Теги</label><div class="flex gap-3"><label><input type="checkbox" id="edit-tag-hit"> Хит</label><label><input type="checkbox" id="edit-tag-new"> Новинка</label><label><input type="checkbox" id="edit-tag-sale"> Распродажа</label></div></div>
                 <div class="flex gap-2"><button type="button" onclick="saveEditedProduct()" class="flex-1 gradient-bg text-white px-4 py-2 rounded-button">Сохранить</button><button type="button" onclick="closeEditModal()" class="flex-1 bg-gray-200 text-gray-800 px-4 py-2 rounded-button">Отмена</button></div>
               </form>
@@ -1302,94 +1310,7 @@
     }
 
     // Данные
-    let products = [
-      { 
-        id:1, 
-        name:'Ballu BSO-07HN1', 
-        brand:'Ballu', 
-        price:850, 
-        oldPrice:950, 
-        area:'до 20', 
-        type:'Настенный', 
-        inverter:'Нет', 
-        heat:'-7', 
-        color:'белый',
-        specs:[
-          'Мощность охлаждения: 2.1 кВт',
-          'Мощность обогрева: 2.3 кВт',
-          'Энергопотребление: 0.75 кВт',
-          'Уровень шума: 23 дБ',
-          'Хладагент: R410A'
-        ],
-        images:[
-          'https://via.placeholder.com/600x400?text=Ballu+BSO-07HN1+1',
-          'https://via.placeholder.com/600x400?text=Ballu+BSO-07HN1+2',
-          'https://via.placeholder.com/600x400?text=Ballu+BSO-07HN1+3'
-        ],
-        description:'Надежный кондиционер для небольших помещений.', 
-        fullDescription:'Ballu BSO-07HN1 - надежная сплит-система для помещений до 20 м². Энергосберегающий режим, низкий шум. Идеальное решение для спальни или небольшой гостиной.', 
-        tags:['хит'], 
-        status:'active', 
-        createdAt:new Date().toISOString() 
-      },
-      { 
-        id:2, 
-        name:'Electrolux EACS-07HAT/N3', 
-        brand:'Electrolux', 
-        price:1100, 
-        oldPrice:null, 
-        area:'21-29', 
-        type:'Настенный', 
-        inverter:'Да', 
-        heat:'-15',
-        color:'серебристый',
-        specs:[
-          'Мощность охлаждения: 2.5 кВт',
-          'Мощность обогрева: 2.7 кВт',
-          'Энергопотребление: 0.8 кВт',
-          'Уровень шума: 22 дБ',
-          'Wi-Fi управление'
-        ],
-        images:[
-          'https://via.placeholder.com/600x400?text=Electrolux+1',
-          'https://via.placeholder.com/600x400?text=Electrolux+2'
-        ],
-        description:'Инверторная модель с низким уровнем шума.', 
-        fullDescription:'Electrolux EACS-07HAT/N3 - инверторный кондиционер, 22 дБ, высокая энергоэффективность. Современный дизайн и удобное управление.', 
-        tags:['новинка'], 
-        status:'active', 
-        createdAt:new Date().toISOString() 
-      },
-      { 
-        id:3, 
-        name:'LG P09EP', 
-        brand:'LG', 
-        price:1450, 
-        oldPrice:1650, 
-        area:'30-39', 
-        type:'Настенный', 
-        inverter:'Да', 
-        heat:'-10',
-        color:'белый',
-        specs:[
-          'Мощность охлаждения: 2.8 кВт',
-          'Мощность обогрева: 3.0 кВт',
-          'Энергопотребление: 0.9 кВт',
-          'Уровень шума: 25 дБ',
-          'Плазменный фильтр'
-        ],
-        images:[
-          'https://via.placeholder.com/600x400?text=LG+P09EP+1',
-          'https://via.placeholder.com/600x400?text=LG+P09EP+2',
-          'https://via.placeholder.com/600x400?text=LG+P09EP+3'
-        ],
-        description:'Wi-Fi управление, мощный обогрев.', 
-        fullDescription:'LG P09EP - современный кондиционер с Wi-Fi, плазменный фильтр. Высокая производительность и стильный внешний вид.', 
-        tags:['распродажа'], 
-        status:'active', 
-        createdAt:new Date().toISOString() 
-      }
-    ];
+    let products = [];
     let brands = [{ id:1, name:'Ballu' }, { id:2, name:'Electrolux' }, { id:3, name:'LG' }, { id:4, name:'Mitsubishi' }, { id:5, name:'Samsung' }, { id:6, name:'Panasonic' }];
     let cart = [], orders = [], adminCredentials = { login:'admin', password:'admin123' }, selectedProducts = new Set(), actionLogs = [], currentPage = 1, itemsPerPage = 6;
     let visitCount = 0, totalVisits = 0;
@@ -1399,8 +1320,376 @@
     let lastScrollPosition = 0; // Для возврата к месту в каталоге
     let currentTab = 'specs'; // Текущая вкладка в карточке товара
 
-    function loadProducts() { const s=localStorage.getItem('aircom_products'); if(s) products=JSON.parse(s); }
-    function saveProducts() { localStorage.setItem('aircom_products', JSON.stringify(products)); addLog('product','Обновлен список товаров'); }
+    // === НОВЫЕ СЕРВЕРНЫЕ ФУНКЦИИ ===
+    // Загрузка товаров с сервера
+    async function loadProductsFromServer() {
+      try {
+        const response = await fetch('api.php?action=getProducts');
+        const data = await response.json();
+        if (data.success) {
+          products = data.products;
+          filterProducts(); // Обновить отображение
+          renderBrands();
+          return true;
+        }
+      } catch (error) {
+        console.error('Ошибка загрузки товаров:', error);
+        // Если сервер недоступен, используем тестовые данные
+        products = [
+          { 
+            id:1, 
+            name:'Ballu BSO-07HN1', 
+            brand:'Ballu', 
+            price:850, 
+            oldPrice:950, 
+            area:'до 20', 
+            type:'Настенный', 
+            inverter:'Нет', 
+            heat:'-7', 
+            color:'белый',
+            specs:[
+              'Мощность охлаждения: 2.1 кВт',
+              'Мощность обогрева: 2.3 кВт',
+              'Энергопотребление: 0.75 кВт',
+              'Уровень шума: 23 дБ',
+              'Хладагент: R410A'
+            ],
+            images:[
+              'https://via.placeholder.com/600x400?text=Ballu+BSO-07HN1+1',
+              'https://via.placeholder.com/600x400?text=Ballu+BSO-07HN1+2',
+              'https://via.placeholder.com/600x400?text=Ballu+BSO-07HN1+3'
+            ],
+            description:'Надежный кондиционер для небольших помещений.', 
+            fullDescription:'Ballu BSO-07HN1 - надежная сплит-система для помещений до 20 м². Энергосберегающий режим, низкий шум. Идеальное решение для спальни или небольшой гостиной.', 
+            tags:['хит'], 
+            status:'active', 
+            createdAt:new Date().toISOString() 
+          },
+          { 
+            id:2, 
+            name:'Electrolux EACS-07HAT/N3', 
+            brand:'Electrolux', 
+            price:1100, 
+            oldPrice:null, 
+            area:'21-29', 
+            type:'Настенный', 
+            inverter:'Да', 
+            heat:'-15',
+            color:'серебристый',
+            specs:[
+              'Мощность охлаждения: 2.5 кВт',
+              'Мощность обогрева: 2.7 кВт',
+              'Энергопотребление: 0.8 кВт',
+              'Уровень шума: 22 дБ',
+              'Wi-Fi управление'
+            ],
+            images:[
+              'https://via.placeholder.com/600x400?text=Electrolux+1',
+              'https://via.placeholder.com/600x400?text=Electrolux+2'
+            ],
+            description:'Инверторная модель с низким уровнем шума.', 
+            fullDescription:'Electrolux EACS-07HAT/N3 - инверторный кондиционер, 22 дБ, высокая энергоэффективность. Современный дизайн и удобное управление.', 
+            tags:['новинка'], 
+            status:'active', 
+            createdAt:new Date().toISOString() 
+          },
+          { 
+            id:3, 
+            name:'LG P09EP', 
+            brand:'LG', 
+            price:1450, 
+            oldPrice:1650, 
+            area:'30-39', 
+            type:'Настенный', 
+            inverter:'Да', 
+            heat:'-10',
+            color:'белый',
+            specs:[
+              'Мощность охлаждения: 2.8 кВт',
+              'Мощность обогрева: 3.0 кВт',
+              'Энергопотребление: 0.9 кВт',
+              'Уровень шума: 25 дБ',
+              'Плазменный фильтр'
+            ],
+            images:[
+              'https://via.placeholder.com/600x400?text=LG+P09EP+1',
+              'https://via.placeholder.com/600x400?text=LG+P09EP+2',
+              'https://via.placeholder.com/600x400?text=LG+P09EP+3'
+            ],
+            description:'Wi-Fi управление, мощный обогрев.', 
+            fullDescription:'LG P09EP - современный кондиционер с Wi-Fi, плазменный фильтр. Высокая производительность и стильный внешний вид.', 
+            tags:['распродажа'], 
+            status:'active', 
+            createdAt:new Date().toISOString() 
+          }
+        ];
+        filterProducts();
+        renderBrands();
+      }
+      return false;
+    }
+
+    // Сохранение нового товара
+    async function saveNewProduct() {
+      const name = document.getElementById('new-name').value;
+      if (!name) { alert('Введите название'); return; }
+      const price = parseFloat(document.getElementById('new-price').value);
+      if (isNaN(price)) { alert('Введите цену'); return; }
+      
+      const imagesText = document.getElementById('new-images').value;
+      const images = imagesText ? imagesText.split('\n').map(s => s.trim()).filter(s => s) : ['https://via.placeholder.com/200x150?text=New'];
+      
+      const specsText = document.getElementById('new-specs').value;
+      const specs = specsText ? specsText.split('\n').map(s => s.trim()).filter(s => s) : [];
+      
+      const tags = [];
+      if (document.getElementById('new-tag-hit').checked) tags.push('хит');
+      if (document.getElementById('new-tag-new').checked) tags.push('новинка');
+      if (document.getElementById('new-tag-sale').checked) tags.push('распродажа');
+      
+      const color = document.getElementById('new-color').value || '';
+      
+      const newProduct = {
+        name,
+        brand: document.getElementById('new-brand').value,
+        price,
+        oldPrice: document.getElementById('new-old-price').value ? parseFloat(document.getElementById('new-old-price').value) : null,
+        area: document.getElementById('new-area').value,
+        type: document.getElementById('new-type').value,
+        inverter: document.getElementById('new-inverter').value,
+        heat: document.getElementById('new-heat').value || '-15',
+        color: color,
+        specs: specs,
+        images: images,
+        description: document.getElementById('new-description').value,
+        fullDescription: document.getElementById('new-fullDescription').value,
+        tags,
+        status: 'active'
+      };
+      
+      try {
+        const response = await fetch('api.php?action=saveProduct', {
+          method: 'POST',
+          headers: { 'Content-Type': 'application/json' },
+          body: JSON.stringify(newProduct)
+        });
+        
+        const data = await response.json();
+        if (data.success) {
+          products = data.products;
+          filterProducts();
+          renderAdminProducts();
+          closeAddProductForm();
+          addLog('product', 'Добавлен товар ' + name);
+          alert('Товар успешно добавлен');
+        } else {
+          alert('Ошибка при сохранении товара');
+        }
+      } catch (error) {
+        console.error('Ошибка:', error);
+        // Офлайн-режим: добавляем локально
+        const newId = Math.max(...products.map(p=>p.id),0) + 1;
+        newProduct.id = newId;
+        newProduct.createdAt = new Date().toISOString();
+        products.push(newProduct);
+        filterProducts();
+        renderAdminProducts();
+        closeAddProductForm();
+        addLog('product', 'Добавлен товар ' + name);
+        alert('Товар добавлен локально (сервер недоступен)');
+      }
+    }
+
+    // Редактирование товара
+    async function saveEditedProduct() {
+      const id = parseInt(document.getElementById('edit-product-id').value);
+      
+      const imagesText = document.getElementById('edit-images').value;
+      const images = imagesText ? imagesText.split('\n').map(s => s.trim()).filter(s => s) : ['https://via.placeholder.com/200x150?text=No+Image'];
+      
+      const specsText = document.getElementById('edit-specs').value;
+      const specs = specsText ? specsText.split('\n').map(s => s.trim()).filter(s => s) : [];
+      
+      const tags = [];
+      if (document.getElementById('edit-tag-hit')?.checked) tags.push('хит');
+      if (document.getElementById('edit-tag-new')?.checked) tags.push('новинка');
+      if (document.getElementById('edit-tag-sale')?.checked) tags.push('распродажа');
+      
+      const updatedProduct = {
+        id: id,
+        name: document.getElementById('edit-name').value,
+        price: parseFloat(document.getElementById('edit-price').value),
+        oldPrice: document.getElementById('edit-old-price').value ? parseFloat(document.getElementById('edit-old-price').value) : null,
+        heat: document.getElementById('edit-heat').value || '-15',
+        color: document.getElementById('edit-color').value || '',
+        description: document.getElementById('edit-description').value,
+        fullDescription: document.getElementById('edit-fullDescription').value,
+        images: images,
+        specs: specs,
+        tags: tags
+      };
+      
+      if (document.getElementById('edit-brand')) updatedProduct.brand = document.getElementById('edit-brand').value;
+      if (document.getElementById('edit-type')) updatedProduct.type = document.getElementById('edit-type').value;
+      if (document.getElementById('edit-inverter')) updatedProduct.inverter = document.getElementById('edit-inverter').value;
+      if (document.getElementById('edit-area')) updatedProduct.area = document.getElementById('edit-area').value;
+      
+      try {
+        const response = await fetch('api.php?action=saveProduct', {
+          method: 'POST',
+          headers: { 'Content-Type': 'application/json' },
+          body: JSON.stringify(updatedProduct)
+        });
+        
+        const data = await response.json();
+        if (data.success) {
+          products = data.products;
+          filterProducts();
+          renderAdminProducts();
+          closeEditModal();
+          addLog('product', 'Изменен товар ' + updatedProduct.name);
+          alert('Товар сохранен');
+        } else {
+          alert('Ошибка при сохранении товара');
+        }
+      } catch (error) {
+        console.error('Ошибка:', error);
+        // Офлайн-режим: обновляем локально
+        const index = products.findIndex(p => p.id === id);
+        if (index !== -1) {
+          products[index] = { ...products[index], ...updatedProduct };
+          filterProducts();
+          renderAdminProducts();
+          closeEditModal();
+          addLog('product', 'Изменен товар ' + updatedProduct.name);
+          alert('Товар сохранен локально (сервер недоступен)');
+        }
+      }
+    }
+
+    // Удаление товара
+    async function deleteProduct(id) {
+      if (confirm('Удалить товар?')) {
+        try {
+          const response = await fetch('api.php?action=deleteProduct', {
+            method: 'DELETE',
+            headers: { 'Content-Type': 'application/json' },
+            body: JSON.stringify({ id: id })
+          });
+          
+          const data = await response.json();
+          if (data.success) {
+            products = data.products;
+            filterProducts();
+            renderAdminProducts();
+            addLog('product', `Удален товар ID: ${id}`);
+            alert('Товар удален');
+          } else {
+            alert('Ошибка при удалении товара');
+          }
+        } catch (error) {
+          console.error('Ошибка:', error);
+          // Офлайн-режим: удаляем локально
+          products = products.filter(p => p.id !== id);
+          filterProducts();
+          renderAdminProducts();
+          addLog('product', `Удален товар ID: ${id}`);
+          alert('Товар удален локально (сервер недоступен)');
+        }
+      }
+    }
+
+    // Удаление выбранных товаров
+    async function deleteSelectedProducts() {
+      if (selectedProducts.size === 0) { alert('Выберите товары'); return; }
+      if (confirm(`Удалить ${selectedProducts.size} товар(ов)?`)) {
+        const ids = Array.from(selectedProducts);
+        
+        try {
+          const response = await fetch('api.php?action=deleteSelected', {
+            method: 'POST',
+            headers: { 'Content-Type': 'application/json' },
+            body: JSON.stringify({ ids: ids })
+          });
+          
+          const data = await response.json();
+          if (data.success) {
+            products = data.products;
+            selectedProducts.clear();
+            filterProducts();
+            renderAdminProducts();
+            addLog('product', `Удалено товаров: ${ids.length}`);
+            alert('Товары удалены');
+          } else {
+            alert('Ошибка при удалении товаров');
+          }
+        } catch (error) {
+          console.error('Ошибка:', error);
+          // Офлайн-режим: удаляем локально
+          products = products.filter(p => !ids.includes(p.id));
+          selectedProducts.clear();
+          filterProducts();
+          renderAdminProducts();
+          addLog('product', `Удалено товаров: ${ids.length}`);
+          alert('Товары удалены локально (сервер недоступен)');
+        }
+      }
+    }
+
+    // Функция для загрузки изображения
+    async function uploadImage(file) {
+      const formData = new FormData();
+      formData.append('image', file);
+      
+      try {
+        const response = await fetch('upload.php', {
+          method: 'POST',
+          body: formData
+        });
+        
+        const data = await response.json();
+        if (data.success) {
+          return data.url;
+        } else {
+          alert('Ошибка загрузки: ' + data.message);
+          return null;
+        }
+      } catch (error) {
+        console.error('Ошибка загрузки:', error);
+        // Имитация загрузки (для демо)
+        return 'https://via.placeholder.com/600x400?text=Uploaded+Image';
+      }
+    }
+
+    // Открыть диалог загрузки изображения
+    function openImageUploader(targetId) {
+      const input = document.createElement('input');
+      input.type = 'file';
+      input.accept = 'image/*';
+      input.onchange = async (e) => {
+        const file = e.target.files[0];
+        if (file) {
+          const url = await uploadImage(file);
+          if (url) {
+            const textarea = document.getElementById(targetId);
+            textarea.value += (textarea.value ? '\n' : '') + url;
+          }
+        }
+      };
+      input.click();
+    }
+
+    // Заглушки для старых функций
+    function loadProducts() {
+      loadProductsFromServer();
+    }
+
+    function saveProducts() {
+      console.log('Товары сохраняются на сервере через API');
+    }
+
+    // === КОНЕЦ НОВЫХ СЕРВЕРНЫХ ФУНКЦИЙ ===
+
     function loadBrands() { const s=localStorage.getItem('aircom_brands'); if(s) brands=JSON.parse(s); renderBrands(); updateBrandSelects(); }
     function saveBrands() { localStorage.setItem('aircom_brands', JSON.stringify(brands)); renderBrands(); updateBrandSelects(); addLog('brand','Обновлен список брендов'); }
     function loadVisits() {
@@ -2089,19 +2378,6 @@ Email: ${e || 'не указан'}
     function selectAllProducts() { document.getElementById('select-all-products').checked=true; toggleSelectAll(); }
     function deselectAllProducts() { document.getElementById('select-all-products').checked=false; toggleSelectAll(); }
     
-    function deleteSelectedProducts() {
-      if(selectedProducts.size===0) { alert('Выберите товары'); return; }
-      if(confirm(`Удалить ${selectedProducts.size} товар(ов)?`)) {
-        products = products.filter(p => !selectedProducts.has(p.id));
-        selectedProducts.clear();
-        saveProducts(); 
-        renderAdminProducts(); 
-        filterProducts(); 
-        addLog('product',`Удалено товаров: ${selectedProducts.size}`);
-        alert('Товары удалены');
-      }
-    }
-    
     function exportProducts() {
       const data=products.map(p=>({ 
         Название:p.name, 
@@ -2174,53 +2450,6 @@ Email: ${e || 'не указан'}
       document.getElementById('add-product-form').classList.add('hidden'); 
     }
     
-    function saveNewProduct() {
-      const name=document.getElementById('new-name').value; 
-      if(!name) { alert('Введите название'); return; }
-      const price=parseFloat(document.getElementById('new-price').value); 
-      if(isNaN(price)) { alert('Введите цену'); return; }
-      
-      const imagesText = document.getElementById('new-images').value;
-      const images = imagesText ? imagesText.split('\n').map(s=>s.trim()).filter(s=>s) : ['https://via.placeholder.com/200x150?text=New'];
-      
-      const specsText = document.getElementById('new-specs').value;
-      const specs = specsText ? specsText.split('\n').map(s=>s.trim()).filter(s=>s) : [];
-      
-      const tags=[];
-      if(document.getElementById('new-tag-hit').checked) tags.push('хит');
-      if(document.getElementById('new-tag-new').checked) tags.push('новинка');
-      if(document.getElementById('new-tag-sale').checked) tags.push('распродажа');
-      
-      const color = document.getElementById('new-color').value || '';
-      
-      const newId = Math.max(...products.map(p=>p.id),0) + 1;
-      products.push({ 
-        id:newId, 
-        name, 
-        brand:document.getElementById('new-brand').value, 
-        price, 
-        oldPrice:document.getElementById('new-old-price').value ? parseFloat(document.getElementById('new-old-price').value) : null, 
-        area:document.getElementById('new-area').value, 
-        type:document.getElementById('new-type').value, 
-        inverter:document.getElementById('new-inverter').value, 
-        heat:document.getElementById('new-heat').value||'-15', 
-        color: color,
-        specs: specs,
-        images: images,
-        description:document.getElementById('new-description').value, 
-        fullDescription:document.getElementById('new-fullDescription').value, 
-        tags, 
-        status:'active', 
-        createdAt:new Date().toISOString() 
-      });
-      
-      saveProducts(); 
-      renderAdminProducts(); 
-      filterProducts(); 
-      closeAddProductForm();
-      addLog('product','Добавлен товар '+name);
-    }
-    
     function cloneProduct(id) {
       const p=products.find(p=>p.id===id); 
       if(!p) return;
@@ -2265,54 +2494,6 @@ Email: ${e || 'не указан'}
     
     function closeEditModal() {
       document.getElementById('edit-product-modal').style.display = 'none';
-    }
-    
-    function saveEditedProduct() {
-      const id = parseInt(document.getElementById('edit-product-id').value);
-      const p = products.find(p => p.id === id);
-      if (!p) return;
-      
-      p.name = document.getElementById('edit-name').value;
-      p.price = parseFloat(document.getElementById('edit-price').value);
-      p.oldPrice = document.getElementById('edit-old-price').value ? parseFloat(document.getElementById('edit-old-price').value) : null;
-      p.heat = document.getElementById('edit-heat').value || '-15';
-      p.color = document.getElementById('edit-color').value || '';
-      p.description = document.getElementById('edit-description').value;
-      p.fullDescription = document.getElementById('edit-fullDescription').value;
-      
-      const imagesText = document.getElementById('edit-images').value;
-      p.images = imagesText ? imagesText.split('\n').map(s=>s.trim()).filter(s=>s) : ['https://via.placeholder.com/200x150?text=No+Image'];
-      
-      const specsText = document.getElementById('edit-specs').value;
-      p.specs = specsText ? specsText.split('\n').map(s=>s.trim()).filter(s=>s) : [];
-      
-      if (document.getElementById('edit-brand')) p.brand = document.getElementById('edit-brand').value;
-      if (document.getElementById('edit-type')) p.type = document.getElementById('edit-type').value;
-      if (document.getElementById('edit-inverter')) p.inverter = document.getElementById('edit-inverter').value;
-      if (document.getElementById('edit-area')) p.area = document.getElementById('edit-area').value;
-      
-      p.tags = [];
-      if (document.getElementById('edit-tag-hit')?.checked) p.tags.push('хит');
-      if (document.getElementById('edit-tag-new')?.checked) p.tags.push('новинка');
-      if (document.getElementById('edit-tag-sale')?.checked) p.tags.push('распродажа');
-      
-      saveProducts();
-      renderAdminProducts();
-      filterProducts();
-      closeEditModal();
-      addLog('product', 'Изменен товар ' + p.name);
-      alert('Товар сохранен');
-    }
-    
-    function deleteProduct(id) { 
-      if(confirm('Удалить товар?')) { 
-        products = products.filter(p => p.id !== id); 
-        saveProducts(); 
-        renderAdminProducts(); 
-        filterProducts(); 
-        addLog('product',`Удален товар ID: ${id}`); 
-        alert('Товар удален');
-      } 
     }
 
     function renderAdminBrands() {
@@ -2368,7 +2549,15 @@ Email: ${e || 'не указан'}
       console.log('Сайт загружен, все функции инициализированы');
     });
 
-    loadProducts(); loadBrands(); loadOrders(); loadCart(); loadLogs(); loadVisits(); loadSettings(); filterProducts();
+    // Инициализация: загружаем товары с сервера
+    loadProductsFromServer();
+    loadBrands(); 
+    loadOrders(); 
+    loadCart(); 
+    loadLogs(); 
+    loadVisits(); 
+    loadSettings(); 
+    
     const pr=document.getElementById('priceRange'), mp=document.getElementById('maxPrice');
     if(pr) pr.addEventListener('input',(e)=>{ if(mp) mp.value=e.target.value; filterProducts(); });
     if(mp) mp.addEventListener('change',(e)=>{ if(pr) pr.value=e.target.value; filterProducts(); });
