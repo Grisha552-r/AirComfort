@@ -1,5 +1,5 @@
-// products.js
-const productsData = [
+// products.js - Отдельный файл с товарами
+window.productsData = [
   {
     id: 1,
     name: 'Ballu BSO-07HN1',
@@ -19,19 +19,71 @@ const productsData = [
       'Хладагент: R410A'
     ],
     images: [
-      'https://raw.githubusercontent.com/Grisha552-r/AirCom-fort/main/img/products/ballu-1.jpg',
-      'https://raw.githubusercontent.com/Grisha552-r/AirCom-fort/main/img/products/ballu-2.jpg'
+      'https://via.placeholder.com/600x400?text=Ballu+BSO-07HN1+1',
+      'https://via.placeholder.com/600x400?text=Ballu+BSO-07HN1+2',
+      'https://via.placeholder.com/600x400?text=Ballu+BSO-07HN1+3'
     ],
     description: 'Надежный кондиционер для небольших помещений.',
-    fullDescription: 'Ballu BSO-07HN1 - надежная сплит-система для помещений до 20 м²...',
+    fullDescription: 'Ballu BSO-07HN1 - надежная сплит-система для помещений до 20 м². Энергосберегающий режим, низкий шум. Идеальное решение для спальни или небольшой гостиной.',
     tags: ['хит'],
     status: 'active',
-    createdAt: '2024-01-01T00:00:00.000Z'
+    createdAt: new Date().toISOString()
+  },
+  {
+    id: 2,
+    name: 'Electrolux EACS-07HAT/N3',
+    brand: 'Electrolux',
+    price: 1100,
+    oldPrice: null,
+    area: '21-29',
+    type: 'Настенный',
+    inverter: 'Да',
+    heat: '-15',
+    color: 'серебристый',
+    specs: [
+      'Мощность охлаждения: 2.5 кВт',
+      'Мощность обогрева: 2.7 кВт',
+      'Энергопотребление: 0.8 кВт',
+      'Уровень шума: 22 дБ',
+      'Wi-Fi управление'
+    ],
+    images: [
+      'https://via.placeholder.com/600x400?text=Electrolux+1',
+      'https://via.placeholder.com/600x400?text=Electrolux+2'
+    ],
+    description: 'Инверторная модель с низким уровнем шума.',
+    fullDescription: 'Electrolux EACS-07HAT/N3 - инверторный кондиционер, 22 дБ, высокая энергоэффективность. Современный дизайн и удобное управление.',
+    tags: ['новинка'],
+    status: 'active',
+    createdAt: new Date().toISOString()
+  },
+  {
+    id: 3,
+    name: 'LG P09EP',
+    brand: 'LG',
+    price: 1450,
+    oldPrice: 1650,
+    area: '30-39',
+    type: 'Настенный',
+    inverter: 'Да',
+    heat: '-10',
+    color: 'белый',
+    specs: [
+      'Мощность охлаждения: 2.8 кВт',
+      'Мощность обогрева: 3.0 кВт',
+      'Энергопотребление: 0.9 кВт',
+      'Уровень шума: 25 дБ',
+      'Плазменный фильтр'
+    ],
+    images: [
+      'https://via.placeholder.com/600x400?text=LG+P09EP+1',
+      'https://via.placeholder.com/600x400?text=LG+P09EP+2',
+      'https://via.placeholder.com/600x400?text=LG+P09EP+3'
+    ],
+    description: 'Wi-Fi управление, мощный обогрев.',
+    fullDescription: 'LG P09EP - современный кондиционер с Wi-Fi, плазменный фильтр. Высокая производительность и стильный внешний вид.',
+    tags: ['распродажа'],
+    status: 'active',
+    createdAt: new Date().toISOString()
   }
-  // ... остальные товары
 ];
-
-// Если нужно, можно добавить функцию для синхронизации с localStorage
-if (typeof module !== 'undefined' && module.exports) {
-    module.exports = productsData; // для Node.js среды
-}
