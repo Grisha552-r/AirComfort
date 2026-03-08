@@ -1,0 +1,11 @@
+# База данных
+*.db
+*.db-journal
+
+# Загруженные изображения
+/uploads/
+!uploads/.gitkeep
+
+# Локальные настройки
+.DS_Store
+Thumbs.db
