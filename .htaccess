@@ -1,0 +1,5 @@
+# Файл: database/.htaccess
+# Защищаем папку с базой данных от прямого доступа
+
+Order Deny,Allow
+Deny from all
