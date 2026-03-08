@@ -1302,107 +1302,38 @@
     }
 
     // Данные
-    let products = [
-      { 
-        id:1, 
-        name:'Ballu BSO-07HN1', 
-        brand:'Ballu', 
-        price:850, 
-        oldPrice:950, 
-        area:'до 20', 
-        type:'Настенный', 
-        inverter:'Нет', 
-        heat:'-7', 
-        color:'белый',
-        specs:[
-          'Мощность охлаждения: 2.1 кВт',
-          'Мощность обогрева: 2.3 кВт',
-          'Энергопотребление: 0.75 кВт',
-          'Уровень шума: 23 дБ',
-          'Хладагент: R410A'
-        ],
-        images:[
-          'https://via.placeholder.com/600x400?text=Ballu+BSO-07HN1+1',
-          'https://via.placeholder.com/600x400?text=Ballu+BSO-07HN1+2',
-          'https://via.placeholder.com/600x400?text=Ballu+BSO-07HN1+3'
-        ],
-        description:'Надежный кондиционер для небольших помещений.', 
-        fullDescription:'Ballu BSO-07HN1 - надежная сплит-система для помещений до 20 м². Энергосберегающий режим, низкий шум. Идеальное решение для спальни или небольшой гостиной.', 
-        tags:['хит'], 
-        status:'active', 
-        createdAt:new Date().toISOString() 
-      },
-      { 
-        id:2, 
-        name:'Electrolux EACS-07HAT/N3', 
-        brand:'Electrolux', 
-        price:1100, 
-        oldPrice:null, 
-        area:'21-29', 
-        type:'Настенный', 
-        inverter:'Да', 
-        heat:'-15',
-        color:'серебристый',
-        specs:[
-          'Мощность охлаждения: 2.5 кВт',
-          'Мощность обогрева: 2.7 кВт',
-          'Энергопотребление: 0.8 кВт',
-          'Уровень шума: 22 дБ',
-          'Wi-Fi управление'
-        ],
-        images:[
-          'https://via.placeholder.com/600x400?text=Electrolux+1',
-          'https://via.placeholder.com/600x400?text=Electrolux+2'
-        ],
-        description:'Инверторная модель с низким уровнем шума.', 
-        fullDescription:'Electrolux EACS-07HAT/N3 - инверторный кондиционер, 22 дБ, высокая энергоэффективность. Современный дизайн и удобное управление.', 
-        tags:['новинка'], 
-        status:'active', 
-        createdAt:new Date().toISOString() 
-      },
-      { 
-        id:3, 
-        name:'LG P09EP', 
-        brand:'LG', 
-        price:1450, 
-        oldPrice:1650, 
-        area:'30-39', 
-        type:'Настенный', 
-        inverter:'Да', 
-        heat:'-10',
-        color:'белый',
-        specs:[
-          'Мощность охлаждения: 2.8 кВт',
-          'Мощность обогрева: 3.0 кВт',
-          'Энергопотребление: 0.9 кВт',
-          'Уровень шума: 25 дБ',
-          'Плазменный фильтр'
-        ],
-        images:[
-          'https://via.placeholder.com/600x400?text=LG+P09EP+1',
-          'https://via.placeholder.com/600x400?text=LG+P09EP+2',
-          'https://via.placeholder.com/600x400?text=LG+P09EP+3'
-        ],
-        description:'Wi-Fi управление, мощный обогрев.', 
-        fullDescription:'LG P09EP - современный кондиционер с Wi-Fi, плазменный фильтр. Высокая производительность и стильный внешний вид.', 
-        tags:['распродажа'], 
-        status:'active', 
-        createdAt:new Date().toISOString() 
-      }
-    ];
+    let products = []; // Пустой массив - будет заполнен из products.js или localStorage
     let brands = [{ id:1, name:'Ballu' }, { id:2, name:'Electrolux' }, { id:3, name:'LG' }, { id:4, name:'Mitsubishi' }, { id:5, name:'Samsung' }, { id:6, name:'Panasonic' }];
     let cart = [], orders = [], adminCredentials = { login:'admin', password:'admin123' }, selectedProducts = new Set(), actionLogs = [], currentPage = 1, itemsPerPage = 6;
     let visitCount = 0, totalVisits = 0;
     let settings = {};
     let currentProduct = null;
     let currentImageIndex = 0;
-    let lastScrollPosition = 0; // Для возврата к месту в каталоге
-    let currentTab = 'specs'; // Текущая вкладка в карточке товара
+    let lastScrollPosition = 0;
+    let currentTab = 'specs';
 
-    function loadProducts() { const s=localStorage.getItem('aircom_products'); if(s) products=JSON.parse(s); }
-    function saveProducts() { localStorage.setItem('aircom_products', JSON.stringify(products)); addLog('product','Обновлен список товаров'); }
+    // Функция загрузки товаров
+    function loadProducts() {
+      const saved = localStorage.getItem('aircom_products');
+      if (saved) {
+        // Если есть сохраненные в localStorage (через админку)
+        products = JSON.parse(saved);
+      } else if (window.productsData) {
+        // Если нет в localStorage, используем данные из products.js
+        products = window.productsData;
+        // Сохраняем в localStorage для будущих изменений
+        localStorage.setItem('aircom_products', JSON.stringify(products));
+      }
+    }
+    
+    function saveProducts() { 
+      localStorage.setItem('aircom_products', JSON.stringify(products)); 
+      addLog('product','Обновлен список товаров'); 
+    }
+    
     function loadBrands() { const s=localStorage.getItem('aircom_brands'); if(s) brands=JSON.parse(s); renderBrands(); updateBrandSelects(); }
     function saveBrands() { localStorage.setItem('aircom_brands', JSON.stringify(brands)); renderBrands(); updateBrandSelects(); addLog('brand','Обновлен список брендов'); }
+    
     function loadVisits() {
       const today = new Date().toDateString();
       let visits = JSON.parse(localStorage.getItem('aircom_visits') || '{"date":"","today":0,"total":0}');
@@ -1412,26 +1343,31 @@
       document.getElementById('today-visits').textContent = visitCount;
       document.getElementById('total-visits').textContent = totalVisits;
     }
+    
     function loadOrders() { 
       const s=localStorage.getItem('aircom_orders'); 
       if(s) orders=JSON.parse(s); 
       updateOrderStats(); 
     }
+    
     function saveOrders() { 
       localStorage.setItem('aircom_orders', JSON.stringify(orders)); 
       updateOrderStats(); 
       addLog('order','Обновлен список заказов');
       backupDatabase();
     }
+    
     function loadCart() { const s=localStorage.getItem('aircom_cart'); if(s) cart=JSON.parse(s); updateCartBadge(); }
     function saveCart() { localStorage.setItem('aircom_cart', JSON.stringify(cart)); updateCartBadge(); }
     function loadLogs() { const s=localStorage.getItem('aircom_logs'); if(s) actionLogs=JSON.parse(s); }
     function saveLogs() { localStorage.setItem('aircom_logs', JSON.stringify(actionLogs)); }
+    
     function loadSettings() { 
       const s=localStorage.getItem('aircom_settings'); 
       if(s) settings = JSON.parse(s);
       updateMetaTags(settings);
     }
+    
     function addLog(t,a) { actionLogs.unshift({type:t, action:a, time:new Date().toLocaleString(), user:'admin'}); if(actionLogs.length>100) actionLogs.pop(); saveLogs(); }
     function updateCartBadge() { const c=cart.reduce((a,i)=>a+i.quantity,0), b=document.getElementById('cart-count'); if(b) { if(c>0) { b.classList.remove('hidden'); b.textContent=c; } else b.classList.add('hidden'); } }
     function updateOrderStats() { 
@@ -2352,6 +2288,9 @@ Email: ${e || 'не указан'}
     function toggleFilterCollapse(el) { const c=el.nextElementSibling; if(c) { if(c.style.display==='none'||c.style.display==='') c.style.display='block'; else c.style.display='none'; } }
 
     document.addEventListener('DOMContentLoaded',function(){
+      // Инициализация товаров
+      loadProducts();
+      
       const ms=document.getElementById('model'), li=document.getElementById('length'), db=document.getElementById('decrease-length'), ib=document.getElementById('increase-length'), tp=document.getElementById('total-price'), dc=document.getElementById('demontage'), sc=document.getElementById('service'), ls=document.getElementById('length-section');
       function calc() {
         if(!ms.value) { tp.textContent='0 BYN'; return 0; }
@@ -2368,7 +2307,7 @@ Email: ${e || 'не указан'}
       console.log('Сайт загружен, все функции инициализированы');
     });
 
-    loadProducts(); loadBrands(); loadOrders(); loadCart(); loadLogs(); loadVisits(); loadSettings(); filterProducts();
+    loadBrands(); loadOrders(); loadCart(); loadLogs(); loadVisits(); loadSettings(); filterProducts();
     const pr=document.getElementById('priceRange'), mp=document.getElementById('maxPrice');
     if(pr) pr.addEventListener('input',(e)=>{ if(mp) mp.value=e.target.value; filterProducts(); });
     if(mp) mp.addEventListener('change',(e)=>{ if(pr) pr.value=e.target.value; filterProducts(); });
@@ -2377,5 +2316,4 @@ Email: ${e || 'не указан'}
     checkProductHash();
   </script>
 </body>
-  <script src="products.js"></script>
 </html>
