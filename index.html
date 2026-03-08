@@ -1274,6 +1274,9 @@
     </footer>
   </div>
 
+  <!-- Подключаем файл с товарами ПЕРЕД основным скриптом -->
+  <script src="products.js"></script>
+  
   <script>
     // Мобильное меню
     function toggleMobileMenu() { document.getElementById('mobileMenu').classList.toggle('active'); }
@@ -1301,7 +1304,8 @@
       }
     }
 
-    // Данные
+    // Данные - УБЕДИТЕСЬ, ЧТО ЗДЕСЬ ТОЛЬКО ОДНО ОБЪЯВЛЕНИЕ!
+    // Удалите все предыдущие объявления products выше в коде!
     let products = []; // Пустой массив - будет заполнен из products.js или localStorage
     let brands = [{ id:1, name:'Ballu' }, { id:2, name:'Electrolux' }, { id:3, name:'LG' }, { id:4, name:'Mitsubishi' }, { id:5, name:'Samsung' }, { id:6, name:'Panasonic' }];
     let cart = [], orders = [], adminCredentials = { login:'admin', password:'admin123' }, selectedProducts = new Set(), actionLogs = [], currentPage = 1, itemsPerPage = 6;
@@ -1314,16 +1318,45 @@
 
     // Функция загрузки товаров
     function loadProducts() {
+      console.log('Загрузка товаров...');
+      console.log('window.productsData:', window.productsData);
+      
       const saved = localStorage.getItem('aircom_products');
       if (saved) {
         // Если есть сохраненные в localStorage (через админку)
         products = JSON.parse(saved);
-      } else if (window.productsData) {
+        console.log('Загружено из localStorage:', products.length);
+      } else if (window.productsData && window.productsData.length > 0) {
         // Если нет в localStorage, используем данные из products.js
         products = window.productsData;
         // Сохраняем в localStorage для будущих изменений
         localStorage.setItem('aircom_products', JSON.stringify(products));
+        console.log('Загружено из products.js:', products.length);
+      } else {
+        console.log('Нет данных о товарах');
+        // Если нет данных, создаем тестовый товар
+        products = [{
+          id: 1,
+          name: 'Тестовый товар',
+          brand: 'Тест',
+          price: 1000,
+          area: 'до 20',
+          type: 'Настенный',
+          inverter: 'Да',
+          heat: '-15',
+          color: 'белый',
+          specs: ['Тестовая характеристика'],
+          images: ['https://via.placeholder.com/600x400?text=Test'],
+          description: 'Тестовое описание',
+          fullDescription: 'Тестовое полное описание',
+          tags: [],
+          status: 'active',
+          createdAt: new Date().toISOString()
+        }];
       }
+      
+      // Обновляем отображение
+      filterProducts();
     }
     
     function saveProducts() { 
@@ -2287,129 +2320,7 @@ Email: ${e || 'не указан'}
     }
     function toggleFilterCollapse(el) { const c=el.nextElementSibling; if(c) { if(c.style.display==='none'||c.style.display==='') c.style.display='block'; else c.style.display='none'; } }
 
-    document.addEventListener('DOMContentLoaded',function(){
-      // Инициализация товаров
-      loadProducts();
-      
-      const ms=document.getElementById('model'), li=document.getElementById('length'), db=document.getElementById('decrease-length'), ib=document.getElementById('increase-length'), tp=document.getElementById('total-price'), dc=document.getElementById('demontage'), sc=document.getElementById('service'), ls=document.getElementById('length-section');
-      function calc() {
-        if(!ms.value) { tp.textContent='0 BYN'; return 0; }
-        let total=parseInt(ms.value), l=parseInt(li.value);
-        if(ms.value!=='100'||!ms.options[ms.selectedIndex].text.includes('Только')) { total+=Math.max(0,l-3)*50; ls.style.display='block'; } else ls.style.display='none';
-        if(dc.checked) total+=100; if(sc.checked) total+=100;
-        tp.textContent=total+' BYN'; return total;
-      }
-      if(ms) ms.addEventListener('change',calc);
-      if(db) db.addEventListener('click',()=>{ if(parseInt(li.value)>3) { li.value=parseInt(li.value)-1; calc(); } });
-      if(ib) ib.addEventListener('click',()=>{ li.value=parseInt(li.value)+1; calc(); });
-      if(dc) dc.addEventListener('change',calc); if(sc) sc.addEventListener('change',calc); calc();
-      
-      console.log('Сайт загружен, все функции инициализированы');
-    });
-
-    loadBrands(); loadOrders(); loadCart(); loadLogs(); loadVisits(); loadSettings(); filterProducts();
-    const pr=document.getElementById('priceRange'), mp=document.getElementById('maxPrice');
-    if(pr) pr.addEventListener('input',(e)=>{ if(mp) mp.value=e.target.value; filterProducts(); });
-    if(mp) mp.addEventListener('change',(e)=>{ if(pr) pr.value=e.target.value; filterProducts(); });
-    window.addEventListener('click',(e)=>{ if(e.target.classList.contains('modal')) e.target.style.display='none'; });
-    window.addEventListener('hashchange',checkProductHash);
-    checkProductHash();
-  </script>
-</body>
-    <!-- Весь ваш код до этого момента без изменений -->
-  
-  <!-- Подключаем файл с товарами ПЕРЕД основным скриптом -->
-  <script src="products.js"></script>
-  
-  <script>
-    // Мобильное меню
-    function toggleMobileMenu() { document.getElementById('mobileMenu').classList.toggle('active'); }
-    function toggleMobileFilters() { document.getElementById('filterSidebar').classList.toggle('mobile-visible'); }
-    function applyFilters() { filterProducts(); if (window.innerWidth <= 768) document.getElementById('filterSidebar').classList.remove('mobile-visible'); }
-
-    function toggleFaq(id) {
-      const answer = document.querySelectorAll('.faq-answer')[id-1];
-      const icon = document.querySelectorAll('.faq-icon')[id-1];
-      const isOpen = answer.classList.contains('open');
-      document.querySelectorAll('.faq-answer').forEach(el => el.classList.remove('open'));
-      document.querySelectorAll('.faq-icon').forEach(el => el.classList.remove('open'));
-      if (!isOpen) { answer.classList.add('open'); icon.classList.add('open'); }
-    }
-
-    // Функция обновления мета-тегов из настроек
-    function updateMetaTags(settings) {
-      if (settings.siteSeo) {
-        document.querySelector('meta[name="description"]').setAttribute('content', settings.siteSeo);
-      }
-      if (settings.siteTitle) {
-        document.title = settings.siteTitle;
-      } else if (settings.siteName) {
-        document.title = settings.siteName + ' - Установка кондиционеров в Гомеле';
-      }
-    }
-
-    // Данные
-    let products = []; // Пустой массив - будет заполнен из products.js или localStorage
-    let brands = [{ id:1, name:'Ballu' }, { id:2, name:'Electrolux' }, { id:3, name:'LG' }, { id:4, name:'Mitsubishi' }, { id:5, name:'Samsung' }, { id:6, name:'Panasonic' }];
-    let cart = [], orders = [], adminCredentials = { login:'admin', password:'admin123' }, selectedProducts = new Set(), actionLogs = [], currentPage = 1, itemsPerPage = 6;
-    let visitCount = 0, totalVisits = 0;
-    let settings = {};
-    let currentProduct = null;
-    let currentImageIndex = 0;
-    let lastScrollPosition = 0;
-    let currentTab = 'specs';
-
-    // Функция загрузки товаров
-    function loadProducts() {
-      console.log('Загрузка товаров...');
-      console.log('window.productsData:', window.productsData);
-      
-      const saved = localStorage.getItem('aircom_products');
-      if (saved) {
-        // Если есть сохраненные в localStorage (через админку)
-        products = JSON.parse(saved);
-        console.log('Загружено из localStorage:', products.length);
-      } else if (window.productsData && window.productsData.length > 0) {
-        // Если нет в localStorage, используем данные из products.js
-        products = window.productsData;
-        // Сохраняем в localStorage для будущих изменений
-        localStorage.setItem('aircom_products', JSON.stringify(products));
-        console.log('Загружено из products.js:', products.length);
-      } else {
-        console.log('Нет данных о товарах');
-        // Если нет данных, создаем тестовый товар
-        products = [{
-          id: 1,
-          name: 'Тестовый товар',
-          brand: 'Тест',
-          price: 1000,
-          area: 'до 20',
-          type: 'Настенный',
-          inverter: 'Да',
-          heat: '-15',
-          color: 'белый',
-          specs: ['Тестовая характеристика'],
-          images: ['https://via.placeholder.com/600x400?text=Test'],
-          description: 'Тестовое описание',
-          fullDescription: 'Тестовое полное описание',
-          tags: [],
-          status: 'active',
-          createdAt: new Date().toISOString()
-        }];
-      }
-      
-      // Обновляем отображение
-      filterProducts();
-    }
-    
-    function saveProducts() { 
-      localStorage.setItem('aircom_products', JSON.stringify(products)); 
-      addLog('product','Обновлен список товаров'); 
-    }
-    
-    // ... остальные функции без изменений ...
-    
-    // В самом конце, после всех функций, вызываем загрузку
+    // Инициализация при загрузке DOM
     document.addEventListener('DOMContentLoaded', function() {
       console.log('DOM загружен');
       loadProducts();
@@ -2487,5 +2398,4 @@ Email: ${e || 'не указан'}
     checkProductHash();
   </script>
 </body>
-</html>
 </html>
