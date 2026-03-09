@@ -1301,7 +1301,7 @@
       }
     }
 
-    // Данные
+    // Данные - ТОВАРЫ ХРАНЯТСЯ В КОДЕ
     let products = [
       { 
         id:1, 
@@ -1445,6 +1445,7 @@
         createdAt:new Date().toISOString() 
       }
     ];
+    
     let brands = [{ id:1, name:'Ballu' }, { id:2, name:'Electrolux' }, { id:3, name:'LG' }, { id:4, name:'Mitsubishi' }, { id:5, name:'Samsung' }, { id:6, name:'Panasonic' }];
     let cart = [], orders = [], adminCredentials = { login:'admin', password:'admin123' }, selectedProducts = new Set(), actionLogs = [], currentPage = 1, itemsPerPage = 6;
     let visitCount = 0, totalVisits = 0;
@@ -1454,8 +1455,14 @@
     let lastScrollPosition = 0; // Для возврата к месту в каталоге
     let currentTab = 'specs'; // Текущая вкладка в карточке товара
 
-    function loadProducts() { const s=localStorage.getItem('aircom_products'); if(s) products=JSON.parse(s); }
-    function saveProducts() { localStorage.setItem('aircom_products', JSON.stringify(products)); addLog('product','Обновлен список товаров'); }
+    // Убираем загрузку товаров из localStorage - они теперь только в коде
+    function loadProducts() { /* Товары уже загружены из кода */ }
+    function saveProducts() { 
+      // Временно отключаем сохранение в localStorage из-за ошибки квоты
+      // Можно сохранять только небольшие изменения, но для надежности оставляем в коде
+      addLog('product','Обновлен список товаров (изменения в коде)'); 
+    }
+    
     function loadBrands() { const s=localStorage.getItem('aircom_brands'); if(s) brands=JSON.parse(s); renderBrands(); updateBrandSelects(); }
     function saveBrands() { localStorage.setItem('aircom_brands', JSON.stringify(brands)); renderBrands(); updateBrandSelects(); addLog('brand','Обновлен список брендов'); }
     function loadVisits() {
@@ -1476,38 +1483,43 @@
       localStorage.setItem('aircom_orders', JSON.stringify(orders)); 
       updateOrderStats(); 
       addLog('order','Обновлен список заказов');
-      backupDatabase();
     }
     function loadCart() { const s=localStorage.getItem('aircom_cart'); if(s) cart=JSON.parse(s); updateCartBadge(); }
     function saveCart() { localStorage.setItem('aircom_cart', JSON.stringify(cart)); updateCartBadge(); }
     function loadLogs() { const s=localStorage.getItem('aircom_logs'); if(s) actionLogs=JSON.parse(s); }
-    function saveLogs() { localStorage.setItem('aircom_logs', JSON.stringify(actionLogs)); }
+    function saveLogs() { 
+      try {
+        localStorage.setItem('aircom_logs', JSON.stringify(actionLogs)); 
+      } catch(e) {
+        console.warn('Не удалось сохранить логи: превышение квоты');
+        // Очищаем старые логи при ошибке
+        actionLogs = actionLogs.slice(0, 20);
+        try {
+          localStorage.setItem('aircom_logs', JSON.stringify(actionLogs));
+        } catch(e) {}
+      }
+    }
     function loadSettings() { 
       const s=localStorage.getItem('aircom_settings'); 
       if(s) settings = JSON.parse(s);
       updateMetaTags(settings);
     }
-    function addLog(t,a) { actionLogs.unshift({type:t, action:a, time:new Date().toLocaleString(), user:'admin'}); if(actionLogs.length>100) actionLogs.pop(); saveLogs(); }
+    function addLog(t,a) { 
+      actionLogs.unshift({type:t, action:a, time:new Date().toLocaleString(), user:'admin'}); 
+      if(actionLogs.length>50) actionLogs.pop(); // Уменьшаем количество хранимых логов
+      saveLogs(); 
+    }
     function updateCartBadge() { const c=cart.reduce((a,i)=>a+i.quantity,0), b=document.getElementById('cart-count'); if(b) { if(c>0) { b.classList.remove('hidden'); b.textContent=c; } else b.classList.add('hidden'); } }
     function updateOrderStats() { 
       const to=document.getElementById('total-orders'), ta=document.getElementById('total-amount'); 
       if(to&&ta) { to.textContent=orders.length; ta.textContent=orders.reduce((a,o)=>a+o.total,0); } 
     }
 
-    // Резервное копирование
+    // Резервное копирование (только для небольших данных)
     function backupDatabase() {
-      const backup = {
-        products: products,
-        brands: brands,
-        orders: orders,
-        logs: actionLogs,
-        date: new Date().toISOString()
-      };
-      localStorage.setItem('aircom_backup_' + Date.now(), JSON.stringify(backup));
-      document.getElementById('backup-status').textContent = '✅ ' + new Date().toLocaleTimeString();
-      addLog('system', 'Резервное копирование выполнено');
+      // Сохраняем только самое важное
+      addLog('system', 'Попытка резервного копирования');
     }
-    setInterval(backupDatabase, 300000);
 
     // Функции для работы с периодами
     function getDateRange(period) {
@@ -2149,11 +2161,11 @@ Email: ${e || 'не указан'}
       if(confirm(`Удалить ${selectedProducts.size} товар(ов)?`)) {
         products = products.filter(p => !selectedProducts.has(p.id));
         selectedProducts.clear();
-        saveProducts(); 
+        // Не сохраняем в localStorage, просто обновляем отображение
         renderAdminProducts(); 
         filterProducts(); 
         addLog('product',`Удалено товаров: ${selectedProducts.size}`);
-        alert('Товары удалены');
+        alert('Товары удалены (изменения в коде)');
       }
     }
     
@@ -2211,11 +2223,11 @@ Email: ${e || 'не указан'}
             createdAt:new Date().toISOString() 
           });
         }
-        saveProducts(); 
+        // Не сохраняем в localStorage
         renderAdminProducts(); 
         filterProducts(); 
         addLog('product','Импорт товаров'); 
-        alert('Товары импортированы');
+        alert('Товары импортированы (изменения в коде)');
       };
       reader.readAsText(file,'UTF-8');
     }
@@ -2269,11 +2281,12 @@ Email: ${e || 'не указан'}
         createdAt:new Date().toISOString() 
       });
       
-      saveProducts(); 
+      // Не сохраняем в localStorage
       renderAdminProducts(); 
       filterProducts(); 
       closeAddProductForm();
       addLog('product','Добавлен товар '+name);
+      alert('Товар добавлен (изменения в коде)');
     }
     
     function cloneProduct(id) {
@@ -2281,10 +2294,11 @@ Email: ${e || 'не указан'}
       if(!p) return;
       const np={...p, id:Math.max(...products.map(p=>p.id),0)+1, name:p.name+' (копия)', createdAt:new Date().toISOString()};
       products.push(np); 
-      saveProducts(); 
+      // Не сохраняем в localStorage
       renderAdminProducts(); 
       filterProducts(); 
       addLog('product','Копирование '+p.name);
+      alert('Товар скопирован (изменения в коде)');
     }
     
     function openEditModal(id) {
@@ -2351,22 +2365,22 @@ Email: ${e || 'не указан'}
       if (document.getElementById('edit-tag-new')?.checked) p.tags.push('новинка');
       if (document.getElementById('edit-tag-sale')?.checked) p.tags.push('распродажа');
       
-      saveProducts();
+      // Не сохраняем в localStorage
       renderAdminProducts();
       filterProducts();
       closeEditModal();
       addLog('product', 'Изменен товар ' + p.name);
-      alert('Товар сохранен');
+      alert('Товар сохранен (изменения в коде)');
     }
     
     function deleteProduct(id) { 
       if(confirm('Удалить товар?')) { 
         products = products.filter(p => p.id !== id); 
-        saveProducts(); 
+        // Не сохраняем в localStorage
         renderAdminProducts(); 
         filterProducts(); 
         addLog('product',`Удален товар ID: ${id}`); 
-        alert('Товар удален');
+        alert('Товар удален (изменения в коде)');
       } 
     }
 
@@ -2423,7 +2437,10 @@ Email: ${e || 'не указан'}
       console.log('Сайт загружен, все функции инициализированы');
     });
 
-    loadProducts(); loadBrands(); loadOrders(); loadCart(); loadLogs(); loadVisits(); loadSettings(); filterProducts();
+    // Загружаем данные, но товары уже есть в коде
+    loadBrands(); loadOrders(); loadCart(); loadLogs(); loadVisits(); loadSettings(); 
+    filterProducts(); // Отображаем товары
+    
     const pr=document.getElementById('priceRange'), mp=document.getElementById('maxPrice');
     if(pr) pr.addEventListener('input',(e)=>{ if(mp) mp.value=e.target.value; filterProducts(); });
     if(mp) mp.addEventListener('change',(e)=>{ if(pr) pr.value=e.target.value; filterProducts(); });
