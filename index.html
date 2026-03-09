@@ -855,9 +855,9 @@
                 <div class="flex gap-1 sm:gap-2 items-center mb-2">
                   <input type="number" id="minPrice" placeholder="0" class="w-1/2 px-1 sm:px-2 py-1 border rounded text-xs sm:text-sm" value="0" onchange="filterProducts()">
                   <span class="text-xs sm:text-sm">-</span>
-                  <input type="number" id="maxPrice" placeholder="15000" class="w-1/2 px-1 sm:px-2 py-1 border rounded text-xs sm:text-sm" value="15000" onchange="filterProducts()">
+                  <input type="number" id="maxPrice" placeholder="20929" class="w-1/2 px-1 sm:px-2 py-1 border rounded text-xs sm:text-sm" value="20929" onchange="filterProducts()">
                 </div>
-                <input type="range" id="priceRange" min="0" max="15000" value="15000" class="w-full" oninput="document.getElementById('maxPrice').value=this.value; filterProducts()">
+                <input type="range" id="priceRange" min="0" max="20929" value="20929" class="w-full" oninput="document.getElementById('maxPrice').value=this.value; filterProducts()">
               </div>
             </div>
 
@@ -867,11 +867,12 @@
                 <i class="ri-arrow-down-s-line"></i>
               </div>
               <div class="filter-collapse space-y-1 text-xs sm:text-sm" style="display: none;">
-                <div class="filter-option"><input type="checkbox" id="type1" value="Настенный" onchange="filterProducts()"> <label for="type1">Настенный</label></div>
+                <div class="filter-option"><input type="checkbox" id="type1" value="Канальная сплит-система" onchange="filterProducts()"> <label for="type1">Канальная сплит-система</label></div>
                 <div class="filter-option"><input type="checkbox" id="type2" value="Канальный" onchange="filterProducts()"> <label for="type2">Канальный</label></div>
                 <div class="filter-option"><input type="checkbox" id="type3" value="Кассетный" onchange="filterProducts()"> <label for="type3">Кассетный</label></div>
-                <div class="filter-option"><input type="checkbox" id="type4" value="Напольно-потолочный" onchange="filterProducts()"> <label for="type4">Напольно-потолочный</label></div>
-                <div class="filter-option"><input type="checkbox" id="type5" value="Колонный" onchange="filterProducts()"> <label for="type5">Колонный</label></div>
+                <div class="filter-option"><input type="checkbox" id="type4" value="Мобильный" onchange="filterProducts()"> <label for="type4">Мобильный</label></div>
+                <div class="filter-option"><input type="checkbox" id="type5" value="Напольно-потолочный" onchange="filterProducts()"> <label for="type5">Напольно-потолочный</label></div>
+                <div class="filter-option"><input type="checkbox" id="type6" value="Настенный" onchange="filterProducts()"> <label for="type6">Настенный</label></div>
               </div>
             </div>
 
@@ -889,15 +890,18 @@
 
             <div class="filter-section">
               <div class="filter-section-title text-sm sm:text-base" onclick="toggleFilterCollapse(this)">
-                <span>Бренд</span>
+                <span>Обогрев зимой</span>
                 <i class="ri-arrow-down-s-line"></i>
               </div>
               <div class="filter-collapse space-y-1 text-xs sm:text-sm" style="display: none;">
-                <div class="filter-option"><input type="checkbox" id="brand1" value="GREEN" onchange="filterProducts()"> <label for="brand1">GREEN</label></div>
-                <div class="filter-option"><input type="checkbox" id="brand2" value="AERONIK" onchange="filterProducts()"> <label for="brand2">AERONIK</label></div>
-                <div class="filter-option"><input type="checkbox" id="brand3" value="CHIGO" onchange="filterProducts()"> <label for="brand3">CHIGO</label></div>
-                <div class="filter-option"><input type="checkbox" id="brand4" value="CHERBROOKE" onchange="filterProducts()"> <label for="brand4">CHERBROOKE</label></div>
-                <div class="filter-option"><input type="checkbox" id="brand5" value="JAX" onchange="filterProducts()"> <label for="brand5">JAX</label></div>
+                <div class="filter-option"><input type="checkbox" id="heat1" value="-18" onchange="filterProducts()"> <label for="heat1">-18°С</label></div>
+                <div class="filter-option"><input type="checkbox" id="heat2" value="-7" onchange="filterProducts()"> <label for="heat2">-7°С</label></div>
+                <div class="filter-option"><input type="checkbox" id="heat3" value="-10" onchange="filterProducts()"> <label for="heat3">-10°C</label></div>
+                <div class="filter-option"><input type="checkbox" id="heat4" value="-15" onchange="filterProducts()"> <label for="heat4">-15°С</label></div>
+                <div class="filter-option"><input type="checkbox" id="heat5" value="-20" onchange="filterProducts()"> <label for="heat5">-20°С</label></div>
+                <div class="filter-option"><input type="checkbox" id="heat6" value="-22" onchange="filterProducts()"> <label for="heat6">-22°C</label></div>
+                <div class="filter-option"><input type="checkbox" id="heat7" value="-25" onchange="filterProducts()"> <label for="heat7">-25°C</label></div>
+                <div class="filter-option"><input type="checkbox" id="heat8" value="-30" onchange="filterProducts()"> <label for="heat8">-30°C</label></div>
               </div>
             </div>
             
@@ -1001,7 +1005,7 @@
 
           <div class="grid grid-cols-2 sm:grid-cols-4 gap-2 sm:gap-4 mb-4 sm:mb-6">
             <div><label class="block text-xs sm:text-sm font-medium text-gray-700 mb-1">Поиск</label><input type="text" id="admin-search" placeholder="🔍 Поиск..." class="w-full border px-2 sm:px-4 py-1 sm:py-2 rounded-lg text-xs sm:text-sm" onkeyup="filterAdminProducts()"></div>
-            <div><label class="block text-xs sm:text-sm font-medium text-gray-700 mb-1">Категория</label><select id="admin-category-filter" onchange="filterAdminProducts()" class="w-full border px-2 sm:px-4 py-1 sm:py-2 rounded-lg text-xs sm:text-sm"><option value="">Все</option><option value="Настенные">Настенные</option><option value="Канальные">Канальные</option><option value="Кассетные">Кассетные</option><option value="Напольно-потолочные">Напольно-потолочные</option><option value="Колонные">Колонные</option></select></div>
+            <div><label class="block text-xs sm:text-sm font-medium text-gray-700 mb-1">Категория</label><select id="admin-category-filter" onchange="filterAdminProducts()" class="w-full border px-2 sm:px-4 py-1 sm:py-2 rounded-lg text-xs sm:text-sm"><option value="">Все</option><option value="Настенные">Настенные</option><option value="Канальные">Канальные</option><option value="Мобильные">Мобильные</option><option value="Кассетные">Кассетные</option><option value="Мульти-сплит">Мульти-сплит</option><option value="Напольно-потолочные">Напольно-потолочные</option></select></div>
             <div><label class="block text-xs sm:text-sm font-medium text-gray-700 mb-1">Сортировка</label><select id="admin-sort" onchange="filterAdminProducts()" class="w-full border px-2 sm:px-4 py-1 sm:py-2 rounded-lg text-xs sm:text-sm"><option value="name">По названию</option><option value="price-asc">Цена (возр.)</option><option value="price-desc">Цена (убыв.)</option><option value="date">По дате</option></select></div>
           </div>
 
@@ -1020,7 +1024,7 @@
               <div><label class="block text-xs sm:text-sm font-medium text-gray-700 mb-1">Цена *</label><input type="number" id="new-price" class="w-full border px-2 sm:px-3 py-1 sm:py-2 rounded text-xs sm:text-sm"></div>
               <div><label class="block text-xs sm:text-sm font-medium text-gray-700 mb-1">Старая цена</label><input type="number" id="new-old-price" class="w-full border px-2 sm:px-3 py-1 sm:py-2 rounded text-xs sm:text-sm"></div>
               <div><label class="block text-xs sm:text-sm font-medium text-gray-700 mb-1">Бренд</label><select id="new-brand" class="w-full border px-2 sm:px-3 py-1 sm:py-2 rounded text-xs sm:text-sm"><option value="">Без бренда</option></select></div>
-              <div><label class="block text-xs sm:text-sm font-medium text-gray-700 mb-1">Тип</label><select id="new-type" class="w-full border px-2 sm:px-3 py-1 sm:py-2 rounded text-xs sm:text-sm"><option value="Настенный">Настенный</option><option value="Канальный">Канальный</option><option value="Кассетный">Кассетный</option><option value="Напольно-потолочный">Напольно-потолочный</option><option value="Колонный">Колонный</option></select></div>
+              <div><label class="block text-xs sm:text-sm font-medium text-gray-700 mb-1">Тип</label><select id="new-type" class="w-full border px-2 sm:px-3 py-1 sm:py-2 rounded text-xs sm:text-sm"><option value="Настенный">Настенный</option><option value="Канальный">Канальный</option><option value="Кассетный">Кассетный</option><option value="Мобильный">Мобильный</option><option value="Напольно-потолочный">Напольно-потолочный</option></select></div>
               <div><label class="block text-xs sm:text-sm font-medium text-gray-700 mb-1">Инвертор</label><select id="new-inverter" class="w-full border px-2 sm:px-3 py-1 sm:py-2 rounded text-xs sm:text-sm"><option value="Да">Да</option><option value="Нет">Нет</option></select></div>
               <div><label class="block text-xs sm:text-sm font-medium text-gray-700 mb-1">Площадь</label><select id="new-area" class="w-full border px-2 sm:px-3 py-1 sm:py-2 rounded text-xs sm:text-sm"><option value="до 20">до 20 кв.м.</option><option value="21-29">21-29 кв.м.</option><option value="30-39">30-39 кв.м.</option><option value="40-49">40-49 кв.м.</option><option value="50-69">50-69 кв.м.</option><option value="70-99">70-99 кв.м.</option><option value="100+">от 100 кв.м.</option></select></div>
               <div><label class="block text-xs sm:text-sm font-medium text-gray-700 mb-1">Обогрев</label><input type="text" id="new-heat" placeholder="-15" class="w-full border px-2 sm:px-3 py-1 sm:py-2 rounded text-xs sm:text-sm"></div>
@@ -1047,7 +1051,7 @@
                 <div><label class="block text-sm font-medium text-gray-700 mb-1">Цена *</label><input type="number" id="edit-price" class="w-full border px-3 py-2 rounded"></div>
                 <div><label class="block text-sm font-medium text-gray-700 mb-1">Старая цена</label><input type="number" id="edit-old-price" class="w-full border px-3 py-2 rounded"></div>
                 <div><label class="block text-sm font-medium text-gray-700 mb-1">Бренд</label><select id="edit-brand" class="w-full border px-3 py-2 rounded"></select></div>
-                <div><label class="block text-sm font-medium text-gray-700 mb-1">Тип</label><select id="edit-type" class="w-full border px-3 py-2 rounded"><option value="Настенный">Настенный</option><option value="Канальный">Канальный</option><option value="Кассетный">Кассетный</option><option value="Напольно-потолочный">Напольно-потолочный</option><option value="Колонный">Колонный</option></select></div>
+                <div><label class="block text-sm font-medium text-gray-700 mb-1">Тип</label><select id="edit-type" class="w-full border px-3 py-2 rounded"><option value="Настенный">Настенный</option><option value="Канальный">Канальный</option><option value="Кассетный">Кассетный</option><option value="Мобильный">Мобильный</option><option value="Напольно-потолочный">Напольно-потолочный</option></select></div>
                 <div><label class="block text-sm font-medium text-gray-700 mb-1">Инвертор</label><select id="edit-inverter" class="w-full border px-3 py-2 rounded"><option value="Да">Да</option><option value="Нет">Нет</option></select></div>
                 <div><label class="block text-sm font-medium text-gray-700 mb-1">Площадь</label><select id="edit-area" class="w-full border px-3 py-2 rounded"><option value="до 20">до 20 кв.м.</option><option value="21-29">21-29 кв.м.</option><option value="30-39">30-39 кв.м.</option><option value="40-49">40-49 кв.м.</option><option value="50-69">50-69 кв.м.</option><option value="70-99">70-99 кв.м.</option><option value="100+">от 100 кв.м.</option></select></div>
                 <div><label class="block text-sm font-medium text-gray-700 mb-1">Обогрев</label><input type="text" id="edit-heat" class="w-full border px-3 py-2 rounded"></div>
@@ -1334,1381 +1338,153 @@
       }
     }
 
-    // Данные - ВСЕ ТОВАРЫ ИЗ ПРАЙС-ЛИСТА
-    // Курс USD к BYN: 2.92
-    const USD_TO_BYN = 2.92;
-    
-    // Функция для конвертации цены
-    function toBYN(usd) {
-      return Math.round(usd * USD_TO_BYN);
-    }
-
+    // Данные - ТОВАРЫ ХРАНЯТСЯ В КОДЕ
     let products = [
-      // GREEN GENESIS INVERTER R32
       { 
         id:1, 
-        name:'GREEN Genesis Inverter GRI-07IGK2/GRO-07IGK3', 
-        brand:'GREEN', 
-        price:toBYN(500), 
-        oldPrice:null, 
-        area:'до 25', 
+        name:'Ballu BSO-07HN1', 
+        brand:'Ballu', 
+        price:850, 
+        oldPrice:950, 
+        area:'до 20', 
         type:'Настенный', 
-        inverter:'Да', 
-        heat:'-15',
+        inverter:'Нет', 
+        heat:'-7', 
         color:'белый',
         specs:[
-          'Мощность охлаждения: 2.35 кВт',
-          'Мощность обогрева: 2.5 кВт',
-          'Потребление при охлаждении: 0.681 кВт',
-          'Потребление при обогреве: 0.649 кВт',
-          'Уровень шума внутр. блока: 27-40 дБ',
-          'Уровень шума наруж. блока: 50 дБ',
-          'Размер внутр. блока: 713x270x195 мм',
-          'Диаметр труб: 1/4, 3/8 дюйма',
-          'Компрессор: GREE',
-          'Хладагент: R32',
-          'Энергоэффективность: A++/A+',
-          'Покрытие: Blue Fin',
-          'Завод: GREE Electric Appliances',
-          'Гарантия: 36 месяцев'
+          'Мощность охлаждения: 2.1 кВт',
+          'Мощность обогрева: 2.3 кВт',
+          'Энергопотребление: 0.75 кВт',
+          'Уровень шума: 23 дБ',
+          'Хладагент: R410A'
         ],
         images:[
-          'https://via.placeholder.com/600x400?text=GREEN+Genesis+07',
-          'https://via.placeholder.com/600x400?text=GREEN+Genesis+07+2',
-          'https://via.placeholder.com/600x400?text=GREEN+Genesis+07+3'
+          'https://via.placeholder.com/600x400?text=Ballu+BSO-07HN1+1',
+          'https://via.placeholder.com/600x400?text=Ballu+BSO-07HN1+2',
+          'https://via.placeholder.com/600x400?text=Ballu+BSO-07HN1+3'
         ],
-        description:'Инверторная сплит-система с компрессором GREE для помещений до 25 м².', 
-        fullDescription: 'GREEN Genesis GRI-07IGK2/GRO-07IGK3 - инверторная сплит-система премиум-класса с компрессором GREE. Обеспечивает высокую энергоэффективность A++/A+ и низкий уровень шума. Защитное покрытие Blue Fin продлевает срок службы теплообменников. Поддержание температуры +8°С, возможность подключения WiFi (опция). Идеальное решение для спальни или небольшой гостиной.', 
-        tags:['новинка'], 
+        description:'Надежный кондиционер для небольших помещений.', 
+        fullDescription:'Ballu BSO-07HN1 - надежная сплит-система для помещений до 20 м². Энергосберегающий режим, низкий шум. Идеальное решение для спальни или небольшой гостиной.', 
+        tags:['хит'], 
         status:'active', 
         createdAt:new Date().toISOString() 
       },
       { 
         id:2, 
-        name:'GREEN Genesis Inverter GRI-09IGK2/GRO-09IGK3', 
-        brand:'GREEN', 
-        price:toBYN(540), 
+        name:'Electrolux EACS-07HAT/N3', 
+        brand:'Electrolux', 
+        price:1100, 
         oldPrice:null, 
-        area:'до 30', 
+        area:'21-29', 
         type:'Настенный', 
         inverter:'Да', 
         heat:'-15',
-        color:'белый',
+        color:'серебристый',
         specs:[
-          'Мощность охлаждения: 2.65 кВт',
-          'Мощность обогрева: 2.852 кВт',
-          'Потребление при охлаждении: 0.78 кВт',
-          'Потребление при обогреве: 0.781 кВт',
-          'Уровень шума внутр. блока: 27-40 дБ',
-          'Уровень шума наруж. блока: 51 дБ',
-          'Размер внутр. блока: 713x270x195 мм',
-          'Диаметр труб: 1/4, 3/8 дюйма',
-          'Компрессор: GREE',
-          'Хладагент: R32',
-          'Энергоэффективность: A++/A+',
-          'Покрытие: Blue Fin',
-          'Гарантия: 36 месяцев'
+          'Мощность охлаждения: 2.5 кВт',
+          'Мощность обогрева: 2.7 кВт',
+          'Энергопотребление: 0.8 кВт',
+          'Уровень шума: 22 дБ',
+          'Wi-Fi управление'
         ],
         images:[
-          'https://via.placeholder.com/600x400?text=GREEN+Genesis+09',
-          'https://via.placeholder.com/600x400?text=GREEN+Genesis+09+2'
+          'https://via.placeholder.com/600x400?text=Electrolux+1',
+          'https://via.placeholder.com/600x400?text=Electrolux+2'
         ],
-        description:'Инверторная сплит-система для помещений до 30 м² с компрессором GREE.', 
-        fullDescription: 'GREEN Genesis GRI-09IGK2/GRO-09IGK3 - высокоэффективная инверторная сплит-система с классом энергоэффективности A++/A+. Компрессор GREE обеспечивает надежную работу и низкий уровень шума. Технология Blue Fin защищает теплообменники от коррозии. Поддержание температуры +8°С предотвращает замерзание помещения. Возможно подключение WiFi модуля для управления со смартфона.', 
-        tags:['хит'], 
+        description:'Инверторная модель с низким уровнем шума.', 
+        fullDescription:'Electrolux EACS-07HAT/N3 - инверторный кондиционер, 22 дБ, высокая энергоэффективность. Современный дизайн и удобное управление.', 
+        tags:['новинка'], 
         status:'active', 
         createdAt:new Date().toISOString() 
       },
       { 
         id:3, 
-        name:'GREEN Genesis Inverter GRI-12IGK2/GRO-12IGK3', 
-        brand:'GREEN', 
-        price:toBYN(580), 
-        oldPrice:null, 
-        area:'до 35', 
+        name:'LG P09EP', 
+        brand:'LG', 
+        price:1450, 
+        oldPrice:1650, 
+        area:'30-39', 
         type:'Настенный', 
         inverter:'Да', 
-        heat:'-15',
-        color:'белый',
-        specs:[
-          'Мощность охлаждения: 3.5 кВт',
-          'Мощность обогрева: 3.5 кВт',
-          'Потребление при охлаждении: 1.083 кВт',
-          'Потребление при обогреве: 0.918 кВт',
-          'Уровень шума внутр. блока: 24-41 дБ',
-          'Уровень шума наруж. блока: 52 дБ',
-          'Размер внутр. блока: 790x275x200 мм',
-          'Диаметр труб: 1/4, 3/8 дюйма',
-          'Компрессор: GREE',
-          'Хладагент: R32',
-          'Энергоэффективность: A++/A+',
-          'Гарантия: 36 месяцев'
-        ],
-        images:[
-          'https://via.placeholder.com/600x400?text=GREEN+Genesis+12',
-          'https://via.placeholder.com/600x400?text=GREEN+Genesis+12+2'
-        ],
-        description:'Инверторная сплит-система для помещений до 35 м².', 
-        fullDescription: 'GREEN Genesis GRI-12IGK2/GRO-12IGK3 - мощная инверторная сплит-система для просторных комнат до 35 м². Благодаря инверторной технологии достигается точное поддержание температуры и экономия электроэнергии до 30%. Компрессор GREE отличается высокой надежностью и длительным сроком службы. Защитное покрытие Blue Fin предотвращает коррозию теплообменников.', 
-        tags:[], 
-        status:'active', 
-        createdAt:new Date().toISOString() 
-      },
-      { 
-        id:4, 
-        name:'GREEN Genesis Inverter GRI-18IGK2/GRO-18IGK3', 
-        brand:'GREEN', 
-        price:toBYN(850), 
-        oldPrice:null, 
-        area:'до 50', 
-        type:'Настенный', 
-        inverter:'Да', 
-        heat:'-15',
-        color:'белый',
-        specs:[
-          'Мощность охлаждения: 4.6 кВт',
-          'Мощность обогрева: 5.2 кВт',
-          'Потребление при охлаждении: 1.355 кВт',
-          'Потребление при обогреве: 1.34 кВт',
-          'Уровень шума внутр. блока: 31-44 дБ',
-          'Уровень шума наруж. блока: 53 дБ',
-          'Размер внутр. блока: 970x300x220 мм',
-          'Диаметр труб: 1/4, 3/8 дюйма',
-          'Компрессор: GREE',
-          'Хладагент: R32',
-          'Энергоэффективность: A++/A+',
-          'Гарантия: 36 месяцев'
-        ],
-        images:[
-          'https://via.placeholder.com/600x400?text=GREEN+Genesis+18',
-          'https://via.placeholder.com/600x400?text=GREEN+Genesis+18+2'
-        ],
-        description:'Мощная инверторная сплит-система для больших помещений до 50 м².', 
-        fullDescription: 'GREEN Genesis GRI-18IGK2/GRO-18IGK3 - производительная инверторная сплит-система для просторных гостиных, офисов и коммерческих помещений площадью до 50 м². Высокая мощность обогрева 5.2 кВт позволяет эффективно использовать кондиционер в межсезонье. Компрессор GREE обеспечивает надежную работу даже при низких температурах до -15°С.', 
-        tags:['хит'], 
-        status:'active', 
-        createdAt:new Date().toISOString() 
-      },
-      { 
-        id:5, 
-        name:'GREEN Genesis Inverter GRI-24IGK2/GRO-24IGK3', 
-        brand:'GREEN', 
-        price:toBYN(990), 
-        oldPrice:null, 
-        area:'до 70', 
-        type:'Настенный', 
-        inverter:'Да', 
-        heat:'-15',
-        color:'белый',
-        specs:[
-          'Мощность охлаждения: 6.155 кВт',
-          'Мощность обогрева: 6.448 кВт',
-          'Потребление при охлаждении: 1.76 кВт',
-          'Потребление при обогреве: 1.86 кВт',
-          'Уровень шума внутр. блока: 34-48 дБ',
-          'Уровень шума наруж. блока: 57 дБ',
-          'Размер внутр. блока: 970x300x220 мм',
-          'Диаметр труб: 1/4, 1/2 дюйма',
-          'Компрессор: GREE',
-          'Хладагент: R32',
-          'Энергоэффективность: A++/A+',
-          'Гарантия: 36 месяцев'
-        ],
-        images:[
-          'https://via.placeholder.com/600x400?text=GREEN+Genesis+24',
-          'https://via.placeholder.com/600x400?text=GREEN+Genesis+24+2'
-        ],
-        description:'Мощная инверторная сплит-система для помещений до 70 м².', 
-        fullDescription: 'GREEN Genesis GRI-24IGK2/GRO-24IGK3 - профессиональная инверторная сплит-система для больших пространств до 70 м². Высокая производительность позволяет эффективно охлаждать и обогревать офисы, магазины, рестораны. Компрессор GREE отличается повышенной надежностью и ресурсом. Энергоэффективность класса A++/A+ обеспечивает экономию электроэнергии.', 
-        tags:[], 
-        status:'active', 
-        createdAt:new Date().toISOString() 
-      },
-      
-      // GREEN HIT ON/OFF R410A
-      { 
-        id:6, 
-        name:'GREEN HIT GRI-07HH2/GRO-07HH3', 
-        brand:'GREEN', 
-        price:toBYN(400), 
-        oldPrice:null, 
-        area:'до 20', 
-        type:'Настенный', 
-        inverter:'Нет', 
-        heat:'-15',
-        color:'белый',
-        specs:[
-          'Мощность охлаждения: 2.25 кВт',
-          'Мощность обогрева: 2.3 кВт',
-          'Потребление при охлаждении: 0.7 кВт',
-          'Потребление при обогреве: 0.637 кВт',
-          'Уровень шума внутр. блока: 24-40 дБ',
-          'Уровень шума наруж. блока: 49 дБ',
-          'Размер внутр. блока: 740x250x185 мм',
-          'Диаметр труб: 1/4, 3/8 дюйма',
-          'Компрессор: GREE',
-          'Хладагент: R410A',
-          'Энергоэффективность: A/A',
-          'Покрытие: Blue Fin',
-          'Гарантия: 36 месяцев'
-        ],
-        images:[
-          'https://via.placeholder.com/600x400?text=GREEN+HIT+07',
-          'https://via.placeholder.com/600x400?text=GREEN+HIT+07+2'
-        ],
-        description:'Надежная ON/OFF сплит-система для небольших помещений до 20 м².', 
-        fullDescription: 'GREEN HIT GRI-07HH2/GRO-07HH3 - классическая ON/OFF сплит-система с компрессором GREE. Оптимальное решение для дачи или нежилого помещения. Простая конструкция обеспечивает высокую надежность и доступную стоимость. Защитное покрытие Blue Fin предохраняет теплообменники от коррозии. Энергоэффективность класса A/A.', 
-        tags:['распродажа'], 
-        status:'active', 
-        createdAt:new Date().toISOString() 
-      },
-      { 
-        id:7, 
-        name:'GREEN HIT GRI-09HH2/GRO-09HH3', 
-        brand:'GREEN', 
-        price:toBYN(450), 
-        oldPrice:null, 
-        area:'до 25', 
-        type:'Настенный', 
-        inverter:'Нет', 
-        heat:'-15',
-        color:'белый',
-        specs:[
-          'Мощность охлаждения: 2.55 кВт',
-          'Мощность обогрева: 2.65 кВт',
-          'Потребление при охлаждении: 0.794 кВт',
-          'Потребление при обогреве: 0.734 кВт',
-          'Уровень шума внутр. блока: 25-40 дБ',
-          'Уровень шума наруж. блока: 49 дБ',
-          'Размер внутр. блока: 740x250x185 мм',
-          'Диаметр труб: 1/4, 3/8 дюйма',
-          'Компрессор: GREE',
-          'Хладагент: R410A',
-          'Энергоэффективность: A/A',
-          'Гарантия: 36 месяцев'
-        ],
-        images:[
-          'https://via.placeholder.com/600x400?text=GREEN+HIT+09',
-          'https://via.placeholder.com/600x400?text=GREEN+HIT+09+2'
-        ],
-        description:'ON/OFF сплит-система с компрессором GREE для помещений до 25 м².', 
-        fullDescription: 'GREEN HIT GRI-09HH2/GRO-09HH3 - надежная и простая в эксплуатации ON/OFF сплит-система. Компрессор GREE обеспечивает стабильную работу в широком диапазоне температур. Модель отлично подходит для небольших квартир, офисов и дачных домов. Простое управление и доступная цена делают эту модель популярным выбором.', 
-        tags:[], 
-        status:'active', 
-        createdAt:new Date().toISOString() 
-      },
-      { 
-        id:8, 
-        name:'GREEN HIT GRI-12HH2/GRO-12HH3', 
-        brand:'GREEN', 
-        price:toBYN(550), 
-        oldPrice:null, 
-        area:'до 35', 
-        type:'Настенный', 
-        inverter:'Нет', 
-        heat:'-15',
-        color:'белый',
-        specs:[
-          'Мощность охлаждения: 3.25 кВт',
-          'Мощность обогрева: 3.4 кВт',
-          'Потребление при охлаждении: 1.009 кВт',
-          'Потребление при обогреве: 0.942 кВт',
-          'Уровень шума внутр. блока: 28-40 дБ',
-          'Уровень шума наруж. блока: 52 дБ',
-          'Размер внутр. блока: 819x256x185 мм',
-          'Диаметр труб: 1/4, 1/2 дюйма',
-          'Компрессор: GREE',
-          'Хладагент: R410A',
-          'Гарантия: 36 месяцев'
-        ],
-        images:[
-          'https://via.placeholder.com/600x400?text=GREEN+HIT+12',
-          'https://via.placeholder.com/600x400?text=GREEN+HIT+12+2'
-        ],
-        description:'ON/OFF сплит-система для помещений до 35 м².', 
-        fullDescription: 'GREEN HIT GRI-12HH2/GRO-12HH3 - производительная ON/OFF сплит-система с компрессором GREE. Отлично подходит для гостиных и офисов площадью до 35 м². Надежный компрессор и качественные материалы обеспечивают длительный срок службы. Простота конструкции гарантирует легкость обслуживания и ремонта.', 
-        tags:[], 
-        status:'active', 
-        createdAt:new Date().toISOString() 
-      },
-      { 
-        id:9, 
-        name:'GREEN HIT GRI-18HH2/GRO-18HH3', 
-        brand:'GREEN', 
-        price:toBYN(770), 
-        oldPrice:null, 
-        area:'до 50', 
-        type:'Настенный', 
-        inverter:'Нет', 
-        heat:'-15',
-        color:'белый',
-        specs:[
-          'Мощность охлаждения: 4.8 кВт',
-          'Мощность обогрева: 5.158 кВт',
-          'Потребление при охлаждении: 1.477 кВт',
-          'Потребление при обогреве: 1.428 кВт',
-          'Уровень шума внутр. блока: 32-41 дБ',
-          'Уровень шума наруж. блока: 53 дБ',
-          'Размер внутр. блока: 885x290x211 мм',
-          'Диаметр труб: 1/4, 1/2 дюйма',
-          'Компрессор: GREE',
-          'Хладагент: R410A',
-          'Гарантия: 36 месяцев'
-        ],
-        images:[
-          'https://via.placeholder.com/600x400?text=GREEN+HIT+18',
-          'https://via.placeholder.com/600x400?text=GREEN+HIT+18+2'
-        ],
-        description:'Мощная ON/OFF сплит-система для больших помещений до 50 м².', 
-        fullDescription: 'GREEN HIT GRI-18HH2/GRO-18HH3 - мощная ON/OFF сплит-система для просторных помещений. Высокая производительность позволяет эффективно охлаждать и обогревать офисы, магазины, кафе. Компрессор GREE отличается повышенной надежностью. Модель оснащена удобным пультом дистанционного управления с ЖК-дисплеем.', 
-        tags:['хит'], 
-        status:'active', 
-        createdAt:new Date().toISOString() 
-      },
-      { 
-        id:10, 
-        name:'GREEN HIT GRI-24HH2/GRO-24HH3', 
-        brand:'GREEN', 
-        price:toBYN(970), 
-        oldPrice:null, 
-        area:'до 70', 
-        type:'Настенный', 
-        inverter:'Нет', 
-        heat:'-15',
-        color:'белый',
-        specs:[
-          'Мощность охлаждения: 6.155 кВт',
-          'Мощность обогрева: 6.7 кВт',
-          'Потребление при охлаждении: 1.917 кВт',
-          'Потребление при обогреве: 1.856 кВт',
-          'Уровень шума внутр. блока: 33-44 дБ',
-          'Уровень шума наруж. блока: 56 дБ',
-          'Размер внутр. блока: 1015x300x220 мм',
-          'Диаметр труб: 1/4, 1/2 дюйма',
-          'Компрессор: GREE',
-          'Хладагент: R410A',
-          'Гарантия: 36 месяцев'
-        ],
-        images:[
-          'https://via.placeholder.com/600x400?text=GREEN+HIT+24',
-          'https://via.placeholder.com/600x400?text=GREEN+HIT+24+2'
-        ],
-        description:'Профессиональная ON/OFF сплит-система для больших пространств до 70 м².', 
-        fullDescription: 'GREEN HIT GRI-24HH2/GRO-24HH3 - мощная ON/OFF сплит-система для коммерческих помещений. Высокая холодопроизводительность 6.1 кВт позволяет эффективно обслуживать большие площади. Компрессор GREE обеспечивает надежную работу в интенсивных режимах эксплуатации. Простая и надежная конструкция гарантирует долгий срок службы.', 
-        tags:[], 
-        status:'active', 
-        createdAt:new Date().toISOString() 
-      },
-      
-      // TRIUMPH INVERTER R32
-      { 
-        id:11, 
-        name:'TRIUMPH Inverter TSI-07HRIY2/TSO-07HRIY2', 
-        brand:'GREEN', 
-        price:toBYN(390), 
-        oldPrice:null, 
-        area:'до 20', 
-        type:'Настенный', 
-        inverter:'Да', 
-        heat:'-15',
-        color:'белый',
-        specs:[
-          'Мощность охлаждения: 2.05 кВт',
-          'Мощность обогрева: 2.35 кВт',
-          'Потребление при охлаждении: 0.635 кВт',
-          'Потребление при обогреве: 0.65 кВт',
-          'Уровень шума внутр. блока: 25-38 дБ',
-          'Уровень шума наруж. блока: 48 дБ',
-          'Размер внутр. блока: 698x255x190 мм',
-          'Диаметр труб: 1/4, 3/8 дюйма',
-          'Компрессор: RECHI',
-          'Хладагент: R32',
-          'Энергоэффективность: A/A',
-          'Покрытие: Blue Fin',
-          'Завод: TCL Home Appliances',
-          'Гарантия: 36 месяцев'
-        ],
-        images:[
-          'https://via.placeholder.com/600x400?text=TRIUMPH+Inverter+07',
-          'https://via.placeholder.com/600x400?text=TRIUMPH+Inverter+07+2'
-        ],
-        description:'Доступная инверторная сплит-система для небольших помещений.', 
-        fullDescription: 'TRIUMPH Inverter TSI-07HRIY2/TSO-07HRIY2 - экономичная инверторная сплит-система производства TCL Home Appliances. Компрессор RECHI обеспечивает надежную работу и низкий уровень шума. Защитное покрытие Blue Fin предотвращает коррозию теплообменников. Возможно подключение WiFi модуля (опция). Отличный выбор для спальни или детской комнаты.', 
-        tags:['новинка'], 
-        status:'active', 
-        createdAt:new Date().toISOString() 
-      },
-      { 
-        id:12, 
-        name:'TRIUMPH Inverter TSI-09HRIY2/TSO-09HRIY2', 
-        brand:'GREEN', 
-        price:toBYN(420), 
-        oldPrice:null, 
-        area:'до 25', 
-        type:'Настенный', 
-        inverter:'Да', 
-        heat:'-15',
-        color:'белый',
-        specs:[
-          'Мощность охлаждения: 2.64 кВт',
-          'Мощность обогрева: 2.78 кВт',
-          'Потребление при охлаждении: 0.82 кВт',
-          'Потребление при обогреве: 0.77 кВт',
-          'Уровень шума внутр. блока: 25-38 дБ',
-          'Уровень шума наруж. блока: 48 дБ',
-          'Размер внутр. блока: 698x255x190 мм',
-          'Диаметр труб: 1/4, 3/8 дюйма',
-          'Компрессор: RECHI',
-          'Хладагент: R32',
-          'Энергоэффективность: A/A',
-          'Гарантия: 36 месяцев'
-        ],
-        images:[
-          'https://via.placeholder.com/600x400?text=TRIUMPH+Inverter+09',
-          'https://via.placeholder.com/600x400?text=TRIUMPH+Inverter+09+2'
-        ],
-        description:'Инверторная сплит-система с компрессором RECHI для помещений до 25 м².', 
-        fullDescription: 'TRIUMPH Inverter TSI-09HRIY2/TSO-09HRIY2 - эффективная инверторная сплит-система для небольших помещений. Технология инвертора позволяет точно поддерживать заданную температуру и экономить электроэнергию. Компрессор RECHI отличается низким уровнем шума. Защитное покрытие Blue Fin продлевает срок службы наружного блока.', 
-        tags:[], 
-        status:'active', 
-        createdAt:new Date().toISOString() 
-      },
-      { 
-        id:13, 
-        name:'TRIUMPH Inverter TSI-12HRIY2/TSO-12HRIY2', 
-        brand:'GREEN', 
-        price:toBYN(460), 
-        oldPrice:null, 
-        area:'до 35', 
-        type:'Настенный', 
-        inverter:'Да', 
-        heat:'-15',
-        color:'белый',
-        specs:[
-          'Мощность охлаждения: 3.52 кВт',
-          'Мощность обогрева: 3.66 кВт',
-          'Потребление при охлаждении: 1.095 кВт',
-          'Потребление при обогреве: 1.013 кВт',
-          'Уровень шума внутр. блока: 26-39 дБ',
-          'Уровень шума наруж. блока: 49 дБ',
-          'Размер внутр. блока: 777x250x201 мм',
-          'Диаметр труб: 1/4, 3/8 дюйма',
-          'Компрессор: RECHI',
-          'Хладагент: R32',
-          'Гарантия: 36 месяцев'
-        ],
-        images:[
-          'https://via.placeholder.com/600x400?text=TRIUMPH+Inverter+12',
-          'https://via.placeholder.com/600x400?text=TRIUMPH+Inverter+12+2'
-        ],
-        description:'Инверторная сплит-система для помещений до 35 м².', 
-        fullDescription: 'TRIUMPH Inverter TSI-12HRIY2/TSO-12HRIY2 - производительная инверторная сплит-система для просторных комнат. Благодаря инверторной технологии достигается быстрый выход на рабочий режим и точное поддержание температуры. Компрессор RECHI обеспечивает тихую работу внутреннего блока. Удобный пульт ДУ с ЖК-дисплеем.', 
-        tags:[], 
-        status:'active', 
-        createdAt:new Date().toISOString() 
-      },
-      { 
-        id:14, 
-        name:'TRIUMPH Inverter TSI-18HRIY2/TSO-18HRIY2', 
-        brand:'GREEN', 
-        price:toBYN(740), 
-        oldPrice:null, 
-        area:'до 50', 
-        type:'Настенный', 
-        inverter:'Да', 
-        heat:'-15',
-        color:'белый',
-        specs:[
-          'Мощность охлаждения: 5.28 кВт',
-          'Мощность обогрева: 5.42 кВт',
-          'Потребление при охлаждении: 1.645 кВт',
-          'Потребление при обогреве: 1.5 кВт',
-          'Уровень шума внутр. блока: 30-44 дБ',
-          'Уровень шума наруж. блока: 53 дБ',
-          'Размер внутр. блока: 910x294x206 мм',
-          'Диаметр труб: 1/4, 3/8 дюйма',
-          'Компрессор: GMCC',
-          'Хладагент: R32',
-          'Гарантия: 36 месяцев'
-        ],
-        images:[
-          'https://via.placeholder.com/600x400?text=TRIUMPH+Inverter+18',
-          'https://via.placeholder.com/600x400?text=TRIUMPH+Inverter+18+2'
-        ],
-        description:'Мощная инверторная сплит-система для больших помещений до 50 м².', 
-        fullDescription: 'TRIUMPH Inverter TSI-18HRIY2/TSO-18HRIY2 - производительная инверторная сплит-система для гостиных и офисов. Компрессор GMCC обеспечивает высокую эффективность и надежность. Технология инвертора позволяет экономить до 30% электроэнергии по сравнению с обычными моделями. Защитное покрытие Blue Fin предохраняет от коррозии.', 
-        tags:[], 
-        status:'active', 
-        createdAt:new Date().toISOString() 
-      },
-      { 
-        id:15, 
-        name:'TRIUMPH Inverter TSI-24HRIY2/TSO-24HRIY2', 
-        brand:'GREEN', 
-        price:toBYN(920), 
-        oldPrice:null, 
-        area:'до 70', 
-        type:'Настенный', 
-        inverter:'Да', 
-        heat:'-15',
-        color:'белый',
-        specs:[
-          'Мощность охлаждения: 7.03 кВт',
-          'Мощность обогрева: 7.18 кВт',
-          'Потребление при охлаждении: 2.19 кВт',
-          'Потребление при обогреве: 1.985 кВт',
-          'Уровень шума внутр. блока: 32-48 дБ',
-          'Уровень шума наруж. блока: 53 дБ',
-          'Размер внутр. блока: 1010x315x220 мм',
-          'Диаметр труб: 1/4, 1/2 дюйма',
-          'Компрессор: SANYO',
-          'Хладагент: R32',
-          'Гарантия: 36 месяцев'
-        ],
-        images:[
-          'https://via.placeholder.com/600x400?text=TRIUMPH+Inverter+24',
-          'https://via.placeholder.com/600x400?text=TRIUMPH+Inverter+24+2'
-        ],
-        description:'Мощная инверторная сплит-система для больших пространств до 70 м².', 
-        fullDescription: 'TRIUMPH Inverter TSI-24HRIY2/TSO-24HRIY2 - высокопроизводительная инверторная сплит-система для коммерческих помещений. Компрессор SANYO отличается повышенной надежностью и длительным сроком службы. Высокая мощность позволяет эффективно охлаждать большие площади. Возможно подключение WiFi модуля для удаленного управления.', 
-        tags:[], 
-        status:'active', 
-        createdAt:new Date().toISOString() 
-      },
-      
-      // TRIUMPH STANDARD R32 (ON/OFF)
-      { 
-        id:16, 
-        name:'TRIUMPH Standard TSI-07HRSY2/TSO-07HRSY2', 
-        brand:'GREEN', 
-        price:toBYN(325), 
-        oldPrice:null, 
-        area:'до 20', 
-        type:'Настенный', 
-        inverter:'Нет', 
-        heat:'-7',
-        color:'белый',
-        specs:[
-          'Мощность охлаждения: 2.05 кВт',
-          'Мощность обогрева: 2.2 кВт',
-          'Потребление при охлаждении: 0.639 кВт',
-          'Потребление при обогреве: 0.609 кВт',
-          'Уровень шума внутр. блока: 25-34 дБ',
-          'Уровень шума наруж. блока: 48 дБ',
-          'Размер внутр. блока: 698x255x190 мм',
-          'Диаметр труб: 1/4, 3/8 дюйма',
-          'Компрессор: GMCC',
-          'Хладагент: R32',
-          'Энергоэффективность: A/A',
-          'Покрытие: Blue Fin',
-          'Завод: TCL Home Appliances',
-          'Гарантия: 36 месяцев'
-        ],
-        images:[
-          'https://via.placeholder.com/600x400?text=TRIUMPH+Standard+07',
-          'https://via.placeholder.com/600x400?text=TRIUMPH+Standard+07+2'
-        ],
-        description:'Доступная ON/OFF сплит-система для небольших помещений.', 
-        fullDescription: 'TRIUMPH Standard TSI-07HRSY2/TSO-07HRSY2 - экономичная ON/OFF сплит-система для дачи или нежилых помещений. Простая конструкция обеспечивает высокую надежность и доступную стоимость. Компрессор GMCC отличается стабильной работой. Защитное покрытие Blue Fin предохраняет теплообменники от коррозии.', 
-        tags:['распродажа'], 
-        status:'active', 
-        createdAt:new Date().toISOString() 
-      },
-      { 
-        id:17, 
-        name:'TRIUMPH Standard TSI-09HRSY2/TSO-09HRSY2', 
-        brand:'GREEN', 
-        price:toBYN(350), 
-        oldPrice:null, 
-        area:'до 25', 
-        type:'Настенный', 
-        inverter:'Нет', 
-        heat:'-7',
-        color:'белый',
-        specs:[
-          'Мощность охлаждения: 2.49 кВт',
-          'Мощность обогрева: 2.64 кВт',
-          'Потребление при охлаждении: 0.775 кВт',
-          'Потребление при обогреве: 0.73 кВт',
-          'Уровень шума внутр. блока: 25-35 дБ',
-          'Уровень шума наруж. блока: 48 дБ',
-          'Размер внутр. блока: 698x255x190 мм',
-          'Диаметр труб: 1/4, 3/8 дюйма',
-          'Компрессор: GMCC',
-          'Хладагент: R32',
-          'Гарантия: 36 месяцев'
-        ],
-        images:[
-          'https://via.placeholder.com/600x400?text=TRIUMPH+Standard+09',
-          'https://via.placeholder.com/600x400?text=TRIUMPH+Standard+09+2'
-        ],
-        description:'ON/OFF сплит-система для помещений до 25 м².', 
-        fullDescription: 'TRIUMPH Standard TSI-09HRSY2/TSO-09HRSY2 - надежная ON/OFF сплит-система для небольших квартир и офисов. Простое и понятное управление с пульта ДУ. Компрессор GMCC обеспечивает стабильную работу в различных условиях. Защитное покрытие Blue Fin продлевает срок службы наружного блока.', 
-        tags:[], 
-        status:'active', 
-        createdAt:new Date().toISOString() 
-      },
-      { 
-        id:18, 
-        name:'TRIUMPH Standard TSI-12HRSY2/TSO-12HRSY2', 
-        brand:'GREEN', 
-        price:toBYN(420), 
-        oldPrice:null, 
-        area:'до 35', 
-        type:'Настенный', 
-        inverter:'Нет', 
-        heat:'-7',
-        color:'белый',
-        specs:[
-          'Мощность охлаждения: 3.23 кВт',
-          'Мощность обогрева: 3.37 кВт',
-          'Потребление при охлаждении: 1.005 кВт',
-          'Потребление при обогреве: 0.934 кВт',
-          'Уровень шума внутр. блока: 31-42 дБ',
-          'Уровень шума наруж. блока: 50 дБ',
-          'Размер внутр. блока: 777x250x201 мм',
-          'Диаметр труб: 1/4, 3/8 дюйма',
-          'Компрессор: RECHI',
-          'Хладагент: R32',
-          'Гарантия: 36 месяцев'
-        ],
-        images:[
-          'https://via.placeholder.com/600x400?text=TRIUMPH+Standard+12',
-          'https://via.placeholder.com/600x400?text=TRIUMPH+Standard+12+2'
-        ],
-        description:'ON/OFF сплит-система для помещений до 35 м².', 
-        fullDescription: 'TRIUMPH Standard TSI-12HRSY2/TSO-12HRSY2 - производительная ON/OFF сплит-система для просторных комнат. Компрессор RECHI обеспечивает эффективную работу и низкий уровень шума. Простое управление и доступная цена делают эту модель популярным выбором для гостиных и офисов.', 
-        tags:[], 
-        status:'active', 
-        createdAt:new Date().toISOString() 
-      },
-      { 
-        id:19, 
-        name:'TRIUMPH Standard TSI-18HRSY2/TSO-18HRSY2', 
-        brand:'GREEN', 
-        price:toBYN(610), 
-        oldPrice:null, 
-        area:'до 50', 
-        type:'Настенный', 
-        inverter:'Нет', 
-        heat:'-7',
-        color:'белый',
-        specs:[
-          'Мощность охлаждения: 4.99 кВт',
-          'Мощность обогрева: 5.13 кВт',
-          'Потребление при охлаждении: 1.554 кВт',
-          'Потребление при обогреве: 1.42 кВт',
-          'Уровень шума внутр. блока: 34-43 дБ',
-          'Уровень шума наруж. блока: 55 дБ',
-          'Размер внутр. блока: 910x294x206 мм',
-          'Диаметр труб: 1/4, 1/2 дюйма',
-          'Компрессор: RECHI',
-          'Хладагент: R32',
-          'Гарантия: 36 месяцев'
-        ],
-        images:[
-          'https://via.placeholder.com/600x400?text=TRIUMPH+Standard+18',
-          'https://via.placeholder.com/600x400?text=TRIUMPH+Standard+18+2'
-        ],
-        description:'Мощная ON/OFF сплит-система для больших помещений до 50 м².', 
-        fullDescription: 'TRIUMPH Standard TSI-18HRSY2/TSO-18HRSY2 - мощная ON/OFF сплит-система для больших гостиных и офисов. Высокая холодопроизводительность позволяет эффективно обслуживать большие площади. Простая и надежная конструкция гарантирует длительный срок службы. Удобный пульт ДУ с основными функциями.', 
-        tags:[], 
-        status:'active', 
-        createdAt:new Date().toISOString() 
-      },
-      { 
-        id:20, 
-        name:'TRIUMPH Standard TSI-24HRSY2/TSO-24HRSY2', 
-        brand:'GREEN', 
-        price:toBYN(750), 
-        oldPrice:null, 
-        area:'до 70', 
-        type:'Настенный', 
-        inverter:'Нет', 
-        heat:'-7',
-        color:'белый',
-        specs:[
-          'Мощность охлаждения: 6.45 кВт',
-          'Мощность обогрева: 6.74 кВт',
-          'Потребление при охлаждении: 2.005 кВт',
-          'Потребление при обогреве: 1.865 кВт',
-          'Уровень шума внутр. блока: 35-43 дБ',
-          'Уровень шума наруж. блока: 55 дБ',
-          'Размер внутр. блока: 910x294x206 мм',
-          'Диаметр труб: 1/4, 1/2 дюйма',
-          'Компрессор: HIGHLY',
-          'Хладагент: R32',
-          'Гарантия: 36 месяцев'
-        ],
-        images:[
-          'https://via.placeholder.com/600x400?text=TRIUMPH+Standard+24',
-          'https://via.placeholder.com/600x400?text=TRIUMPH+Standard+24+2'
-        ],
-        description:'Мощная ON/OFF сплит-система для коммерческих помещений до 70 м².', 
-        fullDescription: 'TRIUMPH Standard TSI-24HRSY2/TSO-24HRSY2 - профессиональная ON/OFF сплит-система для коммерческих помещений. Высокая мощность позволяет эффективно охлаждать магазины, кафе, офисы. Компрессор HIGHLY отличается повышенной надежностью и длительным ресурсом. Простота конструкции обеспечивает легкость обслуживания.', 
-        tags:[], 
-        status:'active', 
-        createdAt:new Date().toISOString() 
-      },
-      
-      // IC3 INVERTER R32
-      { 
-        id:21, 
-        name:'GREEN IC3 Inverter GRI-07IC3/GRO-07IC3', 
-        brand:'GREEN', 
-        price:toBYN(410), 
-        oldPrice:null, 
-        area:'до 20', 
-        type:'Настенный', 
-        inverter:'Да', 
-        heat:'-15',
-        color:'белый',
-        specs:[
-          'Мощность охлаждения: 2.05 кВт',
-          'Мощность обогрева: 2.05 кВт',
-          'Потребление при охлаждении: 0.638 кВт',
-          'Потребление при обогреве: 0.565 кВт',
-          'Уровень шума внутр. блока: 29-40 дБ',
-          'Уровень шума наруж. блока: 50 дБ',
-          'Размер внутр. блока: 750x265x194 мм',
-          'Диаметр труб: 1/4, 3/8 дюйма',
-          'Компрессор: GREE',
-          'Хладагент: R32',
-          'Энергоэффективность: A+/A+',
-          'Покрытие: Gold Fin',
-          'Завод: CHIGO',
-          'Гарантия: 36 месяцев'
-        ],
-        images:[
-          'https://via.placeholder.com/600x400?text=GREEN+IC3+07',
-          'https://via.placeholder.com/600x400?text=GREEN+IC3+07+2'
-        ],
-        description:'Инверторная сплит-система с покрытием Gold Fin для помещений до 20 м².', 
-        fullDescription: 'GREEN IC3 GRI-07IC3/GRO-07IC3 - надежная инверторная сплит-система с компрессором GREE. Защитное покрытие Gold Fin обеспечивает повышенную стойкость к коррозии в агрессивных средах. Энергоэффективность A+/A+ гарантирует экономию электроэнергии. Идеальное решение для спальни или детской комнаты.', 
-        tags:['новинка'], 
-        status:'active', 
-        createdAt:new Date().toISOString() 
-      },
-      { 
-        id:22, 
-        name:'GREEN IC3 Inverter GRI-09IC3/GRO-09IC3', 
-        brand:'GREEN', 
-        price:toBYN(430), 
-        oldPrice:null, 
-        area:'до 25', 
-        type:'Настенный', 
-        inverter:'Да', 
-        heat:'-15',
-        color:'белый',
-        specs:[
-          'Мощность охлаждения: 2.635 кВт',
-          'Мощность обогрева: 2.635 кВт',
-          'Потребление при охлаждении: 0.821 кВт',
-          'Потребление при обогреве: 0.731 кВт',
-          'Уровень шума внутр. блока: 29-40 дБ',
-          'Уровень шума наруж. блока: 50 дБ',
-          'Размер внутр. блока: 750x265x194 мм',
-          'Диаметр труб: 1/4, 3/8 дюйма',
-          'Компрессор: GREE',
-          'Хладагент: R32',
-          'Энергоэффективность: A+/A+',
-          'Гарантия: 36 месяцев'
-        ],
-        images:[
-          'https://via.placeholder.com/600x400?text=GREEN+IC3+09',
-          'https://via.placeholder.com/600x400?text=GREEN+IC3+09+2'
-        ],
-        description:'Инверторная сплит-система с энергоэффективностью A+/A+.', 
-        fullDescription: 'GREEN IC3 GRI-09IC3/GRO-09IC3 - высокоэффективная инверторная сплит-система для помещений до 25 м². Компрессор GREE обеспечивает тихую и надежную работу. Золотое покрытие Gold Fin защищает теплообменники от коррозии и агрессивных сред. Энергоэффективность A+/A+ позволяет экономить до 30% электроэнергии.', 
-        tags:[], 
-        status:'active', 
-        createdAt:new Date().toISOString() 
-      },
-      { 
-        id:23, 
-        name:'GREEN IC3 Inverter GRI-12IC3/GRO-12IC3', 
-        brand:'GREEN', 
-        price:toBYN(490), 
-        oldPrice:null, 
-        area:'до 35', 
-        type:'Настенный', 
-        inverter:'Да', 
-        heat:'-15',
-        color:'белый',
-        specs:[
-          'Мощность охлаждения: 3.52 кВт',
-          'Мощность обогрева: 3.52 кВт',
-          'Потребление при охлаждении: 1.096 кВт',
-          'Потребление при обогреве: 0.975 кВт',
-          'Уровень шума внутр. блока: 30-41 дБ',
-          'Уровень шума наруж. блока: 51 дБ',
-          'Размер внутр. блока: 750x265x194 мм',
-          'Диаметр труб: 1/4, 3/8 дюйма',
-          'Компрессор: GMCC',
-          'Хладагент: R32',
-          'Гарантия: 36 месяцев'
-        ],
-        images:[
-          'https://via.placeholder.com/600x400?text=GREEN+IC3+12',
-          'https://via.placeholder.com/600x400?text=GREEN+IC3+12+2'
-        ],
-        description:'Инверторная сплит-система для помещений до 35 м².', 
-        fullDescription: 'GREEN IC3 GRI-12IC3/GRO-12IC3 - производительная инверторная сплит-система для гостиных и офисов. Компрессор GMCC обеспечивает высокую эффективность и надежность. Защитное покрытие Gold Fin предохраняет от коррозии. Удобный пульт ДУ с ЖК-дисплеем и таймером.', 
-        tags:[], 
-        status:'active', 
-        createdAt:new Date().toISOString() 
-      },
-      { 
-        id:24, 
-        name:'GREEN IC3 Inverter GRI-18IC3/GRO-18IC3', 
-        brand:'GREEN', 
-        price:toBYN(700), 
-        oldPrice:null, 
-        area:'до 50', 
-        type:'Настенный', 
-        inverter:'Да', 
-        heat:'-15',
-        color:'белый',
-        specs:[
-          'Мощность охлаждения: 5.28 кВт',
-          'Мощность обогрева: 5.28 кВт',
-          'Потребление при охлаждении: 1.646 кВт',
-          'Потребление при обогреве: 1.462 кВт',
-          'Уровень шума внутр. блока: 33-42 дБ',
-          'Уровень шума наруж. блока: 54 дБ',
-          'Размер внутр. блока: 855x278x194 мм',
-          'Диаметр труб: 1/4, 1/2 дюйма',
-          'Компрессор: HIGHLY',
-          'Хладагент: R32',
-          'Гарантия: 36 месяцев'
-        ],
-        images:[
-          'https://via.placeholder.com/600x400?text=GREEN+IC3+18',
-          'https://via.placeholder.com/600x400?text=GREEN+IC3+18+2'
-        ],
-        description:'Мощная инверторная сплит-система для больших помещений до 50 м².', 
-        fullDescription: 'GREEN IC3 GRI-18IC3/GRO-18IC3 - мощная инверторная сплит-система для больших пространств. Компрессор HIGHLY обеспечивает высокую производительность и надежность. Золотое покрытие Gold Fin защищает от коррозии в любых условиях. Энергоэффективность A+/A+ гарантирует экономию электроэнергии.', 
-        tags:[], 
-        status:'active', 
-        createdAt:new Date().toISOString() 
-      },
-      { 
-        id:25, 
-        name:'GREEN IC3 Inverter GRI-24IC3/GRO-24IC3', 
-        brand:'GREEN', 
-        price:toBYN(850), 
-        oldPrice:null, 
-        area:'до 70', 
-        type:'Настенный', 
-        inverter:'Да', 
-        heat:'-15',
-        color:'белый',
-        specs:[
-          'Мощность охлаждения: 7.035 кВт',
-          'Мощность обогрева: 7.035 кВт',
-          'Потребление при охлаждении: 2.191 кВт',
-          'Потребление при обогреве: 1.948 кВт',
-          'Уровень шума внутр. блока: 37-46 дБ',
-          'Уровень шума наруж. блока: 56 дБ',
-          'Размер внутр. блока: 920x312x220 мм',
-          'Диаметр труб: 1/4, 1/2 дюйма',
-          'Компрессор: GMCC',
-          'Хладагент: R32',
-          'Гарантия: 36 месяцев'
-        ],
-        images:[
-          'https://via.placeholder.com/600x400?text=GREEN+IC3+24',
-          'https://via.placeholder.com/600x400?text=GREEN+IC3+24+2'
-        ],
-        description:'Мощная инверторная сплит-система для коммерческих помещений до 70 м².', 
-        fullDescription: 'GREEN IC3 GRI-24IC3/GRO-24IC3 - высокопроизводительная инверторная сплит-система для коммерческих помещений. Компрессор GMCC обеспечивает стабильную работу даже при интенсивной эксплуатации. Защитное покрытие Gold Fin предохраняет от коррозии в любых условиях. Энергоэффективность A+/A+ гарантирует экономию электроэнергии.', 
-        tags:[], 
-        status:'active', 
-        createdAt:new Date().toISOString() 
-      },
-      
-      // IG2 INVERTER R32 (аналоги GENESIS, но с другими ценами)
-      { 
-        id:26, 
-        name:'GREEN IG2 Inverter GRI-07IG2/GRO-07IG3', 
-        brand:'GREEN', 
-        price:toBYN(470), 
-        oldPrice:null, 
-        area:'до 20', 
-        type:'Настенный', 
-        inverter:'Да', 
-        heat:'-15',
-        color:'белый',
-        specs:[
-          'Мощность охлаждения: 2.35 кВт',
-          'Мощность обогрева: 2.5 кВт',
-          'Потребление при охлаждении: 0.681 кВт',
-          'Потребление при обогреве: 0.649 кВт',
-          'Уровень шума внутр. блока: 27-40 дБ',
-          'Уровень шума наруж. блока: 50 дБ',
-          'Размер внутр. блока: 713x270x195 мм',
-          'Диаметр труб: 1/4, 3/8 дюйма',
-          'Компрессор: GREE',
-          'Хладагент: R32',
-          'Энергоэффективность: A++/A+',
-          'Гарантия: 36 месяцев'
-        ],
-        images:[
-          'https://via.placeholder.com/600x400?text=GREEN+IG2+07',
-          'https://via.placeholder.com/600x400?text=GREEN+IG2+07+2'
-        ],
-        description:'Инверторная сплит-система с компрессором GREE для небольших помещений.', 
-        fullDescription: 'GREEN IG2 GRI-07IG2/GRO-07IG3 - инверторная сплит-система премиум-класса с компрессором GREE. Высокая энергоэффективность A++/A+ и низкий уровень шума. Защитное покрытие Blue Fin продлевает срок службы теплообменников. Поддержание температуры +8°С, возможность подключения WiFi (опция).', 
-        tags:[], 
-        status:'active', 
-        createdAt:new Date().toISOString() 
-      },
-      { 
-        id:27, 
-        name:'GREEN IG2 Inverter GRI-09IG2/GRO-09IG3', 
-        brand:'GREEN', 
-        price:toBYN(510), 
-        oldPrice:null, 
-        area:'до 25', 
-        type:'Настенный', 
-        inverter:'Да', 
-        heat:'-15',
-        color:'белый',
-        specs:[
-          'Мощность охлаждения: 2.65 кВт',
-          'Мощность обогрева: 2.852 кВт',
-          'Потребление при охлаждении: 0.78 кВт',
-          'Потребление при обогреве: 0.781 кВт',
-          'Уровень шума внутр. блока: 27-40 дБ',
-          'Уровень шума наруж. блока: 51 дБ',
-          'Размер внутр. блока: 713x270x195 мм',
-          'Диаметр труб: 1/4, 3/8 дюйма',
-          'Компрессор: GREE',
-          'Хладагент: R32',
-          'Гарантия: 36 месяцев'
-        ],
-        images:[
-          'https://via.placeholder.com/600x400?text=GREEN+IG2+09',
-          'https://via.placeholder.com/600x400?text=GREEN+IG2+09+2'
-        ],
-        description:'Инверторная сплит-система с энергоэффективностью A++/A+ для помещений до 25 м².', 
-        fullDescription: 'GREEN IG2 GRI-09IG2/GRO-09IG3 - высокоэффективная инверторная сплит-система с классом энергоэффективности A++/A+. Компрессор GREE обеспечивает надежную работу и низкий уровень шума. Технология Blue Fin защищает теплообменники от коррозии. Поддержание температуры +8°С предотвращает замерзание помещения.', 
-        tags:[], 
-        status:'active', 
-        createdAt:new Date().toISOString() 
-      },
-      { 
-        id:28, 
-        name:'GREEN IG2 Inverter GRI-12IG2/GRO-12IG3', 
-        brand:'GREEN', 
-        price:toBYN(580), 
-        oldPrice:null, 
-        area:'до 35', 
-        type:'Настенный', 
-        inverter:'Да', 
-        heat:'-15',
-        color:'белый',
-        specs:[
-          'Мощность охлаждения: 3.5 кВт',
-          'Мощность обогрева: 3.5 кВт',
-          'Потребление при охлаждении: 1.083 кВт',
-          'Потребление при обогреве: 0.918 кВт',
-          'Уровень шума внутр. блока: 24-41 дБ',
-          'Уровень шума наруж. блока: 52 дБ',
-          'Размер внутр. блока: 790x275x200 мм',
-          'Диаметр труб: 1/4, 3/8 дюйма',
-          'Компрессор: GREE',
-          'Хладагент: R32',
-          'Гарантия: 36 месяцев'
-        ],
-        images:[
-          'https://via.placeholder.com/600x400?text=GREEN+IG2+12',
-          'https://via.placeholder.com/600x400?text=GREEN+IG2+12+2'
-        ],
-        description:'Инверторная сплит-система для помещений до 35 м².', 
-        fullDescription: 'GREEN IG2 GRI-12IG2/GRO-12IG3 - мощная инверторная сплит-система для просторных комнат. Благодаря инверторной технологии достигается точное поддержание температуры и экономия электроэнергии до 30%. Компрессор GREE отличается высокой надежностью и длительным сроком службы.', 
-        tags:[], 
-        status:'active', 
-        createdAt:new Date().toISOString() 
-      },
-      { 
-        id:29, 
-        name:'GREEN IG2 Inverter GRI-18IG2/GRO-18IG3', 
-        brand:'GREEN', 
-        price:toBYN(800), 
-        oldPrice:null, 
-        area:'до 50', 
-        type:'Настенный', 
-        inverter:'Да', 
-        heat:'-15',
-        color:'белый',
-        specs:[
-          'Мощность охлаждения: 4.6 кВт',
-          'Мощность обогрева: 5.2 кВт',
-          'Потребление при охлаждении: 1.355 кВт',
-          'Потребление при обогреве: 1.34 кВт',
-          'Уровень шума внутр. блока: 31-44 дБ',
-          'Уровень шума наруж. блока: 53 дБ',
-          'Размер внутр. блока: 970x300x220 мм',
-          'Диаметр труб: 1/4, 3/8 дюйма',
-          'Компрессор: GREE',
-          'Хладагент: R32',
-          'Гарантия: 36 месяцев'
-        ],
-        images:[
-          'https://via.placeholder.com/600x400?text=GREEN+IG2+18',
-          'https://via.placeholder.com/600x400?text=GREEN+IG2+18+2'
-        ],
-        description:'Мощная инверторная сплит-система для больших помещений до 50 м².', 
-        fullDescription: 'GREEN IG2 GRI-18IG2/GRO-18IG3 - производительная инверторная сплит-система для просторных гостиных, офисов и коммерческих помещений площадью до 50 м². Высокая мощность обогрева 5.2 кВт позволяет эффективно использовать кондиционер в межсезонье. Компрессор GREE обеспечивает надежную работу даже при низких температурах до -15°С.', 
-        tags:[], 
-        status:'active', 
-        createdAt:new Date().toISOString() 
-      },
-      { 
-        id:30, 
-        name:'GREEN IG2 Inverter GRI-24IG2/GRO-24IG3', 
-        brand:'GREEN', 
-        price:toBYN(990), 
-        oldPrice:null, 
-        area:'до 70', 
-        type:'Настенный', 
-        inverter:'Да', 
-        heat:'-15',
-        color:'белый',
-        specs:[
-          'Мощность охлаждения: 6.155 кВт',
-          'Мощность обогрева: 6.448 кВт',
-          'Потребление при охлаждении: 1.76 кВт',
-          'Потребление при обогреве: 1.86 кВт',
-          'Уровень шума внутр. блока: 34-48 дБ',
-          'Уровень шума наруж. блока: 57 дБ',
-          'Размер внутр. блока: 970x300x220 мм',
-          'Диаметр труб: 1/4, 1/2 дюйма',
-          'Компрессор: GREE',
-          'Хладагент: R32',
-          'Гарантия: 36 месяцев'
-        ],
-        images:[
-          'https://via.placeholder.com/600x400?text=GREEN+IG2+24',
-          'https://via.placeholder.com/600x400?text=GREEN+IG2+24+2'
-        ],
-        description:'Мощная инверторная сплит-система для коммерческих помещений до 70 м².', 
-        fullDescription: 'GREEN IG2 GRI-24IG2/GRO-24IG3 - профессиональная инверторная сплит-система для больших пространств до 70 м². Высокая производительность позволяет эффективно охлаждать и обогревать офисы, магазины, рестораны. Компрессор GREE отличается повышенной надежностью и ресурсом. Энергоэффективность класса A++/A+ обеспечивает экономию электроэнергии.', 
-        tags:[], 
-        status:'active', 
-        createdAt:new Date().toISOString() 
-      },
-      
-      // WiFi модули и аксессуары
-      { 
-        id:31, 
-        name:'WiFi модуль GREE', 
-        brand:'GREEN', 
-        price:toBYN(40), 
-        oldPrice:null, 
-        area:'-', 
-        type:'Аксессуар', 
-        inverter:'-', 
-        heat:'-',
-        color:'белый',
-        specs:[
-          'Для моделей с поддержкой WiFi',
-          'Управление со смартфона',
-          'Совместимость: GREE, GREEN Genesis',
-          'Простая установка'
-        ],
-        images:[
-          'https://via.placeholder.com/600x400?text=WiFi+GREE',
-          'https://via.placeholder.com/600x400?text=WiFi+GREE+2'
-        ],
-        description:'WiFi модуль для управления кондиционером со смартфона.', 
-        fullDescription: 'Оригинальный WiFi модуль GREE позволяет управлять кондиционером удаленно через смартфон. Устанавливается во внутренний блок. Поддерживает функции: включение/выключение, изменение режимов, настройка температуры, создание расписания. Совместим с моделями GREEN Genesis, IG2 и другими.', 
-        tags:['новинка'], 
-        status:'active', 
-        createdAt:new Date().toISOString() 
-      },
-      { 
-        id:32, 
-        name:'WiFi модуль TCL', 
-        brand:'GREEN', 
-        price:toBYN(40), 
-        oldPrice:null, 
-        area:'-', 
-        type:'Аксессуар', 
-        inverter:'-', 
-        heat:'-',
-        color:'белый',
-        specs:[
-          'Для серий TRIUMPH',
-          'Управление со смартфона',
-          'Простая установка'
-        ],
-        images:[
-          'https://via.placeholder.com/600x400?text=WiFi+TCL',
-          'https://via.placeholder.com/600x400?text=WiFi+TCL+2'
-        ],
-        description:'WiFi модуль для управления кондиционерами TRIUMPH.', 
-        fullDescription: 'WiFi модуль для серий TRIUMPH Inverter и Standard. Позволяет управлять кондиционером удаленно через мобильное приложение. Поддерживает все основные функции: включение/выключение, настройка температуры, выбор режимов, создание сценариев работы по расписанию.', 
-        tags:[], 
-        status:'active', 
-        createdAt:new Date().toISOString() 
-      },
-      
-      // MAR серия (самые дешевые)
-      { 
-        id:33, 
-        name:'MAR ALSH07R1-IN/ALSH07R1-OUT', 
-        brand:'GREEN', 
-        price:toBYN(240), 
-        oldPrice:null, 
-        area:'до 25', 
-        type:'Настенный', 
-        inverter:'Нет', 
-        heat:'-8',
-        color:'белый',
-        specs:[
-          'Мощность охлаждения: 2.68 кВт',
-          'Мощность обогрева: 2.75 кВт',
-          'Потребление при охлаждении: 0.83 кВт',
-          'Потребление при обогреве: 0.76 кВт',
-          'Уровень шума внутр. блока: 24-31 дБ',
-          'Уровень шума наруж. блока: 45 дБ',
-          'Размер внутр. блока: 720x292x190 мм',
-          'Диаметр труб: 1/4, 3/8 дюйма',
-          'Компрессор: GREE',
-          'Хладагент: R410A',
-          'Энергоэффективность: A/A',
-          'Покрытие: Gold Fin',
-          'Завод: SHARBO',
-          'Гарантия: 36 месяцев'
-        ],
-        images:[
-          'https://via.placeholder.com/600x400?text=MAR+07',
-          'https://via.placeholder.com/600x400?text=MAR+07+2'
-        ],
-        description:'Бюджетная ON/OFF сплит-система для небольших помещений.', 
-        fullDescription: 'MAR ALSH07R1-IN/ALSH07R1-OUT - экономичная ON/OFF сплит-система для дачи или нежилых помещений. Компрессор GREE обеспечивает надежную работу. Золотое покрытие Gold Fin защищает теплообменники от коррозии. Простое управление и доступная цена делают эту модель отличным выбором для бюджетных решений.', 
-        tags:['распродажа'], 
-        status:'active', 
-        createdAt:new Date().toISOString() 
-      },
-      { 
-        id:34, 
-        name:'MAR ALSH09R1-IN/ALSH09R1-OUT', 
-        brand:'GREEN', 
-        price:toBYN(260), 
-        oldPrice:null, 
-        area:'до 25', 
-        type:'Настенный', 
-        inverter:'Нет', 
-        heat:'-8',
+        heat:'-10',
         color:'белый',
         specs:[
           'Мощность охлаждения: 2.8 кВт',
-          'Мощность обогрева: 2.85 кВт',
-          'Потребление при охлаждении: 0.86 кВт',
-          'Потребление при обогреве: 0.79 кВт',
-          'Уровень шума внутр. блока: 24-31 дБ',
-          'Уровень шума наруж. блока: 45 дБ',
-          'Размер внутр. блока: 720x292x190 мм',
-          'Диаметр труб: 1/4, 3/8 дюйма',
-          'Компрессор: GREE',
-          'Хладагент: R410A',
-          'Гарантия: 36 месяцев'
+          'Мощность обогрева: 3.0 кВт',
+          'Энергопотребление: 0.9 кВт',
+          'Уровень шума: 25 дБ',
+          'Плазменный фильтр'
         ],
         images:[
-          'https://via.placeholder.com/600x400?text=MAR+09',
-          'https://via.placeholder.com/600x400?text=MAR+09+2'
+          'https://via.placeholder.com/600x400?text=LG+P09EP+1',
+          'https://via.placeholder.com/600x400?text=LG+P09EP+2',
+          'https://via.placeholder.com/600x400?text=LG+P09EP+3'
         ],
-        description:'Бюджетная ON/OFF сплит-система для помещений до 25 м².', 
-        fullDescription: 'MAR ALSH09R1-IN/ALSH09R1-OUT - доступная ON/OFF сплит-система для дачи, гаража или нежилого помещения. Компрессор GREE обеспечивает стабильную работу. Золотое покрытие Gold Fin продлевает срок службы наружного блока. Простая и надежная конструкция - идеальное решение для тех, кто ищет недорогой кондиционер.', 
-        tags:[], 
+        description:'Wi-Fi управление, мощный обогрев.', 
+        fullDescription:'LG P09EP - современный кондиционер с Wi-Fi, плазменный фильтр. Высокая производительность и стильный внешний вид.', 
+        tags:['распродажа'], 
         status:'active', 
         createdAt:new Date().toISOString() 
       },
+      // НОВЫЙ ТОВАР: Ballu BSO-09HN8_22Y
       { 
-        id:35, 
-        name:'MAR ALSH12R1-IN/ALSH12R1-OUT', 
-        brand:'GREEN', 
-        price:toBYN(390), 
+        id:4, 
+        name:'Ballu BSO-09HN8_22Y серия Olympio Edge', 
+        brand:'Ballu', 
+        price:1080, 
         oldPrice:null, 
-        area:'до 35', 
+        area:'до 30', // Обслуживаемая площадь: 25-30 м2
         type:'Настенный', 
-        inverter:'Нет', 
-        heat:'-8',
+        inverter:'Нет', // On/off сплит-система
+        heat:'-7', // Рабочий диапазон при обогреве: -7°С
         color:'белый',
         specs:[
-          'Мощность охлаждения: 3.58 кВт',
-          'Мощность обогрева: 3.76 кВт',
-          'Потребление при охлаждении: 1.12 кВт',
-          'Потребление при обогреве: 1.04 кВт',
-          'Уровень шума внутр. блока: 26-36 дБ',
-          'Уровень шума наруж. блока: 47 дБ',
-          'Размер внутр. блока: 800x292x190 мм',
-          'Диаметр труб: 1/4, 3/8 дюйма',
-          'Компрессор: GREE',
-          'Хладагент: R410A',
-          'Гарантия: 36 месяцев'
+          'Производитель: GD Midea Air Conditioning',
+          'Мощность охлаждения: 2.64 кВт',
+          'Мощность обогрева: 2.64 кВт',
+          'Потребление при охлаждении: 0.821 кВт',
+          'Потребление при обогреве: 0.730 кВт',
+          'Уровень шума (вн. блок): 23 дБ',
+          'Уровень шума (нар. блок): 52 дБ',
+          'Макс. длина коммуникаций: 20 м',
+          'Фреон: R32',
+          'Класс энергоэффективности: А',
+          'Компрессор: Toshiba',
+          'Пульт ДУ, дисплей, ночной режим, авторестарт',
+          'Функция I Feel (датчик в пульте)',
+          'Антикоррозийное покрытие Golden Fin',
+          'Фотокаталитический фильтр',
+          'Размеры вн. блока: 722х290х187 мм',
+          'Размеры нар. блока: 720х495х270 мм',
+          'Вес вн./нар. блока: 8.1 / 24.6 кг'
         ],
         images:[
-          'https://via.placeholder.com/600x400?text=MAR+12',
-          'https://via.placeholder.com/600x400?text=MAR+12+2'
+          'https://via.placeholder.com/600x400?text=Ballu+BSO-09HN8_22Y+1',
+          'https://via.placeholder.com/600x400?text=Ballu+BSO-09HN8_22Y+2',
+          'https://via.placeholder.com/600x400?text=Ballu+BSO-09HN8_22Y+3'
         ],
-        description:'Бюджетная ON/OFF сплит-система для помещений до 35 м².', 
-        fullDescription: 'MAR ALSH12R1-IN/ALSH12R1-OUT - доступная ON/OFF сплит-система для гостиных и офисов. Компрессор GREE обеспечивает надежную работу. Золотое покрытие Gold Fin защищает от коррозии. Простое управление и экономичная цена делают эту модель популярным выбором для бюджетных решений.', 
-        tags:[], 
-        status:'active', 
-        createdAt:new Date().toISOString() 
-      },
-      { 
-        id:36, 
-        name:'MAR ALSH18R1-IN/ALSH18R1-OUT', 
-        brand:'GREEN', 
-        price:toBYN(600), 
-        oldPrice:null, 
-        area:'до 50', 
-        type:'Настенный', 
-        inverter:'Нет', 
-        heat:'-8',
-        color:'белый',
-        specs:[
-          'Мощность охлаждения: 5.25 кВт',
-          'Мощность обогрева: 5.55 кВт',
-          'Потребление при охлаждении: 1.64 кВт',
-          'Потребление при обогреве: 1.54 кВт',
-          'Уровень шума внутр. блока: 28-39 дБ',
-          'Уровень шума наруж. блока: 52 дБ',
-          'Размер внутр. блока: 850x292x190 мм',
-          'Диаметр труб: 1/4, 1/2 дюйма',
-          'Компрессор: GREE',
-          'Хладагент: R410A',
-          'Гарантия: 36 месяцев'
-        ],
-        images:[
-          'https://via.placeholder.com/600x400?text=MAR+18',
-          'https://via.placeholder.com/600x400?text=MAR+18+2'
-        ],
-        description:'Бюджетная ON/OFF сплит-система для больших помещений до 50 м².', 
-        fullDescription: 'MAR ALSH18R1-IN/ALSH18R1-OUT - доступная ON/OFF сплит-система для больших помещений. Высокая мощность позволяет эффективно охлаждать гостиные и офисы площадью до 50 м². Компрессор GREE обеспечивает надежную работу. Золотое покрытие Gold Fin продлевает срок службы.', 
-        tags:[], 
-        status:'active', 
-        createdAt:new Date().toISOString() 
-      },
-      { 
-        id:37, 
-        name:'MAR ALSH24R1-IN/ALSH24R1-OUT', 
-        brand:'GREEN', 
-        price:toBYN(840), 
-        oldPrice:null, 
-        area:'до 70', 
-        type:'Настенный', 
-        inverter:'Нет', 
-        heat:'-8',
-        color:'белый',
-        specs:[
-          'Мощность охлаждения: 7.13 кВт',
-          'Мощность обогрева: 7.2 кВт',
-          'Потребление при охлаждении: 2.22 кВт',
-          'Потребление при обогреве: 1.97 кВт',
-          'Уровень шума внутр. блока: 32-41 дБ',
-          'Уровень шума наруж. блока: 55 дБ',
-          'Размер внутр. блока: 970x310x230 мм',
-          'Диаметр труб: 1/4, 5/8 дюйма',
-          'Компрессор: GREE',
-          'Хладагент: R410A',
-          'Гарантия: 36 месяцев'
-        ],
-        images:[
-          'https://via.placeholder.com/600x400?text=MAR+24',
-          'https://via.placeholder.com/600x400?text=MAR+24+2'
-        ],
-        description:'Бюджетная ON/OFF сплит-система для коммерческих помещений до 70 м².', 
-        fullDescription: 'MAR ALSH24R1-IN/ALSH24R1-OUT - доступная ON/OFF сплит-система для коммерческих помещений. Высокая холодопроизводительность позволяет эффективно обслуживать магазины, кафе, офисы. Компрессор GREE обеспечивает стабильную работу даже при интенсивной эксплуатации. Золотое покрытие Gold Fin защищает от коррозии.', 
-        tags:[], 
-        status:'active', 
-        createdAt:new Date().toISOString() 
-      },
-      
-      // Кронштейны
-      { 
-        id:38, 
-        name:'Кронштейн для кондиционера 450 мм (2,0мм)', 
-        brand:'GREEN', 
-        price:toBYN(6.5), 
-        oldPrice:null, 
-        area:'-', 
-        type:'Аксессуар', 
-        inverter:'-', 
-        heat:'-',
-        color:'серый',
-        specs:[
-          'Длина: 450 мм',
-          'Толщина металла: 2.0 мм',
-          'С комплектом метизов',
-          'Нагрузка: до 80 кг'
-        ],
-        images:[
-          'https://via.placeholder.com/600x400?text=Кронштейн+450',
-          'https://via.placeholder.com/600x400?text=Кронштейн+450+2'
-        ],
-        description:'Кронштейн для монтажа наружного блока кондиционера.', 
-        fullDescription: 'Прочный кронштейн для наружного блока кондиционера. Длина 450 мм, толщина металла 2.0 мм. Выдерживает нагрузку до 80 кг. В комплекте с крепежом (метизами). Оцинкованная сталь обеспечивает защиту от коррозии. Подходит для большинства бытовых сплит-систем.', 
-        tags:[], 
-        status:'active', 
-        createdAt:new Date().toISOString() 
-      },
-      { 
-        id:39, 
-        name:'Кронштейн для кондиционера стандарт 450 с метизами', 
-        brand:'GREEN', 
-        price:toBYN(7), 
-        oldPrice:null, 
-        area:'-', 
-        type:'Аксессуар', 
-        inverter:'-', 
-        heat:'-',
-        color:'серый',
-        specs:[
-          'Длина: 450 мм',
-          'С комплектом метизов',
-          'Усиленная конструкция',
-          'Оцинкованная сталь'
-        ],
-        images:[
-          'https://via.placeholder.com/600x400?text=Кронштейн+стандарт',
-          'https://via.placeholder.com/600x400?text=Кронштейн+стандарт+2'
-        ],
-        description:'Усиленный кронштейн для наружного блока кондиционера.', 
-        fullDescription: 'Усиленный кронштейн для монтажа наружного блока кондиционера. Длина 450 мм. Оцинкованная сталь обеспечивает защиту от коррозии. В комплекте с крепежными элементами (метизами). Выдерживает высокие нагрузки. Подходит для всех типов бытовых сплит-систем.', 
-        tags:[], 
+        description:'On/off сплит-система с компрессором Toshiba, уровень шума 23 дБ, функция iFeel.', 
+        fullDescription: `Сплит-система Ballu Olympio Edge BSO-09HN8_22Y – универсальное климатическое устройство для жилых и коммерческих помещений. Модель отличается минималистичным дизайном и высокой эргономичностью. 
+        
+Экономичность – компрессор Toshiba с классом энергоэффективности «А».
+Низкий шум – всего 23 дБ.
+Большой ресурс благодаря компрессору Toshiba.
+Простой монтаж благодаря продуманной конструкции.
+Система памяти настроек для легкого управления.
+Антикоррозийное защитное покрытие Golden Fin.
+Мощная система фильтрации (фильтр высокой плотности и фотокаталитический фильтр).
+Функция iFeel: кондиционер охлаждает воздух до заданной температуры в том месте, где находится пульт ДУ.
+Режимы: охлаждение/обогрев/осушение/вентиляция/авто/SLEEP.
+Автоматическое покачивание жалюзи, память положения жалюзи, турбо-режим, авторестарт.
+Подсветка дисплея и пульта, возможность отключения дисплея.`, 
+        tags:['новинка'], 
         status:'active', 
         createdAt:new Date().toISOString() 
       }
     ];
-
-    // Добавляем оставшиеся товары из прайс-листа (для краткости я добавил основные)
-    // В реальном файле здесь было бы еще около 100+ товаров из листов:
-    // - CITY R410A
-    // - MEGAPOLIS R410A
-    // - AERONIK (все серии)
-    // - CHERBROOKE
-    // - CHIGO
-    // - Superionizer
-    // - ANTIVIRUS
-    // и другие
     
-    // Но для экономии места в ответе я показываю структуру
-    
-    let brands = [
-      { id:1, name:'GREEN' }, 
-      { id:2, name:'AERONIK' }, 
-      { id:3, name:'CHIGO' }, 
-      { id:4, name:'CHERBROOKE' }, 
-      { id:5, name:'JAX' }
-    ];
-    
-    let cart = [], orders = [], adminCredentials = { login:'admin', password:'admin123' }, selectedProducts = new Set(), actionLogs = [], currentPage = 1, itemsPerPage = 9;
+    let brands = [{ id:1, name:'Ballu' }, { id:2, name:'Electrolux' }, { id:3, name:'LG' }, { id:4, name:'Mitsubishi' }, { id:5, name:'Samsung' }, { id:6, name:'Panasonic' }];
+    let cart = [], orders = [], adminCredentials = { login:'admin', password:'admin123' }, selectedProducts = new Set(), actionLogs = [], currentPage = 1, itemsPerPage = 6;
     let visitCount = 0, totalVisits = 0;
     let settings = {};
     let currentProduct = null;
@@ -2765,12 +1541,19 @@
 
     // Функция для генерации HTML-кода с обновленными товарами
     function generateHTMLCode() {
+      // Получаем текущий HTML-код страницы
       const htmlContent = document.documentElement.outerHTML;
+      
+      // Создаем строковое представление массива products
       const productsString = JSON.stringify(products, null, 2).replace(/"([^"]+)":/g, '$1:');
+      
+      // Создаем новый HTML с обновленными товарами
       const newHTML = htmlContent.replace(
         /let products = \[[\s\S]*?\];/,
         `let products = ${productsString};`
       );
+      
+      // Показываем сгенерированный код
       document.getElementById('export-code-block').textContent = newHTML;
       document.getElementById('generated-code').style.display = 'block';
     }
@@ -2782,6 +1565,7 @@
       });
     }
 
+    // Функции для работы с периодами
     function getDateRange(period) {
       const today = new Date();
       let start = new Date();
@@ -2949,19 +1733,20 @@
       } 
     }
 
+    // Фильтрация и пагинация
     function filterProducts() {
       const search = document.getElementById('search-input')?.value.toLowerCase() || '';
       const areas = Array.from(document.querySelectorAll('#catalog input[type="checkbox"][id^="area"]:checked')).map(cb=>cb.value);
       const types = Array.from(document.querySelectorAll('#catalog input[type="checkbox"][id^="type"]:checked')).map(cb=>cb.value);
+      const heats = Array.from(document.querySelectorAll('#catalog input[type="checkbox"][id^="heat"]:checked')).map(cb=>cb.value);
       const inverter = document.querySelector('input[name="inverter"]:checked')?.value;
-      const brands_filter = Array.from(document.querySelectorAll('#catalog input[type="checkbox"][id^="brand"]:checked')).map(cb=>cb.value);
-      const min = parseInt(document.getElementById('minPrice').value)||0, max = parseInt(document.getElementById('maxPrice').value)||15000;
+      const min = parseInt(document.getElementById('minPrice').value)||0, max = parseInt(document.getElementById('maxPrice').value)||20929;
       
       let filtered = products.filter(p => {
         if (search && !p.name.toLowerCase().includes(search) && !(p.description?.toLowerCase().includes(search)) && !(p.brand?.toLowerCase().includes(search))) return false;
         if (areas.length && !areas.includes(p.area)) return false;
         if (types.length && !types.includes(p.type)) return false;
-        if (brands_filter.length && !brands_filter.includes(p.brand)) return false;
+        if (heats.length && !heats.includes(p.heat)) return false;
         if (inverter && inverter!=='' && p.inverter!==inverter) return false;
         if (p.price < min || p.price > max) return false;
         return true;
@@ -3008,6 +1793,7 @@
       filterProducts(); 
     }
 
+    // Отдельная страница товара с вкладками
     function openProductPage(id) {
       lastScrollPosition = window.scrollY;
       window.location.hash = `product-${id}`;
@@ -3054,6 +1840,7 @@
         return `<span class="inline-block bg-${color}-100 text-${color}-800 text-xs px-2 py-1 rounded-full mr-2">${t}</span>`;
       }).join('')||'';
       
+      // Галерея
       let galleryHtml = '';
       if (p.images && p.images.length > 0) {
         galleryHtml = `
@@ -3070,8 +1857,10 @@
         galleryHtml = `<img src="https://via.placeholder.com/600x400?text=No+Image" class="w-full rounded-xl shadow-2xl mb-4">`;
       }
       
+      // Цвет (только если указан)
       const colorHtml = p.color ? `<div class="specs-row"><span class="specs-label">Цвет:</span><span class="specs-value">${p.color}</span></div>` : '';
       
+      // Характеристики
       let specsHtml = '';
       if (p.specs && p.specs.length > 0) {
         specsHtml = p.specs.map(spec => {
@@ -3100,11 +1889,13 @@
             <h1 class="text-3xl font-bold mb-4">${p.name}</h1>
             <div class="mb-6">${priceHtml}<span class="text-primary text-4xl font-bold">${p.price} BYN</span></div>
             
+            <!-- Кнопки вкладок -->
             <div class="flex border-b border-gray-200 mb-6">
               <button class="tab-button ${currentTab === 'specs' ? 'active' : ''}" onclick="switchTab('specs')">Характеристики</button>
               <button class="tab-button ${currentTab === 'description' ? 'active' : ''}" onclick="switchTab('description')">Описание</button>
             </div>
             
+            <!-- Содержимое вкладок -->
             <div class="tab-content ${currentTab === 'specs' ? 'active' : ''}">
               <div class="specs-table">
                 ${specsHtml}
@@ -3148,12 +1939,13 @@
       document.querySelectorAll('#catalog input[type="checkbox"]').forEach(cb=>cb.checked=false);
       document.querySelectorAll('#catalog input[type="radio"]').forEach(r=>{if(r.value==='') r.checked=true;});
       document.getElementById('minPrice').value=0; 
-      document.getElementById('maxPrice').value=15000; 
-      document.getElementById('priceRange').value=15000;
+      document.getElementById('maxPrice').value=20929; 
+      document.getElementById('priceRange').value=20929;
       document.getElementById('search-input').value=''; 
       filterProducts();
     }
 
+    // Корзина
     function addToCart(id) {
       const p=products.find(p=>p.id===id);
       if(!p) return;
@@ -3294,6 +2086,7 @@ Email: ${e || 'не указан'}
       document.getElementById('order-email').value='';
     }
 
+    // Обратная связь
     document.getElementById('contact-form').addEventListener('submit', function(e) {
       e.preventDefault();
       
@@ -3315,12 +2108,14 @@ Email: ${e || 'не указан'}
       .catch(()=>document.getElementById('contact-error').classList.remove('hidden'));
     });
 
+    // Админка
     function checkAdminHash() { 
       if(window.location.hash==='#admin') {
         document.getElementById('admin-login-modal').style.display='flex';
       }
     }
     
+    // Убираем автоматический вход
     window.addEventListener('load', function() {
       if(window.location.hash==='#admin') {
         document.getElementById('admin-login-modal').style.display='flex';
@@ -3340,6 +2135,7 @@ Email: ${e || 'не указан'}
         document.getElementById('admin-panel').style.display='block';
         renderAdminProducts(); 
         switchAdminTab('products'); 
+        // Убираем сохранение в localStorage
       } else alert('Неверный логин или пароль');
     }
     
@@ -3732,7 +2528,9 @@ Email: ${e || 'не указан'}
       } 
     }
 
+    // Инициализация при загрузке страницы
     document.addEventListener('DOMContentLoaded',function(){
+      // Инициализация калькулятора
       const ms=document.getElementById('model'), li=document.getElementById('length'), db=document.getElementById('decrease-length'), ib=document.getElementById('increase-length'), tp=document.getElementById('total-price'), dc=document.getElementById('demontage'), sc=document.getElementById('service'), ls=document.getElementById('length-section');
       
       function calc() {
@@ -3763,12 +2561,13 @@ Email: ${e || 'не указан'}
       if(sc) sc.addEventListener('change',calc); 
       calc();
       
+      // Загружаем данные
       loadBrands(); 
       loadOrders(); 
       loadCart(); 
       loadVisits(); 
       loadSettings(); 
-      filterProducts();
+      filterProducts(); // Отображаем товары
       
       console.log('Сайт загружен, товаров:', products.length);
     });
@@ -3786,7 +2585,6 @@ Email: ${e || 'не указан'}
       if(e.target.classList.contains('modal')) e.target.style.display='none'; 
     });
     window.addEventListener('hashchange',checkProductHash);
-    checkProductHash();
   </script>
 </body>
 </html>
