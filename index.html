@@ -611,6 +611,40 @@
       .specs-row { flex-direction: column; gap: 4px; }
       .specs-label { width: 100%; }
     }
+    
+    /* Стили для экспорта кода */
+    .export-modal {
+      position: fixed;
+      top: 0;
+      left: 0;
+      right: 0;
+      bottom: 0;
+      background: rgba(0,0,0,0.8);
+      z-index: 2000;
+      display: none;
+      justify-content: center;
+      align-items: center;
+    }
+    .export-content {
+      background: white;
+      padding: 20px;
+      border-radius: 12px;
+      width: 90%;
+      max-width: 1000px;
+      max-height: 80vh;
+      overflow: auto;
+    }
+    .export-code {
+      background: #f4f4f4;
+      padding: 15px;
+      border-radius: 8px;
+      font-family: monospace;
+      font-size: 12px;
+      white-space: pre-wrap;
+      word-wrap: break-word;
+      max-height: 500px;
+      overflow: auto;
+    }
   </style>
 </head>
 <body>
@@ -943,7 +977,6 @@
           <div class="flex items-center gap-3">
             <span class="text-xs sm:text-sm text-gray-600">Посещений сегодня: <span id="today-visits">0</span></span>
             <span class="text-xs sm:text-sm text-gray-600">Всего посещений: <span id="total-visits">0</span></span>
-            <span class="text-xs sm:text-sm text-gray-600">Резервное копирование: <span id="backup-status">✅</span></span>
             <a href="#" onclick="closeAdminPanel(); return false;" class="text-gray-600 hover:text-gray-900"><i class="ri-close-line ri-xl sm:ri-2x"></i></a>
           </div>
         </div>
@@ -955,7 +988,7 @@
             <button onclick="switchAdminTab('brands')" class="px-2 sm:px-4 py-1 sm:py-2 font-medium text-xs sm:text-base text-gray-500 hover:text-gray-700" id="tab-brands-btn">Бренды</button>
             <button onclick="switchAdminTab('reports')" class="px-2 sm:px-4 py-1 sm:py-2 font-medium text-xs sm:text-base text-gray-500 hover:text-gray-700" id="tab-reports-btn">Отчеты</button>
             <button onclick="switchAdminTab('settings')" class="px-2 sm:px-4 py-1 sm:py-2 font-medium text-xs sm:text-base text-gray-500 hover:text-gray-700" id="tab-settings-btn">Настройки</button>
-            <button onclick="switchAdminTab('logs')" class="px-2 sm:px-4 py-1 sm:py-2 font-medium text-xs sm:text-base text-gray-500 hover:text-gray-700" id="tab-logs-btn">Логи</button>
+            <button onclick="switchAdminTab('export')" class="px-2 sm:px-4 py-1 sm:py-2 font-medium text-xs sm:text-base text-gray-500 hover:text-gray-700" id="tab-export-btn">Экспорт кода</button>
           </nav>
         </div>
 
@@ -980,8 +1013,7 @@
             <button onclick="selectAllProducts()" class="bg-gray-200 text-gray-800 px-2 sm:px-4 py-1 sm:py-2 rounded-button text-xs sm:text-sm">Выбрать все</button>
             <button onclick="deselectAllProducts()" class="bg-gray-200 text-gray-800 px-2 sm:px-4 py-1 sm:py-2 rounded-button text-xs sm:text-sm">Снять</button>
             <button onclick="deleteSelectedProducts()" class="bg-red-500 text-white px-2 sm:px-4 py-1 sm:py-2 rounded-button text-xs sm:text-sm">Удалить</button>
-            <button onclick="exportProducts()" class="bg-green-500 text-white px-2 sm:px-4 py-1 sm:py-2 rounded-button text-xs sm:text-sm">Экспорт</button>
-            <label class="bg-purple-500 text-white px-2 sm:px-4 py-1 sm:py-2 rounded-button cursor-pointer text-xs sm:text-sm">Импорт<input type="file" accept=".xlsx,.xls,.csv" class="hidden" onchange="importProducts(this)"></label>
+            <button onclick="exportProducts()" class="bg-green-500 text-white px-2 sm:px-4 py-1 sm:py-2 rounded-button text-xs sm:text-sm">Экспорт CSV</button>
             <button onclick="openAddProductForm()" class="bg-primary text-white px-2 sm:px-4 py-1 sm:py-2 rounded-button btn-animate text-xs sm:text-sm">+ Добавить</button>
           </div>
 
@@ -1003,7 +1035,10 @@
               <div class="sm:col-span-2"><label class="block text-xs sm:text-sm font-medium text-gray-700 mb-1">Изображения (каждая с новой строки)</label><textarea id="new-images" rows="3" class="w-full border px-2 sm:px-3 py-1 sm:py-2 rounded text-xs sm:text-sm" placeholder="https://.../img1.jpg&#10;https://.../img2.jpg"></textarea></div>
               <div class="sm:col-span-2"><label class="block text-xs sm:text-sm font-medium text-gray-700 mb-1">Теги</label><div class="flex gap-3"><label class="flex items-center text-xs sm:text-sm"><input type="checkbox" id="new-tag-hit" class="mr-1"> Хит</label><label class="flex items-center text-xs sm:text-sm"><input type="checkbox" id="new-tag-new" class="mr-1"> Новинка</label><label class="flex items-center text-xs sm:text-sm"><input type="checkbox" id="new-tag-sale" class="mr-1"> Распродажа</label></div></div>
             </div>
-            <div class="flex gap-2 mt-3"><button onclick="saveNewProduct()" class="bg-primary text-white px-4 py-2 rounded-button text-xs sm:text-sm">Сохранить</button><button onclick="closeAddProductForm()" class="bg-gray-200 text-gray-800 px-4 py-2 rounded-button text-xs sm:text-sm">Отмена</button></div>
+            <div class="flex gap-2 mt-3">
+              <button onclick="saveNewProduct()" class="bg-primary text-white px-4 py-2 rounded-button text-xs sm:text-sm">Сохранить</button>
+              <button onclick="closeAddProductForm()" class="bg-gray-200 text-gray-800 px-4 py-2 rounded-button text-xs sm:text-sm">Отмена</button>
+            </div>
           </div>
 
           <!-- Модальное окно редактирования товара -->
@@ -1070,7 +1105,6 @@
           <div class="mb-4 flex flex-wrap gap-1 sm:gap-2">
             <button onclick="deleteAllOrders()" class="bg-red-500 text-white px-2 sm:px-4 py-1 sm:py-2 rounded-button text-xs sm:text-sm">Удалить все</button>
             <button onclick="exportOrders()" class="bg-green-500 text-white px-2 sm:px-4 py-1 sm:py-2 rounded-button text-xs sm:text-sm">Экспорт</button>
-            <button onclick="backupDatabase()" class="bg-blue-500 text-white px-2 sm:px-4 py-1 sm:py-2 rounded-button text-xs sm:text-sm">Резервное копирование</button>
           </div>
           <div id="admin-orders-list" class="space-y-3 sm:space-y-4"></div>
           <div class="mt-4 p-3 sm:p-4 bg-blue-50 rounded"><h4 class="font-bold text-xs sm:text-sm">Статистика заказов:</h4><p class="text-xs sm:text-sm">Всего заказов: <span id="total-orders">0</span></p><p class="text-xs sm:text-sm">Общая сумма: <span id="total-amount">0</span> BYN</p></div>
@@ -1127,18 +1161,21 @@
               <div><label class="block text-xs sm:text-sm font-medium text-gray-700 mb-1">Валюта</label><select id="site-currency" class="w-full border px-2 sm:px-4 py-1 sm:py-2 rounded-lg text-xs sm:text-sm"><option value="BYN">BYN</option><option value="USD">USD</option><option value="EUR">EUR</option><option value="RUB">RUB</option></select></div>
               <div><label class="block text-xs sm:text-sm font-medium text-gray-700 mb-1">Заголовок сайта (SEO)</label><input type="text" id="site-seo-title" value="Установка кондиционеров в Гомеле | AirComfort" class="w-full border px-2 sm:px-4 py-1 sm:py-2 rounded-lg text-xs sm:text-sm"></div>
               <div><label class="block text-xs sm:text-sm font-medium text-gray-700 mb-1">Описание сайта (SEO)</label><textarea id="site-seo-desc" rows="2" class="w-full border px-2 sm:px-4 py-1 sm:py-2 rounded-lg text-xs sm:text-sm" placeholder="Профессиональная установка кондиционеров в Гомеле"></textarea></div>
-              <div><label class="block text-xs sm:text-sm font-medium text-gray-700 mb-1">Способы доставки</label><div class="space-y-1 text-xs sm:text-sm"><label class="flex items-center"><input type="checkbox" checked class="mr-2"> Самовывоз</label><label class="flex items-center"><input type="checkbox" checked class="mr-2"> Курьером по городу</label><label class="flex items-center"><input type="checkbox" class="mr-2"> Почтой по РБ</label></div></div>
-              <div><label class="block text-xs sm:text-sm font-medium text-gray-700 mb-1">Способы оплаты</label><div class="space-y-1 text-xs sm:text-sm"><label class="flex items-center"><input type="checkbox" checked class="mr-2"> Наличные</label><label class="flex items-center"><input type="checkbox" checked class="mr-2"> Картой онлайн</label><label class="flex items-center"><input type="checkbox" checked class="mr-2"> Безналичный расчет</label></div></div>
               <button onclick="saveSettings()" class="bg-primary text-white px-4 sm:px-6 py-1 sm:py-2 rounded-button text-xs sm:text-sm">Сохранить</button>
             </div>
           </div>
         </div>
 
-        <div id="admin-logs-tab" class="hidden">
+        <div id="admin-export-tab" class="hidden">
           <div class="bg-white p-3 sm:p-6 rounded-lg shadow">
-            <h3 class="text-sm sm:text-lg font-bold mb-2 sm:mb-4">История действий</h3>
-            <div class="mb-3 sm:mb-4"><select id="log-filter" onchange="filterLogs()" class="border px-2 sm:px-4 py-1 sm:py-2 rounded-lg text-xs sm:text-sm"><option value="">Все действия</option><option value="product">Товары</option><option value="order">Заказы</option><option value="brand">Бренды</option><option value="user">Пользователи</option><option value="settings">Настройки</option></select></div>
-            <div id="logs-list" class="space-y-1 sm:space-y-2 max-h-96 overflow-y-auto text-xs sm:text-sm"></div>
+            <h3 class="text-sm sm:text-lg font-bold mb-3 sm:mb-4">Экспорт HTML-кода</h3>
+            <p class="text-xs sm:text-sm text-gray-600 mb-4">После добавления, редактирования или удаления товаров нажмите кнопку ниже, чтобы сгенерировать обновленный HTML-код. Скопируйте его и сохраните как новый файл.</p>
+            <button onclick="generateHTMLCode()" class="bg-primary text-white px-4 sm:px-6 py-2 sm:py-3 rounded-button text-xs sm:text-sm mb-4">Сгенерировать HTML-код</button>
+            <div id="generated-code" class="hidden">
+              <h4 class="font-bold mb-2 text-sm">Скопируйте этот код:</h4>
+              <div class="export-code" id="export-code-block"></div>
+              <button onclick="copyToClipboard()" class="mt-3 bg-gray-200 text-gray-800 px-4 py-2 rounded-button text-xs sm:text-sm">Копировать в буфер</button>
+            </div>
           </div>
         </div>
       </div>
@@ -1455,14 +1492,7 @@
     let lastScrollPosition = 0; // Для возврата к месту в каталоге
     let currentTab = 'specs'; // Текущая вкладка в карточке товара
 
-    // Убираем загрузку товаров из localStorage - они теперь только в коде
-    function loadProducts() { /* Товары уже загружены из кода */ }
-    function saveProducts() { 
-      // Временно отключаем сохранение в localStorage из-за ошибки квоты
-      // Можно сохранять только небольшие изменения, но для надежности оставляем в коде
-      addLog('product','Обновлен список товаров (изменения в коде)'); 
-    }
-    
+    // Загружаем данные из localStorage (только для временных данных)
     function loadBrands() { const s=localStorage.getItem('aircom_brands'); if(s) brands=JSON.parse(s); renderBrands(); updateBrandSelects(); }
     function saveBrands() { localStorage.setItem('aircom_brands', JSON.stringify(brands)); renderBrands(); updateBrandSelects(); addLog('brand','Обновлен список брендов'); }
     function loadVisits() {
@@ -1486,19 +1516,6 @@
     }
     function loadCart() { const s=localStorage.getItem('aircom_cart'); if(s) cart=JSON.parse(s); updateCartBadge(); }
     function saveCart() { localStorage.setItem('aircom_cart', JSON.stringify(cart)); updateCartBadge(); }
-    function loadLogs() { const s=localStorage.getItem('aircom_logs'); if(s) actionLogs=JSON.parse(s); }
-    function saveLogs() { 
-      try {
-        localStorage.setItem('aircom_logs', JSON.stringify(actionLogs)); 
-      } catch(e) {
-        console.warn('Не удалось сохранить логи: превышение квоты');
-        // Очищаем старые логи при ошибке
-        actionLogs = actionLogs.slice(0, 20);
-        try {
-          localStorage.setItem('aircom_logs', JSON.stringify(actionLogs));
-        } catch(e) {}
-      }
-    }
     function loadSettings() { 
       const s=localStorage.getItem('aircom_settings'); 
       if(s) settings = JSON.parse(s);
@@ -1506,8 +1523,7 @@
     }
     function addLog(t,a) { 
       actionLogs.unshift({type:t, action:a, time:new Date().toLocaleString(), user:'admin'}); 
-      if(actionLogs.length>50) actionLogs.pop(); // Уменьшаем количество хранимых логов
-      saveLogs(); 
+      if(actionLogs.length>20) actionLogs.pop(); // Ограничиваем логи
     }
     function updateCartBadge() { const c=cart.reduce((a,i)=>a+i.quantity,0), b=document.getElementById('cart-count'); if(b) { if(c>0) { b.classList.remove('hidden'); b.textContent=c; } else b.classList.add('hidden'); } }
     function updateOrderStats() { 
@@ -1515,10 +1531,30 @@
       if(to&&ta) { to.textContent=orders.length; ta.textContent=orders.reduce((a,o)=>a+o.total,0); } 
     }
 
-    // Резервное копирование (только для небольших данных)
-    function backupDatabase() {
-      // Сохраняем только самое важное
-      addLog('system', 'Попытка резервного копирования');
+    // Функция для генерации HTML-кода с обновленными товарами
+    function generateHTMLCode() {
+      // Получаем текущий HTML-код страницы
+      const htmlContent = document.documentElement.outerHTML;
+      
+      // Находим массив products в коде и заменяем его на обновленный
+      const productsString = JSON.stringify(products, null, 2).replace(/"([^"]+)":/g, '$1:');
+      
+      // Создаем новый HTML с обновленными товарами
+      const newHTML = htmlContent.replace(
+        /let products = \[[\s\S]*?\];/,
+        `let products = ${productsString};`
+      );
+      
+      // Показываем сгенерированный код
+      document.getElementById('export-code-block').textContent = newHTML;
+      document.getElementById('generated-code').classList.remove('hidden');
+    }
+    
+    function copyToClipboard() {
+      const code = document.getElementById('export-code-block').textContent;
+      navigator.clipboard.writeText(code).then(() => {
+        alert('Код скопирован в буфер обмена! Сохраните его как новый HTML-файл.');
+      });
     }
 
     // Функции для работы с периодами
@@ -2007,7 +2043,6 @@ Email: ${e || 'не указан'}
         renderAdminProducts(); 
         switchAdminTab('products'); 
         localStorage.setItem('admin_logged_in', 'true');
-        addLog('user','Вход в админ-панель');
       } else alert('Неверный логин или пароль');
     }
     
@@ -2023,7 +2058,7 @@ Email: ${e || 'не указан'}
     }
 
     function switchAdminTab(tab) {
-      const tabs=['products','orders','brands','reports','settings','logs'];
+      const tabs=['products','orders','brands','reports','settings','export'];
       tabs.forEach(t=>{
         const el=document.getElementById(`admin-${t}-tab`), btn=document.getElementById(`tab-${t}-btn`);
         if(el) el.classList.add('hidden');
@@ -2039,7 +2074,6 @@ Email: ${e || 'не указан'}
         const range = getDateRange('today');
         updateReport(range.start, range.end);
       }
-      if(tab==='logs') renderLogs();
     }
 
     function renderAdminProducts() {
@@ -2133,14 +2167,13 @@ Email: ${e || 'не указан'}
       updateOrderStats();
     }
     
-    function updateOrderStatus(id,ns) { const o=orders.find(o=>o.id===id); if(o) { o.status=ns; saveOrders(); filterAdminOrders(); addLog('order',`Статус заказа #${id} изменен на ${ns}`); } }
-    function deleteOrder(id) { if(confirm('Удалить заказ?')) { orders=orders.filter(o=>o.id!==id); saveOrders(); filterAdminOrders(); addLog('order',`Удален заказ #${id}`); } }
-    function deleteAllOrders() { if(confirm('Удалить все заказы?')) { orders=[]; saveOrders(); filterAdminOrders(); addLog('order','Удалены все заказы'); } }
+    function updateOrderStatus(id,ns) { const o=orders.find(o=>o.id===id); if(o) { o.status=ns; saveOrders(); filterAdminOrders(); } }
+    function deleteOrder(id) { if(confirm('Удалить заказ?')) { orders=orders.filter(o=>o.id!==id); saveOrders(); filterAdminOrders(); } }
+    function deleteAllOrders() { if(confirm('Удалить все заказы?')) { orders=[]; saveOrders(); filterAdminOrders(); } }
     function exportOrders() {
       const data=orders.map(o=>({ 'Номер':o.id, Дата:o.date, Клиент:o.customer.name, Телефон:o.customer.phone, Адрес:o.customer.address, Email:o.customer.email, Оплата:o.customer.payment, Сумма:o.total, Статус:o.status, Товары:o.items.map(i=>`${i.name}(${i.quantity})`).join('; ') }));
       const csv=[Object.keys(data[0]).join(','),...data.map(r=>Object.values(r).map(v=>`"${v}"`).join(','))].join('\n');
       const blob=new Blob(['\uFEFF'+csv],{type:'text/csv;charset=utf-8;'}), link=document.createElement('a'); link.href=URL.createObjectURL(blob); link.download='orders_export.csv'; link.click();
-      addLog('order','Экспорт заказов');
     }
 
     function toggleProductSelection(id) { 
@@ -2161,11 +2194,9 @@ Email: ${e || 'не указан'}
       if(confirm(`Удалить ${selectedProducts.size} товар(ов)?`)) {
         products = products.filter(p => !selectedProducts.has(p.id));
         selectedProducts.clear();
-        // Не сохраняем в localStorage, просто обновляем отображение
         renderAdminProducts(); 
         filterProducts(); 
-        addLog('product',`Удалено товаров: ${selectedProducts.size}`);
-        alert('Товары удалены (изменения в коде)');
+        alert('Товары удалены. Не забудьте экспортировать код!');
       }
     }
     
@@ -2187,49 +2218,6 @@ Email: ${e || 'не указан'}
       }));
       const csv=[Object.keys(data[0]).join(','), ...data.map(r=>Object.values(r).map(v=>`"${v}"`).join(','))].join('\n');
       const blob=new Blob(['\uFEFF'+csv],{type:'text/csv;charset=utf-8;'}), link=document.createElement('a'); link.href=URL.createObjectURL(blob); link.download='products_export.csv'; link.click();
-      addLog('product','Экспорт товаров');
-    }
-    
-    function importProducts(input) {
-      const file=input.files[0]; if(!file) return;
-      const reader=new FileReader();
-      reader.onload=(e)=>{
-        const lines=e.target.result.split('\n'), headers=lines[0].split(',').map(h=>h.trim());
-        for(let i=1;i<lines.length;i++) {
-          if(!lines[i].trim()) continue;
-          const values=lines[i].split(',').map(v=>v.replace(/^"|"$/g,'').trim()), prod={};
-          headers.forEach((h,idx)=>prod[h]=values[idx]);
-          
-          const images = prod['Изображения'] ? prod['Изображения'].split(';').map(s=>s.trim()) : ['https://via.placeholder.com/200x150?text=New'];
-          const specs = prod['Характеристики'] ? prod['Характеристики'].split('\n').map(s=>s.trim()).filter(s=>s) : [];
-          
-          products.push({ 
-            id:Math.max(...products.map(p=>p.id),0)+i, 
-            name:prod['Название'], 
-            brand:prod['Бренд'], 
-            price:parseFloat(prod['Цена']), 
-            oldPrice:null,
-            area:prod['Площадь']||'до 20', 
-            type:prod['Тип']||'Настенный', 
-            inverter:prod['Инвертор']||'Да', 
-            heat:prod['Обогрев']||'-15',
-            color:prod['Цвет'] || '',
-            specs: specs,
-            images: images,
-            description:prod['Описание']||'', 
-            fullDescription:prod['Полное описание']||'', 
-            tags:prod['Теги']?prod['Теги'].split(',').map(t=>t.trim()):[], 
-            status:'active', 
-            createdAt:new Date().toISOString() 
-          });
-        }
-        // Не сохраняем в localStorage
-        renderAdminProducts(); 
-        filterProducts(); 
-        addLog('product','Импорт товаров'); 
-        alert('Товары импортированы (изменения в коде)');
-      };
-      reader.readAsText(file,'UTF-8');
     }
     
     function openAddProductForm() { 
@@ -2281,12 +2269,10 @@ Email: ${e || 'не указан'}
         createdAt:new Date().toISOString() 
       });
       
-      // Не сохраняем в localStorage
       renderAdminProducts(); 
       filterProducts(); 
       closeAddProductForm();
-      addLog('product','Добавлен товар '+name);
-      alert('Товар добавлен (изменения в коде)');
+      alert('Товар добавлен! Нажмите "Экспорт кода" в админ-панели, чтобы сохранить изменения.');
     }
     
     function cloneProduct(id) {
@@ -2294,11 +2280,9 @@ Email: ${e || 'не указан'}
       if(!p) return;
       const np={...p, id:Math.max(...products.map(p=>p.id),0)+1, name:p.name+' (копия)', createdAt:new Date().toISOString()};
       products.push(np); 
-      // Не сохраняем в localStorage
       renderAdminProducts(); 
       filterProducts(); 
-      addLog('product','Копирование '+p.name);
-      alert('Товар скопирован (изменения в коде)');
+      alert('Товар скопирован! Нажмите "Экспорт кода" в админ-панели, чтобы сохранить изменения.');
     }
     
     function openEditModal(id) {
@@ -2365,22 +2349,18 @@ Email: ${e || 'не указан'}
       if (document.getElementById('edit-tag-new')?.checked) p.tags.push('новинка');
       if (document.getElementById('edit-tag-sale')?.checked) p.tags.push('распродажа');
       
-      // Не сохраняем в localStorage
       renderAdminProducts();
       filterProducts();
       closeEditModal();
-      addLog('product', 'Изменен товар ' + p.name);
-      alert('Товар сохранен (изменения в коде)');
+      alert('Товар сохранен! Нажмите "Экспорт кода" в админ-панели, чтобы сохранить изменения.');
     }
     
     function deleteProduct(id) { 
       if(confirm('Удалить товар?')) { 
         products = products.filter(p => p.id !== id); 
-        // Не сохраняем в localStorage
         renderAdminProducts(); 
         filterProducts(); 
-        addLog('product',`Удален товар ID: ${id}`); 
-        alert('Товар удален (изменения в коде)');
+        alert('Товар удален! Нажмите "Экспорт кода" в админ-панели, чтобы сохранить изменения.');
       } 
     }
 
@@ -2388,9 +2368,9 @@ Email: ${e || 'не указан'}
       const list=document.getElementById('brands-admin-list'); if(!list) return;
       list.innerHTML=brands.map(b=>`<div class="flex justify-between items-center p-2 border rounded mb-2"><span class="text-xs sm:text-sm">${b.name}</span><div><button onclick="editBrand(${b.id})" class="text-blue-600 mr-2 text-xs">✏️</button><button onclick="deleteBrand(${b.id})" class="text-red-600 text-xs">🗑️</button></div></div>`).join('');
     }
-    function addBrand() { const n=prompt('Название бренда:'); if(!n) return; brands.push({ id:Math.max(...brands.map(b=>b.id),0)+1, name:n }); saveBrands(); renderAdminBrands(); addLog('brand','Добавлен бренд '+n); }
-    function editBrand(id) { const b=brands.find(b=>b.id===id); if(!b) return; const n=prompt('Новое название:',b.name); if(n) { b.name=n; saveBrands(); renderAdminBrands(); addLog('brand','Изменен бренд '+n); } }
-    function deleteBrand(id) { if(confirm('Удалить бренд?')) { brands=brands.filter(b=>b.id!==id); saveBrands(); renderAdminBrands(); addLog('brand','Удален бренд'); } }
+    function addBrand() { const n=prompt('Название бренда:'); if(!n) return; brands.push({ id:Math.max(...brands.map(b=>b.id),0)+1, name:n }); saveBrands(); renderAdminBrands(); }
+    function editBrand(id) { const b=brands.find(b=>b.id===id); if(!b) return; const n=prompt('Новое название:',b.name); if(n) { b.name=n; saveBrands(); renderAdminBrands(); } }
+    function deleteBrand(id) { if(confirm('Удалить бренд?')) { brands=brands.filter(b=>b.id!==id); saveBrands(); renderAdminBrands(); } }
 
     function saveSettings() {
       const s={ 
@@ -2404,19 +2384,13 @@ Email: ${e || 'не указан'}
       };
       localStorage.setItem('aircom_settings',JSON.stringify(s)); 
       updateMetaTags(s);
-      addLog('settings','Изменены настройки'); 
       alert('Настройки сохранены');
     }
-    function renderLogs() {
-      const list=document.getElementById('logs-list'), f=document.getElementById('log-filter')?.value||'', filtered=f?actionLogs.filter(l=>l.type===f):actionLogs;
-      list.innerHTML=filtered.map(l=>`<div class="text-xs border-b pb-1"><span class="text-gray-500">${l.time}</span> - <span class="font-medium">${l.type}:</span> ${l.action}</div>`).join('')||'<p class="text-gray-500 text-xs">Нет записей</p>';
-    }
-    function filterLogs() { renderLogs(); }
 
     function changeAdminCredentials() {
       const nl=document.getElementById('admin-login').value, np=document.getElementById('admin-pass').value;
       if(nl) adminCredentials.login=nl; if(np) adminCredentials.password=np;
-      addLog('user','Изменены учетные данные'); alert('Данные изменены');
+      alert('Данные изменены');
     }
     function toggleFilterCollapse(el) { const c=el.nextElementSibling; if(c) { if(c.style.display==='none'||c.style.display==='') c.style.display='block'; else c.style.display='none'; } }
 
@@ -2437,8 +2411,8 @@ Email: ${e || 'не указан'}
       console.log('Сайт загружен, все функции инициализированы');
     });
 
-    // Загружаем данные, но товары уже есть в коде
-    loadBrands(); loadOrders(); loadCart(); loadLogs(); loadVisits(); loadSettings(); 
+    // Загружаем данные
+    loadBrands(); loadOrders(); loadCart(); loadVisits(); loadSettings(); 
     filterProducts(); // Отображаем товары
     
     const pr=document.getElementById('priceRange'), mp=document.getElementById('maxPrice');
