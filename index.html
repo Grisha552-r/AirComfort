@@ -134,7 +134,8 @@
           colors: {
             primary: '#4CAF50',
             secondary: '#2196F3',
-            accent: '#FF6B35'
+            accent: '#FF6B35',
+            darkred: '#8B0000'
           },
           borderRadius: {
             'button': '12px'
@@ -220,7 +221,8 @@
       background-clip: text;
     }
 
-    .gradient-bg { background: linear-gradient(135deg, #4CAF50 0%, #45a049 100%); }
+    .gradient-bg { background: linear-gradient(135deg, #8B0000 0%, #A52A2A 100%); }
+    .gradient-bg:hover { background: linear-gradient(135deg, #A52A2A 0%, #8B0000 100%); }
 
     .btn-animate {
       transition: all 0.3s ease;
@@ -230,7 +232,7 @@
 
     .btn-animate:hover {
       transform: translateY(-3px);
-      box-shadow: 0 10px 20px rgba(76, 175, 80, 0.3);
+      box-shadow: 0 10px 20px rgba(139, 0, 0, 0.3);
     }
     .btn-animate:active { transform: translateY(-1px); }
 
@@ -663,6 +665,11 @@
     </a>
   </div>
 
+  <!-- Ссылка для входа в админ-панель (скрытая в футере) -->
+  <div style="display: none;">
+    <a href="#admin" onclick="showAdminLogin(); return false;">Админ</a>
+  </div>
+
   <div id="content">
     <!-- Навигация -->
     <nav class="glass-effect shadow-lg py-1.5 px-4 sm:px-6 fixed w-full z-50 border-b border-white/20">
@@ -724,29 +731,21 @@
       </div>
     </nav>
 
-    <!-- Ссылка на админ-панель (скрытая в футере) -->
-    <div class="fixed bottom-20 right-4 z-40">
-      <button onclick="showAdminLogin()" class="bg-gray-800 text-white text-xs px-3 py-1 rounded-full opacity-50 hover:opacity-100 transition-opacity">
-        <i class="ri-admin-line mr-1"></i>Админ
-      </button>
-    </div>
-
-    <!-- Главный экран -->
-    <section class="pt-12 sm:pt-20 pb-6 sm:pb-12 relative overflow-hidden" style="background-image: url('https://split.ck.ua/wp-content/uploads/2019/07/bg-split2-1024x775.jpg">
-      <div class="absolute inset-0 bg-gradient-to-r from-white via-white/95 to-white/30"></div>
-      <div class="absolute inset-0 bg-gradient-to-b from-transparent via-transparent to-white/20"></div>
-      <div class="max-w-7xl mx-auto px-4 sm:px-6 relative z-10">
-        <div class="max-w-2xl">
-          <h1 class="text-xl sm:text-3xl md:text-4xl font-bold text-gray-900 mb-2 sm:mb-4 leading-tight">Профессиональная установка и продажа <span class="text-gradient">кондиционеров</span> с гарантией!</h1>
-          <p class="text-xs sm:text-base text-gray-700 mb-3 sm:mb-6 leading-relaxed">Бесплатный выезд замерщика, точный расчет стоимости и монтаж за 1 день! Мы предлагаем полный спектр услуг по установке климатического оборудования с гарантией качества.</p>
-          <div class="flex flex-col sm:flex-row gap-2 items-start">
-            <button onclick="document.getElementById('calculator').scrollIntoView({behavior: 'smooth'})" class="gradient-bg text-white px-4 sm:px-6 py-1.5 sm:py-2.5 rounded-button font-medium hover:shadow-glow transition-all duration-300 shadow-lg shadow-primary/20 whitespace-nowrap flex items-center justify-center btn-animate text-xs sm:text-base">
+    <!-- Главный экран - новое изображение, текст по центру, красные кнопки -->
+    <section class="pt-12 sm:pt-20 pb-6 sm:pb-12 relative overflow-hidden min-h-[600px] flex items-center" style="background-image: url('https://split.ck.ua/wp-content/uploads/2019/07/bg-split2-1024x775.jpg'); background-size: cover; background-position: center;">
+      <div class="absolute inset-0 bg-black/20"></div>
+      <div class="max-w-7xl mx-auto px-4 sm:px-6 relative z-10 w-full">
+        <div class="max-w-2xl mx-auto text-center">
+          <h1 class="text-xl sm:text-3xl md:text-4xl font-bold text-white mb-2 sm:mb-4 leading-tight">Профессиональная установка и продажа <span class="text-white font-bold">кондиционеров</span> с гарантией!</h1>
+          <p class="text-xs sm:text-base text-white mb-3 sm:mb-6 leading-relaxed">Бесплатный выезд замерщика, точный расчет стоимости и монтаж за 1 день! Мы предлагаем полный спектр услуг по установке климатического оборудования с гарантией качества.</p>
+          <div class="flex flex-col sm:flex-row gap-2 items-center justify-center">
+            <button onclick="document.getElementById('calculator').scrollIntoView({behavior: 'smooth'})" class="gradient-bg text-white px-4 sm:px-6 py-1.5 sm:py-2.5 rounded-button font-medium hover:shadow-glow transition-all duration-300 shadow-lg shadow-darkred/20 whitespace-nowrap flex items-center justify-center btn-animate text-xs sm:text-base">
               <div class="w-3 h-3 sm:w-4 sm:h-4 flex items-center justify-center mr-1 sm:mr-2">
                 <i class="ri-calculator-line"></i>
               </div>
               Рассчитать стоимость
             </button>
-            <button onclick="document.getElementById('catalog').scrollIntoView({behavior: 'smooth'})" class="bg-white text-primary border-2 border-primary px-4 sm:px-6 py-1.5 sm:py-2.5 rounded-button font-medium hover:bg-primary hover:text-white transition-all duration-300 btn-animate text-xs sm:text-base">
+            <button onclick="document.getElementById('catalog').scrollIntoView({behavior: 'smooth'})" class="bg-white text-darkred border-2 border-darkred px-4 sm:px-6 py-1.5 sm:py-2.5 rounded-button font-medium hover:bg-darkred hover:text-white transition-all duration-300 btn-animate text-xs sm:text-base">
               <i class="ri-store-2-line mr-1 sm:mr-2"></i>Перейти в каталог
             </button>
           </div>
@@ -1330,7 +1329,10 @@ https://.../img2.jpg"></textarea></div>
       <div class="max-w-7xl mx-auto px-6">
         <div class="flex flex-col md:flex-row justify-between items-center">
           <div class="mb-3 md:mb-0"><div class="flex items-center"><span class="text-base sm:text-xl font-['Pacifico'] text-white mr-2">AirComfort</span></div><p class="text-xs text-gray-400 mt-1">Профессиональная установка кондиционеров в Гомеле</p><p class="text-xs text-gray-500 mt-1">Общество с ограниченной ответственностью "ТеплоПрайм" УНП 491393506</p></div>
-          <div class="flex flex-col items-center md:items-end"><p class="text-xs text-gray-400">© 2026 AirComfort. Все права защищены.</p></div>
+          <div class="flex flex-col items-center md:items-end"><p class="text-xs text-gray-400">© 2026 AirComfort. Все права защищены.</p>
+          <!-- Скрытая ссылка для входа в админку -->
+          <a href="#admin" onclick="showAdminLogin(); return false;" class="text-xs text-gray-600 hover:text-gray-400 mt-1 opacity-30 hover:opacity-100 transition-opacity">⚙️ Админ-панель</a>
+          </div>
         </div>
       </div>
     </footer>
@@ -2297,14 +2299,18 @@ Email: ${e || 'не указан'}
         .catch(() => document.getElementById('contact-error').classList.remove('hidden'));
     });
 
-    // Админка - вход только по кнопке
+    // Админка - вход только по ссылке в футере
     function showAdminLogin() {
       document.getElementById('admin-login-modal').style.display = 'flex';
     }
     
     // Убираем автоматический вход по хешу
     window.addEventListener('load', function() {
-      // Никакого автоматического входа
+      // Проверяем хеш для входа в админку
+      if (window.location.hash === '#admin') {
+        document.getElementById('admin-login-modal').style.display = 'flex';
+        window.location.hash = ''; // Убираем хеш после открытия модалки
+      }
     });
 
     function loginAdmin() {
@@ -2887,4 +2893,3 @@ Email: ${e || 'не указан'}
   </script>
 </body>
 </html>
-
