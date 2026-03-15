@@ -39,11 +39,12 @@
   <!-- Sitemap ссылка -->
   <link rel="sitemap" type="application/xml" title="Sitemap" href="/sitemap.xml">
   
-  <!-- Favicon и иконки (новый логотип) -->
-  <link rel="icon" type="image/png" sizes="32x32" href="https://i.postimg.cc/Y0881t9p/Image-1.png">
-  <link rel="icon" type="image/png" sizes="16x16" href="https://i.postimg.cc/Y0881t9p/Image-1.png">
-  <link rel="apple-touch-icon" sizes="180x180" href="https://i.postimg.cc/Y0881t9p/Image-1.png">
-  <meta name="msapplication-TileImage" content="https://i.postimg.cc/Y0881t9p/Image-1.png">
+  <!-- Favicon и иконки (новый логотип) - ИСПРАВЛЕНО для телефонов -->
+  <link rel="icon" type="image/png" sizes="32x32" href="https://i.postimg.cc/wjn25f6w/Image.png">
+  <link rel="icon" type="image/png" sizes="16x16" href="https://i.postimg.cc/wjn25f6w/Image.png">
+  <link rel="apple-touch-icon" sizes="180x180" href="https://i.postimg.cc/wjn25f6w/Image.png">
+  <link rel="shortcut icon" href="https://i.postimg.cc/wjn25f6w/Image.png" type="image/png">
+  <meta name="msapplication-TileImage" content="https://i.postimg.cc/wjn25f6w/Image.png">
   <meta name="msapplication-TileColor" content="#4CAF50">
   <meta name="theme-color" content="#4CAF50">
   
@@ -1317,7 +1318,7 @@ https://.../img2.jpg"></textarea></div>
   </div>
 
   <script>
-    // Полный JavaScript код сохранен без изменений
+    // Полный JavaScript код с исправлениями
     // Данные - ТОВАРЫ ХРАНЯТСЯ В КОДЕ
     let products = [
       {
@@ -1645,8 +1646,8 @@ https://.../img2.jpg"></textarea></div>
 
     function generateHTMLCode() {
       const htmlContent = document.documentElement.outerHTML;
-      const productsString = JSON.stringify(products, null, 2).replace(/"([^"]+)":/g, '$1:');
-      const brandsString = JSON.stringify(brands, null, 2).replace(/"([^"]+)":/g, '$1:');
+      const productsString = JSON.stringify(products, null, 2);
+      const brandsString = JSON.stringify(brands, null, 2);
       
       let newHTML = htmlContent.replace(
         /let products = \[[\s\S]*?\];/,
@@ -1917,18 +1918,30 @@ https://.../img2.jpg"></textarea></div>
       }
       if (d) total += 100;
       if (s) total += 100;
+      
+      // Создаем уникальный ID для услуги
+      const serviceId = 'calc-' + Date.now();
+      
       const ci = {
-        id: 'calc-' + Date.now(),
+        id: serviceId,
         name: mt + (d ? ' + демонтаж' : '') + (s ? ' + обслуживание' : ''),
         price: total,
         quantity: 1,
         image: 'https://via.placeholder.com/200x150?text=Service'
       };
+      
       const ex = cart.find(i => i.id === ci.id);
-      if (ex) ex.quantity++;
-      else cart.push(ci);
+      if (ex) {
+        ex.quantity++;
+      } else {
+        cart.push(ci);
+      }
+      
       saveCart();
       alert('Услуга добавлена в корзину');
+      
+      // Показываем корзину после добавления
+      toggleCartModal();
     }
     
     function toggleCartModal() {
@@ -1994,10 +2007,12 @@ https://.../img2.jpg"></textarea></div>
       const a = document.getElementById('order-address').value;
       const e = document.getElementById('order-email').value;
       const pm = document.querySelector('input[name="payment"]:checked')?.value || 'Наличные';
+      
       if (!n || !p || !a) {
         alert('Заполните все поля');
         return;
       }
+      
       const total = cart.reduce((s, i) => s + i.price * i.quantity, 0);
       const order = {
         id: Date.now(),
@@ -2011,13 +2026,7 @@ https://.../img2.jpg"></textarea></div>
       orders.push(order);
       saveOrders();
       
-      const fd = new FormData();
-      fd.append('name', n);
-      fd.append('phone', p);
-      fd.append('address', a);
-      fd.append('email', e || 'aircomfortbel@gmail.com');
-      fd.append('payment', pm);
-      
+      // Формируем текст заказа для email
       let itemsList = '';
       cart.forEach(item => {
         itemsList += `\n• ${item.name} - ${item.quantity} шт x ${item.price} BYN = ${item.price * item.quantity} BYN`;
@@ -2037,56 +2046,109 @@ Email: ${e || 'не указан'}
 
 Статус: новый`;
       
-      fd.append('order', orderText);
-      fd.append('_subject', 'Новый заказ #' + order.id);
-      fd.append('_replyto', e || 'aircomfortbel@gmail.com');
-      
+      // Отправка email через Formspree
       fetch('https://formspree.io/f/mrbkdwwe', {
         method: 'POST',
-        body: fd,
-        headers: { 'Accept': 'application/json' }
-      })
-        .then(response => {
-          if (response.ok) {
-            document.getElementById('order-success').classList.remove('hidden');
-            setTimeout(() => {
-              document.getElementById('order-success').classList.add('hidden');
-            }, 5000);
-          }
+        headers: {
+          'Content-Type': 'application/json',
+          'Accept': 'application/json'
+        },
+        body: JSON.stringify({
+          name: n,
+          phone: p,
+          email: e || 'aircomfortbel@gmail.com',
+          message: orderText,
+          _subject: 'Новый заказ #' + order.id,
+          _replyto: e || 'aircomfortbel@gmail.com'
         })
-        .catch(error => {
-          console.error('Error:', error);
-        });
-      
-      cart = [];
-      saveCart();
-      renderCartItems();
-      document.getElementById('order-name').value = '';
-      document.getElementById('order-phone').value = '';
-      document.getElementById('order-address').value = '';
-      document.getElementById('order-email').value = '';
+      })
+      .then(response => {
+        if (response.ok) {
+          // Показываем сообщение об успехе
+          const successMsg = document.getElementById('order-success');
+          successMsg.classList.remove('hidden');
+          
+          // Очищаем корзину
+          cart = [];
+          saveCart();
+          renderCartItems();
+          
+          // Очищаем форму
+          document.getElementById('order-name').value = '';
+          document.getElementById('order-phone').value = '';
+          document.getElementById('order-address').value = '';
+          document.getElementById('order-email').value = '';
+          
+          // Обновляем статистику в админке
+          filterAdminOrders();
+          
+          // Скрываем сообщение через 5 секунд
+          setTimeout(() => {
+            successMsg.classList.add('hidden');
+          }, 5000);
+        } else {
+          alert('Ошибка при отправке заказа. Пожалуйста, попробуйте еще раз или свяжитесь с нами по телефону.');
+        }
+      })
+      .catch(error => {
+        console.error('Error:', error);
+        alert('Ошибка при отправке заказа. Пожалуйста, попробуйте еще раз или свяжитесь с нами по телефону.');
+      });
     }
 
-    // Обратная связь
-    document.getElementById('contact-form').addEventListener('submit', function(e) {
-      e.preventDefault();
-      
-      const fd = new FormData(this);
-      fd.append('_replyto', document.getElementById('form-email').value || 'aircomfortbel@gmail.com');
-      fd.append('_subject', 'Новое сообщение с сайта');
-      
-      fetch(this.action, {
-        method: 'POST',
-        body: fd,
-        headers: { 'Accept': 'application/json' }
-      })
-        .then(r => {
-          if (r.ok) {
-            document.getElementById('contact-success').classList.remove('hidden');
-            this.reset();
-          } else document.getElementById('contact-error').classList.remove('hidden');
-        })
-        .catch(() => document.getElementById('contact-error').classList.remove('hidden'));
+    // Обработка формы обратной связи
+    document.addEventListener('DOMContentLoaded', function() {
+      const contactForm = document.getElementById('contact-form');
+      if (contactForm) {
+        contactForm.addEventListener('submit', function(e) {
+          e.preventDefault();
+          
+          const formData = new FormData(this);
+          const name = formData.get('name');
+          const phone = formData.get('phone');
+          const email = formData.get('email') || 'aircomfortbel@gmail.com';
+          const message = formData.get('message') || 'Нет сообщения';
+          
+          fetch(this.action, {
+            method: 'POST',
+            headers: {
+              'Content-Type': 'application/json',
+              'Accept': 'application/json'
+            },
+            body: JSON.stringify({
+              name: name,
+              phone: phone,
+              email: email,
+              message: `Сообщение от ${name}\nТелефон: ${phone}\nEmail: ${email}\n\n${message}`,
+              _subject: 'Новое сообщение с сайта',
+              _replyto: email
+            })
+          })
+          .then(response => {
+            if (response.ok) {
+              document.getElementById('contact-success').classList.remove('hidden');
+              this.reset();
+              
+              setTimeout(() => {
+                document.getElementById('contact-success').classList.add('hidden');
+              }, 5000);
+            } else {
+              document.getElementById('contact-error').classList.remove('hidden');
+              
+              setTimeout(() => {
+                document.getElementById('contact-error').classList.add('hidden');
+              }, 5000);
+            }
+          })
+          .catch(() => {
+            document.getElementById('contact-error').classList.remove('hidden');
+            
+            setTimeout(() => {
+              document.getElementById('contact-error').classList.add('hidden');
+            }, 5000);
+          });
+        });
+      }
     });
 
     // Админка - вход только по прямой ссылке #admin
@@ -2108,6 +2170,8 @@ Email: ${e || 'не указан'}
         document.getElementById('admin-login-modal').style.display = 'none';
         document.getElementById('admin-panel').style.display = 'block';
         renderAdminProducts();
+        renderAdminOrders();
+        renderAdminBrands();
         switchAdminTab('products');
       } else alert('Неверный логин или пароль');
     }
@@ -2175,7 +2239,7 @@ Email: ${e || 'не указан'}
     
     function filterAdminProducts() { renderAdminProducts(); }
     
-    function filterAdminOrders() {
+    function renderAdminOrders() {
       const list = document.getElementById('admin-orders-list');
       if (!list) return;
       
@@ -2185,6 +2249,9 @@ Email: ${e || 'не указан'}
       
       if (sf) fo = fo.filter(o => o.status === sf);
       if (st) fo = fo.filter(o => o.customer.name.toLowerCase().includes(st) || o.customer.phone.includes(st));
+      
+      // Обновляем статистику периода
+      updatePeriodStats(fo);
       
       list.innerHTML = '';
       if (fo.length === 0) {
@@ -2230,12 +2297,26 @@ Email: ${e || 'не указан'}
       updateOrderStats();
     }
     
+    function updatePeriodStats(ordersList) {
+      const periodOrders = document.getElementById('period-orders-count');
+      const periodTotal = document.getElementById('period-orders-total');
+      
+      if (periodOrders && periodTotal) {
+        periodOrders.textContent = ordersList.length;
+        periodTotal.textContent = ordersList.reduce((a, o) => a + o.total, 0);
+      }
+    }
+    
+    function filterAdminOrders() {
+      renderAdminOrders();
+    }
+    
     function updateOrderStatus(id, ns) {
       const o = orders.find(o => o.id === id);
       if (o) {
         o.status = ns;
         saveOrders();
-        filterAdminOrders();
+        renderAdminOrders();
       }
     }
     
@@ -2243,7 +2324,7 @@ Email: ${e || 'не указан'}
       if (confirm('Удалить заказ?')) {
         orders = orders.filter(o => o.id !== id);
         saveOrders();
-        filterAdminOrders();
+        renderAdminOrders();
       }
     }
     
@@ -2251,29 +2332,154 @@ Email: ${e || 'не указан'}
       if (confirm('Удалить все заказы?')) {
         orders = [];
         saveOrders();
-        filterAdminOrders();
+        renderAdminOrders();
       }
     }
     
     function exportOrders() {
+      if (orders.length === 0) {
+        alert('Нет заказов для экспорта');
+        return;
+      }
+      
       const data = orders.map(o => ({
         'Номер': o.id,
         Дата: o.date,
         Клиент: o.customer.name,
         Телефон: o.customer.phone,
         Адрес: o.customer.address,
-        Email: o.customer.email,
-        Оплата: o.customer.payment,
+        Email: o.customer.email || '',
+        Оплата: o.customer.payment || 'Наличные',
         Сумма: o.total,
         Статус: o.status,
         Товары: o.items.map(i => `${i.name}(${i.quantity})`).join('; ')
       }));
+      
       const csv = [Object.keys(data[0]).join(','), ...data.map(r => Object.values(r).map(v => `"${v}"`).join(','))].join('\n');
       const blob = new Blob(['\uFEFF' + csv], { type: 'text/csv;charset=utf-8;' });
       const link = document.createElement('a');
       link.href = URL.createObjectURL(blob);
-      link.download = 'orders_export.csv';
+      link.download = 'orders_' + new Date().toISOString().slice(0,10) + '.csv';
       link.click();
+    }
+
+    function applyOrderPeriod() {
+      const period = document.getElementById('order-period-select').value;
+      const startInput = document.getElementById('order-start-date');
+      const endInput = document.getElementById('order-end-date');
+      const applyBtn = document.getElementById('apply-order-period');
+      
+      if (period === 'custom') {
+        startInput.style.display = 'inline-block';
+        endInput.style.display = 'inline-block';
+        applyBtn.style.display = 'inline-block';
+      } else {
+        startInput.style.display = 'none';
+        endInput.style.display = 'none';
+        applyBtn.style.display = 'none';
+        
+        const now = new Date();
+        let start = new Date();
+        
+        if (period === 'today') {
+          start = new Date(now.setHours(0,0,0,0));
+        } else if (period === 'week') {
+          start = new Date(now.setDate(now.getDate() - 7));
+        } else if (period === 'month') {
+          start = new Date(now.setMonth(now.getMonth() - 1));
+        } else if (period === 'year') {
+          start = new Date(now.setFullYear(now.getFullYear() - 1));
+        }
+        
+        const filtered = orders.filter(o => {
+          const orderDate = new Date(o.date);
+          return orderDate >= start;
+        });
+        
+        renderPeriodOrders(filtered);
+      }
+    }
+    
+    function applyCustomOrderPeriod() {
+      const start = new Date(document.getElementById('order-start-date').value);
+      const end = new Date(document.getElementById('order-end-date').value);
+      end.setHours(23,59,59,999);
+      
+      if (isNaN(start) || isNaN(end)) {
+        alert('Выберите даты');
+        return;
+      }
+      
+      const filtered = orders.filter(o => {
+        const orderDate = new Date(o.date);
+        return orderDate >= start && orderDate <= end;
+      });
+      
+      renderPeriodOrders(filtered);
+    }
+    
+    function renderPeriodOrders(filtered) {
+      updatePeriodStats(filtered);
+      
+      const list = document.getElementById('admin-orders-list');
+      if (list) {
+        // Временно показываем отфильтрованные заказы
+        const sf = document.getElementById('order-status-filter')?.value || '';
+        const st = document.getElementById('order-search')?.value.toLowerCase() || '';
+        
+        let fo = filtered;
+        if (sf) fo = fo.filter(o => o.status === sf);
+        if (st) fo = fo.filter(o => o.customer.name.toLowerCase().includes(st) || o.customer.phone.includes(st));
+        
+        list.innerHTML = '';
+        if (fo.length === 0) {
+          list.innerHTML = '<p class="text-gray-500 text-center py-4 text-xs">Нет заказов за выбранный период</p>';
+          return;
+        }
+        
+        fo.forEach(o => {
+          const statusClass = o.status === 'новый' ? 'status-new' :
+            o.status === 'в обработке' ? 'status-processing' :
+              o.status === 'выполнен' ? 'status-completed' : 'status-cancelled';
+          
+          list.innerHTML += `<div class="border p-3 rounded-lg hover:shadow-md">
+            <div class="flex justify-between items-start mb-1">
+              <span class="font-bold text-xs">Заказ #${o.id}</span>
+              <span class="text-xs text-gray-500">${o.date}</span>
+            </div>
+            <div class="grid grid-cols-2 gap-1 text-xs">
+              <div><span class="font-medium">Клиент:</span> ${o.customer.name}</div>
+              <div><span class="font-medium">Тел:</span> ${o.customer.phone}</div>
+              <div class="col-span-2"><span class="font-medium">Адрес:</span> ${o.customer.address}</div>
+              <div><span class="font-medium">Email:</span> ${o.customer.email || 'не указан'}</div>
+              <div><span class="font-medium">Оплата:</span> ${o.customer.payment||'Наличные'}</div>
+              <div><span class="font-medium">Сумма:</span> ${o.total} BYN</div>
+            </div>
+            <div class="mt-2">
+              <span class="font-medium text-xs">Товары:</span> 
+              ${o.items.map(i => `${i.name} (${i.quantity} шт)`).join(', ')}
+            </div>
+            <div class="mt-2 flex gap-2">
+              <span class="px-2 py-1 rounded text-xs ${statusClass}">${o.status}</span>
+              <select onchange="updateOrderStatus(${o.id},this.value)" class="border rounded px-1 py-0.5 text-xs">
+                <option value="новый" ${o.status==='новый'?'selected':''}>Новый</option>
+                <option value="в обработке" ${o.status==='в обработке'?'selected':''}>В обр.</option>
+                <option value="выполнен" ${o.status==='выполнен'?'selected':''}>Выполн.</option>
+                <option value="отменен" ${o.status==='отменен'?'selected':''}>Отмен.</option>
+              </select>
+              <button onclick="deleteOrder(${o.id})" class="text-red-600 hover:text-red-800 px-2 py-1 border border-red-300 rounded text-xs">🗑️</button>
+            </div>
+          </div>`;
+        });
+      }
+    }
+    
+    function clearOrderPeriod() {
+      document.getElementById('order-period-select').value = 'today';
+      document.getElementById('order-start-date').style.display = 'none';
+      document.getElementById('order-end-date').style.display = 'none';
+      document.getElementById('apply-order-period').style.display = 'none';
+      renderAdminOrders();
     }
 
     function toggleProductSelection(id) {
@@ -2319,27 +2525,29 @@ Email: ${e || 'не указан'}
     function exportProducts() {
       const data = products.map(p => ({
         Название: p.name,
-        Бренд: p.brand,
+        Бренд: p.brand || '',
         Цена: p.price,
+        'Старая цена': p.oldPrice || '',
         Тип: p.type,
         Площадь: p.area,
         Инвертор: p.inverter,
-        Обогрев: p.heat,
+        Обогрев: p.heat || '',
         Цвет: p.color || '',
         Характеристики: p.specs?.join('\n') || '',
-        Описание: p.description,
-        'Полное описание': p.fullDescription,
-        Изображения: p.images?.join('; '),
+        Описание: p.description || '',
+        'Полное описание': p.fullDescription || '',
+        Изображения: p.images?.join('; ') || '',
         'Мета-заголовок': p.metaTitle || '',
         'Мета-описание': p.metaDesc || '',
         'Ключевые слова': p.metaKeywords || '',
-        Теги: p.tags?.join(', ')
+        Теги: p.tags?.join(', ') || ''
       }));
+      
       const csv = [Object.keys(data[0]).join(','), ...data.map(r => Object.values(r).map(v => `"${v}"`).join(','))].join('\n');
       const blob = new Blob(['\uFEFF' + csv], { type: 'text/csv;charset=utf-8;' });
       const link = document.createElement('a');
       link.href = URL.createObjectURL(blob);
-      link.download = 'products_export.csv';
+      link.download = 'products_' + new Date().toISOString().slice(0,10) + '.csv';
       link.click();
     }
     
@@ -2520,6 +2728,7 @@ Email: ${e || 'не указан'}
       renderAdminBrands();
       updateBrandSelects();
       renderBrands();
+      alert('Бренд добавлен! Нажмите "Экспорт кода" в админ-панели, чтобы сохранить изменения навсегда.');
     }
     
     function editBrand(id) {
@@ -2541,6 +2750,74 @@ Email: ${e || 'не указан'}
         updateBrandSelects();
         renderBrands();
       }
+    }
+
+    function applyReportPeriod() {
+      const period = document.getElementById('report-period-select').value;
+      const startInput = document.getElementById('report-start-date');
+      const endInput = document.getElementById('report-end-date');
+      const applyBtn = document.getElementById('apply-report-period');
+      
+      if (period === 'custom') {
+        startInput.style.display = 'inline-block';
+        endInput.style.display = 'inline-block';
+        applyBtn.style.display = 'inline-block';
+      } else {
+        startInput.style.display = 'none';
+        endInput.style.display = 'none';
+        applyBtn.style.display = 'none';
+        
+        const now = new Date();
+        let start = new Date();
+        
+        if (period === 'today') {
+          start = new Date(now.setHours(0,0,0,0));
+        } else if (period === 'week') {
+          start = new Date(now.setDate(now.getDate() - 7));
+        } else if (period === 'month') {
+          start = new Date(now.setMonth(now.getMonth() - 1));
+        } else if (period === 'year') {
+          start = new Date(now.setFullYear(now.getFullYear() - 1));
+        }
+        
+        updateReportStats(start, new Date());
+      }
+    }
+    
+    function applyCustomReportPeriod() {
+      const start = new Date(document.getElementById('report-start-date').value);
+      const end = new Date(document.getElementById('report-end-date').value);
+      end.setHours(23,59,59,999);
+      
+      if (isNaN(start) || isNaN(end)) {
+        alert('Выберите даты');
+        return;
+      }
+      
+      updateReportStats(start, end);
+    }
+    
+    function clearReportPeriod() {
+      document.getElementById('report-period-select').value = 'today';
+      document.getElementById('report-start-date').style.display = 'none';
+      document.getElementById('report-end-date').style.display = 'none';
+      document.getElementById('apply-report-period').style.display = 'none';
+      updateReportStats(new Date(new Date().setHours(0,0,0,0)), new Date());
+    }
+    
+    function updateReportStats(start, end) {
+      const periodOrders = orders.filter(o => {
+        const orderDate = new Date(o.date);
+        return orderDate >= start && orderDate <= end;
+      });
+      
+      const count = periodOrders.length;
+      const revenue = periodOrders.reduce((a, o) => a + o.total, 0);
+      const average = count > 0 ? (revenue / count).toFixed(2) : 0;
+      
+      document.getElementById('report-orders-count').textContent = count;
+      document.getElementById('report-revenue').textContent = revenue + ' BYN';
+      document.getElementById('report-average').textContent = average + ' BYN';
     }
 
     function saveSettings() {
@@ -2707,6 +2984,9 @@ Email: ${e || 'не указан'}
         if (e.target.classList.contains('modal')) e.target.style.display = 'none';
       });
       window.addEventListener('hashchange', checkProductHash);
+      
+      // Инициализация отчетов
+      updateReportStats(new Date(new Date().setHours(0,0,0,0)), new Date());
     });
   </script>
 </body>
