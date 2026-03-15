@@ -632,11 +632,11 @@
   </div>
 
   <div id="content">
-    <!-- Навигация (новый логотип) - ИСПРАВЛЕНО: ссылка на логотип заменена на корректную -->
+    <!-- Навигация (новый логотип) -->
     <nav class="glass-effect shadow-lg py-1.5 px-4 sm:px-6 fixed w-full z-50 border-b border-white/20">
       <div class="max-w-7xl mx-auto flex justify-between items-center">
         <div class="flex items-center">
-          <img src="https://i.postimg.cc/Y0881t9p/Image-1.png" alt="AirComfort" class="h-8 sm:h-10 w-auto">
+          <img src="https://i.postimg.cc/wjn25f6w/Image.png" alt="AirComfort" class="h-8 sm:h-10 w-auto">
         </div>
         <div class="hidden md:flex space-x-2 desktop-menu">
           <button onclick="document.getElementById('catalog').scrollIntoView({behavior: 'smooth'})" class="nav-link">
@@ -1299,12 +1299,12 @@ https://.../img2.jpg"></textarea></div>
       </div>
     </section>
 
-    <!-- Футер (новый логотип, белый текст) - ИСПРАВЛЕНО: ссылка на логотип заменена на корректную -->
+    <!-- Футер (новый логотип, белый текст) -->
     <footer class="bg-gradient-to-r from-gray-900 to-gray-800 text-white py-4 sm:py-8">
       <div class="max-w-7xl mx-auto px-6">
         <div class="flex flex-col md:flex-row justify-between items-center">
           <div class="mb-3 md:mb-0">
-            <img src="https://i.postimg.cc/Y0881t9p/Image-1.png" alt="AirComfort" class="h-8 sm:h-10 w-auto brightness-0 invert">
+            <img src="https://i.postimg.cc/wjn25f6w/Image.png" alt="AirComfort" class="h-8 sm:h-10 w-auto brightness-0 invert">
             <p class="text-xs text-white mt-2">Профессиональная установка кондиционеров в Гомеле</p>
             <p class="text-xs text-gray-300 mt-1">Общество с ограниченной ответственностью "ТеплоПрайм" УНП 491393506</p>
           </div>
@@ -2107,7 +2107,6 @@ Email: ${e || 'не указан'}
       if (l === adminCredentials.login && p === adminCredentials.password) {
         document.getElementById('admin-login-modal').style.display = 'none';
         document.getElementById('admin-panel').style.display = 'block';
-        // ИСПРАВЛЕНО: теперь после входа сразу рендерим товары и переключаемся на вкладку
         renderAdminProducts();
         switchAdminTab('products');
       } else alert('Неверный логин или пароль');
@@ -2521,7 +2520,6 @@ Email: ${e || 'не указан'}
       renderAdminBrands();
       updateBrandSelects();
       renderBrands();
-      alert('Бренд добавлен! Нажмите "Экспорт кода" в админ-панели, чтобы сохранить изменения навсегда.'); // ИСПРАВЛЕНО: добавлено предупреждение
     }
     
     function editBrand(id) {
@@ -2533,7 +2531,6 @@ Email: ${e || 'не указан'}
         renderAdminBrands();
         updateBrandSelects();
         renderBrands();
-        alert('Бренд изменен! Нажмите "Экспорт кода" в админ-панели, чтобы сохранить изменения навсегда.'); // ИСПРАВЛЕНО: добавлено предупреждение
       }
     }
     
@@ -2543,7 +2540,6 @@ Email: ${e || 'не указан'}
         renderAdminBrands();
         updateBrandSelects();
         renderBrands();
-        alert('Бренд удален! Нажмите "Экспорт кода" в админ-панели, чтобы сохранить изменения навсегда.'); // ИСПРАВЛЕНО: добавлено предупреждение
       }
     }
 
