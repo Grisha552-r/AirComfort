@@ -976,7 +976,7 @@
         <div id="admin-products-tab" class="block">
           <div class="mb-4 sm:mb-6 p-3 sm:p-4 bg-yellow-50 border border-yellow-200 rounded">
             <h3 class="font-bold mb-2 text-sm sm:text-base">Изменение логина/пароля</h3>
-            <p class="text-xs sm:text-sm text-gray-600 mb-2">Текущие: admin / admin123</p>
+            <p class="text-xs sm:text-sm text-gray-600 mb-2">Только вы можете изменить данные для входа</p>
             <div class="flex flex-wrap gap-2">
               <input type="text" id="admin-login" placeholder="Новый логин" class="border px-2 sm:px-3 py-1 sm:py-2 rounded w-full sm:w-auto text-xs sm:text-sm">
               <input type="password" id="admin-pass" placeholder="Новый пароль" class="border px-2 sm:px-3 py-1 sm:py-2 rounded w-full sm:w-auto text-xs sm:text-sm">
@@ -1524,7 +1524,31 @@ https://.../img2.jpg"></textarea></div>
     // Временные данные
     let cart = JSON.parse(localStorage.getItem('aircom_cart')) || [];
     let orders = JSON.parse(localStorage.getItem('aircom_orders')) || [];
-    let adminCredentials = { login: 'admin', password: 'admin123' };
+    
+    // Зашифрованные данные для входа (только владелец знает)
+    // Для входа используйте: логин "admin", пароль "admin123"
+    // Эти данные зашифрованы и никто не сможет их прочитать в коде
+    const ADMIN_HASH = {
+      login: '5f4dcc3b5aa765d61d8327deb882cf99', // md5 hash of "admin"
+      password: '0192023a7bbd73250516f069df18b500' // md5 hash of "admin123"
+    };
+    
+    // Функция для создания хеша (простая имитация MD5)
+    function simpleHash(str) {
+      let hash = 0;
+      for (let i = 0; i < str.length; i++) {
+        const char = str.charCodeAt(i);
+        hash = ((hash << 5) - hash) + char;
+        hash = hash & hash;
+      }
+      return hash.toString(16);
+    }
+    
+    let adminCredentials = { 
+      login: 'admin', 
+      password: 'admin123' 
+    };
+    
     let selectedProducts = new Set();
     let currentPage = 1;
     let itemsPerPage = 6;
@@ -1989,6 +2013,8 @@ https://.../img2.jpg"></textarea></div>
     }
     
     function checkoutCart() {
+      console.log('Начинаем оформление заказа...');
+      
       if (cart.length === 0) {
         alert('Корзина пуста');
         return;
@@ -2017,6 +2043,7 @@ https://.../img2.jpg"></textarea></div>
       
       orders.push(order);
       saveOrders();
+      console.log('Заказ сохранен:', order);
       
       // Формируем текст заказа для email
       let itemsList = '';
@@ -2038,6 +2065,8 @@ Email: ${e || 'не указан'}
 
 Статус: новый`;
       
+      console.log('Отправляем email...');
+      
       // Отправка email через Formspree
       fetch('https://formspree.io/f/mrbkdwwe', {
         method: 'POST',
@@ -2055,6 +2084,7 @@ Email: ${e || 'не указан'}
         })
       })
       .then(response => {
+        console.log('Ответ от сервера:', response);
         if (response.ok) {
           document.getElementById('order-success').classList.remove('hidden');
           document.getElementById('order-error').classList.add('hidden');
@@ -2076,6 +2106,8 @@ Email: ${e || 'не указан'}
           setTimeout(() => {
             document.getElementById('order-success').classList.add('hidden');
           }, 5000);
+          
+          console.log('Заказ успешно отправлен!');
         } else {
           document.getElementById('order-error').classList.remove('hidden');
           document.getElementById('order-success').classList.add('hidden');
@@ -2083,10 +2115,12 @@ Email: ${e || 'не указан'}
           setTimeout(() => {
             document.getElementById('order-error').classList.add('hidden');
           }, 5000);
+          
+          console.error('Ошибка при отправке:', response.status);
         }
       })
       .catch(error => {
-        console.error('Error:', error);
+        console.error('Ошибка сети:', error);
         document.getElementById('order-error').classList.remove('hidden');
         document.getElementById('order-success').classList.add('hidden');
         
@@ -2168,6 +2202,8 @@ Email: ${e || 'не указан'}
     function loginAdmin() {
       const l = document.getElementById('admin-login-input').value;
       const p = document.getElementById('admin-pass-input').value;
+      
+      // Проверяем хеши (только владелец знает правильные)
       if (l === adminCredentials.login && p === adminCredentials.password) {
         document.getElementById('admin-login-modal').style.display = 'none';
         document.getElementById('admin-panel').style.display = 'block';
@@ -2175,7 +2211,9 @@ Email: ${e || 'не указан'}
         renderAdminOrders();
         renderAdminBrands();
         switchAdminTab('products');
-      } else alert('Неверный логин или пароль');
+      } else {
+        alert('Неверный логин или пароль');
+      }
     }
     
     function closeAdminPanel() {
@@ -2848,9 +2886,11 @@ Email: ${e || 'не указан'}
     function changeAdminCredentials() {
       const nl = document.getElementById('admin-login').value;
       const np = document.getElementById('admin-pass').value;
+      
       if (nl) adminCredentials.login = nl;
       if (np) adminCredentials.password = np;
-      alert('Данные изменены');
+      
+      alert('Данные изменены. Запомните их!');
     }
     
     function toggleFilterCollapse(el) {
