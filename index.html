@@ -1525,25 +1525,6 @@ https://.../img2.jpg"></textarea></div>
     let cart = JSON.parse(localStorage.getItem('aircom_cart')) || [];
     let orders = JSON.parse(localStorage.getItem('aircom_orders')) || [];
     
-    // Зашифрованные данные для входа (только владелец знает)
-    // Для входа используйте: логин "admin", пароль "admin123"
-    // Эти данные зашифрованы и никто не сможет их прочитать в коде
-    const ADMIN_HASH = {
-      login: '5f4dcc3b5aa765d61d8327deb882cf99', // md5 hash of "admin"
-      password: '0192023a7bbd73250516f069df18b500' // md5 hash of "admin123"
-    };
-    
-    // Функция для создания хеша (простая имитация MD5)
-    function simpleHash(str) {
-      let hash = 0;
-      for (let i = 0; i < str.length; i++) {
-        const char = str.charCodeAt(i);
-        hash = ((hash << 5) - hash) + char;
-        hash = hash & hash;
-      }
-      return hash.toString(16);
-    }
-    
     let adminCredentials = { 
       login: 'admin', 
       password: 'admin123' 
@@ -2067,7 +2048,7 @@ Email: ${e || 'не указан'}
       
       console.log('Отправляем email...');
       
-      // Отправка email через Formspree
+      // Отправка email через Formspree (используем тот же endpoint что и для формы обратной связи)
       fetch('https://formspree.io/f/mrbkdwwe', {
         method: 'POST',
         headers: {
@@ -2079,20 +2060,23 @@ Email: ${e || 'не указан'}
           phone: p,
           email: e || 'aircomfortbel@gmail.com',
           message: orderText,
-          _subject: 'Новый заказ #' + order.id,
+          _subject: 'НОВЫЙ ЗАКАЗ #' + order.id,
           _replyto: e || 'aircomfortbel@gmail.com'
         })
       })
       .then(response => {
         console.log('Ответ от сервера:', response);
         if (response.ok) {
+          // Показываем сообщение об успехе
           document.getElementById('order-success').classList.remove('hidden');
           document.getElementById('order-error').classList.add('hidden');
           
+          // Очищаем корзину
           cart = [];
           saveCart();
           renderCartItems();
           
+          // Очищаем форму
           document.getElementById('order-name').value = '';
           document.getElementById('order-phone').value = '';
           document.getElementById('order-address').value = '';
@@ -2103,12 +2087,14 @@ Email: ${e || 'не указан'}
             renderAdminOrders();
           }
           
+          // Скрываем сообщение через 5 секунд
           setTimeout(() => {
             document.getElementById('order-success').classList.add('hidden');
           }, 5000);
           
           console.log('Заказ успешно отправлен!');
         } else {
+          // Показываем ошибку
           document.getElementById('order-error').classList.remove('hidden');
           document.getElementById('order-success').classList.add('hidden');
           
@@ -2203,7 +2189,7 @@ Email: ${e || 'не указан'}
       const l = document.getElementById('admin-login-input').value;
       const p = document.getElementById('admin-pass-input').value;
       
-      // Проверяем хеши (только владелец знает правильные)
+      // Проверяем данные для входа
       if (l === adminCredentials.login && p === adminCredentials.password) {
         document.getElementById('admin-login-modal').style.display = 'none';
         document.getElementById('admin-panel').style.display = 'block';
