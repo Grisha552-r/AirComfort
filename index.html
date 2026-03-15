@@ -950,7 +950,7 @@
       </div>
     </div>
 
-    <!-- Админ-панель (скрыта, доступ только по прямой ссылке) -->
+    <!-- Админ-панель -->
     <div id="admin-panel" class="fixed inset-0 bg-white z-50 overflow-y-auto" style="display: none;">
       <div class="max-w-7xl mx-auto px-4 sm:px-6 py-4 sm:py-6">
         <div class="flex justify-between items-center mb-4 sm:mb-6">
@@ -1205,7 +1205,7 @@ https://.../img2.jpg"></textarea></div>
         <div class="space-y-3 sm:space-y-4">
           <a href="tel:+375291050694" class="flex items-center justify-center gradient-bg text-white px-4 sm:px-6 py-2 sm:py-3 rounded-button font-medium hover:shadow-glow transition-all duration-300 btn-animate text-xs sm:text-base"><i class="ri-phone-line mr-2"></i>Позвонить</a>
           <a href="https://t.me/AirComforto" target="_blank" class="flex items-center justify-center bg-blue-500 text-white px-4 sm:px-6 py-2 sm:py-3 rounded-button font-medium hover:shadow-glow transition-all duration-300 btn-animate text-xs sm:text-base"><i class="ri-telegram-line mr-2"></i>Написать в Telegram</a>
-          <a href="https://msngr.link/vi/375291050694?text=" target="_blank" class="flex items-center justify-center bg-purple-600 text-white px-4 sm:px-6 py-2 sm:py-3 rounded-button font-medium hover:shadow-glow transition-all duration-300 btn-animate text-xs sm:text-base"><i class="ri-chat-3-line mr-2"></i>Написать в Viber</a>
+          <a href="viber://chat?number=%2B375291050694" target="_blank" class="flex items-center justify-center bg-purple-600 text-white px-4 sm:px-6 py-2 sm:py-3 rounded-button font-medium hover:shadow-glow transition-all duration-300 btn-animate text-xs sm:text-base"><i class="ri-chat-3-line mr-2"></i>Написать в Viber</a>
           <button onclick="document.getElementById('contacts').scrollIntoView({behavior: 'smooth'}); document.getElementById('contact-modal').style.display = 'none';" class="w-full bg-gray-200 text-gray-800 px-4 sm:px-6 py-2 sm:py-3 rounded-button font-medium hover:bg-gray-300 transition-all duration-300 btn-animate text-xs sm:text-base">Заполнить форму на сайте</button>
         </div>
         <button onclick="document.getElementById('contact-modal').style.display = 'none';" class="mt-4 sm:mt-6 text-gray-500 hover:text-gray-700 text-xs sm:text-sm"><i class="ri-close-line"></i> Закрыть</button>
@@ -1225,7 +1225,7 @@ https://.../img2.jpg"></textarea></div>
       </div>
     </section>
 
-    <!-- FAQ с 12 вопросами (6 слева, 6 справа) - исправлен дубликат -->
+    <!-- FAQ -->
     <section id="faq" class="py-8 sm:py-16 bg-white">
       <div class="max-w-7xl mx-auto px-6">
         <h2 class="text-lg sm:text-3xl font-bold text-center text-gray-900 mb-2">Часто задаваемые вопросы</h2>
@@ -1276,7 +1276,7 @@ https://.../img2.jpg"></textarea></div>
           <div><h3 class="text-base sm:text-xl font-bold text-gray-900 mb-3 sm:mb-6">Наши контакты</h3><div class="grid grid-cols-1 sm:grid-cols-2 gap-3 sm:gap-6"><div class="bg-white p-3 sm:p-6 rounded-lg shadow-card card-hover"><div class="w-6 h-6 sm:w-10 sm:h-10 flex items-center justify-center bg-gradient-to-br from-primary/20 to-primary/10 rounded-full text-primary mb-2 sm:mb-4 shadow-lg"><i class="ri-phone-line text-xs sm:text-base"></i></div><h4 class="text-xs sm:text-lg font-medium text-gray-900 mb-1">Телефон</h4><a href="tel:+375291050694" class="text-xs text-primary hover:underline">+375 (29) 105-06-94</a></div><div class="bg-white p-3 sm:p-6 rounded-lg shadow-card card-hover"><div class="w-6 h-6 sm:w-10 sm:h-10 flex items-center justify-center bg-gradient-to-br from-secondary/20 to-secondary/10 rounded-full text-secondary mb-2 sm:mb-4 shadow-lg"><i class="ri-mail-line text-xs sm:text-base"></i></div><h4 class="text-xs sm:text-lg font-medium text-gray-900 mb-1">Email</h4><a href="mailto:aircomfortbel@gmail.com" class="text-xs text-primary hover:underline">aircomfortbel@gmail.com</a></div><div class="bg-white p-3 sm:p-6 rounded-lg shadow-card card-hover"><div class="w-6 h-6 sm:w-10 sm:h-10 flex items-center justify-center bg-gradient-to-br from-accent/20 to-accent/10 rounded-full text-accent mb-2 sm:mb-4 shadow-lg"><i class="ri-time-line text-xs sm:text-base"></i></div><h4 class="text-xs sm:text-lg font-medium text-gray-900 mb-1">Время работы</h4><p class="text-xs text-gray-700">Пн-Пт: 9:00 - 20:00</p><p class="text-xs text-gray-700">Сб-Вс: 10:00 - 18:00</p></div><div class="bg-white p-3 sm:p-6 rounded-lg shadow-card card-hover"><div class="w-6 h-6 sm:w-10 sm:h-10 flex items-center justify-center bg-gradient-to-br from-primary/20 to-primary/10 rounded-full text-primary mb-2 sm:mb-4 shadow-lg"><i class="ri-map-pin-line text-xs sm:text-base"></i></div><h4 class="text-xs sm:text-lg font-medium text-gray-900 mb-1">Регион</h4><p class="text-xs text-gray-700">Гомель и Гомельская область</p></div></div></div>
           <div class="bg-white p-4 sm:p-8 rounded-lg shadow-hover border border-gray-100">
             <h3 class="text-base sm:text-xl font-bold text-gray-900 mb-3 sm:mb-6">Оставить заявку</h3>
-            <form id="contact-form" action="https://formspree.io/f/mrbkdwwe" method="POST">
+            <form id="contact-form">
               <input type="hidden" id="calculator-data" name="calculator_data">
               <div class="mb-2 sm:mb-4">
                 <label for="form-name" class="block text-gray-700 font-medium mb-1 text-xs">Ваше имя *</label>
@@ -1321,7 +1321,6 @@ https://.../img2.jpg"></textarea></div>
   </div>
 
   <script>
-    // Полный JavaScript код с исправлениями
     // Данные - ТОВАРЫ ХРАНЯТСЯ В КОДЕ
     let products = [
       {
@@ -1523,16 +1522,16 @@ https://.../img2.jpg"></textarea></div>
       { id: 9, name: 'AirGreen' }
     ];
     
-    // Временные данные (хранятся в localStorage)
+    // Временные данные
     let cart = [];
-    let orders = [];
+    let orders = JSON.parse(localStorage.getItem('aircom_orders')) || [];
     let adminCredentials = { login: 'admin', password: 'admin123' };
     let selectedProducts = new Set();
     let currentPage = 1;
     let itemsPerPage = 6;
     let visitCount = 0;
     let totalVisits = 0;
-    let settings = {};
+    let settings = JSON.parse(localStorage.getItem('aircom_settings')) || {};
     let currentProduct = null;
     let currentImageIndex = 0;
     let lastScrollPosition = 0;
@@ -1922,7 +1921,6 @@ https://.../img2.jpg"></textarea></div>
       if (d) total += 100;
       if (s) total += 100;
       
-      // Создаем уникальный ID для услуги
       const serviceId = 'calc-' + Date.now();
       
       const ci = {
@@ -1942,7 +1940,6 @@ https://.../img2.jpg"></textarea></div>
       
       saveCart();
       alert('Услуга добавлена в корзину');
-      // НЕ открываем корзину автоматически
     }
     
     function toggleCartModal() {
@@ -2020,7 +2017,7 @@ https://.../img2.jpg"></textarea></div>
         customer: { name: n, phone: p, address: a, email: e, payment: pm },
         items: [...cart],
         total: total,
-        date: new Date().toLocaleString(),
+        date: new Date().toLocaleString('ru-RU'),
         status: 'новый'
       };
       
@@ -2047,7 +2044,7 @@ Email: ${e || 'не указан'}
 
 Статус: новый`;
       
-      // Отправка email через Formspree (JSON формат)
+      // Отправка email через Formspree
       fetch('https://formspree.io/f/mrbkdwwe', {
         method: 'POST',
         headers: {
@@ -2065,27 +2062,23 @@ Email: ${e || 'не указан'}
       })
       .then(response => {
         if (response.ok) {
-          // Показываем сообщение об успехе
           document.getElementById('order-success').classList.remove('hidden');
           document.getElementById('order-error').classList.add('hidden');
           
-          // Очищаем корзину
           cart = [];
           saveCart();
           renderCartItems();
           
-          // Очищаем форму
           document.getElementById('order-name').value = '';
           document.getElementById('order-phone').value = '';
           document.getElementById('order-address').value = '';
           document.getElementById('order-email').value = '';
           
-          // Обновляем статистику в админке
+          // Обновляем админку если она открыта
           if (document.getElementById('admin-panel').style.display === 'block') {
             renderAdminOrders();
           }
           
-          // Скрываем сообщение через 5 секунд
           setTimeout(() => {
             document.getElementById('order-success').classList.add('hidden');
           }, 5000);
@@ -2116,13 +2109,12 @@ Email: ${e || 'не указан'}
         contactForm.addEventListener('submit', function(e) {
           e.preventDefault();
           
-          const formData = new FormData(this);
-          const name = formData.get('name');
-          const phone = formData.get('phone');
-          const email = formData.get('email') || 'aircomfortbel@gmail.com';
-          const message = formData.get('message') || 'Нет сообщения';
+          const name = document.getElementById('form-name').value;
+          const phone = document.getElementById('form-phone').value;
+          const email = document.getElementById('form-email').value || 'aircomfortbel@gmail.com';
+          const message = document.getElementById('form-message').value || 'Нет сообщения';
           
-          fetch(this.action, {
+          fetch('https://formspree.io/f/mrbkdwwe', {
             method: 'POST',
             headers: {
               'Content-Type': 'application/json',
@@ -2141,7 +2133,7 @@ Email: ${e || 'не указан'}
             if (response.ok) {
               document.getElementById('contact-success').classList.remove('hidden');
               document.getElementById('contact-error').classList.add('hidden');
-              this.reset();
+              contactForm.reset();
               
               setTimeout(() => {
                 document.getElementById('contact-success').classList.add('hidden');
@@ -2167,7 +2159,7 @@ Email: ${e || 'не указан'}
       }
     });
 
-    // Админка - вход только по прямой ссылке #admin
+    // Админка - вход по прямой ссылке #admin
     function showAdminLogin() {
       document.getElementById('admin-login-modal').style.display = 'flex';
     }
@@ -2409,7 +2401,7 @@ Email: ${e || 'не указан'}
         }
         
         const filtered = orders.filter(o => {
-          const orderDate = new Date(o.date);
+          const orderDate = new Date(o.date.split('.').reverse().join('-'));
           return orderDate >= start;
         });
         
@@ -2428,7 +2420,7 @@ Email: ${e || 'не указан'}
       }
       
       const filtered = orders.filter(o => {
-        const orderDate = new Date(o.date);
+        const orderDate = new Date(o.date.split('.').reverse().join('-'));
         return orderDate >= start && orderDate <= end;
       });
       
@@ -2830,7 +2822,7 @@ Email: ${e || 'не указан'}
     
     function updateReportStats(start, end) {
       const periodOrders = orders.filter(o => {
-        const orderDate = new Date(o.date);
+        const orderDate = new Date(o.date.split('.').reverse().join('-'));
         return orderDate >= start && orderDate <= end;
       });
       
