@@ -39,7 +39,7 @@
   <!-- Sitemap ссылка -->
   <link rel="sitemap" type="application/xml" title="Sitemap" href="/sitemap.xml">
   
-  <!-- Favicon и иконки - ИСПРАВЛЕНО: теперь используем второе фото для браузера -->
+  <!-- Favicon и иконки -->
   <link rel="icon" type="image/png" sizes="32x32" href="https://i.postimg.cc/Y0881t9p/Image-1.png">
   <link rel="icon" type="image/png" sizes="16x16" href="https://i.postimg.cc/Y0881t9p/Image-1.png">
   <link rel="apple-touch-icon" sizes="180x180" href="https://i.postimg.cc/Y0881t9p/Image-1.png">
@@ -1277,7 +1277,6 @@ https://.../img2.jpg"></textarea></div>
           <div class="bg-white p-4 sm:p-8 rounded-lg shadow-hover border border-gray-100">
             <h3 class="text-base sm:text-xl font-bold text-gray-900 mb-3 sm:mb-6">Оставить заявку</h3>
             <form id="contact-form">
-              <input type="hidden" id="calculator-data" name="calculator_data">
               <div class="mb-2 sm:mb-4">
                 <label for="form-name" class="block text-gray-700 font-medium mb-1 text-xs">Ваше имя *</label>
                 <input type="text" id="form-name" name="name" class="w-full px-2 sm:px-4 py-1.5 sm:py-3 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-primary/50 focus:border-primary text-xs" placeholder="Иван Петров" required="">
@@ -1523,7 +1522,7 @@ https://.../img2.jpg"></textarea></div>
     ];
     
     // Временные данные
-    let cart = [];
+    let cart = JSON.parse(localStorage.getItem('aircom_cart')) || [];
     let orders = JSON.parse(localStorage.getItem('aircom_orders')) || [];
     let adminCredentials = { login: 'admin', password: 'admin123' };
     let selectedProducts = new Set();
@@ -1915,6 +1914,8 @@ https://.../img2.jpg"></textarea></div>
       const d = document.getElementById('demontage').checked;
       const s = document.getElementById('service').checked;
       let total = parseInt(ms.value);
+      
+      // Добавляем стоимость за дополнительные метры только для монтажа
       if (ms.value !== '100' || !mt.includes('Только')) {
         total += Math.max(0, l - 3) * 50;
       }
@@ -1927,17 +1928,10 @@ https://.../img2.jpg"></textarea></div>
         id: serviceId,
         name: mt + (d ? ' + демонтаж' : '') + (s ? ' + обслуживание' : ''),
         price: total,
-        quantity: 1,
-        image: 'https://via.placeholder.com/200x150?text=Service'
+        quantity: 1
       };
       
-      const ex = cart.find(i => i.id === ci.id);
-      if (ex) {
-        ex.quantity++;
-      } else {
-        cart.push(ci);
-      }
-      
+      cart.push(ci);
       saveCart();
       alert('Услуга добавлена в корзину');
     }
