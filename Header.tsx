@@ -1,0 +1,31 @@
+import React from 'react';
+import type { Metadata, Viewport } from 'next';
+import '../styles/index.css';
+
+export const viewport: Viewport = {
+  width: 'device-width',
+  initialScale: 1,
+};
+
+export const metadata: Metadata = {
+  title: 'Онлайн-гипермаркет 21vek.by',
+  description: 'Онлайн-гипермаркет 21vek.by — покупайте товары по выгодным ценам',
+  icons: {
+    icon: [
+      { url: '/favicon.ico', type: 'image/x-icon' }
+    ],
+  },
+};
+
+export default function RootLayout({
+  children,
+}: Readonly<{
+  children: React.ReactNode;
+}>) {
+  return (
+    <html lang="ru">
+      <body>{children}
+</body>
+    </html>
+  );
+}

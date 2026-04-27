@@ -1,0 +1,93 @@
+'use client';
+import React, { useState, useEffect } from 'react';
+
+interface TimeLeft {
+  hours: string;
+  minutes: string;
+  seconds: string;
+}
+
+export default function TopPromoBanner() {
+  const [timeLeft, setTimeLeft] = useState<TimeLeft>({ hours: '03', minutes: '35', seconds: '39' });
+  const [visible, setVisible] = useState(true);
+
+  useEffect(() => {
+    // Calculate end time (3 hours from now for demo)
+    const endTime = Date.now() + (3 * 60 * 60 + 35 * 60 + 39) * 1000;
+
+    const timer = setInterval(() => {
+      const remaining = endTime - Date.now();
+      if (remaining <= 0) {
+        clearInterval(timer);
+        setTimeLeft({ hours: '00', minutes: '00', seconds: '00' });
+        return;
+      }
+      const h = Math.floor(remaining / 3600000);
+      const m = Math.floor((remaining % 3600000) / 60000);
+      const s = Math.floor((remaining % 60000) / 1000);
+      setTimeLeft({
+        hours: String(h).padStart(2, '0'),
+        minutes: String(m).padStart(2, '0'),
+        seconds: String(s).padStart(2, '0'),
+      });
+    }, 1000);
+
+    return () => clearInterval(timer);
+  }, []);
+
+  if (!visible) return null;
+
+  return (
+    <div
+      className="relative flex items-center justify-center h-[42px] text-white text-sm font-bold"
+      style={{ background: 'linear-gradient(259.17deg, #b433ca, #6c2ab7)' }}
+    >
+      <a
+        href="https://www.21vek.by/special_offers/appsale.html"
+        className="flex items-center gap-3 text-white no-underline"
+        target="_blank"
+        rel="noreferrer"
+      >
+        <span className="font-bold text-sm">Большая распродажа до -70%!</span>
+        <span
+          className="px-3 py-1 rounded text-white font-black text-sm"
+          style={{ backgroundColor: '#e52e6b', borderRadius: '4px' }}
+        >
+          промокод APPRIL
+        </span>
+        <div className="flex items-center gap-1 text-sm">
+          <span className="text-white opacity-80">0 дн</span>
+          <div className="flex items-center gap-0.5">
+            <span
+              className="inline-flex items-center justify-center w-7 h-6 rounded text-xs font-bold"
+              style={{ backgroundColor: '#7f2dbc', color: '#0077cc', borderRadius: '2px' }}
+            >
+              {timeLeft.hours}
+            </span>
+            <span className="text-white font-bold">:</span>
+            <span
+              className="inline-flex items-center justify-center w-7 h-6 rounded text-xs font-bold"
+              style={{ backgroundColor: '#7f2dbc', color: '#0077cc', borderRadius: '2px' }}
+            >
+              {timeLeft.minutes}
+            </span>
+            <span className="text-white font-bold">:</span>
+            <span
+              className="inline-flex items-center justify-center w-7 h-6 rounded text-xs font-bold"
+              style={{ backgroundColor: '#7f2dbc', color: '#0077cc', borderRadius: '2px' }}
+            >
+              {timeLeft.seconds}
+            </span>
+          </div>
+        </div>
+      </a>
+      <button
+        onClick={() => setVisible(false)}
+        className="absolute right-4 top-1/2 -translate-y-1/2 text-white opacity-70 hover:opacity-100 text-lg leading-none"
+        aria-label="Close"
+      >
+        ×
+      </button>
+    </div>
+  );
+}

@@ -1,0 +1,288 @@
+'use client';
+import React from 'react';
+
+interface WeeklyProduct {
+  name: string;
+  href: string;
+  imgSrc: string;
+  imgAlt: string;
+  price: string;
+  oldPrice?: string;
+  discount?: string;
+  badge?: string;
+  rating?: string;
+}
+
+const weeklyProducts: WeeklyProduct[] = [
+{
+  name: 'Диван Sundays Home Надежда / 121129 (темно-серый)',
+  href: 'https://www.21vek.by/cushioned_furniture/121129_sundays_home_8822770.html',
+  imgSrc: 'https://cdn21vek.by/imgproxy/preview_b/plain/img/galleries/8822/770/121129_sundays_home_8822770_01.jpg',
+  imgAlt: 'Диван Sundays Home Надежда / 121129 (темно-серый)',
+  price: '787,34 р.',
+  badge: 'ШОПЦЕНА',
+  rating: '4.5'
+},
+{
+  name: 'Электрический духовой шкаф Indesit IFE 3644 BL',
+  href: 'https://www.21vek.by/ovens/ife3644bl_indesit.html',
+  imgSrc: 'https://cdn21vek.by/imgproxy/preview_b/plain/img/galleries/ife3644/bl/ife3644bl_indesit_01.jpg',
+  imgAlt: 'Электрический духовой шкаф Indesit IFE 3644 BL',
+  price: '839,00 р.',
+  oldPrice: '999,00 р.',
+  discount: '-16%',
+  rating: '4.9'
+},
+{
+  name: 'Детский горшок NINO Simba (серый)',
+  href: 'https://www.21vek.by/potties/simba_nino_9580719.html',
+  imgSrc: 'https://cdn21vek.by/imgproxy/preview_b/plain/img/galleries/9580/719/simba_nino_9580719_01.jpg',
+  imgAlt: 'Детский горшок NINO Simba (серый)',
+  price: '24,50 р.',
+  rating: '4.9'
+},
+{
+  name: 'Качели садовые Sundays Garden Варна-1 с1391',
+  href: 'https://www.21vek.by/garden_swings/11391_sundays_garden.html',
+  imgSrc: 'https://cdn21vek.by/imgproxy/preview_b/plain/img/galleries/11391/sundays/11391_sundays_garden_01.jpg',
+  imgAlt: 'Качели садовые Sundays Garden Варна-1',
+  price: '629,10 р.',
+  oldPrice: '699,00 р.',
+  discount: '-10%',
+  rating: '4.8'
+},
+{
+  name: 'Матрас Mio Tesoro Тип 43 Stellata 160x200 (джерси трикот)',
+  href: 'https://www.21vek.by/mattresses/43stellata160x200_mio_tesoro_9612790.html',
+  imgSrc: 'https://cdn21vek.by/imgproxy/preview_b/plain/img/galleries/9612/790/43stellata160x200_mio_tesoro_9612790_01.jpg',
+  imgAlt: 'Матрас Mio Tesoro Тип 43 Stellata 160x200',
+  price: '329,00 р.',
+  oldPrice: '369,00 р.',
+  discount: '-11%',
+  rating: '4.6'
+},
+{
+  name: 'Строительная плита Kronospan (Ultradecor) OSB (9x2500x1250)',
+  href: 'https://www.21vek.by/sheet_materials/osb_kronospan_6241841.html',
+  imgSrc: 'https://cdn21vek.by/imgproxy/preview_b/plain/img/galleries/6241/841/osb_kronospan_6241841_01.jpg',
+  imgAlt: 'Строительная плита Kronospan OSB (9x2500x1250)',
+  price: '28,45 р.',
+  badge: 'ШОПЦЕНА',
+  rating: '5.0'
+}];
+
+
+const saleProducts: WeeklyProduct[] = [
+{
+  name: 'Подгузники-трусики детские Helen Harper Baby XL (72шт)',
+  href: 'https://www.21vek.by/diapers/babyxl_helen_harper_8778068.html',
+  imgSrc: 'https://cdn21vek.by/imgproxy/preview_b/plain/img/galleries/8778/068/babyxl_helen_harper_8778068_01.jpg',
+  imgAlt: 'Подгузники-трусики детские Helen Harper Baby XL (72шт)',
+  price: '50,03 р.',
+  badge: 'ШОПЦЕНА'
+},
+{
+  name: 'Аспиратор детский Nativo TBD0604333901A (серебристый)',
+  href: 'https://www.21vek.by/baby_care_appliances/tbd0604333901a_nativo_9304378.html',
+  imgSrc: 'https://cdn21vek.by/imgproxy/preview_b/plain/img/galleries/9304/378/tbd0604333901a_nativo_9304378_01.jpg',
+  imgAlt: 'Аспиратор детский Nativo TBD0604333901A',
+  price: '39,90 р.',
+  oldPrice: '53,64 р.',
+  discount: '-26%'
+},
+{
+  name: 'Матрас Mio Tesoro Bergamo 160x200',
+  href: 'https://www.21vek.by/mattresses/bergamo160x200_mio_tesoro_9259941.html',
+  imgSrc: 'https://cdn21vek.by/imgproxy/preview_b/plain/img/galleries/9259/941/bergamo160x200_mio_tesoro_9259941_01.jpg',
+  imgAlt: 'Матрас Mio Tesoro Bergamo 160x200',
+  price: '441,50 р.',
+  oldPrice: '465,00 р.',
+  discount: '-5%'
+},
+{
+  name: 'Подушка для сна Askona Green Bamboo 68x68',
+  href: 'https://www.21vek.by/bed_pillows/greenbamboo68x68_askona_10065157.html',
+  imgSrc: 'https://cdn21vek.by/imgproxy/preview_b/plain/img/galleries/10065/157/greenbamboo68x68_askona_10065157_01.jpg',
+  imgAlt: 'Подушка для сна Askona Green Bamboo 68x68',
+  price: '53,56 р.',
+  oldPrice: '63,60 р.',
+  discount: '-16%'
+},
+{
+  name: 'Одеяло Mio Tesoro Лен 4сМТ 22л 200x220',
+  href: 'https://www.21vek.by/pillows_blankets/422200x220_mio_tesoro_9194286.html',
+  imgSrc: 'https://cdn21vek.by/imgproxy/preview_b/plain/img/galleries/9194/286/422200x220_mio_tesoro_9194286_01.jpg',
+  imgAlt: 'Одеяло Mio Tesoro Лен 4сМТ 22л 200x220',
+  price: '165,00 р.',
+  oldPrice: '179,00 р.',
+  discount: '-8%'
+},
+{
+  name: 'Автохолодильник Sundays SN-24 (серый)',
+  href: 'https://www.21vek.by/bags_refrigerators/sn24_sundays_01.html',
+  imgSrc: 'https://cdn21vek.by/imgproxy/preview_b/plain/img/galleries/sn24/sundays/sn24_sundays_01.jpg',
+  imgAlt: 'Автохолодильник Sundays SN-24 (серый)',
+  price: '238,95 р.',
+  oldPrice: '301,68 р.',
+  discount: '-21%'
+}];
+
+
+function MiniProductCard({ product }: {product: WeeklyProduct;}) {
+  return (
+    <div className="flex flex-col bg-white rounded-lg overflow-hidden hover:shadow-sm transition-shadow">
+      <a href={product.href} className="block relative" style={{ height: '140px' }}>
+        <div className="w-full h-full bg-[#f7f8fa] flex items-center justify-center p-2">
+          <img
+            src={product.imgSrc}
+            alt={product.imgAlt}
+            className="max-w-full max-h-full object-contain"
+            onError={(e) => {
+              (e.target as HTMLImageElement).src = 'https://cdn21vek.by/desktop/_next/static/images/noImage.7700a60d.svg';
+            }} />
+
+        </div>
+        {product.discount &&
+        <div
+          className="absolute top-1 left-1 px-1 py-0.5 text-xs font-bold text-white rounded"
+          style={{ backgroundColor: '#e52e6b' }}>
+
+            {product.discount}
+          </div>
+        }
+        {product.badge && !product.discount &&
+        <div
+          className="absolute top-1 left-1 px-1 py-0.5 text-xs font-bold rounded"
+          style={{ backgroundColor: 'rgba(250, 170, 50, 0.16)', color: '#1a1a1a', border: '1px solid rgba(250, 170, 50, 0.4)' }}>
+
+            {product.badge}
+          </div>
+        }
+      </a>
+      <div className="p-2 flex flex-col flex-1">
+        {product.rating &&
+        <div className="flex items-center gap-1 mb-1">
+            <svg width="10" height="10" viewBox="0 0 10 10" fill="#faaa32">
+              <path d="M5 1l1.16 2.35L9 3.64l-2 1.95.47 2.75L5 7.02 2.53 8.34 3 5.59 1 3.64l2.84-.29L5 1z" />
+            </svg>
+            <span className="text-xs text-[#1a1a1a]">{product.rating}</span>
+          </div>
+        }
+        <a href={product.href} className="text-xs text-[#1a1a1a] hover:text-[#e52e6b] line-clamp-2 leading-tight mb-2 flex-1">
+          {product.name}
+        </a>
+        <div className="flex items-center justify-between">
+          <div>
+            <div className="text-sm font-bold text-[#1a1a1a]">{product.price}</div>
+            {product.oldPrice &&
+            <div className="text-xs text-[#a0a1a3] line-through">{product.oldPrice}</div>
+            }
+          </div>
+          <button
+            className="w-7 h-7 flex items-center justify-center rounded text-white"
+            style={{ backgroundColor: '#e52e6b' }}>
+
+            <svg width="12" height="12" viewBox="0 0 12 12" fill="none">
+              <path d="M1 1h1.5l1.2 5.5h5.5l1.2-4H3.5" stroke="white" strokeWidth="1" strokeLinecap="round" strokeLinejoin="round" />
+              <circle cx="5" cy="10.5" r="0.8" fill="white" />
+              <circle cx="9" cy="10.5" r="0.8" fill="white" />
+            </svg>
+          </button>
+        </div>
+      </div>
+    </div>);
+
+}
+
+export default function WeeklyProducts() {
+  return (
+    <div className="mb-6">
+      <div className="flex gap-4">
+        {/* Weekly products */}
+        <div className="flex-1">
+          <h3 className="text-xl font-bold text-[#1a1a1a] mb-3">Товары недели</h3>
+          <div className="grid grid-cols-3 gap-3">
+            {weeklyProducts.map((product, idx) =>
+            <MiniProductCard key={idx} product={product} />
+            )}
+          </div>
+        </div>
+
+        {/* Right column: ad banner + sale products */}
+        <div className="w-[280px] flex-shrink-0 flex flex-col gap-3">
+          {/* Ad banner */}
+          <a
+            href="https://www.21vek.by/special_offers/partly_pay.html"
+            className="block rounded-xl overflow-hidden"
+            style={{ height: '120px' }}>
+
+            <div
+              className="w-full h-full flex items-center justify-center text-white font-bold text-lg"
+              style={{ background: 'linear-gradient(135deg, #e52e6b, #7f2dbc)' }}>
+
+              <div className="text-center p-4">
+                <div className="text-2xl font-black">Оплата</div>
+                <div className="text-lg">частями</div>
+                <div className="text-sm opacity-80">без переплат</div>
+              </div>
+            </div>
+          </a>
+
+          {/* Premium banner */}
+          <a
+            href="https://www.21vek.by/premium/"
+            className="block rounded-xl overflow-hidden"
+            style={{ height: '80px' }}>
+
+            <div
+              className="w-full h-full flex items-center justify-center text-white font-bold"
+              style={{ background: 'linear-gradient(135deg, #1a1a1a, #333)' }}>
+
+              <div className="text-center p-3">
+                <div className="text-sm font-black">21vek Premium</div>
+                <div className="text-xs opacity-70">Товары премиум-класса</div>
+              </div>
+            </div>
+          </a>
+
+          {/* Sale products */}
+          <div>
+            <h3 className="text-xl font-bold text-[#1a1a1a] mb-3">Акции</h3>
+            <div className="flex flex-col gap-2">
+              {saleProducts.map((product, idx) =>
+              <a
+                key={idx}
+                href={product.href}
+                className="flex items-center gap-2 p-2 rounded-lg hover:bg-gray-50 transition-colors">
+
+                  <div className="w-12 h-12 flex-shrink-0 bg-[#f7f8fa] rounded overflow-hidden">
+                    <img
+                    src={product.imgSrc}
+                    alt={product.imgAlt}
+                    className="w-full h-full object-contain"
+                    onError={(e) => {
+                      (e.target as HTMLImageElement).src = 'https://cdn21vek.by/desktop/_next/static/images/noImage.7700a60d.svg';
+                    }} />
+
+                  </div>
+                  <div className="flex-1 min-w-0">
+                    <div className="text-xs text-[#1a1a1a] line-clamp-2 leading-tight">{product.name}</div>
+                    <div className="flex items-center gap-1 mt-0.5">
+                      <span className="text-sm font-bold text-[#1a1a1a]">{product.price}</span>
+                      {product.oldPrice &&
+                    <span className="text-xs text-[#a0a1a3] line-through">{product.oldPrice}</span>
+                    }
+                      {product.discount &&
+                    <span className="text-xs font-bold" style={{ color: '#e52e6b' }}>{product.discount}</span>
+                    }
+                    </div>
+                  </div>
+                </a>
+              )}
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>);
+
+}
